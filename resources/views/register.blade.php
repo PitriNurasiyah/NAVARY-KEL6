@@ -24,7 +24,7 @@
         .login-box {
             width: 460px; /* Sedikit lebih lebar untuk form register */
             background-color: #f5efe6;
-            padding: 50px 40px;
+            padding: 20px 40px;
             border-radius: 40px;
             box-shadow: 0 20px 45px rgba(0,0,0,0.2);
             position: relative;
@@ -127,24 +127,24 @@
     </div>
 
     <div class="login-box">
-        <div class="title">Join Our Farm!<br>Buat Akun</div>
+        <div class="title">Cimilk<br>Buat Akun</div>
 
         <form method="POST" action="/register">
             @csrf
 
             <div class="mb-3">
                 <label class="form-label">Nama Lengkap</label>
-                <input type="text" name="name" class="form-control" placeholder="Your name" required>
+                <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Pick a username" required>
+                <input type="text" name="username" class="form-control" placeholder="Masukkan username" required>
             </div>
 
             <div class="mb-4 position-relative">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Create password" required>
+                <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
             </div>
 
             <div class="position-relative mt-4">

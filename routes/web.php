@@ -5,7 +5,7 @@ use App\Http\Controllers\CimilkController;
 
 // Halaman Utama
 Route::get('/', function () {
-    return view('welcome');
+    return view('landingpage');
 });
 
 // --- GROUP ROUTE GUEST (Hanya bisa diakses sebelum login) ---
