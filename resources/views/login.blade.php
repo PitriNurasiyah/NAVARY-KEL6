@@ -3,166 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cimilk | Nature Intended Dairy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'mil-beige': '#f6f1ea', // Warna background utama referensi
-                        'mil-dark': '#231f20',  // Warna teks serif gelap
-                        'mil-gold': '#b9a573',  // Warna tulisan kursif referensi
-                    },
-                    fontFamily: {
-                        'serif-title': ['Playfair Display', 'serif'], // Untuk Judul Utama & Slogan
-                        'serif-body': ['Georgia', 'serif'],      // Untuk paragraf kecil referensi
-                        'poppins': ['Poppins', 'sans-serif'],        // Untuk Navbar & Info-Cards
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Login - Cimilk </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Fredoka:wght@600&display=swap" rel="stylesheet">
+
     <style>
-        /* Elemen Kursif 'Sapi Perah' Meniru Referensi */
-        .script-text {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-weight: 400;
-            color: #b9a573;
-            font-size: 3.5rem;
-            line-height: 1;
-            margin-bottom: -0.5rem;
-            display: block;
+        body {
+            background-color: #e8dccb;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            overflow: hidden;
         }
 
-        /* Lingkaran Krem Tipis di Belakang Teks (Hero) */
-        .mil-circle {
+        /* Container Utama */
+        .farm-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-box {
+            width: 440px;
+            background-color: #f5efe6;
+            padding: 40px;
+            border-radius: 40px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+            position: relative;
+            border: 10px solid transparent;
+            background-clip: padding-box;
+        }
+
+        /* Bingkai Rumput */
+        .login-box::before {
+            content: '';
             position: absolute;
-            width: 500px;
-            height: 500px;
-            background-color: #f2e7da; /* Warna lingkaran tipis */
-            border-radius: 50%;
-            top: -100px;
-            left: -150px;
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
             z-index: -1;
-            opacity: 0.6;
+            background-color: #8CA685;
+            background-image: url('https://www.transparenttextures.com/patterns/grass.png');
+            border-radius: 50px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
         }
 
-        /* Susunan Gambar Grid Meniru Susunan Referensi (Kanan ke Kiri) */
-        .grid-images {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+        /* Icon Sapi di Atas */
+        .top-icon {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e8dccb;
+            padding: 10px;
+            border-radius: 50%;
+            z-index: 20;
         }
-        .grid-images .group:first-child { grid-column: span 1; }
-        .grid-images .group:nth-child(2) { grid-column: span 1; }
-        .grid-images .group:nth-child(3) { grid-column: span 1; }
+
+        .top-icon img {
+            background: white;
+            border: 2px solid #D2B48C;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-family: 'Fredoka', sans-serif;
+            color: #5a2c1b;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            line-height: 1.1;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #5a2c1b;
+            margin-left: 5px;
+            font-size: 18px;
+        }
+
+        .form-control {
+            border-radius: 12px;
+            border: 2px solid #a67c52;
+            padding: 14px;
+            background-color: #fffdfa;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            border-color: #8CA685;
+            box-shadow: 0 0 0 0.25rem rgba(140, 166, 133, 0.1);
+        }
+
+        /* Tombol Login */
+        .btn-login {
+            width: 100%;
+            background: #7a2f1c;
+            color: white;
+            border-radius: 12px;
+            padding: 14px;
+            font-weight: bold;
+            font-size: 19px;
+            border: none;
+            box-shadow: 0 6px 0 #5a1f12;
+            transition: all 0.1s ease;
+            position: relative;
+            z-index: 5;
+        }
+
+        .btn-login:hover { background: #6b2818; color: white; }
+        .btn-login:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #5a1f12;
+        }
+
+        /* Ikon Lumbung (Farm) */
+        .farm-icon-style {
+            position: absolute;
+            bottom: 45px;
+            right: -25px;
+            width: 90px;
+            height: auto;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right:40px;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #845a33;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+        }
+
+        .password-toggle:focus {
+            outline: none;
+        }
+
+        .password-field input {
+            padding-right: 3rem;
+        }
+
+        .login-action-container {
+            width: 100%;
+            position: relative;
+            margin-top: 20px;
+        }
     </style>
 </head>
-<body class="bg-mil-beige text-gray-800 font-poppins antialiased">
+<body>
 
-    <nav class="bg-mil-dark text-mil-beige py-4 px-10 shadow-lg">
-        <div class="max-w-[1400px] mx-auto flex justify-between items-center px-4">
-            <h1 class="font-bold text-xl font-serif-title tracking-tight text-[#f2ca5a]">CIMILK</h1>
-            <div class="space-x-8 text-xs uppercase font-semibold">
-                <a href="#" class="hover:text-mil-gold transition">Beranda</a>
-                <a href="#" class="hover:text-mil-gold transition">Produk</a>
-                <a href="#" class="hover:text-mil-gold transition">Tentang</a>
-                <a href="/login" class="bg-mil-gold text-mil-dark px-5 py-2 rounded-lg font-bold hover:bg-opacity-90 transition">LOGIN</a>
+<div class="farm-wrapper">
+    <div class="top-icon">
+        <img src="{{ asset('img/sapii.png') }}" width="70" alt="cow logo">
+    </div>
+
+    <div class="login-box">
+        <div class="title">Cimilk</div>
+
+        @if(session('success'))
+            <div class="alert alert-success py-2 mb-3" style="font-size: 14px;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger py-2 mb-3" style="font-size: 14px;">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('login.post') }}">
+            @csrf
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Masukkan username" required autofocus>
+            </div>
+
+           <div class="mb-4 password-field">
+            <label class="form-label">Password</label>
+            <div class="position-relative">
+                <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                <button type="button" class="password-toggle" onclick="togglePassword()">
+                    <i id="passwordIcon" class="fa-solid fa-eye"></i>
+                </button>
             </div>
         </div>
-    </nav>
 
-    <main class="space-y-24 pb-20 pt-16">
-
-        <header class="max-w-[1300px] mx-auto px-6 grid md:grid-cols-2 gap-16 items-start relative overflow-hidden h-[500px]">
-            <img src="https://images.pexels.com/photos/1485637/pexels-photo-1485637.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                 alt="Sapi Perah Cimilk" class="w-full h-full object-cover rounded-3xl shadow-xl">
-
-            <div class="relative z-10 p-6 flex items-center justify-center text-center">
-                <div class="relative pt-10">
-                    <div class="mil-circle"></div>
-                    <span class="script-text">sapi perah</span>
-                    <h2 class="text-6xl font-serif-title text-mil-dark leading-[1.05] tracking-tight">Milk and More!</h2>
-                    <p class="text-mil-dark/70 text-xl uppercase tracking-widest font-bold mt-2">FRESH. LOCAL. DELIVERED.</p>
-                </div>
-            </div>
-        </header>
-
-        <section class="container mx-auto px-6 max-w-6xl">
-            <h3 class="text-4xl font-serif-title text-farm-brown text-center mb-16 italic">Produk Terbaru Kami</h3>
-            <div class="grid md:grid-cols-3 gap-10">
-                <div class="text-center group">
-                    <div class="overflow-hidden rounded-2xl shadow-xl border-2 border-farm-soft/50 mb-6 bg-white">
-                        <img src="https://via.placeholder.com/350x350.png?text=Tvorog" alt="Tvorog" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <h4 class="font-bold text-lg text-mil-dark mb-1 font-serif-title">Massa Tvorozhnaya</h4>
-                    <p class="text-sm text-gray-600 italic">Keju lembut kaya protein untuk kesehatan Anda.</p>
-                </div>
-                <div class="text-center group">
-                    <div class="overflow-hidden rounded-2xl shadow-xl border-2 border-farm-soft/50 mb-6 bg-white">
-                        <img src="https://via.placeholder.com/350x350.png?text=Milk" alt="Milk" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <h4 class="font-bold text-lg text-mil-dark mb-1 font-serif-title">Susu Murni 3.2%</h4>
-                    <p class="text-sm text-gray-600 italic">Kesegaran murni langsung dari peternakan lokal.</p>
-                </div>
-                <div class="text-center group">
-                    <div class="overflow-hidden rounded-2xl shadow-xl border-2 border-farm-soft/50 mb-6 bg-white">
-                        <img src="https://via.placeholder.com/350x350.png?text=Yogurt" alt="Yogurt" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <h4 class="font-bold text-lg text-mil-dark mb-1 font-serif-title">Yogurt Buah</h4>
-                    <p class="text-sm text-gray-600 italic">Pilihan menyehatkan dengan rasa buah alami.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="container mx-auto px-6 max-w-3xl text-center">
-            <h3 class="text-2xl font-serif-title text-mil-dark mb-10 uppercase tracking-widest">Kategori Peternakan</h3>
-            <div class="flex justify-center gap-12">
-                <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-mil-beige w-48 hover:border-mil-dark transition cursor-pointer group">
-                    <div class="text-6xl mb-4 group-hover:scale-110 transition">🐮</div>
-                    <h4 class="font-bold text-[10px] text-gray-500 uppercase tracking-[0.2em]">Dairy Cows</h4>
-                </div>
-                <div class="bg-white p-8 rounded-3xl shadow-sm border-2 border-mil-beige w-48 hover:border-mil-dark transition cursor-pointer group">
-                    <div class="text-6xl mb-4 group-hover:scale-110 transition">🥛</div>
-                    <h4 class="font-semibold text-xs text-gray-700 uppercase tracking-widest font-bold">MILK PRODUCTS</h4>
-                </div>
-            </div>
-        </section>
-
-        <section class="container mx-auto px-6 max-w-6xl">
-            <div class="grid-images grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="group overflow-hidden rounded-2xl shadow-xl">
-                    <img src="https://images.unsplash.com/photo-1546445317-29f4545e9d53?auto=format&fit=crop&q=80&w=800"
-                         alt="Sapi Perah" class="w-full h-96 object-cover group-hover:scale-110 transition duration-500">
-                </div>
-                <div class="group overflow-hidden rounded-2xl shadow-xl">
-                    <img src="https://images.unsplash.com/photo-1500595046743-cd273d0984a8?auto=format&fit=crop&q=80&w=800"
-                         alt="Peternakan" class="w-full h-96 object-cover group-hover:scale-110 transition duration-500">
-                </div>
-                <div class="group overflow-hidden rounded-2xl shadow-xl">
-                    <img src="https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?auto=format&fit=crop&q=80&w=800"
-                         alt="Produk" class="w-full h-96 object-cover group-hover:scale-110 transition duration-500">
-                </div>
-            </div>
-        </section>
-
-        <section class="container mx-auto px-6 max-w-3xl text-center">
-            <h3 class="text-3xl font-serif-title text-mil-dark mb-10 leading-tight">Tradisi Produksi Susu,<br>Teruji oleh Waktu</h3>
-            <p class="font-serif-body text-gray-600 text-lg leading-relaxed italic max-w-2xl mx-auto">"Para pengrajin kami dengan teliti mengikuti tradisi yang diwariskan turun-temurun untuk memastikan setiap produk tidak bercacat."</p>
-            <div class="mt-8 border-l-4 border-mil-gold pl-4 font-bold text-mil-dark font-serif-title text-3xl">Berkat Hartono</div>
-        </section>
-
-    </main>
-
-    <footer class="bg-white text-mil-dark py-12 px-6 border-t border-mil-beige">
-        <div class="container mx-auto text-center space-y-3">
-            <div class="font-serif-title text-3xl tracking-tight">CIMILK</div>
-            <p class="text-mil-dark/70 text-xs mt-6 tracking-wide">&copy; 2026 CIMILK. Hak Cipta Dilindungi.</p>
+        <div class="login-action-container">
+            <img src="{{ asset('img/farm.png') }}" class="farm-icon-style" alt="farm icon">
+            <button type="submit" class="btn btn-login">Login</button>
         </div>
-    </footer>
+        </form>
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordIcon = document.getElementById('passwordIcon');
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        passwordIcon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+    }
+</script>
 
 </body>
 </html>

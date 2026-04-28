@@ -150,10 +150,18 @@
 
         <ul class="nav-menu">
             <li class="nav-item"><a href="#" class="nav-link active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-cow"></i> Biodata Sapi</a></li>
+            <li class="nav-item"><a href="{{ route('sapi.index') }}"
+                class="nav-link {{ request()->is('biodata-sapi') ? 'active' : '' }}">
+                    <i class="fa-solid fa-cow"></i> Biodata Sapi
+                </a>
+            </li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-flask"></i> Produksi Susu</a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Penjualan</a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-file-lines"></i> Laporan</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-user-gear"></i> Manajemen Akun
+        </a>
+    </li>
+</ul>
         </ul>
     </div>
 

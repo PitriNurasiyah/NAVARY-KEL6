@@ -2,41 +2,26 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CimilkController;
+use App\Http\Controllers\SapiController;
 
-// Halaman Utama
+// Rute Halaman Utama
 Route::get('/', function () {
-    return view('landingpage');
+    return view('index');
 });
 
-// --- GROUP ROUTE GUEST (Hanya bisa diakses sebelum login) ---
-Route::middleware('guest')->group(function () {
-    // Login
-    Route::get('Cimilk/login', [CimilkController::class, 'showLogin'])->name('login');
-    Route::post('Cimilk/login', [CimilkController::class, 'login'])->name('login.post');
+// Rute Login & Register
+Route::get('login', [CimilkController::class, 'showLogin'])->name('login');
+Route::post('login', [CimilkController::class, 'login'])->name('login.post');
+Route::get('register', [CimilkController::class, 'showRegister'])->name('register');
+Route::post('register', [CimilkController::class, 'register'])->name('register.post');
 
-    // Register
-    Route::get('Cimilk/register', [CimilkController::class, 'showRegister'])->name('register');
-    Route::post('Cimilk/register', [CimilkController::class, 'register'])->name('register.post');
-});
+Route::get('/biodata-sapi', [SapiController::class, 'index'])->name('sapi.index');
 
-// --- GROUP ROUTE AUTH (Harus Login dulu) ---
+// Rute Dashboard (Hanya bisa diakses kalau sudah login)
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard-admin', function () { return view('dashboardAdmin'); })->name('admin.dashboard');
+    Route::get('/dashboard-peternak', function () { return view('dashboardPeternak'); })->name('peternak.dashboard');
+    Route::get('/dashboard-penjualan', function () { return view('dashboardPenjualan'); })->name('penjualan.dashboard');
 
-    // Dashboard Admin
-    Route::get('/dashboard-admin', function () {
-        return view('dashboardAdmin');
-    })->name('admin.dashboard');
-
-    // Dashboard Peternak
-    Route::get('/dashboard-peternak', function () {
-        return view('dashboardPeternak');
-    })->name('peternak.dashboard');
-
-    // Dashboard Penjualan
-    Route::get('/dashboard-penjualan', function () {
-        return view('dashboardPenjualan');
-    })->name('penjualan.dashboard');
-
-    // Logout
-    Route::post('Cimilk/logout', [CimilkController::class, 'logout'])->name('logout');
+    Route::post('logout', [CimilkController::class, 'logout'])->name('logout');
 });

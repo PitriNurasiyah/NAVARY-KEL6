@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class CimilkController extends Controller
 {
-    public function showLogin()
-    {
-    // Pastikan nama file di resources/views adalah login.blade.php
-    return view('login');
+   public function showLogin()
+{
+    if (auth()->check()) {
+         return view('login');
     }
-
+    return view('login');
+}
     public function showRegister()
     {
         return view('register');
@@ -37,35 +38,33 @@ class CimilkController extends Controller
         return redirect('/login')->with('success', 'Registrasi Berhasil!');
     }
 
+
+// Di dalam CimilkController.php
 public function login(Request $request)
 {
     $credentials = $request->only('username', 'password');
+
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
-
         $user = Auth::user();
 
-        // Cek username dan arahkan ke route yang benar
-        if ($user->username == 'admin') {
-            return redirect()->route('admin.dashboard');
-        } elseif ($user->username == 'peternak') {
-            return redirect()->route('peternak.dashboard');
-        } elseif ($user->username == 'penjualan') {
-            return redirect()->route('penjualan.dashboard');
-        }
+        if ($user->username == 'admin') return redirect()->route('admin.dashboard');
+        if ($user->username == 'peternak') return redirect()->route('peternak.dashboard');
+        if ($user->username == 'penjualan') return redirect()->route('penjualan.dashboard');
 
-        // Default jika tidak cocok semua
-       return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
-    // Jika gagal, kembali ke login dengan pesan error
-    return back()->with('error', 'Username atau Password salah!');
+    // PENTING: Gunakan withErrors agar bisa ditangkap oleh @error di Blade
+    return back()->withErrors(['login' => 'Username atau Password salah!']);
 }
     public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/login');
-    }
+{
+    Auth::logout(); // Log out user
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/');
+}
 }

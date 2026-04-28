@@ -6,6 +6,7 @@
     <title>Register - Cimilk Dairy Farm</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Fredoka:wght@600&display=swap" rel="stylesheet">
 
     <style>
@@ -22,7 +23,7 @@
         .farm-wrapper { position: relative; }
 
         .login-box {
-            width: 460px; /* Sedikit lebih lebar untuk form register */
+            width: 460px;
             background-color: #f5efe6;
             padding: 20px 40px;
             border-radius: 40px;
@@ -32,7 +33,6 @@
             background-clip: padding-box;
         }
 
-        /* Frame Rumput */
         .login-box::before {
             content: '';
             position: absolute;
@@ -43,7 +43,6 @@
             border-radius: 50px;
         }
 
-        /* Logo Memotong Border */
         .top-icon {
             position: absolute;
             top: -60px;
@@ -73,6 +72,32 @@
             margin-bottom: 25px;
             line-height: 1.1;
         }
+       .password-field {
+            position: relative;
+        }
+
+        /* Ikon Mata di dalam Input */
+        .password-toggle {
+            position: absolute;
+            top: 70%;
+            right: 40px;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #845a33;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+        }
+
+        .password-toggle:focus {
+            outline: none;
+        }
 
         .form-label { font-weight: bold; color: #5a2c1b; font-size: 16px; }
 
@@ -83,7 +108,6 @@
             background-color: #fffdfa;
         }
 
-        /* Tombol Login Marun 3D */
         .btn-register {
             width: 100%;
             background: #7a2f1c;
@@ -102,17 +126,14 @@
             box-shadow: 0 2px 0 #5a1f12;
         }
 
-        /* Posisi Barn di Atas Tombol Banget */
         .barn-icon {
             position: absolute;
-            bottom: 40px; /* Menempel di atas tombol */
+            bottom: 40px;
             right: -10px;
             width: 75px;
             z-index: 10;
             pointer-events: none;
         }
-
-        .animal-left { position: absolute; bottom: -35px; left: -45px; width: 90px; z-index: 10; }
 
         .footer-link { text-align: center; margin-top: 15px; font-size: 14px; }
         .footer-link a { color: #7a2f1c; font-weight: bold; text-decoration: none; }
@@ -121,7 +142,6 @@
 <body>
 
 <div class="farm-wrapper">
-
     <div class="top-icon">
         <img src="{{ asset('img/sapii.png') }}" width="80" alt="logo">
     </div>
@@ -129,7 +149,13 @@
     <div class="login-box">
         <div class="title">Cimilk<br>Buat Akun</div>
 
-        <form method="POST" action="/register">
+        @if($errors->any())
+            <div class="alert alert-danger py-2 mb-3" style="font-size: 14px;">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('register.post') }}">
             @csrf
 
             <div class="mb-3">
@@ -144,7 +170,10 @@
 
             <div class="mb-4 position-relative">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                <button type="button" class="password-toggle" onclick="togglePassword()">
+                    <i id="passwordIcon" class="fa-solid fa-eye"></i>
+                </button>
             </div>
 
             <div class="position-relative mt-4">
@@ -154,11 +183,21 @@
         </form>
 
         <div class="footer-link">
-            Sudah punya akun? <a href="/login">Masuk di sini</a>
+            Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a>
         </div>
     </div>
-
 </div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordIcon = document.getElementById('passwordIcon');
+        const isPassword = passwordInput.type === 'password';
+
+        passwordInput.type = isPassword ? 'text' : 'password';
+        passwordIcon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+    }
+</script>
 
 </body>
 </html>
