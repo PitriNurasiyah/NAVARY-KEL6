@@ -133,12 +133,6 @@
         <p class="mt-2 text-sm">+62 812-3456-7890</p>
         <p class="text-sm">info@cimilk.com</p>
       </div>
-      <div class="text-right text-sm text-[#d8d4be]">
-        <div class="flex flex-wrap justify-end gap-4">
-          <a href="{{ url('/#home') }}" class="hover:text-white transition">Beranda</a>
-          <a href="{{ url('/#products') }}" class="hover:text-white transition">Produk</a>
-          <a href="{{ url('/#contact') }}" class="hover:text-white transition">Kontak</a>
-        </div>
       </div>
     </div>
     <div class="mt-8 border-t border-white/10 pt-4 text-center text-xs text-[#bfc5a9]">Copyright © 2026 CIMILK. All Rights Reserved.</div>
