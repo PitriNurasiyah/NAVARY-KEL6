@@ -16,6 +16,7 @@
             margin: 0;
             display: flex;
             color: #432118;
+            overflow-x: hidden;
         }
 
         .sidebar {
@@ -149,30 +150,23 @@
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item"><a href="#" class="nav-link active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-            <li class="nav-item"><a href="{{ route('sapi.index') }}"
-                class="nav-link {{ request()->is('biodata-sapi') ? 'active' : '' }}">
-                    <i class="fa-solid fa-cow"></i> Biodata Sapi
-                </a>
-            </li>
+            <li class="nav-item"><a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li class="nav-item"><a href="{{ route('manajemen.akun') }}" class="nav-link {{ request()->routeIs('manajemen.akun') ? 'active' : '' }}"><i class="fa-solid fa-user-gear"></i> Manajemen Akun</a></li>
+            <li class="nav-item"><a href="{{ route('sapi.index') }}" class="nav-link {{ request()->routeIs('sapi.index') ? 'active' : '' }}"><i class="fa-solid fa-cow"></i> Biodata Sapi</a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-flask"></i> Produksi Susu</a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Penjualan</a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-file-lines"></i> Laporan</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-user-gear"></i> Manajemen Akun
-        </a>
-    </li>
-</ul>
         </ul>
     </div>
 
     <div class="main-content">
         <div class="header">
             <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Halo, Admin! 🐮</h3>
-                <p style="color: #6d4c41; font-weight: 600;">Selamat datang kembali di panel kontrol.</p>
+                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Halo, {{ Auth::user()->name ?? 'Admin' }}! 🐮</h3>
+                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Selamat datang kembali di panel kontrol.</p>
             </div>
 
-            <form action="{{ route('logout') }}" method="POST">
+            <form action="{{ route('logout') }}" method="POST" class="m-0">
                 @csrf
                 <button type="submit" class="btn-logout">
                     <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar

@@ -125,17 +125,20 @@
 
 <!-- FOOTER -->
 <footer class="bg-[#3b4a36] text-white mt-10">
-  <div class="bg-[#3f4f3c] px-3 py-3">
-    <div class="max-w-4xl mx-auto grid gap-8 lg:grid-cols-[1.6fr_1fr] items-start text-[#e4dcc8]">
-      <div class="text-left">
+  <div class="bg-[#3f4f3c] px-6 py-8">
+    <div class="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[1fr_1.5fr] items-start text-[#e4dcc8]">
+      <div class="text-left mt-10 pl-4 lg:pl-0">
         <p class="text-xs uppercase tracking-[0.35em] text-[#d8d4be]">Kontak</p>
-        <p class="mt-3 text-base font-semibold">Jl. Babakan Waru No. 026, Desa. Palasari Kec. Palasari</p>
-        <p class="mt-2 text-sm">+62 812-3456-7890</p>
-        <p class="text-sm">info@cimilk.com</p>
+        <p class="mt-3 text-lg font-semibold">Cimilk Yogurt</p>
+        <p class="mt-2 text-base">Kp. Palasari 2 Babakan Waru RT 26, RW 03, Desa Palasari, Kecamatan Ciater, Kabupaten Subang, Subang, Indonesia, 41280</p>
+        <p class="mt-2 text-base">contact: +62 812-3456-7890</p>
+        <p class="text-base">instagram: @cimilk.id</p>
       </div>
+      <div class="w-full mt-4">
+        <iframe src="https://maps.google.com/maps?q=-6.7163390,107.6720960&hl=id&z=15&output=embed" width="100%" height="300" style="border:0; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
-    <div class="mt-8 border-t border-white/10 pt-4 text-center text-xs text-[#bfc5a9]">Copyright © 2026 CIMILK. All Rights Reserved.</div>
+    <div class="mt-12 border-t border-white/10 pt-6 text-center text-sm text-[#bfc5a9]">Copyright © 2026 CIMILK. All Rights Reserved.</div>
   </div>
 </footer>
 

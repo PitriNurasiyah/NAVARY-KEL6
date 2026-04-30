@@ -168,6 +168,16 @@
                 <input type="text" name="username" class="form-control" placeholder="Masukkan username" required>
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select name="role" class="form-control" required>
+                    <option value="" disabled selected>Pilih Role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Peternak">Peternak</option>
+                    <option value="Penjualan">Manajemen Penjualan</option>
+                </select>
+            </div>
+
             <div class="mb-4 position-relative">
                 <label class="form-label">Password</label>
                 <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
