@@ -182,7 +182,7 @@
             </div>
         </form>
 
-        <div class="footer-link">
+        <div class="footer-link"> 
             Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a>
         </div>
     </div>
