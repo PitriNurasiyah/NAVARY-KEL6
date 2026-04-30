@@ -6,7 +6,7 @@
     <title>Dashboard Penjualan - Cimilk Yogurt</title>
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -17,29 +17,6 @@
             margin: 0;
             overflow-x: hidden;
         }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: 260px;
-            background: #f0e2d0;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding-top: 30px;
-            border-right: 8px solid #5d7a54;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand h4 { font-family: 'Fredoka One', cursive; color: #432118; font-size: 24px; margin-bottom: 0; text-align: center; }
-        .brand p { font-size: 14px; color: #845a33; margin-bottom: 40px; text-align: center; }
-        .nav-menu { list-style: none; padding: 0 15px; }
-        .nav-item { margin-bottom: 12px; }
-        .nav-link { text-decoration: none; color: #6d4c41; padding: 12px 18px; display: flex; align-items: center; border-radius: 15px; transition: 0.3s; font-weight: 700; }
-        .nav-link i { margin-right: 12px; width: 20px; text-align: center; }
-        .nav-link:hover, .nav-link.active { background: #5d7a54; color: #ffffff !important; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
 
         .main-content {
             margin-left: 260px;
@@ -152,27 +129,13 @@
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="brand">
-            <h4>Cimilk Yogurt</h4>
-            <p>Penjualan Dashboard</p>
-        </div>
-        <ul class="nav-menu">
-            <li class="nav-item"><a href="{{ route('penjualan.dashboard') }}" class="nav-link active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-            <li class="nav-item"><a href="{{ route('manajemen.akun') }}" class="nav-link"><i class="fa-solid fa-user-gear"></i> Manajemen Akun</a></li>
-            <li class="nav-item"><a href="{{ route('sapi.index') }}" class="nav-link"><i class="fa-solid fa-cow"></i> Biodata Sapi</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-flask"></i> Produksi Susu</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Penjualan</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-file-lines"></i> Laporan</a></li>
-        </ul>
-    </div>
+    @include('layouts.sidebar')
 
     <!-- Main Content -->
     <div class="main-content">
         <div class="header">
             <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Dashboard Penjualan</h3>
+                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Dashboard Penjualan 🐄</h3>
                 <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Selamat datang, {{ Auth::user()->name ?? 'Tim Penjualan' }}</p>
             </div>
 

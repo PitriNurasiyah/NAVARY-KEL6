@@ -6,7 +6,7 @@
     <title>Edit Akun - Cimilk Yogurt</title>
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -17,29 +17,6 @@
             margin: 0;
             overflow-x: hidden;
         }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: 260px;
-            background: #f0e2d0;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding-top: 30px;
-            border-right: 8px solid #5d7a54;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand h4 { font-family: 'Fredoka One', cursive; color: #432118; font-size: 24px; margin-bottom: 0; text-align: center; }
-        .brand p { font-size: 14px; color: #845a33; margin-bottom: 40px; text-align: center; }
-        .nav-menu { list-style: none; padding: 0; }
-        .nav-item { margin-bottom: 12px; }
-        .nav-link { text-decoration: none; color: #6d4c41; padding: 12px 18px; display: flex; align-items: center; border-radius: 15px; transition: 0.3s; font-weight: 700; }
-        .nav-link i { margin-right: 12px; width: 20px; text-align: center; }
-        .nav-link:hover, .nav-link.active { background: #5d7a54; color: #ffffff !important; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
 
         .main-content {
             margin-left: 260px;
@@ -71,22 +48,39 @@
         }
 
         .form-container {
-            background: #ffffff;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #e0e0e0;
+            background-color: #f5efe6;
+            padding: 40px;
+            border-radius: 40px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+            position: relative;
+            border: 8px solid transparent;
+            background-clip: padding-box;
             max-width: 600px;
         }
 
-        .form-label { font-weight: 700; color: #5a2c1b; }
+        /* Bingkai Rumput */
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -12px; left: -12px; right: -12px; bottom: -12px;
+            z-index: -1;
+            background-color: #5d7a54;
+            background-image: url('https://www.transparenttextures.com/patterns/grass.png');
+            border-radius: 45px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-label { font-weight: 700; color: #5a2c1b; margin-bottom: 8px; display: block; }
         .form-control, .form-select {
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            border: 2px solid #a67c52;
+            padding: 12px;
+            background-color: #fffdfa;
         }
         .form-control:focus, .form-select:focus {
             border-color: #5d7a54;
-            box-shadow: none;
+            box-shadow: 0 0 0 0.25rem rgba(93, 122, 84, 0.1);
+            background-color: #ffffff;
         }
 
         .btn-save {
@@ -94,37 +88,32 @@
             color: white;
             font-weight: bold;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 0 #3a4d33;
+            transition: all 0.2s;
         }
-        .btn-save:hover { background: #4a6344; color: white; }
+        .btn-save:hover { background: #4a6344; transform: translateY(-2px); box-shadow: 0 6px 0 #3a4d33; color: white; }
+        .btn-save:active { transform: translateY(2px); box-shadow: 0 2px 0 #3a4d33; }
+
         .btn-cancel {
             background: #e2e8f0;
             color: #475569;
             font-weight: bold;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 12px;
             text-decoration: none;
+            transition: all 0.2s;
+            display: inline-block;
         }
-        .btn-cancel:hover { background: #cbd5e1; color: #475569; }
+        .btn-cancel:hover { background: #cbd5e1; color: #475569; transform: translateY(-2px); }
 
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="brand"><h4>Cimilk Yogurt</h4><p>Admin Dashboard</p></div>
-        <ul class="nav-menu">
-            <li class="nav-item"><a href="{{ route('admin.dashboard') }}" class="nav-link"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-            <li class="nav-item"><a href="{{ route('manajemen.akun') }}" class="nav-link active"><i class="fa-solid fa-user-gear"></i> Manajemen Akun</a></li>
-            <li class="nav-item"><a href="{{ route('sapi.index') }}" class="nav-link"><i class="fa-solid fa-cow"></i> Biodata Sapi</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-flask"></i> Produksi Susu</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Penjualan</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-file-lines"></i> Laporan</a></li>
-        </ul>
-    </div>
+    @include('layouts.sidebar')
 
     <!-- Main Content -->
     <div class="main-content">

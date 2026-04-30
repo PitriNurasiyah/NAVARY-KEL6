@@ -9,13 +9,29 @@ use Illuminate\Support\Facades\Auth;
 
 class CimilkController extends Controller
 {
-   public function showLogin()
-{
-    if (auth()->check()) {
-         return view('auth.login');
+    public function showLogin()
+    {
+        if (Auth::check()) {
+            return $this->redirectBasedOnRole(Auth::user());
+        }
+        return view('auth.login');
     }
-    return view('auth.login');
-}
+
+    private function redirectBasedOnRole($user)
+    {
+        $role = strtolower($user->role);
+        $username = strtolower($user->username);
+
+        if ($role == 'peternak' || $username == 'peternak') {
+            return redirect()->route('peternak.dashboard');
+        }
+        if ($role == 'penjualan' || $role == 'manajemen penjualan' || $username == 'penjualan') {
+            return redirect()->route('penjualan.dashboard');
+        }
+        
+        return redirect()->route('admin.dashboard');
+    }
+
     public function showRegister()
     {
         return view('auth.register');
@@ -44,33 +60,23 @@ class CimilkController extends Controller
         return redirect('/login')->with('success', 'Registrasi Berhasil!');
     }
 
+    public function login(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
 
-// Di dalam CimilkController.php
-public function login(Request $request)
-{
-    $credentials = $request->only('username', 'password');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return $this->redirectBasedOnRole(Auth::user());
+        }
 
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-        $user = Auth::user();
-
-        if ($user->username == 'admin' || $user->role == 'Admin') return redirect()->route('admin.dashboard');
-        if ($user->username == 'peternak' || $user->role == 'Peternak') return redirect()->route('peternak.dashboard');
-        if ($user->username == 'penjualan' || $user->role == 'Penjualan') return redirect()->route('penjualan.dashboard');
-
-        return redirect()->route('admin.dashboard');
+        return back()->withErrors(['login' => 'Username atau Password salah!']);
     }
 
-    // PENTING: Gunakan withErrors agar bisa ditangkap oleh @error di Blade
-    return back()->withErrors(['login' => 'Username atau Password salah!']);
-}
     public function logout(Request $request)
-{
-    Auth::logout(); // Log out user
-
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    return redirect('/');
-}
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
 }
