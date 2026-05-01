@@ -72,8 +72,8 @@
         .badge-admin { background-color: #d1fae5; color: #065f46; }
         .badge-peternak { background-color: #ede9fe; color: #5b21b6; }
         .badge-penjualan { background-color: #ffedd5; color: #c2410c; }
-
-    </style>
+        
+        .badge-penjualan { background-color: #ffedd5; color: #c2410c; }
 </head>
 <body>
 
@@ -94,8 +94,12 @@
                 <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Kelola semua akun pengguna sistem.</p>
             </div>
 
-            <div class="d-flex align-items-center gap-3">   
-                <a href="{{ route('register') }}" class="btn btn-add"><i class="fa-solid fa-user-plus me-2"></i>Tambah Akun</a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="{{ route('register') }}" class="btn-add">
+                    <i class="fa-solid fa-user-plus"></i> Tambah Akun
+                </a>
+
+                <form action="{{ route('logout') }}" method="POST" class="m-0">
                     @csrf
                     <button type="submit" class="btn-logout">
                         <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
@@ -154,15 +158,6 @@
             </table>
         </div>
 
-    </div>
-
-    <!-- Modal Tambah Akun -->
-    <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
-            <div class="modal-content">
-                <iframe src="{{ route('register') }}" class="register-iframe"></iframe>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

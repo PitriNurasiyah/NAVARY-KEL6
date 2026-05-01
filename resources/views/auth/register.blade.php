@@ -10,16 +10,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Fredoka:wght@600&display=swap" rel="stylesheet">
 
     <style>
+        /* Base styles */
         body {
-            background-color: transparent;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Start from top to avoid clipping */
+            background-color: {{ Auth::check() ? '#dcc8ae' : '#e8dccb' }};
             font-family: 'Quicksand', sans-serif;
             margin: 0;
-            padding-top: 60px; /* Space for the top icon */
-            height: 100vh;
-            overflow: hidden;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Form Container positioning */
+        .register-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            @if(Auth::check())
+                margin-left: 260px; /* Space for sidebar */
+            @endif
         }
 
         .farm-wrapper { position: relative; width: 380px; }
@@ -27,7 +37,7 @@
         .login-box {
             width: 100%;
             background-color: #f5efe6;
-            padding: 10px 25px 25px 25px; /* Compact top padding */
+            padding: 10px 25px 25px 25px;
             border-radius: 40px;
             box-shadow: 0 20px 45px rgba(0,0,0,0.2);
             position: relative;
@@ -77,6 +87,7 @@
             z-index: 30;
             padding: 0;
             line-height: 1;
+            text-decoration: none;
         }
 
         .title {
@@ -93,7 +104,7 @@
         .password-toggle {
             position: absolute;
             top: 50%;
-            right: 38px;
+            right: 12px;
             transform: translateY(-50%);
             background: transparent;
             border: none;
@@ -150,101 +161,90 @@
 
         .footer-link { text-align: center; margin-top: 15px; font-size: 14px; }
         .footer-link a { color: #7a2f1c; font-weight: bold; text-decoration: none; }
-
-          /* Modal Styling for Floating Effect */
-        .modal-content {
-            background-color: transparent;
-            border: none;
-            box-shadow: none;
-        }
-        .register-iframe {
-            width: 100%;
-            height: 700px;
-            border: none;
-        }
     </style>
 </head>
 <body>
 
-<div class="farm-wrapper">
-    <div class="top-icon">
-        <img src="{{ asset('img/sapii.png') }}" width="80" alt="logo">
-    </div>
+    @if(Auth::check())
+        @include('layouts.sidebar')
+    @endif
 
-    <div class="login-box">
-        <button type="button" class="btn-close-custom" onclick="closeModal()">
-            <i class="fa-solid fa-circle-xmark"></i>
-        </button>
-        <div class="title">Cimilk<br>Buat Akun</div>
-
-        @if(session('success'))
-            <script>
-                if (window.parent && window.parent.location.pathname === '/manajemen-akun') {
-                    window.parent.location.reload();
-                }
-            </script>
-        @endif
-
-        @if($errors->any())
-            <div class="alert alert-danger py-2" style="font-size: 13px;">
-                {{ $errors->first() }}
-            </div>
-        @endif
-
-        <form action="{{ route('register.post') }}" method="POST" target="_top">
-            @csrf
-
-            <div class="mb-3">
-                <label class="form-label">Nama Lengkap</label>
-                <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>
+    <div class="register-wrapper">
+        <div class="farm-wrapper">
+            <div class="top-icon">
+                <img src="{{ asset('img/sapii.png') }}" width="80" alt="logo">
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Masukkan username" required>
-            </div>
+            <div class="login-box">
+                @if(Auth::check())
+                <a href="{{ route('manajemen.akun') }}" class="btn-close-custom">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </a>
+                @endif
 
-            <div class="mb-3">
-                <label class="form-label">Role</label>
-                <select name="role" class="form-control" required>
-                    <option value="" disabled selected>Pilih Role</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Peternak">Peternak</option>
-                    <option value="Penjualan">Manajemen Penjualan</option>
-                </select>
-            </div>
+                <div class="title">Cimilk<br>Buat Akun</div>
 
-            <div class="mb-4">
-                <label class="form-label">Password</label>
-                <div class="position-relative">
-                    <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
-                    <button type="button" class="password-toggle" onclick="togglePassword()">
-                        <i id="passwordIcon" class="fa-solid fa-eye"></i>
-                    </button>
+                @if(session('success'))
+                    <div class="alert alert-success py-2" style="font-size: 13px;">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if($errors->any())
+                    <div class="alert alert-danger py-2" style="font-size: 13px;">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
+                <form action="{{ route('register.post') }}" method="POST">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label class="form-label">Nama Lengkap</label>
+                        <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Masukkan username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select name="role" class="form-control" required>
+                            <option value="" disabled selected>Pilih Role</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Peternak">Peternak</option>
+                            <option value="Penjualan">Manajemen Penjualan</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Password</label>
+                        <div class="position-relative">
+                            <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <i id="passwordIcon" class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="position-relative mt-4">
+                        <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
+                        <button type="submit" class="btn btn-register">Register</button>
+                    </div>
+                </form>
+
+                @if(!Auth::check())
+                <div class="footer-link"> 
+                    Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a>
                 </div>
+                @endif
             </div>
-
-            <div class="position-relative mt-4">
-                <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
-                <button type="submit" class="btn btn-register">Register</button>
-            </div>
-        </form>
-
-        <div class="footer-link"> 
-            Sudah punya akun? <a href="{{ route('login') }}" target="_top">Masuk di sini</a>
         </div>
     </div>
-</div>
 
 <script>
-    function closeModal() {
-        if (window.parent && window.parent.bootstrap) {
-            const modalElement = window.parent.document.getElementById('addAccountModal');
-            const modal = window.parent.bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
-    }
-
     function togglePassword() {
         const passwordInput = document.getElementById('passwordInput');
         const passwordIcon = document.getElementById('passwordIcon');
