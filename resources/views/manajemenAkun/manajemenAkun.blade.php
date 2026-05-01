@@ -88,7 +88,7 @@
             </div>
 
             <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('manajemen-akun.create') }}" class="btn-add"><i class="fa-solid fa-plus me-2"></i>Tambah Akun</a>
+                <a href="{{ route('register') }}" class="btn-add"><i class="fa-solid fa-plus me-2"></i>Tambah Akun</a>
 
                 <form action="{{ route('logout') }}" method="POST" class="m-0">
                     @csrf

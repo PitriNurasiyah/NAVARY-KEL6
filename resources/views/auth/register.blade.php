@@ -11,21 +11,23 @@
 
     <style>
         body {
-            background-color: #e8dccb;
-            height: 100vh;
+            background-color: transparent;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Start from top to avoid clipping */
             font-family: 'Quicksand', sans-serif;
             margin: 0;
+            padding-top: 60px; /* Space for the top icon */
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .farm-wrapper { position: relative; }
+        .farm-wrapper { position: relative; width: 380px; }
 
         .login-box {
-            width: 460px;
+            width: 100%;
             background-color: #f5efe6;
-            padding: 20px 40px;
+            padding: 10px 25px 25px 25px; /* Compact top padding */
             border-radius: 40px;
             box-shadow: 0 20px 45px rgba(0,0,0,0.2);
             position: relative;
@@ -45,11 +47,11 @@
 
         .top-icon {
             position: absolute;
-            top: -60px;
+            top: -55px;
             left: 50%;
             transform: translateX(-50%);
-            background: #e8dccb;
-            padding: 10px;
+            background: #dcc8ae;
+            padding: 6px;
             border-radius: 50%;
             z-index: 20;
         }
@@ -58,18 +60,33 @@
             background: white;
             border: 2px solid #D2B48C;
             border-radius: 50%;
-            padding: 15px;
+            padding: 8px;
             box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            width: 65px;
+        }
+
+        .btn-close-custom {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            color: #8CA685;
+            cursor: pointer;
+            z-index: 30;
+            padding: 0;
+            line-height: 1;
         }
 
         .title {
             text-align: center;
-            font-size: 26px;
+            font-size: 24px;
             font-family: 'Fredoka', sans-serif;
             font-weight: bold;
             color: #5a2c1b;
-            margin-top: 30px;
-            margin-bottom: 25px;
+            margin-top: 25px;
+            margin-bottom: 20px;
             line-height: 1.1;
         }
        .password-field {
@@ -79,8 +96,8 @@
         /* Ikon Mata di dalam Input */
         .password-toggle {
             position: absolute;
-            top: 70%;
-            right: 40px;
+            top: 50%;
+            right: 38px;
             transform: translateY(-50%);
             background: transparent;
             border: none;
@@ -93,6 +110,7 @@
             justify-content: center;
             width: 32px;
             height: 32px;
+            z-index: 10;
         }
 
         .password-toggle:focus {
@@ -106,6 +124,7 @@
             border: 2px solid #a67c52;
             padding: 10px 14px;
             background-color: #fffdfa;
+            font-size: 14px;
         }
 
         .btn-register {
@@ -147,6 +166,9 @@
     </div>
 
     <div class="login-box">
+        <button type="button" class="btn-close-custom" onclick="closeModal()">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
         <div class="title">Cimilk<br>Buat Akun</div>
 
         @if($errors->any())
@@ -178,12 +200,14 @@
                 </select>
             </div>
 
-            <div class="mb-4 position-relative">
+            <div class="mb-4">
                 <label class="form-label">Password</label>
-                <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
-                <button type="button" class="password-toggle" onclick="togglePassword()">
-                    <i id="passwordIcon" class="fa-solid fa-eye"></i>
-                </button>
+                <div class="position-relative">
+                    <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword()">
+                        <i id="passwordIcon" class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="position-relative mt-4">
@@ -199,6 +223,14 @@
 </div>
 
 <script>
+    function closeModal() {
+        if (window.parent && window.parent.bootstrap) {
+            const modalElement = window.parent.document.getElementById('addAccountModal');
+            const modal = window.parent.bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+        }
+    }
+
     function togglePassword() {
         const passwordInput = document.getElementById('passwordInput');
         const passwordIcon = document.getElementById('passwordIcon');

@@ -139,8 +139,8 @@
     <div class="main-content">
         <div class="header">
             <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Dashboard Peternak 🐄</h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Selamat datang, {{ Auth::user()->name ?? 'Peternak' }}</p>
+                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Hallo, {{ Auth::user()->name ?? 'Peternak' }}! </h3>
+                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Selamat datang kembali di dashboard peternak 🐄</p>
             </div>
 
             <form action="{{ route('logout') }}" method="POST" class="m-0">
