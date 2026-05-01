@@ -89,11 +89,7 @@
             margin-bottom: 20px;
             line-height: 1.1;
         }
-       .password-field {
-            position: relative;
-        }
 
-        /* Ikon Mata di dalam Input */
         .password-toggle {
             position: absolute;
             top: 50%;
@@ -113,9 +109,7 @@
             z-index: 10;
         }
 
-        .password-toggle:focus {
-            outline: none;
-        }
+        .password-toggle:focus { outline: none; }
 
         .form-label { font-weight: bold; color: #5a2c1b; font-size: 16px; }
 
@@ -156,6 +150,18 @@
 
         .footer-link { text-align: center; margin-top: 15px; font-size: 14px; }
         .footer-link a { color: #7a2f1c; font-weight: bold; text-decoration: none; }
+
+          /* Modal Styling for Floating Effect */
+        .modal-content {
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        .register-iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -171,13 +177,21 @@
         </button>
         <div class="title">Cimilk<br>Buat Akun</div>
 
+        @if(session('success'))
+            <script>
+                if (window.parent && window.parent.location.pathname === '/manajemen-akun') {
+                    window.parent.location.reload();
+                }
+            </script>
+        @endif
+
         @if($errors->any())
-            <div class="alert alert-danger py-2 mb-3" style="font-size: 14px;">
+            <div class="alert alert-danger py-2" style="font-size: 13px;">
                 {{ $errors->first() }}
             </div>
         @endif
 
-        <form method="POST" action="{{ route('register.post') }}">
+        <form action="{{ route('register.post') }}" method="POST" target="_top">
             @csrf
 
             <div class="mb-3">
@@ -217,7 +231,7 @@
         </form>
 
         <div class="footer-link"> 
-            Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a>
+            Sudah punya akun? <a href="{{ route('login') }}" target="_top">Masuk di sini</a>
         </div>
     </div>
 </div>

@@ -40,8 +40,8 @@
                 </div>
             </div>
             <div class="flex items-center gap-4 text-xs uppercase font-semibold">
-                <a href="{{ route('register') }}" class="hover:text-farm-soft transition">BUAT AKUN</a>
                 <a href="{{ route('login') }}" class="bg-farm-brown px-5 py-2 rounded-lg font-bold hover:bg-opacity-90 transition">LOGIN</a>
+                <a href="{{ route('register') }}" class="bg-farm-brown px-5 py-2 rounded-lg font-bold hover:bg-opacity-90 transition">DAFTAR</a>
             </div>
         </div>
     </nav>

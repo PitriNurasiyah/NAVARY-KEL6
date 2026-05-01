@@ -81,16 +81,21 @@
 
     <!-- Main Content -->
     <div class="main-content">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 15px; font-weight: 600;">
+                <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="header">
             <div class="welcome-text">
                 <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Daftar Akun Pengguna</h3>
                 <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Kelola semua akun pengguna sistem.</p>
             </div>
 
-            <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('register') }}" class="btn-add"><i class="fa-solid fa-plus me-2"></i>Tambah Akun</a>
-
-                <form action="{{ route('logout') }}" method="POST" class="m-0">
+            <div class="d-flex align-items-center gap-3">   
+                <a href="{{ route('register') }}" class="btn btn-add"><i class="fa-solid fa-user-plus me-2"></i>Tambah Akun</a>
                     @csrf
                     <button type="submit" class="btn-logout">
                         <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
@@ -149,6 +154,15 @@
             </table>
         </div>
 
+    </div>
+
+    <!-- Modal Tambah Akun -->
+    <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 440px;">
+            <div class="modal-content">
+                <iframe src="{{ route('register') }}" class="register-iframe"></iframe>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
