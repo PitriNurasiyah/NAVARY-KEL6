@@ -21,20 +21,29 @@ class ManajemenAkunController extends Controller
 
     public function store(Request $request)
     {
+        $messages = [
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'username.required' => 'Username wajib diisi.',
+            'username.unique' => 'Username sudah terdaftar, silakan gunakan yang lain.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal harus 3 karakter.',
+            'role.required' => 'Silakan pilih role pengguna.',
+        ];
+
         $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users',
             'password' => 'required|min:3',
             'role' => 'required',
-            'status' => 'required'
-        ]);
+            'status' => 'nullable'
+        ], $messages);
 
         User::create([
             'name' => $request->name,
             'username' => $request->username,
             'password' => bcrypt($request->password),
             'role' => $request->role,
-            'status' => $request->status
+            'status' => $request->status ?? 'Aktif'
         ]);
 
         return redirect()->route('manajemen.akun')->with('success', 'Akun berhasil ditambahkan!');

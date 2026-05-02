@@ -8,6 +8,6 @@ class DashboardPeternakController extends Controller
 {
     public function index()
     {
-        return view('dashboardPeternak.dashboardPeternak');
+        return view('dashboard.peternak');
     }
 }

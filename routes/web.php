@@ -13,11 +13,9 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Rute Login & Register
+// Rute Login
 Route::get('login', [CimilkController::class, 'showLogin'])->name('login');
 Route::post('login', [CimilkController::class, 'login'])->name('login.post');
-Route::get('register', [CimilkController::class, 'showRegister'])->name('register');
-Route::post('register', [CimilkController::class, 'register'])->name('register.post');
 
 Route::get('/biodata-sapi', [SapiController::class, 'index'])->name('sapi.index');
 Route::get('/biodata-sapi/create', [SapiController::class, 'create'])->name('sapi.create');

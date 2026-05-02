@@ -12,7 +12,7 @@
     <style>
         /* Base styles */
         body {
-            background-color: {{ Auth::check() ? '#dcc8ae' : '#e8dccb' }};
+            background-color: {{ request('mode') == 'modal' ? 'transparent' : (Auth::check() ? '#dcc8ae' : '#e8dccb') }};
             font-family: 'Quicksand', sans-serif;
             margin: 0;
             display: flex;
@@ -26,8 +26,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px;
-            @if(Auth::check())
+            padding: {{ request('mode') == 'modal' ? '0' : '40px' }};
+            @if(Auth::check() && request()->query('mode') != 'modal')
                 margin-left: 260px; /* Space for sidebar */
             @endif
         }
@@ -104,7 +104,7 @@
         .password-toggle {
             position: absolute;
             top: 50%;
-            right: 12px;
+            right: 38px;
             transform: translateY(-50%);
             background: transparent;
             border: none;
@@ -161,11 +161,12 @@
 
         .footer-link { text-align: center; margin-top: 15px; font-size: 14px; }
         .footer-link a { color: #7a2f1c; font-weight: bold; text-decoration: none; }
+
     </style>
 </head>
 <body>
 
-    @if(Auth::check())
+    @if(request('mode') != 'modal')
         @include('layouts.sidebar')
     @endif
 
@@ -177,9 +178,9 @@
 
             <div class="login-box">
                 @if(Auth::check())
-                <a href="{{ route('manajemen.akun') }}" class="btn-close-custom">
+                <button type="button" class="btn-close-custom" onclick="const modal = window.parent.bootstrap.Modal.getInstance(window.parent.document.getElementById('registerModal')); if(modal) modal.hide();">
                     <i class="fa-solid fa-circle-xmark"></i>
-                </a>
+                </button>
                 @endif
 
                 <div class="title">Cimilk<br>Buat Akun</div>
@@ -196,7 +197,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('register.post') }}" method="POST">
+                <form action="{{ route('manajemen-akun.store') }}" method="POST" {!! request('mode') == 'modal' ? '' : 'target="_top"' !!}>
                     @csrf
 
                     <div class="mb-3">
@@ -253,6 +254,15 @@
         passwordInput.type = isPassword ? 'text' : 'password';
         passwordIcon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
     }
+
+    // Close modal and refresh parent dashboard on success
+    @if(session('success'))
+    @if(request('mode') == 'modal')
+    setTimeout(function() {
+        window.top.location.href = "{{ route('manajemen.akun') }}?success=" + encodeURIComponent("{{ session('success') }}");
+    }, 1000); // Wait 1 second to show the success message inside the modal first
+    @endif
+    @endif
 </script>
 
 </body>

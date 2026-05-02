@@ -8,6 +8,6 @@ class DashboardPenjualanController extends Controller
 {
     public function index()
     {
-        return view('dashboardPenjualan.dashboardPenjualan');
+        return view('dashboard.penjualan');
     }
 }

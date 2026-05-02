@@ -24,15 +24,15 @@
             overflow-x: auto;
             gap: 20px;
             padding-bottom: 5px;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;  
         }
 
         .cards-wrapper::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
+            display: none; 
         }
 
-        /* Tabel Profesional */
+        /* Tabel */
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
         .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
         .table tbody td { padding: 16px !important; border: 1px solid #bc9f82 !important; }
