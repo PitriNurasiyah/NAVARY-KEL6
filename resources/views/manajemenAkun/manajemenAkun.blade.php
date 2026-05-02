@@ -27,16 +27,58 @@
         .btn-add { border: none; background: #5d7a54; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; text-decoration: none; }
         .btn-add:hover { background: #4a6344; color: #fff; }
 
-         .cari-bar {
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; 
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .search-wrapper {
             background: #e6d5c0;
-            border: 2px solid #a67c52;
-            padding: 15px 25px;
-            border-radius: 15px;
-            margin-bottom: 35px;
-            font-size: 14px;
-            color: #432118;
-            font-weight: 600;
+            border: 3px solid #a67c52;
+            padding: 10.5px 15px;
+            border-radius: 12px;
+            flex-grow: 1;
+            display: flex;
             align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .search-input-group {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            margin-right: 15px;
+        }
+
+        .search-input-group i {
+            color: #5a1f12;
+            font-size: 18px;
+        }
+
+        .search-input-group input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 0px 15px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            color: #432118;
+            font-size: 15px;
+        }
+
+        .search-input-group input::placeholder {
+            color: #845a33;
+            opacity: 0.7;
+        }
+
+        /* Restore shadow for external button */
+        .btn-add { 
+            box-shadow: 0 4px 0 #3a4d33;
+            white-space: nowrap;
         }
 
         /* Tabel */
@@ -126,24 +168,24 @@
                 <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Daftar Akun Pengguna</h3>
                 <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Kelola semua akun pengguna sistem.</p>
             </div>
-            <div class="d-flex align-items-center gap-3">
-                <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#registerModal">
-                    <i class="fa-solid fa-user-plus"></i> Tambah Akun
+            <form action="{{ route('logout') }}" method="POST" class="m-0">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
                 </button>
+            </form>
+        </div>
 
-                <form action="{{ route('logout') }}" method="POST" class="m-0">
-                    @csrf
-                    <button type="submit" class="btn-logout">
-                        <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
-                    </button>
-                </form>
-                <div class="cari-container">            
-                    <div class="cari-bar">
-                        <i class="fa-solid fa-search me-2" style="color: #5a1f12;"></i>
-                        <input type="text" class="form-control" placeholder="Ketik nama atau username">
-                    </div>
+        <div class="action-bar">
+            <div class="search-wrapper">
+                <div class="search-input-group">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Cari nama atau username pengguna...">
                 </div>
             </div>
+            <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#registerModal">
+                <i class="fa-solid fa-user-plus me-2"></i> Tambah Akun
+            </button>
         </div>
 
         <div class="custom-table">
@@ -159,7 +201,7 @@
                         <th class="text-center">AKSI</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="userTableBody">
                     @foreach($users as $index => $user)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
@@ -192,6 +234,15 @@
                         </td>
                     </tr>
                     @endforeach
+                    <tr id="noDataRow" style="display: none;">
+                        <td colspan="7" class="text-center py-5">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fa-solid fa-magnifying-glass mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
+                                <h5 class="fw-bold mb-1" style="color: #432118;">Data Tidak Ditemukan</h5>
+                                <p class="text-muted mb-0">Maaf, kami tidak dapat menemukan data yang Anda cari.</p>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -211,5 +262,24 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('#userTableBody tr:not(#noDataRow)');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            document.getElementById('noDataRow').style.display = visibleCount === 0 ? '' : 'none';
+        });
+    </script>
 </body>
 </html>
