@@ -155,40 +155,46 @@
         <!-- Cards Section -->
         <div class="row g-4 mb-4">
             <div class="col-md-4">
-                <div class="dashboard-card">
-                    <div class="card-info">
-                        <h5>Penjualan Hari Ini</h5>
-                        <h2>1.2Jt</h2>
-                        <p>Rupiah</p>
+                <a href="#" class="text-decoration-none">
+                    <div class="dashboard-card">
+                        <div class="card-info">
+                            <h5>Penjualan Hari Ini</h5>
+                            <h2>1.2Jt</h2>
+                            <p>Rupiah</p>
+                        </div>
+                        <div class="card-icon icon-green">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
                     </div>
-                    <div class="card-icon icon-green">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-4">
-                <div class="dashboard-card">
-                    <div class="card-info">
-                        <h5>Total Terjual</h5>
-                        <h2>80</h2>
-                        <p>Liter</p>
+                <a href="#" class="text-decoration-none">
+                    <div class="dashboard-card">
+                        <div class="card-info">
+                            <h5>Total Terjual</h5>
+                            <h2>80</h2>
+                            <p>Liter</p>
+                        </div>
+                        <div class="card-icon icon-blue">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
                     </div>
-                    <div class="card-icon icon-blue">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-4">
-                <div class="dashboard-card">
-                    <div class="card-info">
-                        <h5>Sisa Stok</h5>
-                        <h2>40</h2>
-                        <p>Liter</p>
+                <a href="#" class="text-decoration-none">
+                    <div class="dashboard-card">
+                        <div class="card-info">
+                            <h5>Sisa Stok</h5>
+                            <h2>40</h2>
+                            <p>Liter</p>
+                        </div>
+                        <div class="card-icon icon-orange">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
                     </div>
-                    <div class="card-icon icon-orange">
-                        <i class="fa-solid fa-box"></i>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
         

@@ -20,9 +20,25 @@
                 <i class="fas fa-house"></i> Dashboard
             </a>
         </li>
-        <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-eye"></i> Data Produksi Susu (View)</a></li>
-        <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cart-plus"></i> Input Penjualan</a></li>
-        <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-clipboard-list"></i> Data Penjualan</a></li>
-        <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-file-invoice-dollar"></i> Laporan Penjualan</a></li>
+        <li class="nav-item">
+            <a href="{{ route('produksi.index') }}" class="nav-link {{ request()->routeIs('produksi.index') ? 'active' : '' }}">
+                <i class="fas fa-eye"></i> Data Produksi Susu
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('penjualan.input') }}" class="nav-link {{ request()->routeIs('penjualan.input') ? 'active' : '' }}">
+                <i class="fas fa-cart-plus"></i> Input Penjualan
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('penjualan.data') }}" class="nav-link {{ request()->routeIs('penjualan.data') ? 'active' : '' }}">
+                <i class="fas fa-clipboard-list"></i> Data Penjualan
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('penjualan.laporan') }}" class="nav-link {{ request()->routeIs('penjualan.laporan') ? 'active' : '' }}">
+                <i class="fas fa-file-invoice-dollar"></i> Laporan Penjualan
+            </a>
+        </li>
     </ul>
 </div>

@@ -30,8 +30,20 @@
                 <i class="fas fa-cow"></i> Biodata Sapi
             </a>
         </li>
-        <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-flask"></i> Produksi Susu</a></li>
-        <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cart-shopping"></i> Penjualan</a></li>
-        <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-file-lines"></i> Laporan</a></li>
+        <li class="nav-item">
+            <a href="{{ route('produksi.index') }}" class="nav-link {{ request()->routeIs('produksi.index') ? 'active' : '' }}">
+                <i class="fas fa-flask"></i> Produksi Susu
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('penjualan.dashboard') }}" class="nav-link {{ request()->routeIs('penjualan.dashboard') ? 'active' : '' }}">
+                <i class="fas fa-cart-shopping"></i> Penjualan
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
+                <i class="fas fa-file-lines"></i> Laporan
+            </a>
+        </li>
     </ul>
 </div>

@@ -34,11 +34,21 @@ Route::middleware('auth')->group(function () {
     Route::put('/manajemen-akun/{id}', [ManajemenAkunController::class, 'update'])->name('manajemen-akun.update');
     Route::delete('/manajemen-akun/{id}', [ManajemenAkunController::class, 'destroy'])->name('manajemen-akun.destroy');
     Route::get('/dashboard-peternak', [DashboardPeternakController::class, 'index'])->name('peternak.dashboard');
-    Route::get('/pencatatan-pakan', function() { return view('peternak.pakan'); })->name('pakan.index');
-    Route::get('/siklus-sapi', function() { return view('peternak.siklus'); })->name('siklus.index');
-    Route::get('/produksi-susu-peternak', function() { return view('peternak.produksi'); })->name('produksi.index');
+    Route::get('/pencatatan-pakan', function() { 
+        return view('peternak.pakan'); 
+    })->name('pakan.index');
+    Route::get('/siklus-sapi', function() { 
+        return view('peternak.siklus'); 
+    })->name('siklus.index');
+    Route::get('/produksi-susu-peternak', function() { 
+        return view('peternak.produksi'); 
+    })->name('produksi.index');
     
     Route::get('/dashboard-penjualan', [DashboardPenjualanController::class, 'index'])->name('penjualan.dashboard');
+    Route::get('/input-penjualan', function() { return view('penjualan.input'); })->name('penjualan.input');
+    Route::get('/data-penjualan', function() { return view('penjualan.data'); })->name('penjualan.data');
+    Route::get('/laporan-penjualan', function() { return view('penjualan.laporan'); })->name('penjualan.laporan');
+    Route::get('/laporan-admin', function() { return view('laporan.index'); })->name('laporan.index');
 
     Route::post('logout', [CimilkController::class, 'logout'])->name('logout');
 });

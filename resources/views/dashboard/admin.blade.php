@@ -127,36 +127,42 @@
 
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <span>Populasi Sapi</span>
-                        <h2>50</h2>
-                        <div class="stat-unit">Ekor Sehat</div>
+                <a href="{{ route('sapi.index') }}" class="text-decoration-none">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span>Populasi Sapi</span>
+                            <h2>50</h2>
+                            <div class="stat-unit">Ekor Sehat</div>
+                        </div>
+                        <div class="icon-circle bg-custom-green"><i class="fa-solid fa-paw"></i></div>
                     </div>
-                    <div class="icon-circle bg-custom-green"><i class="fa-solid fa-paw"></i></div>
-                </div>
+                </a>
             </div>
 
             <div class="col-md-4">
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <span>Hasil Produksi</span>
-                        <h2>120</h2>
-                        <div class="stat-unit">Liter Susu</div>
+                <a href="#" class="text-decoration-none">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span>Hasil Produksi</span>
+                            <h2>120</h2>
+                            <div class="stat-unit">Liter Susu</div>
+                        </div>
+                        <div class="icon-circle bg-custom-brown"><i class="fa-solid fa-bucket"></i></div>
                     </div>
-                    <div class="icon-circle bg-custom-brown"><i class="fa-solid fa-bucket"></i></div>
-                </div>
+                </a>
             </div>
 
             <div class="col-md-4">
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <span>Omzet Penjualan</span>
-                        <h2>15jt</h2>
-                        <div class="stat-unit">Rupiah</div>
+                <a href="{{ route('penjualan.dashboard') }}" class="text-decoration-none">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span>Omzet Penjualan</span>
+                            <h2>15jt</h2>
+                            <div class="stat-unit">Rupiah</div>
+                        </div>
+                        <div class="icon-circle bg-custom-tan"><i class="fa-solid fa-coins"></i></div>
                     </div>
-                    <div class="icon-circle bg-custom-tan"><i class="fa-solid fa-coins"></i></div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
