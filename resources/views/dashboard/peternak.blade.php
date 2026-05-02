@@ -25,31 +25,21 @@
             padding: 45px;
         }
 
-        /* Header Styling */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
+        .page-title-section {
+            margin-bottom: 30px;
+        }
+        .page-title-section h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 26px;
+            color: #432118;
+            margin: 0 0 4px 0;
+        }
+        .page-title-section p {
+            color: #6d4c41;
+            font-weight: 600;
+            margin: 0;
         }
 
-        .btn-logout {
-            border: none;
-            background: #5a1f12;
-            padding: 8px 20px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: #ffffff;
-            box-shadow: 0 4px 0 #3a150c;
-            transition: 0.2s;
-        }
-
-        .btn-logout:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #3a150c;
-        }
-
-        /* Peternak Dashboard Specific */
         .alert-box {
             background-color: #fef0d7;
             border: 2px solid #f6c23e;
@@ -119,42 +109,74 @@
             font-size: 24px;
         }
         
-        .icon-blue {
-            background-color: #e0f2fe;
-            color: #0ea5e9;
+        .icon-blue { background-color: #e0f2fe; color: #0ea5e9; }
+        .icon-green { background-color: #dcfce7; color: #22c55e; }
+
+        /* Data Sapi Section (view only) */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        
-        .icon-green {
-            background-color: #dcfce7;
-            color: #22c55e;
+        .section-header h4 {
+            font-family: 'Fredoka One', cursive;
+            color: #432118;
+            margin: 0;
+            font-size: 22px;
+        }
+        .view-only-badge {
+            background: #e6d5c0;
+            color: #845a33;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1.5px solid #bc9f82;
+            text-transform: uppercase;
         }
 
+        .cow-card { background: #f0e2d0; padding: 20px; border-radius: 20px; border: 3px solid #bc9f82; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .cow-card h5 { font-family: 'Fredoka One', cursive; color: #432118; font-size: 16px; margin-bottom: 6px; }
+        .cow-card p { font-size: 13px; margin: 0; color: #6d4c41; font-weight: 600; }
+
+        .cards-wrapper {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .cards-wrapper::-webkit-scrollbar { display: none; }
+
+        /* Table */
+        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px !important; text-transform: uppercase; font-size: 12px; border: 1px solid #bc9f82 !important; }
+        .table tbody td { padding: 14px !important; border: 1px solid #bc9f82 !important; font-weight: 600; }
+        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #bc9f82 !important; }
+        .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
+        .table tbody tr:hover { background-color: rgba(93, 122, 84, 0.05) !important; }
+        .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
     </style>
 </head>
 <body>
 
     @include('layouts.sidebar')
+    @include('layouts.header', ['pageTitle' => 'Dashboard Peternak', 'pageSubtitle' => 'Selamat datang di panel Peternak'])
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="header">
-            <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Hallo, {{ Auth::user()->name ?? 'Peternak' }}! </h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Selamat datang kembali di dashboard peternak 🐄</p>
-            </div>
 
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
-                </button>
-            </form>
+        <div class="page-title-section">
+            <h3>Hallo, {{ Auth::user()->name ?? 'Peternak' }}! 🐄</h3>
+            <p>Selamat datang kembali di dashboard peternak.</p>
         </div>
 
         <!-- Alert Section -->
         <div class="alert-box">
             <div class="alert-title">
-                <i class="fa-solid fa-circle-exclamation"></i> Peringat Jadwal Hari Ini
+                <i class="fa-solid fa-circle-exclamation"></i> Peringatan Jadwal Hari Ini
             </div>
             <ul class="alert-list">
                 <li>Sapi ID-01: Jadwal Inseminasi Buatan (IB)</li>
@@ -189,10 +211,8 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Aksi Cepat -->
-        <h4 class="fw-bold mb-3" style="color: #3a150c;">Aksi Cepat</h4>
-        <!-- Placeholder for future actions -->
+
+
 
     </div>
 

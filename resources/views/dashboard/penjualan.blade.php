@@ -16,6 +16,7 @@
             color: #432118;
             margin: 0;
             overflow-x: hidden;
+            display: flex;
         }
 
         .main-content {
@@ -24,39 +25,30 @@
             padding: 45px;
         }
 
-        /* Header Styling */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
+        .page-title-section {
+            margin-bottom: 30px;
+        }
+        .page-title-section h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 26px;
+            color: #432118;
+            margin: 0 0 4px 0;
+        }
+        .page-title-section p {
+            color: #6d4c41;
+            font-weight: 600;
+            margin: 0;
         }
 
-        .btn-logout {
-            border: none;
-            background: #5a1f12;
-            padding: 8px 20px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: #ffffff;
-            box-shadow: 0 4px 0 #3a150c;
-            transition: 0.2s;
-        }
-
-        .btn-logout:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #3a150c;
-        }
-
-        /* Penjualan Dashboard Specific */
         .alert-box {
-            background-color: #faf5ff; /* light purple */
+            background-color: #faf5ff;
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 30px;
             color: #6b21a8;
             font-weight: 700;
             font-size: 16px;
+            border: 2px solid #d8b4fe;
         }
 
         .dashboard-card {
@@ -124,32 +116,24 @@
             color: #9ca3af;
             font-weight: 600;
         }
-
     </style>
 </head>
 <body>
 
     @include('layouts.sidebar')
+    @include('layouts.header', ['pageTitle' => 'Dashboard Penjualan', 'pageSubtitle' => 'Selamat datang di panel Manajemen Penjualan'])
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="header">
-            <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Hallo, {{ Auth::user()->name ?? 'Penjualan' }}!</h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Selamat datang kembali di dashboard Manajemen penjualan 🐄</p>
-            </div>
 
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
-                </button>
-            </form>
+        <div class="page-title-section">
+            <h3>Hallo, {{ Auth::user()->name ?? 'Penjualan' }}! 🐄</h3>
+            <p>Selamat datang kembali di dashboard Manajemen Penjualan.</p>
         </div>
 
         <!-- Alert Section -->
         <div class="alert-box">
-            Stok Susu Tersedia: 120 Liter
+            <i class="fa-solid fa-boxes-stacking me-2"></i> Stok Susu Tersedia: <strong>120 Liter</strong>
         </div>
 
         <!-- Cards Section -->

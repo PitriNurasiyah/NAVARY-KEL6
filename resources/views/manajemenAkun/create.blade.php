@@ -10,25 +10,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Fredoka:wght@600&display=swap" rel="stylesheet">
 
     <style>
-        /* Base styles */
         body {
             background-color: {{ request('mode') == 'modal' ? 'transparent' : (Auth::check() ? '#dcc8ae' : '#e8dccb') }};
             font-family: 'Quicksand', sans-serif;
             margin: 0;
             display: flex;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
         }
 
-        /* Form Container positioning */
         .register-wrapper {
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: {{ request('mode') == 'modal' ? '0' : '40px' }};
+            align-items: {{ request('mode') == 'modal' ? 'flex-start' : 'center' }};
+            padding-top: {{ request('mode') == 'modal' ? '100px' : '40px' }};
+            padding-bottom: {{ request('mode') == 'modal' ? '60px' : '40px' }};
             @if(Auth::check() && request()->query('mode') != 'modal')
-                margin-left: 260px; /* Space for sidebar */
+                margin-left: 260px;
             @endif
         }
 
@@ -37,7 +41,7 @@
         .login-box {
             width: 100%;
             background-color: #f5efe6;
-            padding: 10px 25px 25px 25px;
+            padding: 25px 25px 30px;
             border-radius: 40px;
             box-shadow: 0 20px 45px rgba(0,0,0,0.2);
             position: relative;
@@ -97,14 +101,14 @@
             font-weight: bold;
             color: #5a2c1b;
             margin-top: 25px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.1;
         }
 
         .password-toggle {
             position: absolute;
             top: 50%;
-            right: 38px;
+            right: 45px;
             transform: translateY(-50%);
             background: transparent;
             border: none;
@@ -162,12 +166,21 @@
         .footer-link { text-align: center; margin-top: 15px; font-size: 14px; }
         .footer-link a { color: #7a2f1c; font-weight: bold; text-decoration: none; }
 
+        /* Error alert */
+        .alert-form {
+            padding: 8px 12px;
+            font-size: 13px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #f5c2c7;
+        }
     </style>
 </head>
 <body>
 
     @if(request('mode') != 'modal')
         @include('layouts.sidebar')
+        @include('layouts.header', ['pageTitle' => 'Tambah Akun', 'pageSubtitle' => 'Buat akun pengguna baru'])
     @endif
 
     <div class="register-wrapper">
@@ -178,49 +191,43 @@
 
             <div class="login-box">
                 @if(Auth::check())
-                <button type="button" class="btn-close-custom" onclick="const modal = window.parent.bootstrap.Modal.getInstance(window.parent.document.getElementById('registerModal')); if(modal) modal.hide();">
+                <button type="button" class="btn-close-custom" id="closeModalBtn">
                     <i class="fa-solid fa-circle-xmark"></i>
                 </button>
                 @endif
 
-                <div class="title">Cimilk<br>Buat Akun</div>
-
-                @if(session('success'))
-                    <div class="alert alert-success py-2" style="font-size: 13px;">
-                        {{ session('success') }}
-                    </div>
-                @endif
+                <div class="title">Tambah Akun</div>
 
                 @if($errors->any())
-                    <div class="alert alert-danger py-2" style="font-size: 13px;">
+                    <div class="alert alert-danger alert-form">
                         {{ $errors->first() }}
                     </div>
                 @endif
 
-                <form action="{{ route('manajemen-akun.store') }}" method="POST" {!! request('mode') == 'modal' ? '' : 'target="_top"' !!}>
+                <form action="{{ route('manajemen-akun.store') }}" method="POST" id="registerForm">
                     @csrf
-
-                    <div class="mb-3">
+                    <input type="hidden" name="mode" value="{{ request('mode') }}">
+                    <div class="mb-2">
                         <label class="form-label">Nama Lengkap</label>
-                        <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>
+                        <input type="text" name="name" class="form-control" placeholder="Masukkan nama" value="{{ old('name') }}" required>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label class="form-label">Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="Masukkan username" required>
+                        <input type="text" name="username" class="form-control" placeholder="Masukkan username" value="{{ old('username') }}" required>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label class="form-label">Role</label>
                         <select name="role" class="form-control" required>
-                            <option value="" disabled selected>Pilih Role</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Peternak">Peternak</option>
-                            <option value="Penjualan">Manajemen Penjualan</option>
+                            <option value="" disabled {{ old('role') ? '' : 'selected' }}>Pilih Role</option>
+                            <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="Peternak" {{ old('role') == 'Peternak' ? 'selected' : '' }}>Peternak</option>
+                            <option value="Penjualan" {{ old('role') == 'Penjualan' ? 'selected' : '' }}>Manajemen Penjualan</option>
                         </select>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label class="form-label">Password</label>
                         <div class="position-relative">
                             <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
@@ -230,14 +237,14 @@
                         </div>
                     </div>
 
-                    <div class="position-relative mt-4">
+                    <div class="position-relative mt-2">
                         <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
-                        <button type="submit" class="btn btn-register">Register</button>
+                        <button type="submit" class="btn btn-register" id="registerBtn">Register</button>
                     </div>
                 </form>
 
                 @if(!Auth::check())
-                <div class="footer-link"> 
+                <div class="footer-link">
                     Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a>
                 </div>
                 @endif
@@ -250,18 +257,35 @@
         const passwordInput = document.getElementById('passwordInput');
         const passwordIcon = document.getElementById('passwordIcon');
         const isPassword = passwordInput.type === 'password';
-
         passwordInput.type = isPassword ? 'text' : 'password';
         passwordIcon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
     }
 
-    // Close modal and refresh parent dashboard on success
+    // ====== Tutup modal saat klik tombol X ======
+    const closeBtn = document.getElementById('closeModalBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            try {
+                const modal = window.parent.bootstrap.Modal.getInstance(
+                    window.parent.document.getElementById('registerModal')
+                );
+                if (modal) modal.hide();
+            } catch(e) {
+                window.history.back();
+            }
+        });
+    }
+
+    // ====== Jika sukses register: langsung close modal & redirect (tanpa delay) ======
     @if(session('success'))
-    @if(request('mode') == 'modal')
-    setTimeout(function() {
-        window.top.location.href = "{{ route('manajemen.akun') }}?success=" + encodeURIComponent("{{ session('success') }}");
-    }, 1000); // Wait 1 second to show the success message inside the modal first
-    @endif
+    window.addEventListener('DOMContentLoaded', (event) => {
+        try {
+            // Tutup modal langsung dan redirect ke halaman manajemen akun dengan notifikasi
+            window.top.location.href = "{{ route('manajemen.akun') }}?success=" + encodeURIComponent("{{ session('success') }}");
+        } catch(e) {
+            window.location.href = "{{ route('manajemen.akun') }}";
+        }
+    });
     @endif
 </script>
 

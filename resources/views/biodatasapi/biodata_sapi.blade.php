@@ -13,13 +13,56 @@
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
-        .btn-add { border: none; background: #5d7a54; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; text-decoration: none; }
+        /* Page title */
+        .page-title-section { margin-bottom: 20px; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; }
+
+        /* Notifikasi CRUD */
+        .crud-notification {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.4s ease;
+        }
+        .crud-notification.success {
+            background: #d1fae5;
+            border: 2px solid #6ee7b7;
+            color: #065f46;
+        }
+        .crud-notification.error {
+            background: #fee2e2;
+            border: 2px solid #fca5a5;
+            color: #7f1d1d;
+        }
+        .notif-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.6;
+            font-size: 16px;
+            padding: 0;
+        }
+        .notif-close:hover { opacity: 1; }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-add { border: none; background: #5d7a54; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; text-decoration: none; white-space: nowrap; }
         .btn-add:hover { background: #4a6344; color: #fff; }
 
         .action-bar {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; 
+            align-items: center;
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -39,13 +82,9 @@
             display: flex;
             align-items: center;
             flex-grow: 1;
-            margin-right: 15px;
         }
 
-        .search-input-group i {
-            color: #5a1f12;
-            font-size: 18px;
-        }
+        .search-input-group i { color: #5a1f12; font-size: 18px; }
 
         .search-input-group input {
             background: transparent;
@@ -59,18 +98,9 @@
             font-size: 15px;
         }
 
-        .search-input-group input::placeholder {
-            color: #845a33;
-            opacity: 0.7;
-        }
+        .search-input-group input::placeholder { color: #845a33; opacity: 0.7; }
 
-        /* Restore shadow for external button */
-        .btn-add { 
-            box-shadow: 0 4px 0 #3a4d33;
-            white-space: nowrap;
-        }
-
-        .cow-card { background: #f0e2d0; padding: 25px; border-radius: 25px; border: 3px solid #bc9f82; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-width: 300px; }
+        .cow-card { background: #f0e2d0; padding: 25px; border-radius: 25px; border: 3px solid #bc9f82; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-width: 280px; }
         .cow-card h5 { font-family: 'Fredoka One', cursive; color: #432118; }
 
         .cards-wrapper {
@@ -78,80 +108,99 @@
             overflow-x: auto;
             gap: 20px;
             padding-bottom: 5px;
-            scrollbar-width: none; 
-            -ms-overflow-style: none;  
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            margin-bottom: 25px;
         }
-
-        .cards-wrapper::-webkit-scrollbar {
-            display: none; 
-        }
+        .cards-wrapper::-webkit-scrollbar { display: none; }
 
         /* Tabel */
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
         .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
         .table tbody td { padding: 16px !important; border: 1px solid #bc9f82 !important; }
-
-        /* Garis Vertikal Tabel */
         .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #bc9f82 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
-
         .table tbody tr:hover { background-color: rgba(93, 122, 84, 0.05) !important; }
 
-        .custom-table {
-            width: 100%;
-            overflow-x: auto;
-            border-radius: 15px;
-        }
+        .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
+        /* Custom Delete Confirm Modal */
+        .confirm-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 9999;
             align-items: center;
-            margin-bottom: 40px;
+            justify-content: center;
         }
-
-        .btn-logout {
-            border: none;
-            background: #5a1f12;
-            padding: 8px 20px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: #ffffff;
-            box-shadow: 0 4px 0 #3a150c;
-            transition: 0.2s;
+        .confirm-overlay.active { display: flex; }
+        .confirm-box {
+            background: #f5efe6;
+            border-radius: 20px;
+            padding: 35px 40px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            text-align: center;
+            border: 6px solid #8CA685;
+            animation: popIn 0.25s ease;
         }
-
-        .btn-logout:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #3a150c;
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
+        .confirm-icon { font-size: 48px; color: #c0392b; margin-bottom: 15px; }
+        .confirm-box h5 { font-family: 'Fredoka One', cursive; color: #432118; font-size: 20px; margin-bottom: 8px; }
+        .confirm-box p { color: #6d4c41; font-weight: 600; font-size: 14px; margin-bottom: 25px; }
+        .confirm-actions { display: flex; gap: 12px; justify-content: center; }
+        .btn-confirm-yes {
+            background: #c0392b; color: #fff; border: none;
+            padding: 10px 28px; border-radius: 12px; font-weight: 700;
+            box-shadow: 0 4px 0 #922b21; cursor: pointer; transition: 0.2s;
+        }
+        .btn-confirm-yes:active { transform: translateY(3px); box-shadow: 0 1px 0 #922b21; }
+        .btn-confirm-no {
+            background: #e2e8f0; color: #475569; border: none;
+            padding: 10px 28px; border-radius: 12px; font-weight: 700; cursor: pointer;
+        }
+        .btn-confirm-no:hover { background: #cbd5e1; }
     </style>
 </head>
 <body>
 
     @include('layouts.sidebar')
+    @include('layouts.header', ['pageTitle' => 'Biodata Sapi', 'pageSubtitle' => 'Data lengkap sapi peternakan'])
 
     <div class="main-content">
-        <div class="header">
-            <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One', cursive;">Biodata Sapi 🐄</h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Data lengkap sapi peternakan.</p>
-            </div>
 
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
+        <div class="page-title-section">
+            <h3>Biodata Sapi 🐄</h3>
+            <p>Data lengkap sapi peternakan.</p>
+        </div>
+
+        {{-- Notifikasi CRUD (posisi di atas search) --}}
+        @if(session('success'))
+            <div class="crud-notification success" id="crudNotif">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>{{ session('success') }}</span>
+                <button class="notif-close" onclick="document.getElementById('crudNotif').remove()">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
-            </form>
-        </div>
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="crud-notification error" id="crudNotif">
+                <i class="fa-solid fa-circle-xmark"></i>
+                <span>{{ session('error') }}</span>
+                <button class="notif-close" onclick="document.getElementById('crudNotif').remove()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        @endif
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <!-- Space preserved if needed -->
-        </div>
-
-
-        <div class="cards-wrapper mb-4">
+        <!-- Cards Sapi -->
+        <div class="cards-wrapper">
             @foreach($sapi as $s)
             <div class="cow-card">
                 <h5>{{ $s->nama }}</h5>
@@ -161,6 +210,7 @@
             @endforeach
         </div>
 
+        <!-- Action Bar: Search + Tambah (Search visible for all, Tambah hidden for Peternak) -->
         <div class="action-bar">
             <div class="search-wrapper">
                 <div class="search-input-group">
@@ -168,7 +218,9 @@
                     <input type="text" id="searchInput" placeholder="Cari data sapi berdasarkan nama atau ID...">
                 </div>
             </div>
+            @if(Auth::user()->role !== 'Peternak')
             <a href="{{ route('sapi.create') }}" class="btn btn-add"><i class="fa-solid fa-plus me-2"></i>Tambah Sapi Baru</a>
+            @endif
         </div>
 
         <div class="custom-table mt-2">
@@ -179,7 +231,9 @@
                         <th>NAMA</th>
                         <th>JENIS</th>
                         <th>STATUS</th>
+                        @if(Auth::user()->role !== 'Peternak')
                         <th class="text-center">AKSI</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody id="sapiTableBody">
@@ -189,20 +243,24 @@
                         <td>{{ $s->nama }}</td>
                         <td>{{ $s->jenis }}</td>
                         <td>
-                            <span class="badge {{ strtolower($s->status_kesehatan) == 'sehat' ? 'bg-success' : 'bg-warning text-dark' }}">
+                            <span class="badge {{ strtolower($s->status_kesehatan) == 'sehat' ? 'bg-success' : 
+                                (strtolower($s->status_kesehatan) == 'sakit' ? 
+                            'bg-danger' : 'bg-warning text-dark') }}">
                                 {{ $s->status_kesehatan }}
                             </span>
                         </td>
+                        @if(Auth::user()->role !== 'Peternak')
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
                                 <a href="{{ route('sapi.edit', $s->id) }}" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
-                                <form action="{{ route('sapi.destroy', $s->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data sapi ini?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger shadow-sm">Hapus</button>
-                                </form>
+                                <button type="button"
+                                    class="btn btn-sm btn-outline-danger shadow-sm"
+                                    onclick="confirmDelete('{{ route('sapi.destroy', $s->id) }}', '{{ $s->nama }}')">
+                                    Hapus
+                                </button>
                             </div>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                     <tr id="noDataRow" style="display: none;">
@@ -218,8 +276,29 @@
             </table>
         </div>
     </div>
+
+    <!-- Custom Confirm Delete Modal -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-box">
+            <div class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h5>Hapus Data Sapi?</h5>
+            <p id="confirmMessage">Apakah Anda yakin ingin menghapus data sapi ini?</p>
+            <div class="confirm-actions">
+                <button class="btn-confirm-yes" id="confirmYesBtn">Ya, Hapus</button>
+                <button class="btn-confirm-no" onclick="closeConfirm()">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden delete form -->
+    <form id="deleteForm" method="POST" style="display:none;">
+        @csrf
+        @method('DELETE')
+    </form>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // ====== Search ======
         document.getElementById('searchInput').addEventListener('input', function() {
             let filter = this.value.toLowerCase();
             let rows = document.querySelectorAll('#sapiTableBody tr:not(#noDataRow)');
@@ -237,6 +316,40 @@
 
             document.getElementById('noDataRow').style.display = visibleCount === 0 ? '' : 'none';
         });
+
+        // ====== Custom Delete Confirm ======
+        let deleteUrl = '';
+
+        function confirmDelete(url, name) {
+            deleteUrl = url;
+            document.getElementById('confirmMessage').textContent =
+                'Apakah Anda yakin ingin menghapus data sapi "' + name + '"? Tindakan ini tidak bisa dibatalkan.';
+            document.getElementById('confirmOverlay').classList.add('active');
+        }
+
+        function closeConfirm() {
+            document.getElementById('confirmOverlay').classList.remove('active');
+        }
+
+        document.getElementById('confirmYesBtn').addEventListener('click', function() {
+            const form = document.getElementById('deleteForm');
+            form.action = deleteUrl;
+            form.submit();
+        });
+
+        document.getElementById('confirmOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeConfirm();
+        });
+
+        // ====== Auto-dismiss notification ======
+        const notif = document.getElementById('crudNotif');
+        if (notif) {
+            setTimeout(() => {
+                notif.style.opacity = '0';
+                notif.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => notif.remove(), 500);
+            }, 5000);
+        }
     </script>
 </body>
 </html>

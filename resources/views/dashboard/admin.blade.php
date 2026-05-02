@@ -24,29 +24,6 @@
             padding: 45px;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .btn-logout {
-            border: none;
-            background: #5a1f12;
-            padding: 8px 20px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: #ffffff;
-            box-shadow: 0 4px 0 #3a150c;
-            transition: 0.2s;
-        }
-
-        .btn-logout:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #3a150c;
-        }
-
         .notification-bar {
             background: #e6d5c0;
             border: 2px solid #a67c52;
@@ -99,31 +76,48 @@
         .bg-custom-brown { background: #845a33; color: #ffffff; }
         .bg-custom-tan { background: #a67c52; color: #ffffff; }
 
+        /* Page title below header */
+        .page-title-section {
+            margin-bottom: 30px;
+        }
+        .page-title-section h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 26px;
+            color: #432118;
+            margin: 0 0 4px 0;
+        }
+        .page-title-section p {
+            color: #6d4c41;
+            font-weight: 600;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
 
     @include('layouts.sidebar')
+    @include('layouts.header', ['pageTitle' => 'Dashboard Admin', 'pageSubtitle' => 'Selamat datang di panel Admin'])
 
     <div class="main-content">
-        <div class="header">
-            <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Hallo, {{ Auth::user()->name ?? 'Admin' }}!</h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Selamat datang kembali di dashboard admin 🐮</p>
-            </div>
 
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
-                </button>
-            </form>
+        <div class="page-title-section">
+            <h3>Hallo, {{ Auth::user()->name ?? 'Admin' }}! 🐮</h3>
+            <p>Selamat datang kembali di dashboard admin.</p>
         </div>
 
-        <div class="notification-bar">
+        @if(session('success'))
+        <div class="notification-bar alert alert-dismissible fade show" role="alert" style="background-color: #dcfce7; border-color: #22c55e; color: #166534;">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            <strong>Berhasil!</strong> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @else
+        <div class="notification-bar alert alert-dismissible fade show" role="alert">
             <i class="fa-solid fa-bell me-2" style="color: #5a1f12;"></i>
-            <strong>Update Sistem:</strong> Sinkronisasi data peternakan berhasil diselesaikan hari ini.
+            <strong>Update Sistem:</strong> Sinkronisasi data berhasil. Selamat bekerja, {{ Auth::user()->name ?? 'Admin' }}!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        @endif
 
         <div class="row g-4">
             <div class="col-md-4">
@@ -131,8 +125,8 @@
                     <div class="stat-card">
                         <div class="stat-info">
                             <span>Populasi Sapi</span>
-                            <h2>50</h2>
-                            <div class="stat-unit">Ekor Sehat</div>
+                            <h2>{{ $totalSapi ?? 0 }}</h2>
+                            <div class="stat-unit">Ekor</div>
                         </div>
                         <div class="icon-circle bg-custom-green"><i class="fa-solid fa-paw"></i></div>
                     </div>
@@ -140,11 +134,11 @@
             </div>
 
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
+                <a href="{{ route('produksi.index') }}" class="text-decoration-none">
                     <div class="stat-card">
                         <div class="stat-info">
                             <span>Hasil Produksi</span>
-                            <h2>120</h2>
+                            <h2>{{ $totalProduksi ?? 0 }}</h2>
                             <div class="stat-unit">Liter Susu</div>
                         </div>
                         <div class="icon-circle bg-custom-brown"><i class="fa-solid fa-bucket"></i></div>
@@ -153,11 +147,11 @@
             </div>
 
             <div class="col-md-4">
-                <a href="{{ route('penjualan.dashboard') }}" class="text-decoration-none">
+                <a href="{{ route('penjualan.data') }}" class="text-decoration-none">
                     <div class="stat-card">
                         <div class="stat-info">
                             <span>Omzet Penjualan</span>
-                            <h2>15jt</h2>
+                            <h2>Rp{{ number_format($totalPenjualan ?? 0, 0, ',', '.') }}</h2>
                             <div class="stat-unit">Rupiah</div>
                         </div>
                         <div class="icon-circle bg-custom-tan"><i class="fa-solid fa-coins"></i></div>
@@ -167,5 +161,6 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

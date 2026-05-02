@@ -10,26 +10,15 @@
     <style>
         body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .btn-logout { border: none; background: #5a1f12; padding: 8px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a150c; transition: 0.2s; }
         .placeholder-card { background: #f0e2d0; padding: 50px; border-radius: 25px; border: 3px dashed #bc9f82; text-align: center; }
     </style>
 </head>
 <body>
     @include('layouts.sidebar')
+    @include('layouts.header', ['pageTitle' => 'Laporan Penjualan', 'pageSubtitle' => 'Analisis performa penjualan bulanan'])
     <div class="main-content">
-        <div class="header">
-            <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Laporan Penjualan 📈</h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Analisis performa penjualan bulanan.</p>
-            </div>
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
-                </button>
-            </form>
-        </div>
+        <h3 class="fw-bold mb-1" style="font-family: 'Fredoka One'; color: #432118;">Laporan Penjualan 📈</h3>
+        <p style="color: #6d4c41; font-weight: 600; margin-bottom: 25px;">Analisis performa penjualan bulanan.</p>
         <div class="placeholder-card">
             <i class="fa-solid fa-file-contract mb-4" style="font-size: 64px; color: #a67c52; opacity: 0.5;"></i>
             <h4 class="fw-bold" style="color: #432118;">Halaman Laporan Penjualan</h4>

@@ -26,14 +26,14 @@ class ManajemenAkunController extends Controller
             'username.required' => 'Username wajib diisi.',
             'username.unique' => 'Username sudah terdaftar, silakan gunakan yang lain.',
             'password.required' => 'Password wajib diisi.',
-            'password.min' => 'Password minimal harus 3 karakter.',
+            'password.min' => 'Password minimal harus 8 karakter.',
             'role.required' => 'Silakan pilih role pengguna.',
         ];
 
         $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users',
-            'password' => 'required|min:3',
+            'password' => 'required|min:8',
             'role' => 'required',
             'status' => 'nullable'
         ], $messages);
@@ -45,6 +45,13 @@ class ManajemenAkunController extends Controller
             'role' => $request->role,
             'status' => $request->status ?? 'Aktif'
         ]);
+
+        // Jika dikirim dari modal, redirect ke halaman create (masih dalam iframe)
+        // agar JS bisa mendeteksi session('success') dan redirect top window
+        if ($request->input('mode') === 'modal') {
+            return redirect()->route('manajemen-akun.create', ['mode' => 'modal'])
+                ->with('success', 'Akun berhasil ditambahkan!');
+        }
 
         return redirect()->route('manajemen.akun')->with('success', 'Akun berhasil ditambahkan!');
     }

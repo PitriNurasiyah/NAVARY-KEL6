@@ -10,8 +10,6 @@
     <style>
         body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .btn-logout { border: none; background: #5a1f12; padding: 8px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a150c; transition: 0.2s; }
         .form-card { background: #f0e2d0; padding: 30px; border-radius: 25px; border: 3px solid #bc9f82; }
         .btn-submit { background: #5d7a54; color: white; border: none; padding: 10px 30px; border-radius: 12px; font-weight: 700; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; }
         .btn-submit:hover { background: #4a6344; color: white; }
@@ -19,19 +17,10 @@
 </head>
 <body>
     @include('layouts.sidebar')
+    @include('layouts.header', ['pageTitle' => 'Input Penjualan', 'pageSubtitle' => 'Catat transaksi penjualan harian'])
     <div class="main-content">
-        <div class="header">
-            <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Input Penjualan 🛒</h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Catat transaksi penjualan harian.</p>
-            </div>
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
-                </button>
-            </form>
-        </div>
+        <h3 class="fw-bold mb-1" style="font-family: 'Fredoka One'; color: #432118;">Input Penjualan 🛒</h3>
+        <p style="color: #6d4c41; font-weight: 600; margin-bottom: 25px;">Catat transaksi penjualan harian.</p>
         <div class="form-card">
             <h5 class="fw-bold mb-4" style="color: #3a150c;">Form Transaksi Baru</h5>
             <form>

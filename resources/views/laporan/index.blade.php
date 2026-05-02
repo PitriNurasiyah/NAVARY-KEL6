@@ -10,30 +10,40 @@
     <style>
         body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .btn-logout { border: none; background: #5a1f12; padding: 8px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a150c; transition: 0.2s; }
-        .placeholder-card { background: #f0e2d0; padding: 50px; border-radius: 25px; border: 3px dashed #bc9f82; text-align: center; }
+        .report-card { background: #f0e2d0; padding: 30px; border-radius: 25px; border: 3px solid #bc9f82; text-align: center; transition: 0.3s; display: block; text-decoration: none; color: inherit; height: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .report-card:hover { transform: translateY(-5px); border-color: #5d7a54; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .icon-wrapper { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 20px auto; color: white; }
+        .bg-custom-green { background: #5d7a54; }
+        .bg-custom-tan { background: #a67c52; }
+        .report-card h4 { font-family: 'Fredoka One', cursive; margin-bottom: 10px; color: #432118; }
+        .report-card p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
     </style>
 </head>
 <body>
     @include('layouts.sidebar')
+    @include('layouts.header', ['pageTitle' => 'Laporan Admin', 'pageSubtitle' => 'Rekapitulasi data seluruh sistem'])
     <div class="main-content">
-        <div class="header">
-            <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Laporan Admin 📊</h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Rekapitulasi data seluruh sistem.</p>
+        <h3 class="fw-bold mb-1" style="font-family: 'Fredoka One'; color: #432118;">Laporan Admin 📊</h3>
+        <p style="color: #6d4c41; font-weight: 600; margin-bottom: 25px;">Rekapitulasi data seluruh sistem.</p>
+        <div class="row g-4 mt-2">
+            <div class="col-md-6">
+                <a href="{{ route('produksi.index') }}" class="report-card">
+                    <div class="icon-wrapper bg-custom-green">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+                    <h4>Laporan Produksi Susu</h4>
+                    <p>Lihat rekap data produksi susu sapi harian dan bulanan.</p>
+                </a>
             </div>
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
-                </button>
-            </form>
-        </div>
-        <div class="placeholder-card">
-            <i class="fa-solid fa-file-invoice-dollar mb-4" style="font-size: 64px; color: #a67c52; opacity: 0.5;"></i>
-            <h4 class="fw-bold" style="color: #432118;">Halaman Laporan</h4>
-            <p class="text-muted">Fitur rekapitulasi laporan sedang dalam tahap pengembangan.</p>
+            <div class="col-md-6">
+                <a href="{{ route('penjualan.laporan') }}" class="report-card">
+                    <div class="icon-wrapper bg-custom-tan">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h4>Laporan Penjualan Bulanan</h4>
+                    <p>Lihat rekapitulasi data transaksi penjualan per bulan.</p>
+                </a>
+            </div>
         </div>
     </div>
 </body>

@@ -15,6 +15,7 @@
             background-color: #dcc8ae;
             color: #432118;
             margin: 0;
+            display: flex;
             overflow-x: hidden;
         }
 
@@ -24,57 +25,38 @@
             padding: 45px;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .btn-logout {
-            border: none;
-            background: #5a1f12;
-            padding: 8px 20px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: #ffffff;
-            box-shadow: 0 4px 0 #3a150c;
-            transition: 0.2s;
-        }
-
-        .btn-logout:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #3a150c;
-        }
+        .page-title-section { margin-bottom: 30px; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; }
 
         .form-container {
             background-color: #f5efe6;
-            padding: 40px;
-            border-radius: 40px;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             position: relative;
-            border: 8px solid transparent;
+            border: 6px solid transparent;
             background-clip: padding-box;
-            max-width: 600px;
+            max-width: 500px;
         }
 
-        /* Bingkai Rumput */
         .form-container::before {
             content: '';
             position: absolute;
-            top: -12px; left: -12px; right: -12px; bottom: -12px;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
             z-index: -1;
             background-color: #5d7a54;
             background-image: url('https://www.transparenttextures.com/patterns/grass.png');
-            border-radius: 45px;
+            border-radius: 35px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
         }
 
-        .form-label { font-weight: 700; color: #5a2c1b; margin-bottom: 8px; display: block; }
+        .form-label { font-weight: 700; color: #5a2c1b; margin-bottom: 4px; display: block; font-size: 14px; }
         .form-control, .form-select {
-            border-radius: 12px;
+            border-radius: 10px;
             border: 2px solid #a67c52;
-            padding: 12px;
+            padding: 10px;
+            font-size: 14px;
             background-color: #fffdfa;
         }
         .form-control:focus, .form-select:focus {
@@ -88,8 +70,8 @@
             color: white;
             font-weight: bold;
             border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
+            padding: 10px 20px;
+            border-radius: 10px;
             box-shadow: 0 4px 0 #3a4d33;
             transition: all 0.2s;
         }
@@ -108,27 +90,19 @@
             display: inline-block;
         }
         .btn-cancel:hover { background: #cbd5e1; color: #475569; transform: translateY(-2px); }
-
     </style>
 </head>
 <body>
 
     @include('layouts.sidebar')
+    @include('layouts.header', ['pageTitle' => 'Edit Sapi', 'pageSubtitle' => 'Perbarui informasi data sapi'])
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="header">
-            <div class="welcome-text">
-                <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One', cursive;">Edit Data Sapi 🐄</h3>
-                <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Perbarui informasi sapi.</p>
-            </div>
 
-            <form action="{{ route('logout') }}" method="POST" class="m-0">
-                @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
-                </button>
-            </form>
+        <div class="page-title-section">
+            <h3>Edit Data Sapi 🐄</h3>
+            <p>Perbarui informasi sapi.</p>
         </div>
 
         <div class="form-container">
