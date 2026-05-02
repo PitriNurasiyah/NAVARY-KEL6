@@ -27,8 +27,20 @@
         .btn-add { border: none; background: #5d7a54; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; text-decoration: none; }
         .btn-add:hover { background: #4a6344; color: #fff; }
 
-        /* Tabel Profesional */
-        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; background: white; border-radius: 15px; overflow: hidden; }
+         .cari-bar {
+            background: #e6d5c0;
+            border: 2px solid #a67c52;
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 35px;
+            font-size: 14px;
+            color: #432118;
+            font-weight: 600;
+            align-items: center;
+        }
+
+        /* Tabel */
+        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
         .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
         .table tbody td { padding: 16px !important; border: 1px solid #bc9f82 !important; font-weight: 600; }
 
@@ -42,7 +54,6 @@
             width: 100%;
             overflow-x: auto;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .header {
@@ -72,18 +83,40 @@
         .badge-admin { background-color: #d1fae5; color: #065f46; }
         .badge-peternak { background-color: #ede9fe; color: #5b21b6; }
         .badge-penjualan { background-color: #ffedd5; color: #c2410c; }
-        
-        .badge-penjualan { background-color: #ffedd5; color: #c2410c; }
-</head>
-<body>
+
+        /* Modal Floating Styling */
+        .modal-transparent {
+            background: transparent !important;
+        }
+        .modal-content-custom {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        .modal-backdrop.show {
+            opacity: 0.6;
+            background-color: #000;
+        }
+        .iframe-container {
+            width: 100%;
+            height: 765px;
+            border: none;
+            overflow: hidden;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
 
     @include('layouts.sidebar')
 
     <!-- Main Content -->
     <div class="main-content">
-        @if(session('success'))
+        @if(session('success') || request()->query('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 15px; font-weight: 600;">
-                <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
+                <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') ?? request()->query('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
@@ -93,11 +126,10 @@
                 <h3 class="fw-bold mb-0" style="font-family: 'Fredoka One';">Daftar Akun Pengguna</h3>
                 <p style="color: #6d4c41; font-weight: 600; margin-bottom: 0;">Kelola semua akun pengguna sistem.</p>
             </div>
-
             <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('register') }}" class="btn-add">
+                <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#registerModal">
                     <i class="fa-solid fa-user-plus"></i> Tambah Akun
-                </a>
+                </button>
 
                 <form action="{{ route('logout') }}" method="POST" class="m-0">
                     @csrf
@@ -105,6 +137,12 @@
                         <i class="fa-solid fa-sign-out-alt me-2"></i>Keluar
                     </button>
                 </form>
+                <div class="cari-container">            
+                    <div class="cari-bar">
+                        <i class="fa-solid fa-search me-2" style="color: #5a1f12;"></i>
+                        <input type="text" class="form-control" placeholder="Ketik nama atau username">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -158,6 +196,18 @@
             </table>
         </div>
 
+    </div>
+
+
+    <!-- Modal Register -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="iframe-container">
+                    <iframe src="{{ route('manajemen-akun.create', ['mode' => 'modal']) }}" scrolling="no"></iframe>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
