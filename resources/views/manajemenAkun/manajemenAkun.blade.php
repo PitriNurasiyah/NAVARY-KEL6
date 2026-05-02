@@ -230,7 +230,6 @@
 
         <div class="page-title-section">
             <h3>Daftar Akun Pengguna</h3>
-            <p>Kelola semua akun pengguna sistem.</p>
         </div>
 
         {{-- Notifikasi CRUD (posisi di atas search) --}}

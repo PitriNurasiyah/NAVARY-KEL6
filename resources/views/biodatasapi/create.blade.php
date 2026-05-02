@@ -102,7 +102,6 @@
 
         <div class="page-title-section">
             <h3>Tambah Data Sapi 🐄</h3>
-            <p>Masukkan informasi sapi baru.</p>
         </div>
 
         <div class="form-container">

@@ -167,7 +167,6 @@
 
         <div class="header-page-info">
             <h6>{{ $pageTitle ?? 'Dashboard' }}</h6>
-            <p>{{ $pageSubtitle ?? 'Cimilk Yogurt' }}</p>
         </div>
     </div>
 

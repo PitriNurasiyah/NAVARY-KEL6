@@ -128,7 +128,6 @@
 
         <div class="page-title-section">
             <h3>Hallo, {{ Auth::user()->name ?? 'Penjualan' }}! 🐄</h3>
-            <p>Selamat datang kembali di dashboard Manajemen Penjualan.</p>
         </div>
 
         <!-- Alert Section -->

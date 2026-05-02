@@ -22,7 +22,6 @@
         <div class="placeholder-card">
             <i class="fa-solid fa-file-contract mb-4" style="font-size: 64px; color: #a67c52; opacity: 0.5;"></i>
             <h4 class="fw-bold" style="color: #432118;">Halaman Laporan Penjualan</h4>
-            <p class="text-muted">Fitur laporan penjualan sedang dalam tahap integrasi data.</p>
         </div>
     </div>
 </body>

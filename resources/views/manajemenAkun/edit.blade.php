@@ -130,7 +130,6 @@
 
         <div class="page-title-section">
             <h3>Edit Akun Pengguna</h3>
-            <p>Perbarui informasi akun.</p>
         </div>
 
         <div class="form-container">

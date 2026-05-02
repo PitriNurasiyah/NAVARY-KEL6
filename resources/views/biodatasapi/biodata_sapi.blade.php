@@ -70,8 +70,8 @@
         .search-wrapper {
             background: #e6d5c0;
             border: 3px solid #a67c52;
-            padding: 3px 15px;
-            border-radius: 15px;
+            padding: 10.5px 15px;
+            border-radius: 12px;
             flex-grow: 1;
             display: flex;
             align-items: center;
