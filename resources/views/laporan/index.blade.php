@@ -21,13 +21,13 @@
 </head>
 <body>
     @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Laporan Admin', 'pageSubtitle' => 'Rekapitulasi data seluruh sistem'])
+    @include('layouts.header', ['pageTitle' => 'Laporan', 'pageSubtitle' => 'Rekapitulasi data seluruh sistem'])
     <div class="main-content">
         <h3 class="fw-bold mb-1" style="font-family: 'Fredoka One'; color: #432118;">Laporan Admin 📊</h3>
         <p style="color: #6d4c41; font-weight: 600; margin-bottom: 25px;">Rekapitulasi data seluruh sistem.</p>
         <div class="row g-4 mt-2">
             <div class="col-md-6">
-                <a href="{{ route('produksi.index') }}" class="report-card">
+                <a href="{{ route('laporan.produksi') }}" class="report-card">
                     <div class="icon-wrapper bg-custom-green">
                         <i class="fa-solid fa-flask"></i>
                     </div>

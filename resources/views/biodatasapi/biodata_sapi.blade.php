@@ -70,7 +70,7 @@
         .search-wrapper {
             background: #e6d5c0;
             border: 3px solid #a67c52;
-            padding: 10.5px 15px;
+            padding: 5px 15px;
             border-radius: 12px;
             flex-grow: 1;
             display: flex;
@@ -204,8 +204,13 @@
             @foreach($sapi as $s)
             <div class="cow-card">
                 <h5>{{ $s->nama }}</h5>
-                <p>ID: {{ $s->kode_sapi }}<br>Jenis: {{ $s->jenis }}<br>
-                Status: <span class="{{ strtolower($s->status_kesehatan) == 'sehat' ? 'text-success' : (strtolower($s->status_kesehatan) == 'sakit' ? 'text-danger' : 'text-warning') }} fw-bold">{{ $s->status_kesehatan }}</span></p>
+                <p style="margin-bottom: 12px; line-height: 1.6; font-size: 14px;">
+                    ID: {{ $s->kode_sapi }}<br>
+                    Jenis: {{ $s->jenis }}<br>
+                    Umur: {{ $s->umur ?? '-' }}<br>
+                    Status Kesehatan: <span class="{{ strtolower($s->status_kesehatan) == 'sehat' ? 'text-success' : (strtolower($s->status_kesehatan) == 'sakit' ? 'text-danger' : 'text-warning') }} fw-bold">{{ $s->status_kesehatan }}</span>
+                </p>
+                <button type="button" class="btn btn-sm text-dark fw-bold px-3 py-1" style="background-color: #e2e8f0; border-radius: 8px;" onclick="showCowDetail('{{ $s->kode_sapi }}', '{{ addslashes($s->nama) }}', '{{ $s->jenis }}', '{{ $s->jenis_kelamin ?? '-' }}', '{{ $s->umur ?? '-' }}', '{{ $s->berat ?? '-' }}', '{{ $s->status_kesehatan }}')">Lihat Detail</button>
             </div>
             @endforeach
         </div>
@@ -230,6 +235,9 @@
                         <th>ID SAPI</th>
                         <th>NAMA</th>
                         <th>JENIS</th>
+                        <th>J. KELAMIN</th>
+                        <th>UMUR</th>
+                        <th>BERAT</th>
                         <th>STATUS</th>
                         @if(Auth::user()->role !== 'Peternak')
                         <th class="text-center">AKSI</th>
@@ -242,6 +250,9 @@
                         <td>{{ $s->kode_sapi }}</td>
                         <td>{{ $s->nama }}</td>
                         <td>{{ $s->jenis }}</td>
+                        <td>{{ $s->jenis_kelamin ?? '-' }}</td>
+                        <td>{{ $s->umur ?? '-' }}</td>
+                        <td>{{ $s->berat ?? '-' }}</td>
                         <td>
                             <span class="badge {{ strtolower($s->status_kesehatan) == 'sehat' ? 'bg-success' : 
                                 (strtolower($s->status_kesehatan) == 'sakit' ? 
@@ -264,7 +275,7 @@
                     </tr>
                     @endforeach
                     <tr id="noDataRow" style="display: none;">
-                        <td colspan="5" class="text-center py-5">
+                        <td colspan="8" class="text-center py-5">
                             <div class="d-flex flex-column align-items-center">
                                 <i class="fa-solid fa-magnifying-glass mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                 <h5 class="fw-bold mb-1" style="color: #432118;">Data Tidak Ditemukan</h5>
@@ -290,6 +301,52 @@
         </div>
     </div>
 
+    <!-- Modal Detail Sapi -->
+    <div class="modal fade" id="cowDetailModal" tabindex="-1" aria-labelledby="cowDetailModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px; border: 4px solid #8CA685; background-color: #f5efe6;">
+          <div class="modal-header" style="border-bottom: 2px solid #a67c52;">
+            <h5 class="modal-title fw-bold" id="cowDetailModalLabel" style="font-family: 'Fredoka One', cursive; color: #432118;">Detail Sapi</h5>
+          </div>
+          <div class="modal-body" style="color: #432118; font-weight: 600;">
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex justify-content-between border-bottom pb-2 border-secondary border-opacity-25">
+                    <span class="text-muted">ID Sapi</span>
+                    <span id="detail-id" class="fw-bold"></span>
+                </div>
+                <div class="d-flex justify-content-between border-bottom pb-2 border-secondary border-opacity-25">
+                    <span class="text-muted">Nama Sapi</span>
+                    <span id="detail-nama" class="fw-bold"></span>
+                </div>
+                <div class="d-flex justify-content-between border-bottom pb-2 border-secondary border-opacity-25">
+                    <span class="text-muted">Jenis</span>
+                    <span id="detail-jenis" class="fw-bold"></span>
+                </div>
+                <div class="d-flex justify-content-between border-bottom pb-2 border-secondary border-opacity-25">
+                    <span class="text-muted">Jenis Kelamin</span>
+                    <span id="detail-jk" class="fw-bold"></span>
+                </div>
+                <div class="d-flex justify-content-between border-bottom pb-2 border-secondary border-opacity-25">
+                    <span class="text-muted">Umur</span>
+                    <span id="detail-umur" class="fw-bold"></span>
+                </div>
+                <div class="d-flex justify-content-between border-bottom pb-2 border-secondary border-opacity-25">
+                    <span class="text-muted">Berat</span>
+                    <span id="detail-berat" class="fw-bold"></span>
+                </div>
+                <div class="d-flex justify-content-between pb-1">
+                    <span class="text-muted">Status Kesehatan</span>
+                    <span id="detail-status" class="fw-bold"></span>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="border-top: none;">
+            <button type="button" class="btn fw-bold px-4 text-white" style="background-color: #5d7a54; border-radius: 10px;" data-bs-dismiss="modal">Tutup</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Hidden delete form -->
     <form id="deleteForm" method="POST" style="display:none;">
         @csrf
@@ -298,6 +355,28 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // ====== Show Detail Modal ======
+        function showCowDetail(id, nama, jenis, jk, umur, berat, status) {
+            document.getElementById('detail-id').textContent = id;
+            document.getElementById('detail-nama').textContent = nama;
+            document.getElementById('detail-jenis').textContent = jenis;
+            document.getElementById('detail-jk').textContent = jk;
+            document.getElementById('detail-umur').textContent = umur;
+            document.getElementById('detail-berat').textContent = berat;
+            document.getElementById('detail-status').textContent = status;
+            
+            let statusEl = document.getElementById('detail-status');
+            if(status.toLowerCase() === 'sehat') {
+                statusEl.className = 'fw-bold text-success';
+            } else if(status.toLowerCase() === 'sakit') {
+                statusEl.className = 'fw-bold text-danger';
+            } else {
+                statusEl.className = 'fw-bold text-warning';
+            }
+
+            var modal = new bootstrap.Modal(document.getElementById('cowDetailModal'));
+            modal.show();
+        }
         // ====== Search ======
         document.getElementById('searchInput').addEventListener('input', function() {
             let filter = this.value.toLowerCase();

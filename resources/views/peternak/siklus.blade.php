@@ -18,9 +18,14 @@
         /* Action Bar */
         .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 20px; }
         .search-wrapper {
-            flex: 1; background: #f5efe6; border-radius: 20px; padding: 10px 20px;
-            display: flex; align-items: center; border: 3px solid #bc9f82;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            background: #e6d5c0;
+            border: 3px solid #a67c52;
+            padding: 10.5px 15px;
+            border-radius: 12px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         .search-input-group { display: flex; align-items: center; width: 100%; gap: 10px; }
         .search-input-group i { color: #5a1f12; font-size: 18px; }
@@ -30,6 +35,17 @@
             font-weight: 600; color: #432118; font-size: 15px;
         }
         .search-input-group input::placeholder { color: #845a33; opacity: 0.7; }
+
+        /* Tabel */
+        .btn-add {
+            border: none; background: #5d7a54; padding: 10.5px 20px;
+            border-radius: 12px; font-weight: 700; color: #ffffff;
+            box-shadow: 0 4px 0 #3a4d33; transition: 0.2s;
+            text-decoration: none; white-space: nowrap;
+            display: flex; align-items: center;
+        }
+        .btn-add:hover { background: #4a6344; color: white; transform: translateY(-2px); box-shadow: 0 6px 0 #3a4d33; }
+        .btn-add:active { transform: translateY(2px); box-shadow: 0 2px 0 #3a4d33; }
 
         /* Tabel */
         .custom-table {
@@ -58,6 +74,9 @@
                     <input type="text" id="searchInput" placeholder="Cari data siklus..">
                 </div>
             </div>
+            <a href="#" class="btn-add">
+                <i class="fa-solid fa-plus me-2"></i> Tambah Siklus Sapi
+            </a>
         </div>
 
         <div class="custom-table">

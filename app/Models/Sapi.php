@@ -15,7 +15,9 @@ class Sapi extends Model
         'kode_sapi',
         'nama',
         'jenis',
+        'jenis_kelamin',
         'umur',
+        'berat',
         'status_kesehatan'
     ];
 }

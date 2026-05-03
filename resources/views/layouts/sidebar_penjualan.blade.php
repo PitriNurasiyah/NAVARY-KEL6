@@ -34,12 +34,12 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('produksi.index') }}" class="nav-link {{ request()->routeIs('produksi.index') ? 'active' : '' }}">
-                <i class="fas fa-eye"></i> <span>Data Produksi Susu</span>
+                <i class="fas fa-flask"></i> <span>Produksi Susu</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('penjualan.data') }}" class="nav-link {{ request()->routeIs('penjualan.data') ? 'active' : '' }}">
-                <i class="fas fa-clipboard-list"></i> <span>Data Penjualan</span>
+                <i class="fas fa-clipboard-list"></i> <span>Penjualan</span>
             </a>
         </li>
         <li class="nav-item">

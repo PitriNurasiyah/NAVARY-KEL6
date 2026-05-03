@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-penjualan', function() { return view('penjualan.data'); })->name('penjualan.data');
     Route::get('/laporan-penjualan', function() { return view('penjualan.laporan'); })->name('penjualan.laporan');
     Route::get('/laporan-admin', function() { return view('laporan.index'); })->name('laporan.index');
+    Route::get('/laporan-produksi', function() { return view('laporan.produksi'); })->name('laporan.produksi');
 
     Route::post('logout', [CimilkController::class, 'logout'])->name('logout');
 });

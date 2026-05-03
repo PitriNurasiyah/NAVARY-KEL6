@@ -13,7 +13,6 @@
     .nav-link { text-decoration: none; color: #6d4c41; padding: 12px 18px; display: flex; align-items: center; border-radius: 15px; transition: 0.3s; font-weight: 700; }
     .nav-link i { margin-right: 12px; width: 20px; text-align: center; }
     .nav-link:hover, .nav-link.active { background: #5d7a54; color: #ffffff !important; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-    .view-text { font-size: 11px; margin-left: 5px; opacity: 0.8; }
     .nav-item { margin-bottom: 5px; }
 </style>
 
@@ -35,12 +34,12 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('sapi.index') }}" class="nav-link {{ request()->routeIs('sapi.*') ? 'active' : '' }}">
-                <i class="fas fa-cow"></i> <span>Data Sapi <span class="view-text">(View)</span></span>
+                <i class="fas fa-cow"></i> <span>Data Sapi</span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('pakan.index') }}" class="nav-link {{ request()->routeIs('pakan.index') ? 'active' : '' }}">
-                <i class="fas fa-seedling"></i> <span>Pencatatan Jenis Pakan</span>
+                <i class="fas fa-seedling"></i> <span>Manajemen Pakan</span>
             </a>
         </li>
         <li class="nav-item">

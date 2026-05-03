@@ -31,7 +31,9 @@ class SapiController extends Controller
             'kode_sapi' => $request->kode_sapi,
             'nama' => $request->nama,
             'jenis' => $request->jenis,
+            'jenis_kelamin' => $request->jenis_kelamin,
             'umur' => $request->umur ?? 0,
+            'berat' => $request->berat,
             'status_kesehatan' => $request->status_kesehatan
         ]);
 
@@ -58,7 +60,9 @@ class SapiController extends Controller
             'kode_sapi' => $request->kode_sapi,
             'nama' => $request->nama,
             'jenis' => $request->jenis,
+            'jenis_kelamin' => $request->jenis_kelamin,
             'umur' => $request->umur ?? 0,
+            'berat' => $request->berat,
             'status_kesehatan' => $request->status_kesehatan
         ]);
 

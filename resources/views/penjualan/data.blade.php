@@ -60,7 +60,7 @@
 </head>
 <body>
     @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Data Penjualan', 'pageSubtitle' => 'Riwayat transaksi penjualan Cimilk'])
+    @include('layouts.header', ['pageTitle' => ' Penjualan', 'pageSubtitle' => 'Riwayat transaksi penjualan Cimilk'])
     <div class="main-content">
         <div class="page-title-section">
             <h3>Data Penjualan 📑</h3>

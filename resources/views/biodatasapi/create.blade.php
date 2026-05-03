@@ -95,7 +95,7 @@
 <body>
 
     @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Tambah Sapi', 'pageSubtitle' => 'Masukkan informasi sapi baru'])
+    @include('layouts.header', ['pageTitle' => 'Biodata Sapi', 'pageSubtitle' => 'Masukkan informasi sapi baru'])
 
     <!-- Main Content -->
     <div class="main-content">
@@ -131,6 +131,25 @@
                 <div class="mb-3">
                     <label class="form-label">Jenis</label>
                     <input type="text" name="jenis" class="form-control" placeholder="Contoh: Holstein" value="{{ old('jenis') }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Jenis Kelamin (Opsional)</label>
+                    <select name="jenis_kelamin" class="form-select">
+                        <option value="">-- Pilih Jenis Kelamin --</option>
+                        <option value="Jantan" {{ old('jenis_kelamin') == 'Jantan' ? 'selected' : '' }}>Jantan</option>
+                        <option value="Betina" {{ old('jenis_kelamin') == 'Betina' ? 'selected' : '' }}>Betina</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Umur Sapi (Opsional)</label>
+                    <input type="text" name="umur" class="form-control" placeholder="Contoh: 3 Tahun atau 24 Bulan" value="{{ old('umur') }}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Berat Sapi (Opsional)</label>
+                    <input type="text" name="berat" class="form-control" placeholder="Contoh: 450 kg" value="{{ old('berat') }}">
                 </div>
 
                 <div class="mb-3">

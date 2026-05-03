@@ -94,9 +94,9 @@
                     <input type="text" id="searchInput" placeholder="Cari data produksi..">
                 </div>
             </div>
-            @if(Auth::user()->role !== 'Admin')
+            @if(Auth::user()->role === 'Peternak')
             <button type="button" class="btn-add" onclick="alert('Fitur simpan otomatis atau tombol simpan akan ditambahkan.')">
-                <i class="fa-solid fa-save me-2"></i> Simpan Data Produksi
+                <i class="fa-solid fa-plus me-2"></i> Tambah Data Produksi
             </button>
             @endif
         </div>
@@ -111,7 +111,7 @@
                             <th>HASIL PAGI (LITER)</th>
                             <th>HASIL SORE (LITER)</th>
                             <th class="text-center">TOTAL</th>
-                            @if(Auth::user()->role !== 'Admin')
+                            @if(Auth::user()->role === 'Peternak')
                             <th class="text-center">AKSI</th>
                             @endif
                         </tr>
@@ -129,14 +129,14 @@
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td>{{ $cow['id'] }}</td>
                             <td>
-                                @if(Auth::user()->role !== 'Admin')
+                                @if(Auth::user()->role === 'Peternak')
                                 <input type="number" class="form-control-sm-custom" value="{{ $cow['pagi'] }}" step="0.1">
                                 @else
                                 {{ $cow['pagi'] }} L
                                 @endif
                             </td>
                             <td>
-                                @if(Auth::user()->role !== 'Admin')
+                                @if(Auth::user()->role === 'Peternak')
                                 <input type="number" class="form-control-sm-custom" value="{{ $cow['sore'] }}" step="0.1">
                                 @else
                                 {{ $cow['sore'] }} L
@@ -145,9 +145,12 @@
                             <td class="text-center">
                                 <span class="total-badge">0.0 L</span>
                             </td>
-                            @if(Auth::user()->role !== 'Admin')
+                            @if(Auth::user()->role === 'Peternak')
                             <td class="text-center">
-                                <button class="btn btn-sm btn-outline-success border-0"><i class="fa-solid fa-check-circle"></i></button>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button class="btn btn-sm btn-outline-primary shadow-sm" onclick="alert('Fitur edit akan segera tersedia')">Edit</button>
+                                    <button class="btn btn-sm btn-outline-danger shadow-sm" onclick="alert('Fitur hapus akan segera tersedia')">Hapus</button>
+                                </div>
                             </td>
                             @endif
                         </tr>

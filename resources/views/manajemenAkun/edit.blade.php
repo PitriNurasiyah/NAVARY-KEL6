@@ -123,7 +123,7 @@
 <body>
 
     @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Edit Akun', 'pageSubtitle' => 'Perbarui informasi akun pengguna'])
+    @include('layouts.header', ['pageTitle' => 'Manajemen Akun', 'pageSubtitle' => 'Perbarui informasi akun pengguna'])
 
     <!-- Main Content -->
     <div class="main-content">
