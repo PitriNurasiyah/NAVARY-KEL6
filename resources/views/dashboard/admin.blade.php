@@ -77,20 +77,9 @@
         .bg-custom-tan { background: #a67c52; color: #ffffff; }
 
         /* Page title below header */
-        .page-title-section {
-            margin-bottom: 30px;
-        }
-        .page-title-section h3 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 26px;
-            color: #432118;
-            margin: 0 0 4px 0;
-        }
-        .page-title-section p {
-            color: #6d4c41;
-            font-weight: 600;
-            margin: 0;
-        }
+        .page-title-section { margin-bottom: 25px; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
     </style>
 </head>
 <body>

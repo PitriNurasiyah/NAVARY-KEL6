@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Produksi - Cimilk Yogurt</title>
+    <title>Laporan Penjualan - Cimilk Yogurt</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -44,12 +44,12 @@
 </head>
 <body>
     @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Laporan Produksi', 'pageSubtitle' => 'Rekapitulasi hasil produksi susu sapi'])
+    @include('layouts.header', ['pageTitle' => 'Laporan Penjualan', 'pageSubtitle' => 'Rekapitulasi performa penjualan yogurt'])
 
     <div class="main-content">
         <div class="page-title-section">
-            <h3>Laporan Produksi Susu 🥛</h3>
-            <p>Daftar lengkap hasil produksi susu dari seluruh sapi.</p>
+            <h3>Laporan Penjualan 📈</h3>
+            <p>Daftar lengkap transaksi penjualan Cimilk Yogurt.</p>
         </div>
 
         <div class="action-buttons">
@@ -67,31 +67,29 @@
                     <tr>
                         <th class="text-center" style="width: 60px;">NO</th>
                         <th>TANGGAL</th>
-                        <th>ID SAPI</th>
-                        <th>PAGI (L)</th>
-                        <th>SORE (L)</th>
-                        <th class="text-center">TOTAL HARIAN</th>
+                        <th>PRODUK</th>
+                        <th>JUMLAH</th>
+                        <th class="text-end">TOTAL HARGA</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($produksi as $index => $item)
+                    @forelse($penjualan as $index => $item)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d F Y') }}</td>
-                        <td class="fw-bold text-success">{{ $item->sapi->kode_sapi ?? 'N/A' }}</td>
-                        <td>{{ $item->jumlah_pagi }} Liter</td>
-                        <td>{{ $item->jumlah_sore }} Liter</td>
-                        <td class="text-center">
-                            <span class="badge bg-success px-3 py-2" style="border-radius: 8px; font-size: 14px;">
-                                {{ $item->total }} L
+                        <td>{{ \Carbon\Carbon::parse($item->tanggal ?? $item->created_at)->format('d F Y') }}</td>
+                        <td class="fw-bold">{{ $item->produk ?? 'Yogurt Original' }}</td>
+                        <td>{{ $item->jumlah ?? 0 }} Unit</td>
+                        <td class="text-end">
+                            <span class="badge bg-success px-3 py-2" style="border-radius: 8px; font-size: 14px; font-weight: 700;">
+                                Rp {{ number_format($item->total_harga ?? 0, 0, ',', '.') }}
                             </span>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center py-5">
-                            <i class="fa-solid fa-folder-open mb-3 d-block" style="font-size: 48px; color: #bc9f82;"></i>
-                            <span class="text-muted">Belum ada data produksi yang tercatat.</span>
+                        <td colspan="5" class="text-center py-5">
+                            <i class="fa-solid fa-cart-shopping mb-3 d-block" style="font-size: 48px; color: #bc9f82;"></i>
+                            <span class="text-muted">Belum ada data transaksi penjualan.</span>
                         </td>
                     </tr>
                     @endforelse

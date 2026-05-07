@@ -14,41 +14,23 @@
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         /* Page title */
-        .page-title-section { margin-bottom: 20px; }
+        .page-title-section { margin-bottom: 25px; }
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
-        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         /* Notifikasi CRUD */
         .crud-notification {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 20px;
-            border-radius: 14px;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 20px;
-            animation: fadeInDown 0.4s ease;
+            display: flex; align-items: center; gap: 12px; padding: 15px 25px; border-radius: 12px;
+            font-weight: 700; font-size: 14px; margin-bottom: 25px; animation: fadeInDown 0.4s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-        .crud-notification.success {
-            background: #d1fae5;
-            border: 2px solid #6ee7b7;
-            color: #065f46;
-        }
-        .crud-notification.error {
-            background: #fee2e2;
-            border: 2px solid #fca5a5;
-            color: #7f1d1d;
-        }
+        .crud-notification.success { background: #dcfce7; border: 2px solid #22c55e; color: #166534; }
+        .crud-notification.error { background: #fee2e2; border: 2px solid #ef4444; color: #991b1b; }
+        
         .notif-close {
-            margin-left: auto;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: inherit;
-            opacity: 0.6;
-            font-size: 16px;
-            padding: 0;
+            margin-left: auto; background: none; border: none; color: inherit;
+            font-size: 18px; cursor: pointer; opacity: 0.5; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center;
         }
         .notif-close:hover { opacity: 1; }
         @keyframes fadeInDown {
@@ -274,12 +256,12 @@
                         @endif
                     </tr>
                     @endforeach
-                    <tr id="noDataRow" style="display: none;">
+                    <tr id="noDataRow" @if(count($sapi) > 0) style="display: none;" @endif>
                         <td colspan="8" class="text-center py-5">
                             <div class="d-flex flex-column align-items-center">
-                                <i class="fa-solid fa-magnifying-glass mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
-                                <h5 class="fw-bold mb-1" style="color: #432118;">Data Tidak Ditemukan</h5>
-                                <p class="text-muted mb-0">Maaf, kami tidak dapat menemukan data yang Anda cari.</p>
+                                <i class="fa-solid fa-cow mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
+                                <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>
+                                <p class="text-muted mb-0">Belum ada data sapi yang tersimpan.</p>
                             </div>
                         </td>
                     </tr>

@@ -10,6 +10,9 @@
     <style>
         body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
+        .page-title-section { margin-bottom: 25px; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
         .report-card { background: #f0e2d0; padding: 30px; border-radius: 25px; border: 3px solid #bc9f82; text-align: center; transition: 0.3s; display: block; text-decoration: none; color: inherit; height: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .report-card:hover { transform: translateY(-5px); border-color: #5d7a54; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
         .icon-wrapper { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 20px auto; color: white; }
@@ -23,8 +26,10 @@
     @include('layouts.sidebar')
     @include('layouts.header', ['pageTitle' => 'Laporan', 'pageSubtitle' => 'Rekapitulasi data seluruh sistem'])
     <div class="main-content">
-        <h3 class="fw-bold mb-1" style="font-family: 'Fredoka One'; color: #432118;">Laporan Admin 📊</h3>
-        <p style="color: #6d4c41; font-weight: 600; margin-bottom: 25px;">Rekapitulasi data seluruh sistem.</p>
+        <div class="page-title-section">
+            <h3>Laporan Admin 📊</h3>
+            <p>Rekapitulasi data seluruh sistem.</p>
+        </div>
         <div class="row g-4 mt-2">
             <div class="col-md-6">
                 <a href="{{ route('laporan.produksi') }}" class="report-card">
@@ -36,7 +41,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href="{{ route('penjualan.laporan') }}" class="report-card">
+                <a href="{{ route('laporan.penjualan') }}" class="report-card">
                     <div class="icon-wrapper bg-custom-tan">
                         <i class="fa-solid fa-chart-line"></i>
                     </div>

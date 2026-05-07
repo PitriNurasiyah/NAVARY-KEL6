@@ -33,17 +33,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('produksi.index') }}" class="nav-link {{ request()->routeIs('produksi.index') ? 'active' : '' }}">
+            <a href="{{ route('produksi.index') }}" class="nav-link {{ request()->routeIs('produksi.*') ? 'active' : '' }}">
                 <i class="fas fa-flask"></i> <span>Produksi Susu</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('penjualan.data') }}" class="nav-link {{ request()->routeIs('penjualan.data') ? 'active' : '' }}">
+            <a href="{{ route('penjualan.data') }}" class="nav-link {{ request()->routeIs('penjualan.data', 'penjualan.input') ? 'active' : '' }}">
                 <i class="fas fa-clipboard-list"></i> <span>Penjualan</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('penjualan.laporan') }}" class="nav-link {{ request()->routeIs('penjualan.laporan') ? 'active' : '' }}">
+            <a href="{{ route('laporan.penjualan') }}" class="nav-link {{ request()->routeIs('laporan.penjualan') ? 'active' : '' }}">
                 <i class="fas fa-file-invoice-dollar"></i> <span>Laporan Penjualan</span>
             </a>
         </li>

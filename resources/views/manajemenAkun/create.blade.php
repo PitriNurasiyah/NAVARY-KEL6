@@ -138,6 +138,7 @@
 
         .btn-register {
             width: 100%;
+            min-width: 150px;
             background: #7a2f1c;
             color: white;
             border-radius: 12px;
@@ -167,13 +168,14 @@
         .footer-link a { color: #7a2f1c; font-weight: bold; text-decoration: none; }
 
         /* Error alert */
-        .alert-form {
-            padding: 8px 12px;
-            font-size: 13px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border: 2px solid #f5c2c7;
-        }
+        /* Error alert */
+        .alert-form { padding: 8px 12px; font-size: 13px; border-radius: 12px; margin-bottom: 10px; border: 2px solid #f5c2c7; }
+        
+        /* Page title section for full page mode */
+        .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
+        .page-title-section { margin-bottom: 25px; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -181,9 +183,15 @@
     @if(request('mode') != 'modal')
         @include('layouts.sidebar')
         @include('layouts.header', ['pageTitle' => 'Tambah Akun', 'pageSubtitle' => 'Buat akun pengguna baru'])
+        
+        <div class="main-content">
+            <div class="page-title-section">
+                <h3>Tambah Akun Baru 👤</h3>
+                <p>Silahkan isi form di bawah untuk mendaftarkan akun pengguna baru ke sistem.</p>
+            </div>
     @endif
 
-    <div class="register-wrapper">
+    <div class="register-wrapper" style="{{ request('mode') != 'modal' ? 'padding-top: 20px;' : '' }}">
         <div class="farm-wrapper">
             <div class="top-icon">
                 <img src="{{ asset('img/sapii.png') }}" width="80" alt="logo">
@@ -251,6 +259,9 @@
             </div>
         </div>
     </div>
+    @if(request('mode') != 'modal')
+        </div>
+    @endif
 
 <script>
     function togglePassword() {

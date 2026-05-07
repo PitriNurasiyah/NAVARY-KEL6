@@ -10,9 +10,9 @@ class DashboardAdminController extends Controller
 {
     public function index()
     {
-        $totalSapi = Sapi::count();
-        $totalProduksi = 0; // Belum ada modul DB
-        $totalPenjualan = 0; // Belum ada modul DB
+        $totalSapi = \App\Models\Sapi::count();
+        $totalProduksi = \App\Models\ProduksiSusu::sum('total');
+        $totalPenjualan = \App\Models\Penjualan::sum('total_harga');
         
         return view('dashboard.admin', compact('totalSapi', 'totalProduksi', 'totalPenjualan'));
     }

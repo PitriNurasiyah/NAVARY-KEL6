@@ -25,92 +25,63 @@
             padding: 45px;
         }
 
-        .page-title-section {
-            margin-bottom: 30px;
-        }
-        .page-title-section h3 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 26px;
-            color: #432118;
-            margin: 0 0 4px 0;
-        }
-        .page-title-section p {
-            color: #6d4c41;
-            font-weight: 600;
-            margin: 0;
-        }
+        .page-title-section { margin-bottom: 25px; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
-        .alert-box {
-            background-color: #fef0d7;
-            border: 2px solid #f6c23e;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        .alert-title {
-            color: #a77000;
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .alert-list {
-            margin: 0;
-            padding-left: 20px;
-            color: #856404;
-            font-weight: 600;
-            font-size: 15px;
-        }
-
-        .dashboard-card {
-            background: #ffffff;
-            border-radius: 20px;
+        .stat-card {
+            background: #f0e2d0;
             padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #e0e0e0;
+            border-radius: 25px;
+            border: 3px solid #bc9f82;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             height: 100%;
+            text-decoration: none;
         }
 
-        .card-info h5 {
-            color: #6d4c41;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 5px;
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #5d7a54;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
-        .card-info h2 {
+        .stat-info h2 {
             font-family: 'Fredoka One', cursive;
-            color: #3a150c;
-            font-size: 32px;
-            margin: 0;
+            margin: 5px 0;
+            font-size: 38px;
+            color: #432118;
         }
-        
-        .card-info p {
-            color: #8f7267;
-            font-size: 14px;
-            margin: 0;
-            font-weight: 600;
-        }
+        .stat-info span { color: #845a33; font-weight: 700; text-transform: uppercase; font-size: 12px; }
+        .stat-unit { color: #5d7a54; font-weight: 800; font-size: 14px; }
 
-        .card-icon {
+        .icon-circle {
             width: 60px;
             height: 60px;
-            border-radius: 50%;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
         }
-        
-        .icon-blue { background-color: #e0f2fe; color: #0ea5e9; }
-        .icon-green { background-color: #dcfce7; color: #22c55e; }
+
+        .bg-custom-green { background: #5d7a54; color: #ffffff; }
+        .bg-custom-blue { background: #799cd1ff; color: #ffffff; }
+        .bg-custom-brown { background: #845a33; color: #ffffff; }
+
+        .notification-bar {
+            background: #fef0d7;
+            border: 2px solid #f6c23e;
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 35px;
+            font-size: 14px;
+            color: #432118;
+            font-weight: 600;
+        }
 
         /* Data Sapi Section (view only) */
         .section-header {
@@ -173,40 +144,64 @@
             <p>Selamat datang kembali di dashboard peternak.</p>
         </div>
 
-        <!-- Alert Section -->
-        <div class="alert-box">
-            <div class="alert-title">
-                <i class="fa-solid fa-circle-exclamation"></i> Peringatan Jadwal Hari Ini
+        @if($alerts->count() > 0)
+        <div class="notification-bar">
+            <div class="fw-bold mb-2" style="color: #a77000; font-size: 16px;">
+                <i class="fa-solid fa-circle-exclamation me-2"></i> Peringatan Jadwal Hari Ini
             </div>
-            <ul class="alert-list">
-                <li>Sapi ID-01: Jadwal Inseminasi Buatan (IB)</li>
-                <li>Sapi ID-05: Masa Kering Kandang</li>
+            <ul class="mb-0 ps-3">
+                @foreach($alerts as $alert)
+                    <li>{{ $alert->sapi->nama ?? 'Sapi' }} ({{ $alert->sapi->kode_sapi }}): 
+                        @if($alert->tanggal_mulai == date('Y-m-d'))
+                            Mulai Fase {{ $alert->fase }}
+                        @else
+                            Estimasi Selesai Fase {{ $alert->fase }}
+                        @endif
+                    </li>
+                @endforeach
             </ul>
         </div>
+        @else
+        <div class="notification-bar" style="background: #e6f7ff; border-color: #91d5ff; color: #0050b3;">
+            <i class="fa-solid fa-circle-info me-2"></i> Tidak ada jadwal khusus untuk hari ini. Tetap semangat bekerja!
+        </div>
+        @endif
 
         <!-- Cards Section -->
         <div class="row g-4 mb-4">
-            <div class="col-md-6">
-                <div class="dashboard-card">
-                    <div class="card-info">
-                        <h5>Tugas Input Hari Ini</h5>
-                        <h2>3</h2>
-                        <p>Kegiatan</p>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span>Populasi Sapi</span>
+                        <h2>{{ $totalSapi }}</h2>
+                        <div class="stat-unit">Ekor Sapi</div>
                     </div>
-                    <div class="card-icon icon-blue">
-                        <i class="fa-solid fa-check"></i>
+                    <div class="icon-circle bg-custom-green">
+                        <i class="fa-solid fa-cow"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="dashboard-card">
-                    <div class="card-info">
-                        <h5>Total Produksi Anda</h5>
-                        <h2>15</h2>
-                        <p>Liter</p>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span>Tugas Input Hari Ini</span>
+                        <h2>{{ $tugasInput }}</h2>
+                        <div class="stat-unit">Belum Diinput</div>
                     </div>
-                    <div class="card-icon icon-green">
-                        <i class="fa-solid fa-flask"></i>
+                    <div class="icon-circle bg-custom-blue">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span>Total Produksi</span>
+                        <h2>{{ number_format($totalProduksi, 0, ',', '.') }}</h2>
+                        <div class="stat-unit">Liter Susu</div>
+                    </div>
+                    <div class="icon-circle bg-custom-brown">
+                        <i class="fa-solid fa-bucket"></i>
                     </div>
                 </div>
             </div>

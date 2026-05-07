@@ -34,22 +34,25 @@ Route::middleware('auth')->group(function () {
     Route::put('/manajemen-akun/{id}', [ManajemenAkunController::class, 'update'])->name('manajemen-akun.update');
     Route::delete('/manajemen-akun/{id}', [ManajemenAkunController::class, 'destroy'])->name('manajemen-akun.destroy');
     Route::get('/dashboard-peternak', [DashboardPeternakController::class, 'index'])->name('peternak.dashboard');
-    Route::get('/pencatatan-pakan', function() { 
-        return view('peternak.pakan'); 
-    })->name('pakan.index');
-    Route::get('/siklus-sapi', function() { 
-        return view('peternak.siklus'); 
-    })->name('siklus.index');
-    Route::get('/produksi-susu-peternak', function() { 
-        return view('peternak.produksi'); 
-    })->name('produksi.index');
+    Route::resource('pakan', App\Http\Controllers\PakanController::class);
+    Route::resource('siklus', App\Http\Controllers\SiklusSapiController::class);
+    Route::resource('produksi', App\Http\Controllers\ProduksiSusuController::class);
     
     Route::get('/dashboard-penjualan', [DashboardPenjualanController::class, 'index'])->name('penjualan.dashboard');
-    Route::get('/input-penjualan', function() { return view('penjualan.input'); })->name('penjualan.input');
-    Route::get('/data-penjualan', function() { return view('penjualan.data'); })->name('penjualan.data');
-    Route::get('/laporan-penjualan', function() { return view('penjualan.laporan'); })->name('penjualan.laporan');
+    Route::get('/input-penjualan', function() { return view('penjualan.input-penjualan.index'); })->name('penjualan.input');
+    Route::get('/data-penjualan', function() { 
+        $penjualan = \App\Models\Penjualan::orderBy('created_at', 'desc')->get();
+        return view('penjualan.data-penjualan.index', compact('penjualan')); 
+    })->name('penjualan.data');
     Route::get('/laporan-admin', function() { return view('laporan.index'); })->name('laporan.index');
-    Route::get('/laporan-produksi', function() { return view('laporan.produksi'); })->name('laporan.produksi');
+    Route::get('/laporan-produksi', function() { 
+        $produksi = \App\Models\ProduksiSusu::with('sapi')->orderBy('tanggal', 'desc')->get();
+        return view('laporan.produksi', compact('produksi')); 
+    })->name('laporan.produksi');
+    Route::get('/laporan-penjualan', function() { 
+        $penjualan = \App\Models\Penjualan::orderBy('created_at', 'desc')->get();
+        return view('laporan.penjualan', compact('penjualan')); 
+    })->name('laporan.penjualan');
 
     Route::post('logout', [CimilkController::class, 'logout'])->name('logout');
 });

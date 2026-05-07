@@ -38,17 +38,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('pakan.index') }}" class="nav-link {{ request()->routeIs('pakan.index') ? 'active' : '' }}">
+            <a href="{{ route('pakan.index') }}" class="nav-link {{ request()->routeIs('pakan.*') ? 'active' : '' }}">
                 <i class="fas fa-seedling"></i> <span>Manajemen Pakan</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('siklus.index') }}" class="nav-link {{ request()->routeIs('siklus.index') ? 'active' : '' }}">
+            <a href="{{ route('siklus.index') }}" class="nav-link {{ request()->routeIs('siklus.*') ? 'active' : '' }}">
                 <i class="fas fa-clock-rotate-left"></i> <span>Siklus Sapi</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('produksi.index') }}" class="nav-link {{ request()->routeIs('produksi.index') ? 'active' : '' }}">
+            <a href="{{ route('produksi.index') }}" class="nav-link {{ request()->routeIs('produksi.*') ? 'active' : '' }}">
                 <i class="fas fa-flask"></i> <span>Produksi Susu</span>
             </a>
         </li>

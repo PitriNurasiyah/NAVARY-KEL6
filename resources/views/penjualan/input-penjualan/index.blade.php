@@ -10,6 +10,11 @@
     <style>
         body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
+        
+        .page-title-section { margin-bottom: 25px; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
+
         .form-card { background: #f0e2d0; padding: 30px; border-radius: 25px; border: 3px solid #bc9f82; }
         .btn-submit { background: #5d7a54; color: white; border: none; padding: 10px 30px; border-radius: 12px; font-weight: 700; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; }
         .btn-submit:hover { background: #4a6344; color: white; }
@@ -19,8 +24,11 @@
     @include('layouts.sidebar')
     @include('layouts.header', ['pageTitle' => 'Input Penjualan', 'pageSubtitle' => 'Catat transaksi penjualan harian'])
     <div class="main-content">
-        <h3 class="fw-bold mb-1" style="font-family: 'Fredoka One'; color: #432118;">Input Penjualan 🛒</h3>
-        <p style="color: #6d4c41; font-weight: 600; margin-bottom: 25px;">Catat transaksi penjualan harian.</p>
+        <div class="page-title-section">
+            <h3>Input Penjualan 🛒</h3>
+            <p>Catat transaksi penjualan harian.</p>
+        </div>
+
         <div class="form-card">
             <h5 class="fw-bold mb-4" style="color: #3a150c;">Form Transaksi Baru</h5>
             <form>
