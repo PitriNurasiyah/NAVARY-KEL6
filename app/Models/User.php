@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
+        'plain_password',
         'role',
         'status',
     ];
@@ -47,9 +48,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function getAuthIdentifierName() {
-
-return 'username';
-
-}
 }

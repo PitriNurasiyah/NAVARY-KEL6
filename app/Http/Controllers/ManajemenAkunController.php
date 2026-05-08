@@ -41,7 +41,8 @@ class ManajemenAkunController extends Controller
         User::create([
             'name' => $request->name,
             'username' => $request->username,
-            'password' => bcrypt($request->password),
+            'password' => $request->password,
+            'plain_password' => $request->password,
             'role' => $request->role,
             'status' => $request->status ?? 'Aktif'
         ]);
@@ -80,7 +81,10 @@ class ManajemenAkunController extends Controller
         ]);
 
         if ($request->filled('password')) {
-            $user->update(['password' => bcrypt($request->password)]);
+            $user->update([
+                'password' => $request->password,
+                'plain_password' => $request->password
+            ]);
         }
 
         return redirect()->route('manajemen.akun')->with('success', 'Akun berhasil diperbarui!');

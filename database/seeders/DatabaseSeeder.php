@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'username' => 'admin',
-            'password' => bcrypt('admin'),
+            'password' => '12345678',
+            'plain_password' => '12345678',
             'role' => 'Admin',
             'status' => 'Aktif'
         ]);
@@ -27,7 +28,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Peternak',
             'username' => 'peternak',
-            'password' => bcrypt('peternak'),
+            'password' => '123456789',
+            'plain_password' => '123456789',
             'role' => 'Peternak',
             'status' => 'Aktif'
         ]);
@@ -35,7 +37,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Penjualan',
             'username' => 'penjualan',
-            'password' => bcrypt('12345678'),
+            'password' => '12345678',
+            'plain_password' => '12345678',
             'role' => 'Penjualan',
             'status' => 'Aktif'
         ]);

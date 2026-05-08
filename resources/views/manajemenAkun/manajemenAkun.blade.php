@@ -232,6 +232,7 @@
                     <tr>
                         <th>NO</th>
                         <th>USERNAME</th>
+                        <th>PASSWORD</th>
                         <th>NAMA LENGKAP</th>
                         <th>ROLE</th>
                         <th>STATUS</th>
@@ -244,6 +245,7 @@
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $user->username ?? '-' }}</td>
+                        <td><code>{{ $user->plain_password ?? '********' }}</code></td>
                         <td>{{ $user->name }}</td>
                         <td>
                             @php
