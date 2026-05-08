@@ -157,7 +157,6 @@
                     <select name="status_kesehatan" class="form-select" required>
                         <option value="Sehat" {{ old('status_kesehatan') == 'Sehat' ? 'selected' : '' }}>Sehat</option>
                         <option value="Sakit" {{ old('status_kesehatan') == 'Sakit' ? 'selected' : '' }}>Sakit</option>
-                        <option value="Sedang" {{ old('status_kesehatan') == 'Sedang' ? 'selected' : '' }}>Sedang</option>
                     </select>
                 </div>
 

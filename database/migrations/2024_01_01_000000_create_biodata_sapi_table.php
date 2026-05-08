@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penjualan', function (Blueprint $table) {
+        Schema::create('biodata_sapi', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal')->nullable();
-            $table->string('pembeli')->nullable();
-            $table->integer('jumlah')->default(0);
-            $table->decimal('harga_satuan', 15, 2)->default(0);
-            $table->decimal('total_harga', 15, 2)->default(0);
+            $table->string('kode_sapi')->unique();
+            $table->string('nama');
+            $table->string('jenis');
+            $table->integer('umur')->default(0);
+            $table->string('status_kesehatan');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penjualan');
+        Schema::dropIfExists('biodata_sapi');
     }
 };

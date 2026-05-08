@@ -121,17 +121,17 @@
 
         <!-- Alert Section -->
         <div class="alert-box">
-            <i class="fa-solid fa-boxes-stacking me-2"></i> Stok Susu Tersedia: <strong>120 Liter</strong>
+            <i class="fa-solid fa-boxes-stacking me-2"></i> Stok Susu Tersedia: <strong>{{ number_format($stokSusu, 0, '.', ',') }} Liter</strong>
         </div>
 
         <!-- Cards Section -->
         <div class="row g-4 mb-4">
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
+                <a href="{{ route('penjualan.data') }}" class="text-decoration-none">
                     <div class="dashboard-card">
                         <div class="card-info">
                             <h5>Penjualan Hari Ini</h5>
-                            <h2>1.2Jt</h2>
+                            <h2>Rp {{ number_format($penjualanHariIni, 0, ',', '.') }}</h2>
                             <p>Rupiah</p>
                         </div>
                         <div class="card-icon icon-green">
@@ -141,11 +141,11 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
+                <a href="{{ route('penjualan.data') }}" class="text-decoration-none">
                     <div class="dashboard-card">
                         <div class="card-info">
                             <h5>Total Terjual</h5>
-                            <h2>80</h2>
+                            <h2>{{ number_format($totalTerjual, 0, '.', ',') }}</h2>
                             <p>Liter</p>
                         </div>
                         <div class="card-icon icon-blue">
@@ -159,7 +159,7 @@
                     <div class="dashboard-card">
                         <div class="card-info">
                             <h5>Sisa Stok</h5>
-                            <h2>40</h2>
+                            <h2>{{ number_format($stokSusu, 0, '.', ',') }}</h2>
                             <p>Liter</p>
                         </div>
                         <div class="card-icon icon-orange">
@@ -173,13 +173,46 @@
         <!-- Grafik Penjualan -->
         <div class="chart-card">
             <h5 class="fw-bold mb-3" style="color: #3a150c;">Grafik Penjualan Bulanan</h5>
-            <div class="chart-placeholder">
-                <i class="fa-solid fa-chart-area me-2"></i> Area Grafik Penjualan
+            <div style="height: 300px; position: relative;">
+                <canvas id="dashboardSalesChart"></canvas>
             </div>
         </div>
 
     </div>
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const ctx = document.getElementById('dashboardSalesChart').getContext('2d');
+        
+        // Data derived from controller (needs to be added)
+        const labels = @json($labels ?? ['Jan', 'Feb', 'Mar']);
+        const data = @json($revenues ?? [0, 0, 0]);
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Pendapatan (Rp)',
+                    data: data,
+                    backgroundColor: '#5d7a54',
+                    borderRadius: 8,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f0f0f0' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

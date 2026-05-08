@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Penjualan - Cimilk Yogurt</title>
+    <title>Edit Penjualan - Cimilk Yogurt</title>
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
@@ -85,6 +85,23 @@
         .btn-submit:hover { background: #4a6344; transform: translateY(-2px); box-shadow: 0 7px 0 #3a4d33; color: white; }
         .btn-submit:active { transform: translateY(2px); box-shadow: 0 2px 0 #3a4d33; }
 
+        .btn-cancel {
+            background: #e2e8f0;
+            color: #475569;
+            font-weight: bold;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.2s;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+        }
+        .btn-cancel:hover { background: #cbd5e1; color: #475569; }
+
         .input-group-text {
             background-color: #bc9f82;
             color: white;
@@ -99,17 +116,17 @@
 <body>
 
     @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Input Penjualan', 'pageSubtitle' => 'Input data penjualan susu'])
+    @include('layouts.header', ['pageTitle' => 'Edit Penjualan', 'pageSubtitle' => 'Perbarui data penjualan susu'])
 
     <div class="main-content">
         <div class="page-title-section">
-            <h3>Transaksi Penjualan Baru 💰</h3>
-            <p>Silahkan lengkapi detail transaksi di bawah ini.</p>
+            <h3>Edit Transaksi Penjualan 📝</h3>
+            <p>Silahkan perbarui detail transaksi di bawah ini.</p>
         </div>
 
         <div class="form-container">
             <div class="form-title">
-                <i class="fa-solid fa-receipt me-2"></i> Form Penjualan
+                <i class="fa-solid fa-edit me-2"></i> Form Edit Penjualan
             </div>
 
             @if($errors->any())
@@ -122,29 +139,30 @@
                 </div>
             @endif
 
-            <form action="{{ route('penjualan.store') }}" method="POST" id="penjualanForm">
+            <form action="{{ route('penjualan.update', $item->id) }}" method="POST" id="penjualanForm">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Tanggal</label>
-                        <input type="date" name="tanggal" class="form-control" value="{{ date('Y-m-d') }}" required>
+                        <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', $item->tanggal) }}" required>
                     </div>
 
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Pembeli</label>
-                        <input type="text" name="pembeli" class="form-control" placeholder="Masukkan nama pembeli" required>
+                        <input type="text" name="pembeli" class="form-control" placeholder="Masukkan nama pembeli" value="{{ old('pembeli', $item->pembeli) }}" required>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Jumlah (Liter)</label>
-                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="0" min="0" required>
+                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="0" min="0" value="{{ old('jumlah', $item->jumlah) }}" required>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Harga Satuan (Rp/Liter)</label>
                         <div class="input-group has-prefix">
                             <span class="input-group-text">Rp</span>
-                            <input type="number" name="harga_satuan" id="harga_satuan" class="form-control" placeholder="15000" min="0" required>
+                            <input type="number" name="harga_satuan" id="harga_satuan" class="form-control" placeholder="15000" min="0" value="{{ old('harga_satuan', $item->harga_satuan) }}" required>
                         </div>
                     </div>
 
@@ -152,16 +170,16 @@
                         <label class="form-label">Total Harga (Otomatis)</label>
                         <div class="input-group has-prefix">
                             <span class="input-group-text">Rp</span>
-                            <input type="number" name="total_harga" id="total_harga" class="form-control" value="0" readonly>
+                            <input type="number" name="total_harga" id="total_harga" class="form-control" value="{{ old('total_harga', $item->total_harga) }}" readonly>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-submit">
-                        <i class="fa-solid fa-save me-2"></i> Simpan Transaksi
+                        <i class="fa-solid fa-save me-2"></i> Simpan Perubahan
                     </button>
-                    <a href="{{ route('penjualan.data') }}" class="btn btn-cancel" style="background: #e2e8f0; color: #475569; font-weight: bold; border: none; padding: 14px 30px; border-radius: 15px; text-decoration: none; transition: all 0.2s; width: 100%; font-size: 16px; margin-top: 10px; display: block; text-align: center;">
+                    <a href="{{ route('penjualan.data') }}" class="btn btn-cancel">
                         Batal
                     </a>
                 </div>

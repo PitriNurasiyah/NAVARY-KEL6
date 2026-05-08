@@ -10,12 +10,12 @@ class Penjualan extends Model
     use HasFactory;
 
     protected $table = 'penjualan';
-
+    
     protected $fillable = [
-        'produk',
-        'jumlah',
-        'total_harga',
         'tanggal',
-        'keterangan'
+        'pembeli',
+        'jumlah',
+        'harga_satuan',
+        'total_harga'
     ];
 }

@@ -44,7 +44,12 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('laporan.penjualan') }}" class="nav-link {{ request()->routeIs('laporan.penjualan') ? 'active' : '' }}">
-                <i class="fas fa-file-invoice-dollar"></i> <span>Laporan Penjualan</span>
+                <i class="fas fa-calendar-day"></i> <span>Laporan Harian</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('laporan.penjualan.bulanan') }}" class="nav-link {{ request()->routeIs('laporan.penjualan.bulanan') ? 'active' : '' }}">
+                <i class="fas fa-chart-line"></i> <span>Laporan Bulanan</span>
             </a>
         </li>
     </ul>

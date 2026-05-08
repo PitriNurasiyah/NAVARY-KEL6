@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/dashboard-penjualan', [DashboardPenjualanController::class, 'index'])->name('penjualan.dashboard');
     Route::get('/input-penjualan', function() { return view('penjualan.input-penjualan.index'); })->name('penjualan.input');
+    Route::post('/input-penjualan', [App\Http\Controllers\PenjualanController::class, 'store'])->name('penjualan.store');
+    Route::get('/input-penjualan/{id}/edit', [App\Http\Controllers\PenjualanController::class, 'edit'])->name('penjualan.edit');
+    Route::put('/input-penjualan/{id}', [App\Http\Controllers\PenjualanController::class, 'update'])->name('penjualan.update');
+    Route::delete('/input-penjualan/{id}', [App\Http\Controllers\PenjualanController::class, 'destroy'])->name('penjualan.destroy');
     Route::get('/data-penjualan', function() { 
         $penjualan = \App\Models\Penjualan::orderBy('created_at', 'desc')->get();
         return view('penjualan.data-penjualan.index', compact('penjualan')); 
@@ -49,10 +53,61 @@ Route::middleware('auth')->group(function () {
         $produksi = \App\Models\ProduksiSusu::with('sapi')->orderBy('tanggal', 'desc')->get();
         return view('laporan.produksi', compact('produksi')); 
     })->name('laporan.produksi');
-    Route::get('/laporan-penjualan', function() { 
-        $penjualan = \App\Models\Penjualan::orderBy('created_at', 'desc')->get();
-        return view('laporan.penjualan', compact('penjualan')); 
+    Route::get('/laporan-penjualan', function(Illuminate\Http\Request $request) { 
+        $query = \App\Models\Penjualan::query();
+        
+        if ($request->filled('dari_tanggal')) {
+            $query->whereDate('tanggal', '>=', $request->dari_tanggal);
+        }
+        if ($request->filled('sampai_tanggal')) {
+            $query->whereDate('tanggal', '<=', $request->sampai_tanggal);
+        }
+
+        $penjualan = $query->orderBy('tanggal', 'desc')->get();
+        $totalPenjualan = $penjualan->sum('total_harga');
+        $totalLiter = $penjualan->sum('jumlah');
+        
+        return view('laporan.penjualan', compact('penjualan', 'totalPenjualan', 'totalLiter')); 
     })->name('laporan.penjualan');
+
+    Route::get('/laporan-penjualan-bulanan', function() { 
+        // 1. Monthly Data (Aggregation)
+        $monthlyData = \App\Models\Penjualan::selectRaw('
+            MONTH(tanggal) as month, 
+            YEAR(tanggal) as year, 
+            SUM(jumlah) as total_liter, 
+            SUM(total_harga) as total_pendapatan
+        ')
+        ->groupBy('year', 'month')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
+
+        $m_labels = []; $m_liters = []; $m_revenues = [];
+        foreach ($monthlyData as $data) {
+            $monthName = \Carbon\Carbon::create()->month($data->month)->translatedFormat('F');
+            $m_labels[] = $monthName . ' ' . $data->year;
+            $m_liters[] = $data->total_liter;
+            $m_revenues[] = $data->total_pendapatan;
+        }
+
+        // 2. Daily Data (Aggregation for last 30 entries)
+        $dailyData = \App\Models\Penjualan::orderBy('tanggal', 'asc')
+            ->take(30)
+            ->get();
+        
+        $d_labels = []; $d_liters = []; $d_revenues = [];
+        foreach ($dailyData as $data) {
+            $d_labels[] = \Carbon\Carbon::parse($data->tanggal)->format('d/m');
+            $d_liters[] = $data->jumlah;
+            $d_revenues[] = $data->total_harga;
+        }
+
+        return view('laporan.penjualan_bulanan', [
+            'm_labels' => $m_labels, 'm_liters' => $m_liters, 'm_revenues' => $m_revenues,
+            'd_labels' => $d_labels, 'd_liters' => $d_liters, 'd_revenues' => $d_revenues
+        ]); 
+    })->name('laporan.penjualan.bulanan');
 
     Route::post('logout', [CimilkController::class, 'logout'])->name('logout');
 });
