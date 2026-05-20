@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard-peternak', [DashboardPeternakController::class, 'index'])->name('peternak.dashboard');
     Route::resource('pakan', App\Http\Controllers\PakanController::class);
     Route::resource('siklus', App\Http\Controllers\SiklusSapiController::class);
+    Route::post('/siklus/produksi', [App\Http\Controllers\SiklusSapiController::class, 'storeProduksi'])->name('siklus.storeProduksi');
+    Route::get('/siklus/{id}/pantau', [App\Http\Controllers\SiklusSapiController::class, 'pantau'])->name('siklus.pantau');
     Route::resource('produksi', App\Http\Controllers\ProduksiSusuController::class);
     
     Route::get('/dashboard-penjualan', [DashboardPenjualanController::class, 'index'])->name('penjualan.dashboard');

@@ -53,13 +53,27 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Fase Siklus</label>
-                    <select name="fase" class="form-select" required>
+                    <select name="fase" id="faseSelect" class="form-select" required>
                         <option value="IB">IB (Inseminasi Buatan)</option>
                         <option value="Bunting">Bunting</option>
                         <option value="Melahirkan">Melahirkan</option>
                         <option value="Laktasi">Laktasi</option>
                         <option value="Kering Kandang">Kering Kandang</option>
                     </select>
+                </div>
+                
+                <div id="inputSusuFields" style="display: none; background: #e8f4e5; padding: 15px; border-radius: 10px; border: 2px dashed #8CA685; margin-bottom: 15px;">
+                    <p style="font-weight: 700; color: #4a6344; margin-bottom: 10px; font-size: 14px;"><i class="fa-solid fa-droplet"></i> Input Produksi Susu Awal (Opsional)</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-2 mb-md-0">
+                            <label class="form-label">Susu Pagi (Liter)</label>
+                            <input type="number" step="0.01" name="jumlah_pagi" class="form-control" placeholder="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Susu Sore (Liter)</label>
+                            <input type="number" step="0.01" name="jumlah_sore" class="form-control" placeholder="0">
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tanggal Mulai</label>
@@ -84,5 +98,16 @@
             </form>
         </div>
     </div>
+    
+    <script>
+        document.getElementById('faseSelect').addEventListener('change', function() {
+            if(this.value === 'Laktasi') {
+                document.getElementById('inputSusuFields').style.display = 'block';
+            } else {
+                document.getElementById('inputSusuFields').style.display = 'none';
+            }
+        });
+        document.getElementById('faseSelect').dispatchEvent(new Event('change'));
+    </script>
 </body>
 </html>

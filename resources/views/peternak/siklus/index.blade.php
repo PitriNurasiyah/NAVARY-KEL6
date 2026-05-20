@@ -61,7 +61,12 @@
         .btn-confirm-yes:active { transform: translateY(3px); box-shadow: 0 1px 0 #922b21; }
         .btn-confirm-no { background: #e2e8f0; color: #475569; border: none; padding: 10px 28px; border-radius: 12px; font-weight: 700; cursor: pointer; }
         .btn-confirm-no:hover { background: #cbd5e1; }
+
+        .chart-container { background: white; padding: 25px; border-radius: 15px; border: 2px solid #bc9f82; margin-top: 25px; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .chart-container.active { display: block; animation: fadeInDown 0.4s ease; }
+        .chart-title { font-family: 'Fredoka One', cursive; color: #432118; font-size: 20px; margin-bottom: 20px; text-align: center; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     @include('layouts.sidebar')
@@ -135,6 +140,9 @@
                         @if(Auth::user()->role === 'Peternak')
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
+                                @if($item->fase === 'Laktasi')
+                                <button type="button" class="btn btn-sm btn-outline-info shadow-sm fw-bold" onclick="openProduksi('{{ $item->sapi_id }}', '{{ addslashes($item->sapi->nama ?? 'Sapi') }}')"><i class="fa-solid fa-plus"></i> Input Produksi</button>
+                                @endif
                                 <a href="{{ route('siklus.edit', $item->id) }}" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
                                 <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete('{{ route('siklus.destroy', $item->id) }}', '{{ $item->sapi->nama ?? 'Sapi' }}')">Hapus</button>
                             </div>
@@ -155,8 +163,12 @@
                 </tbody>
             </table>
         </div>
-    </div>
 
+        <div class="chart-container" id="laktasiChartContainer">
+            <h4 class="chart-title">Grafik Pemantauan Laktasi Sapi (Per 100 Hari)</h4>
+            <canvas id="laktasiChart" height="100"></canvas>
+        </div>
+    </div>
     <div class="confirm-overlay" id="confirmOverlay">
         <div class="confirm-box">
             <div class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -166,6 +178,40 @@
                 <button class="btn-confirm-yes" id="confirmYesBtn">Ya, Hapus</button>
                 <button class="btn-confirm-no" onclick="closeConfirm()">Batal</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal Input Produksi Susu -->
+    <div class="confirm-overlay" id="produksiOverlay">
+        <div class="confirm-box" style="max-width: 500px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="m-0 text-start" style="font-family: 'Fredoka One', cursive; color: #432118; font-size: 20px;"><i class="fa-solid fa-droplet text-info me-2"></i>Input Produksi Susu</h5>
+                <button type="button" class="btn-close" onclick="closeProduksi()"></button>
+            </div>
+            <form action="{{ route('siklus.storeProduksi') }}" method="POST" id="formProduksiSusu">
+                @csrf
+                <input type="hidden" name="sapi_id" id="produksiSapiId">
+                <p class="text-start mb-3" style="color: #6d4c41; font-weight: 600; font-size: 14px;">Sapi: <span id="produksiSapiNama" class="badge bg-primary"></span></p>
+                
+                <div class="mb-3 text-start">
+                    <label class="form-label" style="font-weight: 700; color: #5a2c1b; font-size: 14px;">Tanggal</label>
+                    <input type="date" name="tanggal" class="form-control" value="{{ date('Y-m-d') }}" style="border-radius: 10px; border: 2px solid #a67c52; padding: 10px; background-color: #fffdfa;" required>
+                </div>
+                <div class="row text-start mb-4">
+                    <div class="col-6">
+                        <label class="form-label" style="font-weight: 700; color: #5a2c1b; font-size: 14px;">Susu Pagi (L)</label>
+                        <input type="number" step="0.01" name="jumlah_pagi" class="form-control" placeholder="0" style="border-radius: 10px; border: 2px solid #a67c52; padding: 10px; background-color: #fffdfa;">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label" style="font-weight: 700; color: #5a2c1b; font-size: 14px;">Susu Sore (L)</label>
+                        <input type="number" step="0.01" name="jumlah_sore" class="form-control" placeholder="0" style="border-radius: 10px; border: 2px solid #a67c52; padding: 10px; background-color: #fffdfa;">
+                    </div>
+                </div>
+                <div class="confirm-actions">
+                    <button type="submit" class="btn-confirm-yes" style="background: #5d7a54; box-shadow: 0 4px 0 #3a4d33;">Simpan Data</button>
+                    <button type="button" class="btn-confirm-no" onclick="closeProduksi()">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -180,6 +226,13 @@
             rows.forEach(row => {
                 row.style.display = (fase === 'all' || row.getAttribute('data-fase') === fase) ? '' : 'none';
             });
+
+            // Tampilkan grafik hanya jika tab Laktasi dipilih
+            if(fase === 'Laktasi') {
+                document.getElementById('laktasiChartContainer').classList.add('active');
+            } else {
+                document.getElementById('laktasiChartContainer').classList.remove('active');
+            }
         }
         document.getElementById('searchInput').addEventListener('input', function() {
             let filter = this.value.toLowerCase();
@@ -198,6 +251,49 @@
         document.getElementById('confirmYesBtn').addEventListener('click', function() {
             const form = document.getElementById('deleteForm'); form.action = deleteUrl; form.submit();
         });
+
+        function openProduksi(sapiId, sapiNama) {
+            document.getElementById('produksiSapiId').value = sapiId;
+            document.getElementById('produksiSapiNama').textContent = sapiNama;
+            document.getElementById('produksiOverlay').classList.add('active');
+        }
+
+        function closeProduksi() {
+            document.getElementById('produksiOverlay').classList.remove('active');
+            document.getElementById('formProduksiSusu').reset();
+            document.getElementById('formProduksiSusu').querySelector('input[name="tanggal"]').value = new Date().toISOString().split('T')[0];
+        }
+
+        // Setup Chart
+        const chartDataRaw = @json($laktasiChartData ?? []);
+        if (chartDataRaw.length > 0) {
+            const labels = chartDataRaw.map(d => d.nama);
+            const data100 = chartDataRaw.map(d => d.produksi100);
+            const data200 = chartDataRaw.map(d => d.produksi200);
+            const data300 = chartDataRaw.map(d => d.produksi300);
+
+            const ctx = document.getElementById('laktasiChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: '100 Hari Pertama (L)', data: data100, backgroundColor: '#8CA685', borderColor: '#4a6344', borderWidth: 1 },
+                        { label: '100 Hari Kedua (L)', data: data200, backgroundColor: '#c0a080', borderColor: '#a67c52', borderWidth: 1 },
+                        { label: '100 Hari Ketiga (L)', data: data300, backgroundColor: '#d1b99a', borderColor: '#b69772', borderWidth: 1 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Total Produksi (Liter)' } }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>

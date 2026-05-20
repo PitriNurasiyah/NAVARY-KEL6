@@ -15,7 +15,7 @@
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; text-transform: uppercase; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         /* Filter Section */
@@ -35,7 +35,7 @@
         .summary-wrapper { display: flex; gap: 20px; margin-bottom: 35px; }
         .summary-card {
             flex: 1;
-            background: #fefefe; 
+            background: #fefefe;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 0 #bc9f82;
@@ -44,28 +44,28 @@
         .summary-card h2 { margin: 10px 0 0; font-family: 'Fredoka One', cursive; font-size: 32px; color: #1a1a1a; }
 
         /* Table Section */
-        .table-container { 
-            background: white; 
-            border-radius: 20px; 
-            padding: 0; 
-            border: 2px solid #bc9f82; 
-            overflow: hidden; 
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 0;
+            border: 2px solid #bc9f82;
+            overflow: hidden;
             margin-top: 10px;
         }
         .table { margin-bottom: 0; border-collapse: separate; border-spacing: 0; }
-        .table thead th { 
-            background-color: #4a6344 !important; 
-            color: #ffffff !important; 
-            padding: 18px 15px; 
+        .table thead th {
+            background-color: #4a6344 !important;
+            color: #ffffff !important;
+            padding: 18px 15px;
             font-weight: 800;
             font-size: 13px;
             text-transform: uppercase;
             border: 1px solid #bc9f82 !important;
         }
-        .table tbody td { 
-            padding: 15px; 
-            border: 1px solid #bc9f82 !important; 
-            font-weight: 600; 
+        .table tbody td {
+            padding: 15px;
+            border: 1px solid #bc9f82 !important;
+            font-weight: 600;
             color: #432118;
             background: white;
         }
@@ -78,9 +78,9 @@
 
 
         @media print {
-            .sidebar, .top-header, .header, .filter-section, .btn-back, .btn-filter, 
-            .page-title-section, .summary-wrapper, .mt-4, .toggle-group { 
-                display: none !important; 
+            .sidebar, .top-header, .header, .filter-section, .btn-back, .btn-filter,
+            .page-title-section, .summary-wrapper, .mt-4, .toggle-group {
+                display: none !important;
             }
             .print-only-header { display: block !important; text-align: center; margin-bottom: 30px; }
             body { background: white !important; }
