@@ -4,137 +4,198 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Sapi - Cimilk Yogurt</title>
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Fredoka:wght@600&display=swap" rel="stylesheet">
 
     <style>
         body {
+            background-color: {{ request('mode') == 'modal' ? 'transparent' : (Auth::check() ? '#dcc8ae' : '#e8dccb') }};
             font-family: 'Quicksand', sans-serif;
-            background-color: #dcc8ae;
-            color: #432118;
             margin: 0;
             display: flex;
-            overflow-x: hidden;
+            min-height: 100vh;
+            overflow-y: {{ request('mode') == 'modal' ? 'hidden' : 'auto' }};
+            
+            
+        }
+        body::-webkit-scrollbar { display: none; }
+
+        .register-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: {{ request('mode') == 'modal' ? 'flex-start' : 'center' }};
+            padding-top: {{ request('mode') == 'modal' ? '60px' : '40px' }};
+            padding-bottom: {{ request('mode') == 'modal' ? '50px' : '40px' }};
+            @if(Auth::check() && request()->query('mode') != 'modal')
+                margin-left: 260px;
+            @endif
         }
 
-        .main-content {
-            margin-left: 260px;
-            width: calc(100% - 260px);
-            padding: 45px;
+        .farm-wrapper { position: relative; width: 500px; max-width: 95%; }
+
+        .login-box {
+            width: 100%;
+            background-color: #f5efe6;
+            padding: 25px 25px 30px;
+            border-radius: 40px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+            position: relative;
+            border: 10px solid transparent;
+            background-clip: padding-box;
         }
 
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            z-index: -1;
+            background-color: #8CA685;
+            background-image: url('https://www.transparenttextures.com/patterns/grass.png');
+            border-radius: 50px;
+        }
+
+        .top-icon {
+            position: absolute;
+            top: -55px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dcc8ae;
+            padding: 6px;
+            border-radius: 50%;
+            z-index: 20;
+        }
+
+        .top-icon img {
+            background: white;
+            border: 2px solid #D2B48C;
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            width: 65px;
+        }
+
+        .btn-close-custom {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            color: #8CA685;
+            cursor: pointer;
+            z-index: 30;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: bold;
+            color: #5a2c1b;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            line-height: 1.1;
+        }
+
+        .form-label { font-weight: bold; color: #5a2c1b; font-size: 14px; margin-bottom: 4px; }
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 2px solid #a67c52;
+            padding: 10px 14px;
+            background-color: #fffdfa;
+            font-size: 14px;
+        }
+
+        .btn-register {
+            width: 100%;
+            background: #7a2f1c;
+            color: white;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            box-shadow: 0 6px 0 #5a1f12;
+            transition: all 0.1s ease;
+        }
+        .btn-register:active { transform: translateY(4px); box-shadow: 0 2px 0 #5a1f12; }
+
+        .barn-icon {
+            position: absolute;
+            bottom: 40px;
+            right: -10px;
+            width: 75px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .alert-form { padding: 8px 12px; font-size: 13px; border-radius: 12px; margin-bottom: 15px; border: 2px solid #f5c2c7; }
+        
+        .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
         .page-title-section { margin-bottom: 25px; }
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
-
-        .form-container {
-            background-color: #f5efe6;
-            padding: 25px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            position: relative;
-            border: 6px solid transparent;
-            background-clip: padding-box;
-            max-width: 500px;
-        }
-
-        .form-container::before {
-            content: '';
-            position: absolute;
-            top: -10px; left: -10px; right: -10px; bottom: -10px;
-            z-index: -1;
-            background-color: #5d7a54;
-            background-image: url('https://www.transparenttextures.com/patterns/grass.png');
-            border-radius: 35px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        .form-label { font-weight: 700; color: #5a2c1b; margin-bottom: 4px; display: block; font-size: 14px; }
-        .form-control, .form-select {
-            border-radius: 10px;
-            border: 2px solid #a67c52;
-            padding: 10px;
-            font-size: 14px;
-            background-color: #fffdfa;
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: #5d7a54;
-            box-shadow: 0 0 0 0.25rem rgba(93, 122, 84, 0.1);
-            background-color: #ffffff;
-        }
-
-        .btn-save {
-            background: #5d7a54;
-            color: white;
-            font-weight: bold;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 0 #3a4d33;
-            transition: all 0.2s;
-        }
-        .btn-save:hover { background: #4a6344; transform: translateY(-2px); box-shadow: 0 6px 0 #3a4d33; color: white; }
-        .btn-save:active { transform: translateY(2px); box-shadow: 0 2px 0 #3a4d33; }
-
-        .btn-cancel {
-            background: #e2e8f0;
-            color: #475569;
-            font-weight: bold;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: all 0.2s;
-            display: inline-block;
-        }
-        .btn-cancel:hover { background: #cbd5e1; color: #475569; transform: translateY(-2px); }
     </style>
 </head>
 <body>
 
-    @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Biodata Sapi', 'pageSubtitle' => 'Masukkan informasi sapi baru'])
+    @if(request('mode') != 'modal')
+        @include('layouts.sidebar')
+        @include('layouts.header', ['pageTitle' => 'Tambah Sapi', 'pageSubtitle' => 'Input data baru'])
+        
+        <div class="main-content">
+            <div class="page-title-section">
+                <h3>Tambah Sapi 🐄</h3>
+            </div>
+    @endif
 
-    <!-- Main Content -->
-    <div class="main-content">
+    <div class="register-wrapper" style="{{ request('mode') != 'modal' ? 'padding-top: 20px;' : '' }}">
+        <div class="farm-wrapper">
+            <div class="top-icon">
+                <img src="{{ asset('img/sapii.png') }}" width="80" alt="logo">
+            </div>
 
-        <div class="page-title-section">
-            <h3>Tambah Data Sapi 🐄</h3>
-        </div>
+            <div class="login-box">
+                @if(Auth::check())
+                <button type="button" class="btn-close-custom" id="closeModalBtn">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+                @endif
 
-        <div class="form-container">
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                <div class="title">Tambah Sapi</div>
 
-            <form action="{{ route('sapi.store') }}" method="POST">
+                @if($errors->any())
+                    <div class="alert alert-danger alert-form">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
+                <form action="{{ route('sapi.store') }}" method="POST" target="_parent">
                 @csrf
+                    <input type="hidden" name="mode" value="{{ request('mode') }}">
                 
-                <div class="mb-3">
-                    <label class="form-label">ID Sapi (Kode)</label>
+                <div class="mb-2">
+                    <label class="form-label">ID Sapi</label>
                     <input type="text" name="kode_sapi" class="form-control" placeholder="Contoh: SP001" value="{{ old('kode_sapi') }}" required>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label class="form-label">Nama Sapi</label>
                     <input type="text" name="nama" class="form-control" placeholder="Contoh: Sapi A" value="{{ old('nama') }}" required>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label class="form-label">Jenis</label>
                     <input type="text" name="jenis" class="form-control" placeholder="Contoh: Holstein" value="{{ old('jenis') }}" required>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Jenis Kelamin (Opsional)</label>
+                <div class="mb-2">
+                    <label class="form-label">Jenis Kelamin</label>
                     <select name="jenis_kelamin" class="form-select">
                         <option value="">-- Pilih Jenis Kelamin --</option>
                         <option value="Jantan" {{ old('jenis_kelamin') == 'Jantan' ? 'selected' : '' }}>Jantan</option>
@@ -142,17 +203,17 @@
                     </select>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Umur Sapi (Opsional)</label>
+                <div class="mb-2">
+                    <label class="form-label">Umur Sapi</label>
                     <input type="text" name="umur" class="form-control" placeholder="Contoh: 3 Tahun atau 24 Bulan" value="{{ old('umur') }}">
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Berat Sapi (Opsional)</label>
+                <div class="mb-2">
+                    <label class="form-label">Berat Sapi</label>
                     <input type="text" name="berat" class="form-control" placeholder="Contoh: 450 kg" value="{{ old('berat') }}">
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-2">
                     <label class="form-label">Status Kesehatan</label>
                     <select name="status_kesehatan" class="form-select" required>
                         <option value="Sehat" {{ old('status_kesehatan') == 'Sehat' ? 'selected' : '' }}>Sehat</option>
@@ -160,15 +221,47 @@
                     </select>
                 </div>
 
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-save">Simpan Data</button>
-                    <a href="{{ route('sapi.index') }}" class="btn btn-cancel">Batal</a>
-                </div>
+                    <div class="position-relative mt-4">
+                        <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-secondary w-100 fw-bold" style="border-radius: 12px; padding: 12px; background-color: #8c7b6f; border: none; box-shadow: 0 6px 0 #5e5149;" id="cancelBtn" onclick="if(window.parent && window.parent.document.getElementById('registerModal')){ window.parent.bootstrap.Modal.getInstance(window.parent.document.getElementById('registerModal')).hide(); } else { window.history.back(); }">Batal</button>
+                            <button type="submit" class="btn btn-register w-100">Simpan Data</button>
+                        </div>
+                    </div>
             </form>
+
+            </div>
         </div>
-
     </div>
+    @if(request('mode') != 'modal')
+        </div>
+    @endif
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const closeBtn = document.getElementById('closeModalBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            try {
+                const modal = window.parent.bootstrap.Modal.getInstance(
+                    window.parent.document.getElementById('registerModal')
+                );
+                if (modal) modal.hide();
+            } catch(e) {
+                window.history.back();
+            }
+        });
+    }
+
+    @if(session('success'))
+    window.addEventListener('DOMContentLoaded', (event) => {
+        try {
+            window.top.location.href = "{{ route('sapi.index') }}?success=" + encodeURIComponent("{{ session('success') }}");
+        } catch(e) {
+            window.location.href = "{{ route('sapi.index') }}";
+        }
+    });
+    @endif
+</script>
+
 </body>
 </html>

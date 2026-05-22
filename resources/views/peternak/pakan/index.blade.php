@@ -64,7 +64,26 @@
         .btn-confirm-yes:active { transform: translateY(3px); box-shadow: 0 1px 0 #922b21; }
         .btn-confirm-no { background: #e2e8f0; color: #475569; border: none; padding: 10px 28px; border-radius: 12px; font-weight: 700; cursor: pointer; }
         .btn-confirm-no:hover { background: #cbd5e1; }
-    </style>
+    
+        /* Modal Floating Styling */
+        .modal-content-custom {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        .modal-backdrop.show { opacity: 0.6; background-color: #000; }
+        .iframe-container {
+            width: 100%;
+            height: auto;
+            border: none;
+            overflow: hidden;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            border: none;
+        }
+
+        </style>
 </head>
 <body>
     @include('layouts.sidebar')
@@ -92,7 +111,7 @@
                 </div>
             </div>
             @if(Auth::user()->role === 'Peternak')
-            <a href="{{ route('pakan.create') }}" class="btn btn-add"><i class="fa-solid fa-plus me-2"></i>Tambah Pakan Baru</a>
+            <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('pakan.create') }}"><i class="fa-solid fa-plus me-2"></i>Tambah Pakan Baru</button>
             @endif
         </div>
 
@@ -161,6 +180,18 @@
         @method('DELETE')
     </form>
 
+    
+    <!-- Modal Register/Create -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="iframe-container">
+                    <iframe id="registerIframe" src="" scrolling="no" onload="setTimeout(() => { if(this.contentWindow.document.body) { this.style.height = (this.contentWindow.document.body.scrollHeight + 50) + 'px'; } }, 50);" ></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('searchInput').addEventListener('input', function() {
@@ -195,5 +226,27 @@
             }, 5000);
         }
     </script>
+
+    <script>
+        // ====== Modal: Reload iframe ======
+        const registerModal = document.getElementById('registerModal');
+        const registerIframe = document.getElementById('registerIframe');
+        
+        if (registerModal && registerIframe) {
+            registerModal.addEventListener('show.bs.modal', function(event) {
+                // Determine the create route
+                // If it's passed via data-route, use it. Otherwise default to the one mapped in JS.
+                const button = event.relatedTarget;
+                const routeUrl = button.getAttribute('data-route');
+                if (routeUrl) {
+                    registerIframe.src = routeUrl + (routeUrl.includes('?') ? '&' : '?') + "mode=modal";
+                }
+            });
+            registerModal.addEventListener('hide.bs.modal', function() {
+                registerIframe.src = '';
+            });
+        }
+    </script>
+
 </body>
 </html>

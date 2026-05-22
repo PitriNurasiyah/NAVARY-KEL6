@@ -65,7 +65,26 @@
         .chart-container { background: white; padding: 25px; border-radius: 15px; border: 2px solid #bc9f82; margin-top: 25px; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .chart-container.active { display: block; animation: fadeInDown 0.4s ease; }
         .chart-title { font-family: 'Fredoka One', cursive; color: #432118; font-size: 20px; margin-bottom: 20px; text-align: center; }
-    </style>
+    
+        /* Modal Floating Styling */
+        .modal-content-custom {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        .modal-backdrop.show { opacity: 0.6; background-color: #000; }
+        .iframe-container {
+            width: 100%;
+            height: auto;
+            border: none;
+            overflow: hidden;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            border: none;
+        }
+
+        </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -103,7 +122,7 @@
                 </div>
             </div>
             @if(Auth::user()->role === 'Peternak')
-            <a href="{{ route('siklus.create') }}" class="btn btn-add"><i class="fa-solid fa-plus me-2"></i>Tambah Siklus</a>
+            <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('siklus.create') }}"><i class="fa-solid fa-plus me-2"></i>Tambah Siklus</button>
             @endif
         </div>
 
@@ -217,6 +236,18 @@
 
     <form id="deleteForm" method="POST" style="display:none;">@csrf @method('DELETE')</form>
 
+    
+    <!-- Modal Register/Create -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="iframe-container">
+                    <iframe id="registerIframe" src="" scrolling="no" onload="setTimeout(() => { if(this.contentWindow.document.body) { this.style.height = (this.contentWindow.document.body.scrollHeight + 50) + 'px'; } }, 50);" ></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function filterFase(fase, element) {
@@ -295,5 +326,27 @@
             });
         }
     </script>
+
+    <script>
+        // ====== Modal: Reload iframe ======
+        const registerModal = document.getElementById('registerModal');
+        const registerIframe = document.getElementById('registerIframe');
+        
+        if (registerModal && registerIframe) {
+            registerModal.addEventListener('show.bs.modal', function(event) {
+                // Determine the create route
+                // If it's passed via data-route, use it. Otherwise default to the one mapped in JS.
+                const button = event.relatedTarget;
+                const routeUrl = button.getAttribute('data-route');
+                if (routeUrl) {
+                    registerIframe.src = routeUrl + (routeUrl.includes('?') ? '&' : '?') + "mode=modal";
+                }
+            });
+            registerModal.addEventListener('hide.bs.modal', function() {
+                registerIframe.src = '';
+            });
+        }
+    </script>
+
 </body>
 </html>

@@ -79,15 +79,17 @@
 
         @media print {
             .sidebar, .top-header, .header, .filter-section, .btn-back, .btn-filter,
-            .page-title-section, .summary-wrapper, .mt-4, .toggle-group {
+            .page-title-section p, .summary-wrapper, .mt-4, .toggle-group, .print-only-header {
                 display: none !important;
             }
-            .print-only-header { display: block !important; text-align: center; margin-bottom: 30px; }
-            body { background: white !important; }
-            .main-content { margin: 0 !important; width: 100% !important; padding: 0 !important; }
-            .table-container { border: 1px solid #000 !important; border-radius: 0 !important; }
-            .table thead th { background-color: #eee !important; color: black !important; -webkit-print-color-adjust: exact; }
-            .table tbody td { border: 1px solid #000 !important; }
+            body { background: white !important; padding: 0 !important; margin: 0 !important; }
+            .main-content { margin: 0 !important; width: 100% !important; padding: 20px !important; }
+            .table-container { border: none !important; border-radius: 0 !important; margin-top: 0 !important; padding: 0 !important; }
+            .table { border: 1px solid #000 !important; width: 100% !important; border-collapse: separate !important; border-spacing: 0 !important; }
+            .table thead th { background-color: #f0f0f0 !important; color: black !important; border: 1px solid #000 !important; -webkit-print-color-adjust: exact; padding: 10px !important; }
+            .table tbody td { border: 1px solid #000 !important; color: black !important; -webkit-print-color-adjust: exact; padding: 10px !important; }
+            .page-title-section { display: block !important; margin-bottom: 20px !important; }
+            .page-title-section h3 { text-align: center; margin-bottom: 20px; font-size: 20px; color: black !important; }
         }
     </style>
 </head>

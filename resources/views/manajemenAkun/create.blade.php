@@ -16,7 +16,7 @@
             margin: 0;
             display: flex;
             min-height: 100vh;
-            overflow-y: auto;
+            overflow-y: {{ request('mode') == 'modal' ? 'hidden' : 'auto' }};
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none;  /* IE and Edge */
         }

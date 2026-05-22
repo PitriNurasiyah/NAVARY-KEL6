@@ -107,18 +107,12 @@
         .modal-backdrop.show { opacity: 0.6; background-color: #000; }
         .iframe-container {
             width: 100%;
-            height: 750px;
+            height: auto;
             border: none;
-            overflow-y: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
-        }
-        .iframe-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
+            overflow: hidden;
         }
         .iframe-container iframe {
             width: 100%;
-            height: 100%;
             border: none;
         }
 
@@ -294,7 +288,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-custom">
                 <div class="iframe-container">
-                    <iframe id="registerIframe" src="" scrolling="no"></iframe>
+                    <iframe id="registerIframe" src="" scrolling="no" onload="setTimeout(() => { if(this.contentWindow.document.body) { this.style.height = (this.contentWindow.document.body.scrollHeight + 50) + 'px'; } }, 50);" ></iframe>
                 </div>
             </div>
         </div>

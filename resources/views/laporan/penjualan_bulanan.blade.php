@@ -107,11 +107,6 @@
             </div>
         </div>
 
-        <div class="mt-4 text-end">
-            <button class="btn btn-dark rounded-pill px-4" onclick="window.print()" style="font-weight: 700;">
-                <i class="fa-solid fa-print me-2"></i> Cetak Grafik
-            </button>
-        </div>
     </div>
 
     <script>
