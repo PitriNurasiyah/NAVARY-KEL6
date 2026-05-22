@@ -81,6 +81,19 @@
             border: none;
         }
 
+        .sapi-filter-btn { background: #fdfbf7; color: #432118; border: 2px solid #bc9f82 !important; box-shadow: 0 4px 0 #bc9f82; }
+        .sapi-filter-btn:hover { background: #8CA685; color: white; border-color: #8CA685 !important; transform: translateY(-2px); }
+        .btn-active-sapi { background: #4a6344 !important; color: white !important; border-color: #4a6344 !important; box-shadow: 0 4px 0 #3a4d33 !important; }
+        .sapi-list-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 10px 5px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .sapi-list-scroll::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
         </style>
 </head>
 <body>
@@ -113,6 +126,8 @@
             @endif
         </div>
 
+
+
         <div class="custom-table">
             <table class="table align-middle">
                 <thead>
@@ -123,6 +138,7 @@
                         <th>SORE (L)</th>
                         <th class="text-center">TOTAL</th>
                         <th>TANGGAL</th>
+                        <th>HARI LAKTASI</th>
                         @if(Auth::user()->role === 'Peternak')
                         <th class="text-center">AKSI</th>
                         @endif
@@ -137,6 +153,7 @@
                         <td>{{ $item->jumlah_sore }} L</td>
                         <td class="text-center"><span class="total-badge">{{ $item->total }} L</span></td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
+                        <td>{{ $item->laktasi_hari_ke ? 'Hari ke-' . $item->laktasi_hari_ke : '-' }}</td>
                         @if(Auth::user()->role === 'Peternak')
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
@@ -148,7 +165,7 @@
                     </tr>
                     @empty
                     <tr id="noDataRow">
-                        <td colspan="7" class="text-center py-5">
+                        <td colspan="8" class="text-center py-5">
                             <div class="d-flex flex-column align-items-center">
                                 <i class="fa-solid fa-bucket mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                 <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>
@@ -165,7 +182,27 @@
         </div>
 
         <div class="chart-container">
-            <h4 class="chart-title">Produksi Per Sapi (Hari Ini)</h4>
+            <h4 class="chart-title" id="chartTitle">Grafik Produksi Laktasi: {{ $sapiList->first()->nama ?? 'N/A' }} 📈</h4>
+            
+            <!-- Sapi Filter List -->
+            <div class="mb-4">
+                <p style="font-weight: 700; color: #5a2c1b; margin-bottom: 8px; font-size: 14px;"><i class="fa-solid fa-cow"></i> Pilih Sapi untuk Melihat Grafik Laktasi:</p>
+                <div class="sapi-list-scroll">
+                    @foreach($sapiList as $index => $s)
+                        <button type="button" class="btn btn-sm sapi-filter-btn {{ $index === 0 ? 'btn-active-sapi' : '' }}" 
+                                style="border-radius: 20px; font-weight: bold; padding: 8px 18px;"
+                                onclick="selectSapiChart({{ $s->id }}, '{{ $s->nama }}')"
+                                data-sapi-id="{{ $s->id }}">
+                            🐄 {{ $s->kode_sapi }} - {{ $s->nama }}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+
+            <div id="noChartDataMessage" class="text-center py-5 d-none">
+                <i class="fa-solid fa-circle-info fs-3 mb-2 text-muted" style="color: #a67c52 !important; opacity: 0.7;"></i>
+                <p class="text-muted fw-bold mb-0">Sapi ini belum memasuki fase laktasi atau belum memiliki data produksi laktasi.</p>
+            </div>
             <canvas id="productionChart" height="100"></canvas>
         </div>
     </div>
@@ -222,17 +259,82 @@
         });
 
         // Chart
+        const lactationChartData = @json($lactationData);
         const ctx = document.getElementById('productionChart').getContext('2d');
-        const labels = {!! json_encode($chartData->map(fn($d) => $d->sapi->kode_sapi ?? 'N/A')) !!};
-        const dataValues = {!! json_encode($chartData->map(fn($d) => $d->total)) !!};
-        new Chart(ctx, {
+        
+        // Find initially active cow ID
+        const initialActiveBtn = document.querySelector('.btn-active-sapi');
+        const initialSapiId = initialActiveBtn ? initialActiveBtn.getAttribute('data-sapi-id') : null;
+        
+        let initialLabels = ['Hari 1 - 100', 'Hari 101 - 200', 'Hari 201 - 300'];
+        let initialData = [0, 0, 0];
+        
+        if (initialSapiId && lactationChartData[initialSapiId]) {
+            initialLabels = lactationChartData[initialSapiId].labels;
+            initialData = lactationChartData[initialSapiId].data;
+            if (!lactationChartData[initialSapiId].has_data) {
+                document.getElementById('noChartDataMessage').classList.remove('d-none');
+                document.getElementById('productionChart').style.display = 'none';
+            }
+        }
+        
+        const productionChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: labels,
-                datasets: [{ label: 'Total (Liter)', data: dataValues, backgroundColor: '#5d7a54', borderRadius: 8, barThickness: 30 }]
+                labels: initialLabels,
+                datasets: [{
+                    label: 'Total Produksi Susu (Liter)',
+                    data: initialData,
+                    backgroundColor: '#8CA685',
+                    borderColor: '#4a6344',
+                    borderWidth: 2,
+                    borderRadius: 12,
+                    barThickness: 50
+                }]
             },
-            options: { indexAxis: 'y', responsive: true, scales: { x: { beginAtZero: true, grid: { display: false } }, y: { grid: { display: false } } }, plugins: { legend: { display: false } } }
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
         });
+
+        function selectSapiChart(sapiId, sapiName) {
+            document.querySelectorAll('.sapi-filter-btn').forEach(btn => {
+                btn.classList.remove('btn-active-sapi');
+            });
+            const clickedBtn = document.querySelector(`.sapi-filter-btn[data-sapi-id="${sapiId}"]`);
+            if (clickedBtn) {
+                clickedBtn.classList.add('btn-active-sapi');
+            }
+            
+            document.getElementById('chartTitle').textContent = `Grafik Produksi Laktasi: ${sapiName} 📈`;
+            
+            const cowData = lactationChartData[sapiId];
+            if (cowData) {
+                productionChart.data.labels = cowData.labels;
+                productionChart.data.datasets[0].data = cowData.data;
+                productionChart.update();
+                
+                if (cowData.has_data) {
+                    document.getElementById('noChartDataMessage').classList.add('d-none');
+                    document.getElementById('productionChart').style.display = 'block';
+                } else {
+                    document.getElementById('noChartDataMessage').classList.remove('d-none');
+                    document.getElementById('productionChart').style.display = 'none';
+                }
+            }
+        }
     </script>
 
     <script>

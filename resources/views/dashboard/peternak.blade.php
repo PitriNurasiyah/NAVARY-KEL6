@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Peternak - Cimilk Yogurt</title>
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #dcc8ae;
-            color: #432118;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f1f10 0%, #1a2e1a 50%, #0d1b0e 100%);
+            background-attachment: fixed;
+            color: #ffffff;
             margin: 0;
             overflow-x: hidden;
             display: flex;
+            min-height: 100vh;
         }
 
         .main-content {
@@ -26,37 +28,40 @@
         }
 
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
-        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
+        .page-title-section h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; color: #ffffff; margin: 0 0 4px 0; letter-spacing: -0.5px; }
+        .page-title-section p { color: rgba(110,231,183,0.7); font-weight: 600; margin: 0; font-size: 14px; }
 
         .stat-card {
-            background: #f0e2d0;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(15px);
             padding: 25px;
-            border-radius: 25px;
-            border: 3px solid #bc9f82;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
             height: 100%;
             text-decoration: none;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            border-color: #5d7a54;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            border-color: rgba(52,211,153,0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 20px rgba(52,211,153,0.1);
+            background: rgba(255,255,255,0.09);
         }
 
         .stat-info h2 {
-            font-family: 'Fredoka One', cursive;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 5px 0;
-            font-size: 38px;
-            color: #432118;
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
         }
-        .stat-info span { color: #845a33; font-weight: 700; text-transform: uppercase; font-size: 12px; }
-        .stat-unit { color: #5d7a54; font-weight: 800; font-size: 14px; }
+        .stat-info span { color: rgba(255,255,255,0.55); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .stat-unit { color: #34d399; font-weight: 800; font-size: 13px; }
 
         .icon-circle {
             width: 60px;
@@ -73,13 +78,13 @@
         .bg-custom-brown { background: #845a33; color: #ffffff; }
 
         .notification-bar {
-            background: #fef0d7;
-            border: 2px solid #f6c23e;
+            background: rgba(234,179,8,0.1);
+            border: 1px solid rgba(234,179,8,0.3);
             padding: 15px 25px;
-            border-radius: 15px;
+            border-radius: 12px;
             margin-bottom: 35px;
             font-size: 14px;
-            color: #432118;
+            color: rgba(255,255,255,0.85);
             font-weight: 600;
         }
 
@@ -91,25 +96,26 @@
             margin-bottom: 20px;
         }
         .section-header h4 {
-            font-family: 'Fredoka One', cursive;
-            color: #432118;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            color: #ffffff;
             margin: 0;
-            font-size: 22px;
+            font-size: 20px;
         }
         .view-only-badge {
-            background: #e6d5c0;
-            color: #845a33;
+            background: rgba(52,211,153,0.15);
+            color: #6ee7b7;
             font-size: 11px;
             font-weight: 700;
             padding: 3px 10px;
             border-radius: 20px;
-            border: 1.5px solid #bc9f82;
+            border: 1px solid rgba(52,211,153,0.3);
             text-transform: uppercase;
         }
 
-        .cow-card { background: #f0e2d0; padding: 20px; border-radius: 20px; border: 3px solid #bc9f82; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .cow-card h5 { font-family: 'Fredoka One', cursive; color: #432118; font-size: 16px; margin-bottom: 6px; }
-        .cow-card p { font-size: 13px; margin: 0; color: #6d4c41; font-weight: 600; }
+        .cow-card { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .cow-card h5 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: #ffffff; font-size: 15px; margin-bottom: 6px; }
+        .cow-card p { font-size: 13px; margin: 0; color: rgba(255,255,255,0.6); font-weight: 600; }
 
         .cards-wrapper {
             display: flex;
@@ -122,12 +128,12 @@
         .cards-wrapper::-webkit-scrollbar { display: none; }
 
         /* Table */
-        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
-        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px !important; text-transform: uppercase; font-size: 12px; border: 1px solid #bc9f82 !important; }
-        .table tbody td { padding: 14px !important; border: 1px solid #bc9f82 !important; font-weight: 600; }
-        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #bc9f82 !important; }
+        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: rgba(255,255,255,0.85); }
+        .table thead th { background-color: rgba(52,211,153,0.15) !important; color: #6ee7b7 !important; padding: 14px !important; text-transform: uppercase; font-size: 11px; border: 1px solid rgba(255,255,255,0.08) !important; letter-spacing: 0.5px; }
+        .table tbody td { padding: 14px !important; border: 1px solid rgba(255,255,255,0.07) !important; font-weight: 600; background: rgba(255,255,255,0.03); }
+        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid rgba(255,255,255,0.08) !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
-        .table tbody tr:hover { background-color: rgba(93, 122, 84, 0.05) !important; }
+        .table tbody tr:hover td { background-color: rgba(52,211,153,0.07) !important; }
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
     </style>
 </head>
@@ -207,10 +213,111 @@
             </div>
         </div>
 
-
+        <!-- Charts Section -->
+        <div class="row g-4 mt-2 mb-4">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm border-0" style="background-color: #f5efe6; border-radius: 25px; border: 3px solid #bc9f82 !important;">
+                    <h5 class="fw-bold mb-3" style="font-family: 'Fredoka One', cursive; color: #432118;"><i class="fa-solid fa-wheat-awn me-2" style="color: #845a33;"></i>Grafik Stok Pakan</h5>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="pakanChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm border-0" style="background-color: #f5efe6; border-radius: 25px; border: 3px solid #bc9f82 !important;">
+                    <h5 class="fw-bold mb-3" style="font-family: 'Fredoka One', cursive; color: #432118;"><i class="fa-solid fa-chart-line me-2" style="color: #5d7a54;"></i>Grafik Produksi Susu (7 Hari Terakhir)</h5>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="produksiChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Data Stok Pakan
+        const pakanLabels = {!! json_encode($pakanData->pluck('nama_pakan')) !!};
+        const pakanStok = {!! json_encode($pakanData->pluck('total_stok')) !!};
+        
+        // Data Produksi Susu
+        const produksiLabels = {!! json_encode($produksiData->map(function($d) { return \Carbon\Carbon::parse($d->tanggal)->format('d M'); })) !!};
+        const produksiTotal = {!! json_encode($produksiData->pluck('total_produksi')) !!};
+
+        // Render Pakan Chart (Bar)
+        const ctxPakan = document.getElementById('pakanChart').getContext('2d');
+        new Chart(ctxPakan, {
+            type: 'bar',
+            data: {
+                labels: pakanLabels,
+                datasets: [{
+                    label: 'Stok (KG)',
+                    data: pakanStok,
+                    backgroundColor: '#845a33',
+                    borderColor: '#5a2c1b',
+                    borderWidth: 2,
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#432118', font: { family: 'Quicksand', weight: 'bold' } },
+                        grid: { color: 'rgba(67, 33, 24, 0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#432118', font: { family: 'Quicksand', weight: 'bold' } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Render Produksi Chart (Line)
+        const ctxProduksi = document.getElementById('produksiChart').getContext('2d');
+        new Chart(ctxProduksi, {
+            type: 'line',
+            data: {
+                labels: produksiLabels,
+                datasets: [{
+                    label: 'Total Produksi (Liter)',
+                    data: produksiTotal,
+                    borderColor: '#5d7a54',
+                    backgroundColor: 'rgba(93, 122, 84, 0.2)',
+                    borderWidth: 4,
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#4a6344',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#432118', font: { family: 'Quicksand', weight: 'bold' } },
+                        grid: { color: 'rgba(67, 33, 24, 0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#432118', font: { family: 'Quicksand', weight: 'bold' } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

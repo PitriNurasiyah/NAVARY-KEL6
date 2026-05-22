@@ -10,14 +10,16 @@
         left: 260px;
         right: 0;
         height: 70px;
-        background: #f0e2d0;
-        border-bottom: 4px solid #5d7a54;
+        background: rgba(15, 31, 16, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 35px;
         z-index: 999;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         transition: left 0.3s ease;
     }
 
@@ -56,16 +58,17 @@
     }
 
     .header-page-info h6 {
-        font-family: 'Fredoka One', cursive;
-        font-size: 18px;
-        color: #432118;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: #ffffff;
         margin: 0;
         line-height: 1.2;
     }
 
     .header-page-info p {
-        font-size: 12px;
-        color: #845a33;
+        font-size: 11px;
+        color: rgba(110,231,183,0.7);
         margin: 0;
         font-weight: 600;
     }
@@ -78,18 +81,19 @@
 
     /* Profile Avatar */
     .profile-avatar {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #5d7a54, #4a6344);
+        background: linear-gradient(135deg, #34d399, #059669);
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-family: 'Fredoka One', cursive;
-        font-size: 18px;
-        border: 3px solid #bc9f82;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        border: 2px solid rgba(52,211,153,0.3);
+        box-shadow: 0 0 15px rgba(52,211,153,0.2);
     }
 
     .profile-info {
@@ -98,37 +102,36 @@
 
     .profile-info .name {
         font-weight: 700;
-        font-size: 14px;
-        color: #432118;
+        font-size: 13px;
+        color: #ffffff;
         line-height: 1.2;
     }
 
     .profile-info .role {
-        font-size: 11px;
-        color: #845a33;
+        font-size: 10px;
+        color: rgba(110,231,183,0.7);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
 
     .btn-logout {
-        border: none;
-        background: #5a1f12;
-        padding: 8px 18px;
-        border-radius: 12px;
+        border: 1px solid rgba(52,211,153,0.3);
+        background: rgba(52,211,153,0.1);
+        padding: 7px 16px;
+        border-radius: 10px;
         font-weight: 700;
-        color: #ffffff;
-        box-shadow: 0 4px 0 #3a150c;
+        color: #6ee7b7;
+        box-shadow: 0 0 15px rgba(52,211,153,0.1);
         transition: 0.2s;
-        font-size: 13px;
+        font-size: 12px;
         white-space: nowrap;
         cursor: pointer;
     }
 
-    .btn-logout:hover { background: #7a2f1c; }
+    .btn-logout:hover { background: rgba(52,211,153,0.2); color: #fff; }
     .btn-logout:active {
-        transform: translateY(3px);
-        box-shadow: 0 1px 0 #3a150c;
+        transform: translateY(2px);
     }
 
     /* Adjust main content for fixed header */
@@ -155,26 +158,25 @@
     }
     
     .notification-btn {
-        background: white;
-        border: 2px solid #bc9f82;
-        width: 42px;
-        height: 42px;
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.12);
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #5d7a54;
-        font-size: 18px;
+        color: rgba(255,255,255,0.7);
+        font-size: 17px;
         cursor: pointer;
         transition: 0.3s;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
         padding: 0;
     }
     
     .notification-btn:hover {
-        background: #fdfaf6;
-        color: #4a6344;
-        border-color: #a67c52;
+        background: rgba(52,211,153,0.15);
+        color: #6ee7b7;
+        border-color: rgba(52,211,153,0.3);
     }
     
     .notification-badge {
@@ -199,10 +201,11 @@
         top: 55px;
         right: -10px;
         width: 320px;
-        background: white;
+        background: rgba(15,31,16,0.97);
+        backdrop-filter: blur(20px);
         border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        border: 3px solid #bc9f82;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.1);
         display: none;
         flex-direction: column;
         overflow: hidden;
@@ -214,9 +217,9 @@
     }
     
     .notification-header {
-        background: #f0e2d0;
+        background: rgba(255,255,255,0.05);
         padding: 15px;
-        border-bottom: 2px solid #bc9f82;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -224,19 +227,22 @@
     
     .notification-header h6 {
         margin: 0;
-        font-family: 'Fredoka One', cursive;
-        color: #432118;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        color: #ffffff;
+        font-size: 14px;
     }
     
     .notification-header span {
-        font-size: 12px;
-        color: #845a33;
-        font-weight: 700;
+        font-size: 11px;
+        color: rgba(110,231,183,0.7);
+        font-weight: 600;
         cursor: pointer;
     }
     
     .notification-header span:hover {
         text-decoration: underline;
+        color: #6ee7b7;
     }
     
     .notification-body {
@@ -245,7 +251,8 @@
         padding: 10px;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
+        background: transparent;
     }
     
     .notification-item {
@@ -254,13 +261,13 @@
         gap: 12px;
         padding: 12px;
         border-radius: 10px;
-        background: #fdfaf6;
-        border: 1px solid #e6d5c0;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.07);
         transition: 0.2s;
     }
     
     .notification-item:hover {
-        background: #f0e2d0;
+        background: rgba(255,255,255,0.09);
     }
     
     .notification-icon-bg {
@@ -278,14 +285,14 @@
     .notification-content p {
         margin: 0;
         font-size: 12px;
-        color: #432118;
+        color: rgba(255,255,255,0.85);
         font-weight: 600;
         line-height: 1.4;
     }
     
     .notification-content span {
         font-size: 10px;
-        color: #845a33;
+        color: rgba(110,231,183,0.6);
         font-weight: 600;
     }
     
@@ -358,25 +365,16 @@
     // Notification Logic using LocalStorage
     const STORAGE_KEY = 'app_notifications';
     
-    // Load existing notifications or default ones
-    let notifications = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    
-    if (!notifications) {
-        // Default initial notifications if localStorage is empty
-        notifications = [
-            { id: 1, type: 'info', text: 'Data sapi ID-01 berhasil disimpan.', time: '2 menit yang lalu', read: false },
-            { id: 2, type: 'warning', text: 'Stok pakan konsentrat menipis!', time: '1 jam yang lalu', read: false },
-            { id: 3, type: 'cart', text: 'Transaksi baru ditambahkan.', time: '3 jam yang lalu', read: false }
-        ];
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications));
-    }
+    // Load existing notifications
+    let notifications = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
     let hasNewFlash = false;
-    const lastNotif = notifications.length > 0 ? notifications[0] : null;
 
+    // ─── Flash: session('success') ────────────────────────────────────
     @if(session('success') || request()->query('success'))
         var successMsg = {!! json_encode(session('success') ?? request()->query('success')) !!};
-        if(!lastNotif || lastNotif.text !== successMsg) {
+        var alreadyExists = notifications.some(n => n.text === successMsg && n.type === 'success');
+        if(!alreadyExists) {
             notifications.unshift({
                 id: Date.now(),
                 type: 'success',
@@ -388,9 +386,11 @@
         }
     @endif
     
+    // ─── Flash: session('error') ──────────────────────────────────────
     @if(session('error'))
         var errorMsg = {!! json_encode(session('error')) !!};
-        if(!lastNotif || lastNotif.text !== errorMsg) {
+        var alreadyExistsErr = notifications.some(n => n.text === errorMsg && n.type === 'error');
+        if(!alreadyExistsErr) {
             notifications.unshift({
                 id: Date.now() + 1,
                 type: 'error',
@@ -402,8 +402,46 @@
         }
     @endif
 
+    // ─── Siklus Sapi Alerts (jadwal hari ini dari database) ──────────
+    @php
+        $today = \Carbon\Carbon::today()->toDateString();
+        $headerAlerts = \App\Models\SiklusSapi::with('sapi')
+            ->where(function($q) use ($today) {
+                $q->whereDate('tanggal_mulai', $today)
+                  ->orWhereDate('estimasi_selesai', $today);
+            })
+            ->where('status', 'Berjalan')
+            ->get();
+    @endphp
+
+    @foreach($headerAlerts as $alert)
+    @php
+        if ($alert->tanggal_mulai == $today) {
+            $alertText = '🐄 ' . ($alert->sapi->nama ?? 'Sapi') . ' (' . ($alert->sapi->kode_sapi ?? '-') . '): Mulai Fase ' . $alert->fase . ' hari ini.';
+        } else {
+            $alertText = '⏰ ' . ($alert->sapi->nama ?? 'Sapi') . ' (' . ($alert->sapi->kode_sapi ?? '-') . '): Estimasi selesai Fase ' . $alert->fase . ' hari ini.';
+        }
+        $alertId = 'siklus_' . $alert->id . '_' . $today;
+    @endphp
+    (function() {
+        var txt = {!! json_encode($alertText) !!};
+        var uid = {!! json_encode($alertId) !!};
+        var exists = notifications.some(function(n) { return n.id == uid; });
+        if (!exists) {
+            notifications.unshift({
+                id: uid,
+                type: 'warning',
+                text: txt,
+                time: 'Jadwal Hari Ini',
+                read: false
+            });
+            hasNewFlash = true;
+        }
+    })();
+    @endforeach
+
     if(hasNewFlash) {
-        // Limit to latest 50 notifications to prevent storage overflow
+        // Limit to latest 50 notifications
         if(notifications.length > 50) notifications = notifications.slice(0, 50);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications));
     }

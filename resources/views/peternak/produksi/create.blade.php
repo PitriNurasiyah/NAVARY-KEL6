@@ -195,9 +195,13 @@
                     <label class="form-label">Hasil Pagi (Liter)</label>
                     <input type="number" step="0.1" name="jumlah_pagi" class="form-control" placeholder="0.0" required>
                 </div>
-                <div class="mb-4">
+                <div class="mb-2">
                     <label class="form-label">Hasil Sore (Liter)</label>
                     <input type="number" step="0.1" name="jumlah_sore" class="form-control" placeholder="0.0" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Hari Laktasi Ke-</label>
+                    <input type="text" name="laktasi_hari_ke" class="form-control" placeholder="Masukkan hari laktasi ke...">
                 </div>
                     <div class="position-relative mt-4">
                         <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">

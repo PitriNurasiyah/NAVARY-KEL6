@@ -16,7 +16,8 @@ class ProduksiSusu extends Model
         'tanggal',
         'jumlah_pagi',
         'jumlah_sore',
-        'total'
+        'total',
+        'laktasi_hari_ke'
     ];
 
     public function sapi()

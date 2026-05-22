@@ -11,7 +11,7 @@
     <style>
         body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
-        .page-title-section { margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .page-title-section { margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
         
         .card-cow { background: #f5efe6; padding: 25px; border-radius: 20px; border: 4px solid #8CA685; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
@@ -36,6 +36,8 @@
         .btn-danger-action:hover { background: #a93226; transform: translateY(2px); box-shadow: 0 2px 0 #7b241c; color: white; }
 
         .form-control { border-radius: 10px; border: 2px solid #a67c52; }
+        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #5a1f12; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-back:hover { background: #6d4c41; color: #fff; transform: translateY(-2px); }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -45,19 +47,15 @@
 
     <div class="main-content">
         <div class="page-title-section">
-            <a href="{{ route('siklus.index') }}" class="btn btn-sm" style="background: #e6d5c0; color: #5a2c1b; border: 2px solid #bc9f82; border-radius: 10px; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
             <div>
                 <h3>Detail Siklus: {{ $sapi->nama }} 🐄</h3>
                 <p>ID: {{ $sapi->kode_sapi }} | Umur: {{ $sapi->umur ?? '-' }}</p>
             </div>
+            <a href="{{ route('siklus.index') }}" class="btn-back"><i class="fa-solid fa-arrow-left me-2"></i> Kembali</a>
         </div>
 
-        @if(session('success'))
-            <div class="alert alert-success" style="border-radius: 12px; font-weight: bold;"><i class="fa-solid fa-circle-check me-2"></i>{{ session('success') }}</div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-danger" style="border-radius: 12px; font-weight: bold;"><i class="fa-solid fa-circle-xmark me-2"></i>{{ session('error') }}</div>
-        @endif
+
+        {{-- Flash messages are automatically captured by the header notification system --}}
 
         <div class="card-cow">
             @php
@@ -80,7 +78,7 @@
                 </div>
             @elseif($fase == 'IB')
                 @if($latest->status == 'Berjalan')
-                @php $daysPassed = \Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()); @endphp
+                @php $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-magnifying-glass fs-3 mb-2 d-block"></i> Menunggu 14-21 hari setelah IB. (Sekarang Hari ke-{{ $daysPassed }}). Lakukan cek birahi untuk memastikan kehamilan.</p>
                     <div class="d-flex justify-content-center gap-3">
@@ -99,7 +97,7 @@
                 @endif
             @elseif($fase == 'Bunting')
                 @if($latest->status == 'Berjalan')
-                @php $daysPassed = \Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()); @endphp
+                @php $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-baby-carriage fs-3 mb-2 d-block"></i> Masa kehamilan sapi (±9 bulan). Sudah berjalan: {{ $daysPassed }} hari.<br>Estimasi selesai: {{ \Carbon\Carbon::parse($latest->estimasi_selesai)->format('d/m/Y') }}</p>
                     <form action="{{ route('siklus.action.melahirkan', $latest->id) }}" method="POST">
@@ -110,7 +108,7 @@
                 @endif
             @elseif($fase == 'Laktasi')
                 @if($latest->status == 'Berjalan')
-                @php $daysPassed = \Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()); @endphp
+                @php $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-jug-detergent fs-3 mb-2 d-block"></i> Masa Laktasi. Sapi sedang menghasilkan susu (Hari ke-{{ $daysPassed }}).</p>
                     <a href="{{ route('produksi.index') }}" class="btn btn-action mb-2"><i class="fa-solid fa-plus me-2"></i>Input Produksi Susu</a>
@@ -122,7 +120,7 @@
                 @endif
             @elseif($fase == 'Kering Kandang')
                 @if($latest->status == 'Berjalan')
-                @php $daysPassed = \Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()); @endphp
+                @php $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-bed fs-3 mb-2 d-block"></i> Masa Kering (Istirahat ±1 bulan). Sudah berjalan: {{ $daysPassed }} hari.</p>
                     <form action="{{ route('siklus.action.selesai_kering', $latest->id) }}" method="POST">
@@ -134,30 +132,7 @@
             @endif
         </div>
 
-        @if($laktasiChartData)
-        <div class="chart-container">
-            <h4 style="font-family: 'Fredoka One', cursive; color: #432118; margin-bottom: 20px;">Grafik Produksi Laktasi Terakhir (Per 100 Hari)</h4>
-            <canvas id="laktasiChart" height="80"></canvas>
-        </div>
-        <script>
-            const chartDataRaw = @json($laktasiChartData);
-            const ctx = document.getElementById('laktasiChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: chartDataRaw.labels,
-                    datasets: [
-                        { 
-                            label: 'Total Produksi (L)', 
-                            data: chartDataRaw.data, 
-                            backgroundColor: ['#8CA685', '#c0a080', '#d1b99a'] 
-                        }
-                    ]
-                },
-                options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            });
-        </script>
-        @endif
+
 
         <h4 style="font-family: 'Fredoka One', cursive; color: #432118; margin-bottom: 20px; margin-top: 40px;">Riwayat Siklus Sapi</h4>
         <div class="timeline">
@@ -171,7 +146,17 @@
                             <span class="date">{{ \Carbon\Carbon::parse($sik->tanggal_mulai)->format('d F Y') }}</span>
                             <p class="mb-0 text-muted">{{ $sik->keterangan ?? 'Tidak ada keterangan khusus.' }}</p>
                         </div>
-                        <span class="status-badge {{ $sik->status == 'Selesai' ? 'bg-success text-white' : ($sik->status == 'Batal' ? 'bg-danger text-white' : 'bg-warning text-dark') }}">{{ $sik->status }}</span>
+                        <div class="text-end">
+                            <span class="status-badge {{ $sik->status == 'Selesai' ? 'bg-success text-white' : ($sik->status == 'Batal' ? 'bg-danger text-white' : 'bg-warning text-dark') }} d-inline-block mb-2">{{ $sik->status }}</span>
+                            <div class="d-flex gap-2 justify-content-end">
+                                <a href="{{ route('siklus.edit', $sik->id) }}" class="btn btn-sm btn-outline-secondary" style="border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: bold; border-color: #bc9f82; color: #5a2c1b;"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                                <form action="{{ route('siklus.destroy', $sik->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data siklus ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" style="border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: bold;"><i class="fa-solid fa-trash"></i> Hapus</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -90,7 +90,7 @@
                 </div>
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-save">Simpan Perubahan</button>
-                    <a href="{{ route('siklus.index') }}" class="btn btn-cancel">Batal</a>
+                    <a href="{{ route('siklus.show', $siklus->sapi_id) }}" class="btn btn-cancel">Batal</a>
                 </div>
             </form>
         </div>

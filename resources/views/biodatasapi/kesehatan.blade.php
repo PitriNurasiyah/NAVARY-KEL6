@@ -18,10 +18,10 @@
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
-        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #5a1f12; transition: 0.2s; text-decoration: none; }
+        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #5a1f12; transition: 0.2s; text-decoration: none; white-space: nowrap; }
         .btn-back:hover { background: #6d4c41; color: #fff; transform: translateY(-2px); }
 
-        .btn-add { border: none; background: #5d7a54; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; text-decoration: none; }
+        .btn-add { border: none; background: #5d7a54; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; text-decoration: none; white-space: nowrap; }
         .btn-add:hover { background: #4a6344; color: #fff; transform: translateY(-2px); }
 
         /* Form Card */
@@ -39,12 +39,12 @@
 
         /* Tabel */
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
-        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; background: #fdfbf7; border-radius: 15px; overflow: hidden; }
-        .table thead th { background-color: #8CA685 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; border-top: none !important; }
-        .table tbody td { padding: 16px !important; border: 1px solid #bc9f82 !important; }
+        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; background: white; border-radius: 15px; overflow: hidden; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
+        .table tbody td { padding: 12px 16px !important; border: 1px solid #bc9f82 !important; background: white; }
         .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #bc9f82 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
-        .table tbody tr:hover { background-color: rgba(140, 166, 133, 0.1) !important; }
+        .table tbody tr:hover { background-color: rgba(74, 99, 68, 0.05) !important; }
 
         .crud-notification {
             display: flex; align-items: center; gap: 12px; padding: 15px 25px; border-radius: 12px;
@@ -56,6 +56,89 @@
         .notif-close:hover { opacity: 1; }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Farm Modal Styles */
+        .farm-wrapper { position: relative; width: 100%; max-width: 500px; margin: auto; }
+        .login-box {
+            width: 100%;
+            background-color: #f5efe6;
+            padding: 25px 25px 30px;
+            border-radius: 40px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+            position: relative;
+            border: 10px solid transparent;
+            background-clip: padding-box;
+        }
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            z-index: -1;
+            background-color: #8CA685;
+            background-image: url('https://www.transparenttextures.com/patterns/grass.png');
+            border-radius: 50px;
+        }
+        .top-icon {
+            position: absolute;
+            top: -55px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #dcc8ae;
+            padding: 6px;
+            border-radius: 50%;
+            z-index: 20;
+        }
+        .top-icon img {
+            background: white;
+            border: 2px solid #D2B48C;
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            width: 65px;
+        }
+        .btn-close-custom {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            color: #8CA685;
+            cursor: pointer;
+            z-index: 30;
+            padding: 0;
+            line-height: 1;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: bold;
+            color: #5a2c1b;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            line-height: 1.1;
+        }
+        .btn-register {
+            width: 100%;
+            background: #7a2f1c;
+            color: white;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            box-shadow: 0 6px 0 #5a1f12;
+            transition: all 0.1s ease;
+        }
+        .btn-register:active { transform: translateY(4px); box-shadow: 0 2px 0 #5a1f12; }
+        .barn-icon {
+            position: absolute;
+            bottom: 40px;
+            right: -10px;
+            width: 75px;
+            z-index: 10;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -70,7 +153,6 @@
                 <h3>Riwayat Kesehatan: {{ $sapi->nama }} ({{ $sapi->kode_sapi }}) 🩺</h3>
                 <p>Status saat ini: <span class="badge {{ strtolower($sapi->status_kesehatan) == 'sehat' ? 'bg-success' : 'bg-danger' }}">{{ $sapi->status_kesehatan }}</span></p>
             </div>
-            <a href="{{ route('sapi.index') }}" class="btn-back"><i class="fa-solid fa-arrow-left me-2"></i>Kembali</a>
         </div>
 
         @if(session('success'))
@@ -94,46 +176,11 @@
         @endif
 
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="form-card">
-                    <h5>Tambah Log Kesehatan</h5>
-                    <form action="{{ route('kesehatan.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="sapi_id" value="{{ $sapi->id }}">
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Tanggal</label>
-                            <input type="date" name="tanggal" class="form-control" value="{{ date('Y-m-d') }}" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Kondisi Sekarang</label>
-                            <input type="text" name="kondisi_sekarang" class="form-control" placeholder="Cth: Demam, Membaik..." required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Tindakan / Perawatan</label>
-                            <input type="text" name="tindakan_perawatan" class="form-control" placeholder="Cth: Pemberian Vaksin PMK">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Catatan Perkembangan</label>
-                            <textarea name="catatan_perkembangan" class="form-control" rows="3" placeholder="Tambahkan detail jika ada..."></textarea>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label">Update Status Sapi (Opsional)</label>
-                            <input type="text" name="update_status_sapi" class="form-control" placeholder="Kosongkan jika tidak ada perubahan status">
-                        </div>
-
-                        <button type="submit" class="btn-add w-100"><i class="fa-solid fa-notes-medical me-2"></i>Simpan Log</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="form-card" style="padding: 0; background: transparent; border: none; box-shadow: none;">
-                    <h5 class="mb-3">Tabel Riwayat Pemantauan</h5>
+                    <div class="d-flex justify-content-end align-items-center mb-3">
+                        <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#tambahLogModal"><i class="fa-solid fa-plus me-2"></i>Tambah Log Kesehatan</button>
+                    </div>
                     <div class="custom-table">
                         <table class="table table-bordered-custom align-middle">
                             <thead>
@@ -180,6 +227,65 @@
                 </div>
             </div>
         </div>
+
+    <!-- Modal Tambah Log Kesehatan -->
+    <div class="modal fade" id="tambahLogModal" tabindex="-1" aria-labelledby="tambahLogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+            <div class="modal-content" style="background: transparent; border: none; box-shadow: none;">
+                <div class="farm-wrapper">
+                    <div class="top-icon">
+                        <img src="{{ asset('img/sapii.png') }}" width="80" alt="logo">
+                    </div>
+
+                    <div class="login-box">
+                        <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+
+                        <div class="title" style="font-family: 'Fredoka', sans-serif;">Tambah Log Kesehatan</div>
+
+                        <form action="{{ route('kesehatan.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="sapi_id" value="{{ $sapi->id }}">
+                            
+                            <div class="mb-2">
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" name="tanggal" class="form-control" value="{{ date('Y-m-d') }}" required>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Kondisi Sekarang</label>
+                                <input type="text" name="kondisi_sekarang" class="form-control" placeholder="Contoh: Demam, Sehat, etc..." required>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Tindakan / Perawatan</label>
+                                <input type="text" name="tindakan_perawatan" class="form-control" placeholder="Contoh: Pemberian Vaksin PMK">
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Catatan Perkembangan</label>
+                                <textarea name="catatan_perkembangan" class="form-control" rows="3" placeholder="Tambahkan detail jika ada..."></textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Update Status Sapi</label>
+                                <input type="text" name="update_status_sapi" class="form-control" placeholder="Kosongkan jika tidak ada perubahan status">
+                            </div>
+
+                            <div class="position-relative mt-4">
+                                <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-secondary w-100 fw-bold" style="border-radius: 12px; padding: 12px; background-color: #8c7b6f; border: none; box-shadow: 0 6px 0 #5e5149; color: white;" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn-register w-100"><i class="fa-solid fa-notes-medical me-2"></i>Simpan Log</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     </div>
 

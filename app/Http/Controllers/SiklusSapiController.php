@@ -12,6 +12,7 @@ class SiklusSapiController extends Controller
 {
     public function index()
     {
+        $this->checkAutoTransitions();
         $sapi = Sapi::with(['siklusSapi' => function($query) {
             $query->orderBy('created_at', 'desc');
         }])->where('jenis_kelamin', 'Betina')->paginate(10);
@@ -21,7 +22,7 @@ class SiklusSapiController extends Controller
 
     public function create()
     {
-        $sapi = Sapi::all();
+        $sapi = Sapi::where('jenis_kelamin', 'Betina')->get();
         return view('peternak.siklus.create', compact('sapi'));
     }
 
@@ -56,11 +57,12 @@ class SiklusSapiController extends Controller
             ]);
         }
 
-        return redirect()->route('siklus.index')->with('success', 'Data siklus berhasil disimpan!');
+        return redirect()->route('siklus.show', $request->sapi_id)->with('success', 'Data siklus berhasil disimpan!');
     }
 
     public function show($id)
     {
+        $this->checkAutoTransitions();
         $sapi = Sapi::with(['siklusSapi' => function($query) {
             $query->orderBy('created_at', 'desc');
         }])->where('jenis_kelamin', 'Betina')->findOrFail($id);
@@ -133,14 +135,15 @@ class SiklusSapiController extends Controller
             );
         }
 
-        return redirect()->route('siklus.index')->with('success', 'Data siklus berhasil diperbarui!');
+        return redirect()->route('siklus.show', $siklus->sapi_id)->with('success', 'Data siklus berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         $siklus = SiklusSapi::findOrFail($id);
+        $sapiId = $siklus->sapi_id;
         $siklus->delete();
-        return redirect()->route('siklus.index')->with('success', 'Data siklus berhasil dihapus!');
+        return redirect()->route('siklus.show', $sapiId)->with('success', 'Data siklus berhasil dihapus!');
     }
 
     public function storeProduksi(Request $request)
@@ -174,10 +177,14 @@ class SiklusSapiController extends Controller
             SiklusSapi::create([
                 'sapi_id' => $siklus->sapi_id,
                 'fase' => 'Bunting',
-                'tanggal_mulai' => date('Y-m-d'),
-                'estimasi_selesai' => Carbon::now()->addMonths(9)->format('Y-m-d'),
-                'status' => 'Berjalan'
+                'tanggal_mulai' => $siklus->tanggal_mulai,
+                'estimasi_selesai' => Carbon::parse($siklus->tanggal_mulai)->addMonths(9)->format('Y-m-d'),
+                'status' => 'Berjalan',
+                'keterangan' => 'Memasuki fase Bunting setelah IB berhasil.'
             ]);
+            
+            $this->checkAutoTransitions();
+            
             return back()->with('success', 'Selamat! Sapi kini memasuki fase Bunting (Kehamilan).');
         } else {
             $siklus->update(['status' => 'Batal', 'keterangan' => 'IB Gagal']);
@@ -229,5 +236,44 @@ class SiklusSapiController extends Controller
         $siklus->update(['status' => 'Selesai', 'keterangan' => 'Masa kering selesai. Sapi siap IB kembali.']);
         
         return back()->with('success', 'Masa kering selesai. Sapi kini siap untuk memulai siklus IB yang baru.');
+    }
+
+    private function checkAutoTransitions()
+    {
+        $today = Carbon::today()->toDateString();
+
+        // 1. Transisi otomatis dari Bunting ke Laktasi setelah 9 bulan
+        $buntingCycles = SiklusSapi::where('fase', 'Bunting')
+            ->where('status', 'Berjalan')
+            ->whereDate('estimasi_selesai', '<=', $today)
+            ->get();
+
+        foreach ($buntingCycles as $bunting) {
+            $bunting->update([
+                'status' => 'Selesai',
+                'keterangan' => 'Sapi telah melahirkan (Transisi Otomatis)'
+            ]);
+
+            SiklusSapi::create([
+                'sapi_id' => $bunting->sapi_id,
+                'fase' => 'Laktasi',
+                'tanggal_mulai' => $bunting->estimasi_selesai,
+                'status' => 'Berjalan',
+                'keterangan' => 'Memasuki fase Laktasi otomatis setelah masa bunting selesai.'
+            ]);
+        }
+
+        // 2. Transisi otomatis dari Kering Kandang ke Selesai setelah 1 bulan
+        $keringCycles = SiklusSapi::where('fase', 'Kering Kandang')
+            ->where('status', 'Berjalan')
+            ->whereDate('estimasi_selesai', '<=', $today)
+            ->get();
+
+        foreach ($keringCycles as $kering) {
+            $kering->update([
+                'status' => 'Selesai',
+                'keterangan' => 'Masa kering selesai. Sapi siap IB kembali. (Transisi Otomatis)'
+            ]);
+        }
     }
 }

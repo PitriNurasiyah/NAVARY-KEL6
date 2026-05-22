@@ -33,6 +33,20 @@ class DashboardPeternakController extends Controller
             ->where('status', 'Berjalan')
             ->get();
 
-        return view('dashboard.peternak', compact('totalSapi', 'tugasInput', 'totalProduksi', 'alerts'));
+        // 5. Data Grafik Stok Pakan
+        $pakanData = \App\Models\Pakan::select('nama_pakan', \DB::raw('SUM(stok) as total_stok'))
+            ->groupBy('nama_pakan')
+            ->get();
+
+        // 6. Data Grafik Produksi Susu Harian (7 Hari Terakhir)
+        $produksiData = \App\Models\ProduksiSusu::select('tanggal', \DB::raw('SUM(total) as total_produksi'))
+            ->groupBy('tanggal')
+            ->orderBy('tanggal', 'asc')
+            ->take(7)
+            ->get();
+
+        return view('dashboard.peternak', compact(
+            'totalSapi', 'tugasInput', 'totalProduksi', 'alerts', 'pakanData', 'produksiData'
+        ));
     }
 }

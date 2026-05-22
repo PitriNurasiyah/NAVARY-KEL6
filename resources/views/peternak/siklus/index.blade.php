@@ -75,28 +75,7 @@
             </div>
         @endif
 
-        <div class="cards-wrapper">
-            @foreach($sapi as $s)
-            @php
-                $latestSiklus = $s->siklusSapi->first();
-                $fase = $latestSiklus ? $latestSiklus->fase : 'Belum Ada Siklus';
-                $faseClass = 'fase-none';
-                if ($fase == 'IB') $faseClass = 'fase-ib';
-                elseif ($fase == 'Bunting') $faseClass = 'fase-bunting';
-                elseif ($fase == 'Laktasi') $faseClass = 'fase-laktasi';
-                elseif ($fase == 'Kering Kandang') $faseClass = 'fase-kering';
-            @endphp
-            <div class="cow-card">
-                <h5>{{ $s->nama }}</h5>
-                <p style="margin-bottom: 12px; line-height: 1.6; font-size: 14px;">
-                    ID: {{ $s->kode_sapi }}<br>
-                    Umur: {{ $s->umur ?? '-' }}<br>
-                    Fase: <span class="badge badge-fase {{ $faseClass }}">{{ $fase }}</span>
-                </p>
-                <a href="{{ route('siklus.show', $s->id) }}" class="btn btn-sm text-dark fw-bold px-3 py-1" style="background-color: #e2e8f0; border-radius: 8px;">Kelola Siklus</a>
-            </div>
-            @endforeach
-        </div>
+
 
         <div class="action-bar">
             <div class="search-wrapper">
@@ -105,81 +84,110 @@
                     <input type="text" id="searchInput" placeholder="Cari data sapi betina berdasarkan nama atau ID...">
                 </div>
             </div>
+            <button type="button" class="btn text-white fw-bold px-4 py-2" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('siklus.create') }}" style="background-color: #5d7a54; border-radius: 12px; box-shadow: 0 4px 0 #3a4d33; transition: all 0.1s ease; border: none; white-space: nowrap;"><i class="fa-solid fa-plus me-1"></i> Tambah Siklus</button>
         </div>
 
-        <div class="custom-table">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>NO</th>
-                        <th>ID SAPI</th>
-                        <th>NAMA SAPI</th>
-                        <th>UMUR</th>
-                        <th class="text-center">FASE SIKLUS SAAT INI</th>
-                        <th class="text-center">AKSI</th>
-                    </tr>
-                </thead>
-                <tbody id="sapiTableBody">
-                    @forelse($sapi as $index => $s)
-                        @php
-                            $latestSiklus = $s->siklusSapi->first();
-                            $fase = $latestSiklus ? $latestSiklus->fase : 'Belum Ada Siklus';
-                            $faseClass = 'fase-none';
-                            if ($fase == 'IB') $faseClass = 'fase-ib';
-                            elseif ($fase == 'Bunting') $faseClass = 'fase-bunting';
-                            elseif ($fase == 'Laktasi') $faseClass = 'fase-laktasi';
-                            elseif ($fase == 'Kering Kandang') $faseClass = 'fase-kering';
-                        @endphp
-                        <tr onclick="window.location.href='{{ route('siklus.show', $s->id) }}'" class="sapi-row">
-                            <td>{{ $index + 1 + ($sapi->currentPage() - 1) * $sapi->perPage() }}</td>
-                            <td class="fw-bold sapi-id">{{ $s->kode_sapi }}</td>
-                            <td class="sapi-nama">{{ $s->nama }}</td>
-                            <td>{{ $s->umur ?? '-' }}</td>
-                            <td class="text-center">
-                                <span class="badge badge-fase {{ $faseClass }}">
-                                    @if($fase == 'Belum Ada Siklus')
-                                        <i class="fa-solid fa-circle-exclamation me-1"></i>
-                                    @endif
-                                    {{ $fase }}
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('siklus.show', $s->id) }}" class="btn btn-sm text-white fw-bold px-3" style="background-color: #8CA685; border-radius: 8px;">Kelola Siklus <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr id="noDataRow">
-                            <td colspan="6" class="text-center py-5">
-                                <div class="d-flex flex-column align-items-center">
-                                    <i class="fa-solid fa-cow mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
-                                    <h5 class="fw-bold mb-1" style="color: #432118;">Tidak Ada Sapi Betina</h5>
-                                    <p class="text-muted mb-0">Sistem tidak menemukan data sapi betina di biodata.</p>
+        <div class="row g-4" id="sapiGrid">
+            @forelse($sapi as $s)
+                @php
+                    $latestSiklus = $s->siklusSapi->first();
+                    $fase = $latestSiklus ? $latestSiklus->fase : 'Belum Ada Siklus';
+                    $faseClass = 'fase-none';
+                    if ($fase == 'IB') $faseClass = 'fase-ib';
+                    elseif ($fase == 'Bunting') $faseClass = 'fase-bunting';
+                    elseif ($fase == 'Laktasi') $faseClass = 'fase-laktasi';
+                    elseif ($fase == 'Kering Kandang') $faseClass = 'fase-kering';
+                @endphp
+                <div class="col-md-6 col-lg-4 sapi-row" data-sapi-id="{{ $s->kode_sapi }}" data-sapi-nama="{{ $s->nama }}">
+                    <div class="card p-4 shadow-sm border-0 h-100 d-flex flex-column justify-content-between" style="background-color: #f5efe6; border-radius: 25px; border: 3px solid #bc9f82 !important;">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h5 class="fw-bold mb-1 sapi-nama" style="font-family: 'Fredoka One', cursive; color: #432118; font-size: 17px;">{{ $s->nama }}</h5>
+                                    <p class="text-muted mb-0 font-monospace sapi-id" style="font-size: 13px; font-weight: 700;">ID: {{ $s->kode_sapi }}</p>
                                 </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                                <span class="badge badge-fase {{ $faseClass }}">{{ $fase }}</span>
+                            </div>
+                            <div class="p-3 rounded-3 mb-3" style="background: rgba(93, 122, 84, 0.08); font-size: 14px; font-weight: 600;">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">Umur Sapi:</span>
+                                    <span style="color: #432118;">{{ $s->umur ?? '-' }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-muted">Hari Ke:</span>
+                                    <span style="color: #432118;">{{ $latestSiklus ? $latestSiklus->hari_ke ?? '-' : '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="{{ route('siklus.show', $s->id) }}" class="btn text-white fw-bold px-3 py-2 w-100 text-center" style="background-color: #5d7a54; border-radius: 12px; box-shadow: 0 4px 0 #3a4d33; transition: all 0.1s ease; border: none;">Kelola Siklus <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-12 text-center py-5" id="noDataRow">
+                    <div class="d-flex flex-column align-items-center">
+                        <i class="fa-solid fa-cow mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
+                        <h5 class="fw-bold mb-1" style="color: #432118;">Tidak Ada Sapi Betina</h5>
+                        <p class="text-muted mb-0">Sistem tidak menemukan data sapi betina di biodata.</p>
+                    </div>
+                </div>
+            @endforelse
         </div>
-        <div class="mt-3">
+
+        <div class="mt-4">
             {{ $sapi->links() }}
         </div>
     </div>
 
+    <!-- Modal Register/Create -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background: transparent; border: none; box-shadow: none;">
+                <div class="iframe-container" style="width: 100%; height: auto; border: none; overflow: hidden;">
+                    <iframe id="registerIframe" src="" scrolling="no" onload="setTimeout(() => { if(this.contentWindow.document.body) { this.style.height = (this.contentWindow.document.body.scrollHeight + 50) + 'px'; } }, 50);" style="width: 100%; border: none;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('searchInput').addEventListener('input', function() {
             let filter = this.value.toLowerCase();
             let rows = document.querySelectorAll('.sapi-row');
+            let hasVisible = false;
             rows.forEach(row => {
                 let idText = row.querySelector('.sapi-id').innerText.toLowerCase();
                 let namaText = row.querySelector('.sapi-nama').innerText.toLowerCase();
                 if(idText.includes(filter) || namaText.includes(filter)) {
                     row.style.display = '';
+                    hasVisible = true;
                 } else {
                     row.style.display = 'none';
                 }
             });
+            const noData = document.getElementById('noDataRow');
+            if (noData) {
+                noData.style.display = hasVisible ? 'none' : '';
+            }
         });
+
+        const registerModal = document.getElementById('registerModal');
+        const registerIframe = document.getElementById('registerIframe');
+        
+        if (registerModal && registerIframe) {
+            registerModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const routeUrl = button.getAttribute('data-route');
+                if (routeUrl) {
+                    registerIframe.src = routeUrl + (routeUrl.includes('?') ? '&' : '?') + "mode=modal";
+                }
+            });
+            registerModal.addEventListener('hide.bs.modal', function() {
+                registerIframe.src = '';
+            });
+        }
     </script>
 </body>
 </html>
