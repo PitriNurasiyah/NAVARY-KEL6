@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         .page-title-section { margin-bottom: 25px; }
@@ -22,9 +22,9 @@
         .btn-print:hover { background: #4a6344; transform: translateY(-2px); box-shadow: 0 6px 0 #3a4d33; color: white; }
         .btn-print:active { transform: translateY(2px); box-shadow: 0 2px 0 #3a4d33; }
 
-        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #5a1f12; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-back:hover { background: #6d4c41; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 0 #5a1f12; }
-        .btn-back:active { transform: translateY(2px); box-shadow: 0 2px 0 #5a1f12; }
+        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #152414; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-back:hover { background: #6d4c41; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 0 #152414; }
+        .btn-back:active { transform: translateY(2px); box-shadow: 0 2px 0 #152414; }
 
         .custom-table { border-collapse: separate; border-spacing: 0; width: 100%; border-radius: 15px; overflow: hidden; border: 1px solid #bc9f82; }
         .custom-table thead th { background-color: #5d7a54 !important; color: white !important; padding: 18px 15px; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }

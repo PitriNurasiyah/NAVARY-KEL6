@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
@@ -18,7 +18,7 @@
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
-        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #5a1f12; transition: 0.2s; text-decoration: none; white-space: nowrap; }
+        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #152414; transition: 0.2s; text-decoration: none; white-space: nowrap; }
         .btn-back:hover { background: #6d4c41; color: #fff; transform: translateY(-2px); }
 
         .btn-add { border: none; background: #5d7a54; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; text-decoration: none; white-space: nowrap; }
@@ -35,7 +35,7 @@
         .form-control:focus, .form-select:focus {
             background-color: #ffffff; border-color: #a67c52; box-shadow: 0 0 0 4px rgba(166, 124, 82, 0.15);
         }
-        .form-label { font-weight: 700; color: #5a1f12; margin-bottom: 8px; font-size: 14px; }
+        .form-label { font-weight: 700; color: #152414; margin-bottom: 8px; font-size: 14px; }
 
         /* Tabel */
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
@@ -82,7 +82,7 @@
             top: -55px;
             left: 50%;
             transform: translateX(-50%);
-            background: #dcc8ae;
+            background: #f5efe6;
             padding: 6px;
             border-radius: 50%;
             z-index: 20;
@@ -113,24 +113,24 @@
             font-size: 24px;
             font-family: 'Fredoka', sans-serif;
             font-weight: bold;
-            color: #5a2c1b;
+            color: #432118;
             margin-top: 15px;
             margin-bottom: 25px;
             line-height: 1.1;
         }
         .btn-register {
             width: 100%;
-            background: #7a2f1c;
+            background: #233722;
             color: white;
             border-radius: 12px;
             padding: 12px;
             font-weight: bold;
             font-size: 18px;
             border: none;
-            box-shadow: 0 6px 0 #5a1f12;
+            box-shadow: 0 6px 0 #152414;
             transition: all 0.1s ease;
         }
-        .btn-register:active { transform: translateY(4px); box-shadow: 0 2px 0 #5a1f12; }
+        .btn-register:active { transform: translateY(4px); box-shadow: 0 2px 0 #152414; }
         .barn-icon {
             position: absolute;
             bottom: 40px;

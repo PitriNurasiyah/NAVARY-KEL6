@@ -1,11 +1,11 @@
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
     .sidebar {
         width: 260px; height: 100vh;
-        background: linear-gradient(180deg, #1a2e1a 0%, #0f1f10 60%, #0a1a0b 100%);
+        background: linear-gradient(180deg, #2e3b2c 0%, #1d251c 100%);
         position: fixed; top: 0; left: 0; padding: 0;
-        border-right: 1px solid rgba(255,255,255,0.08);
-        box-shadow: 5px 0 30px rgba(0,0,0,0.4);
+        border-right: 1px solid rgba(255,255,255,0.05);
+        box-shadow: 5px 0 30px rgba(0,0,0,0.15);
         z-index: 1000; display: flex; flex-direction: column;
         transition: width 0.3s ease; overflow-x: hidden;
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -25,13 +25,13 @@
         padding: 0 20px;
     }
     .brand h4 {
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Playfair Display', serif;
         font-weight: 800; color: #ffffff;
         font-size: 20px; margin: 0; text-align: center;
         white-space: nowrap; letter-spacing: 1px;
     }
     .brand p {
-        font-size: 11px; color: rgba(110,231,183,0.7);
+        font-size: 11px; color: #a3b89e;
         margin: 2px 0 0 0; text-align: center;
         font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
         white-space: nowrap;
@@ -41,7 +41,7 @@
     .sidebar.sidebar-hidden-state .nav-menu { padding: 20px 10px; }
     .nav-item { margin-bottom: 4px; }
     .nav-link {
-        text-decoration: none; color: rgba(255,255,255,0.55);
+        text-decoration: none; color: rgba(255,255,255,0.7);
         padding: 11px 16px; display: flex; align-items: center;
         border-radius: 12px; transition: all 0.25s ease;
         font-weight: 600; font-size: 13.5px;
@@ -49,17 +49,16 @@
     }
     .nav-link i { margin-right: 12px; width: 18px; text-align: center; font-size: 15px; }
     .nav-link:hover {
-        background: rgba(255,255,255,0.07);
-        color: rgba(255,255,255,0.9);
-        border-color: rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.06);
+        color: #ffffff;
     }
     .nav-link.active {
-        background: linear-gradient(135deg, rgba(52,211,153,0.25), rgba(16,185,129,0.15));
-        color: #6ee7b7 !important;
-        border-color: rgba(52,211,153,0.25);
-        box-shadow: 0 4px 15px rgba(16,185,129,0.15);
+        background: #485c46 !important;
+        color: #ffffff !important;
+        border-color: transparent;
+        box-shadow: none;
     }
-    .nav-link.active i { color: #34d399; }
+    .nav-link.active i { color: #ffffff !important; }
 </style>
 
 <div class="sidebar" id="appSidebar">
@@ -69,7 +68,7 @@
         }
     </script>
     <div class="brand">
-        <h4>CIMILK</h4>
+        <h4>Cimilk</h4>
         <p>Panel Penjualan</p>
     </div>
     <ul class="nav-menu">

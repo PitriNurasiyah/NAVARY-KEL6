@@ -11,7 +11,7 @@
 
     <style>
         body {
-            background-color: {{ request('mode') == 'modal' ? 'transparent' : (Auth::check() ? '#dcc8ae' : '#e8dccb') }};
+            background-color: {{ request('mode') == 'modal' ? 'transparent' : (Auth::check() ? '#f5efe6' : '#f5efe6') }};
             font-family: 'Quicksand', sans-serif;
             margin: 0;
             display: flex;
@@ -62,7 +62,7 @@
             top: -55px;
             left: 50%;
             transform: translateX(-50%);
-            background: #dcc8ae;
+            background: #f5efe6;
             padding: 6px;
             border-radius: 50%;
             z-index: 20;
@@ -96,13 +96,13 @@
             font-size: 24px;
             font-family: 'Fredoka', sans-serif;
             font-weight: bold;
-            color: #5a2c1b;
+            color: #432118;
             margin-top: 15px;
             margin-bottom: 25px;
             line-height: 1.1;
         }
 
-        .form-label { font-weight: bold; color: #5a2c1b; font-size: 14px; margin-bottom: 4px; }
+        .form-label { font-weight: bold; color: #432118; font-size: 14px; margin-bottom: 4px; }
         .form-control, .form-select {
             border-radius: 12px;
             border: 2px solid #a67c52;
@@ -113,17 +113,17 @@
 
         .btn-register {
             width: 100%;
-            background: #7a2f1c;
+            background: #233722;
             color: white;
             border-radius: 12px;
             padding: 12px;
             font-weight: bold;
             font-size: 18px;
             border: none;
-            box-shadow: 0 6px 0 #5a1f12;
+            box-shadow: 0 6px 0 #152414;
             transition: all 0.1s ease;
         }
-        .btn-register:active { transform: translateY(4px); box-shadow: 0 2px 0 #5a1f12; }
+        .btn-register:active { transform: translateY(4px); box-shadow: 0 2px 0 #152414; }
 
         .barn-icon {
             position: absolute;

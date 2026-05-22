@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
@@ -28,7 +28,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
         .filter-title { font-weight: 800; font-size: 18px; margin-bottom: 15px; color: #432118; }
-        .form-label { font-weight: 700; color: #5a2c1b; margin-bottom: 5px; font-size: 14px; }
+        .form-label { font-weight: 700; color: #432118; margin-bottom: 5px; font-size: 14px; }
         .form-control { border-radius: 12px; border: 2px solid #a67c52; padding: 10px; font-size: 14px; background-color: #fffdfa; }
 
         /* Summary Cards */
@@ -76,9 +76,40 @@
         }
         .btn-filter:hover { background: #4a6344; transform: translateY(-2px); color: white; }
 
+        .btn-back {
+            border: none;
+            background: #845a33;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            color: #ffffff;
+            box-shadow: 0 4px 0 #152414;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-back:hover {
+            background: #6d4c41;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #152414;
+        }
+        .btn-back:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #152414;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
 
         @media print {
-            .sidebar, .top-header, .header, .filter-section, .btn-back, .btn-filter,
+            .sidebar, .top-header, .header, .filter-section, .btn-back, .btn-filter, .action-buttons,
             .page-title-section p, .summary-wrapper, .mt-4, .toggle-group, .print-only-header {
                 display: none !important;
             }
@@ -147,7 +178,16 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="mb-3 text-end">
+        <div class="action-buttons mb-3">
+            @if(Auth::user() && Auth::user()->role === 'Penjualan')
+                <a href="{{ route('penjualan.dashboard') }}" class="btn-back">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                </a>
+            @else
+                <a href="{{ route('laporan.index') }}" class="btn-back">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                </a>
+            @endif
             <div class="dropdown d-inline-block">
                 <button class="btn btn-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-print me-2"></i> Cetak Laporan

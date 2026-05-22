@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
@@ -46,7 +46,7 @@
             flex-grow: 1;
         }
 
-        .search-input-group i { color: #5a1f12; font-size: 18px; }
+        .search-input-group i { color: #152414; font-size: 18px; }
 
         .search-input-group input {
             background: transparent;

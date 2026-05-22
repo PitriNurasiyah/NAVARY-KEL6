@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
@@ -48,7 +48,7 @@
             border-bottom: 2px dashed #bc9f82;
         }
 
-        .form-label { font-weight: 700; color: #5a2c1b; margin-bottom: 6px; font-size: 14px; }
+        .form-label { font-weight: 700; color: #432118; margin-bottom: 6px; font-size: 14px; }
         .form-control {
             border-radius: 12px;
             border: 2px solid #a67c52;

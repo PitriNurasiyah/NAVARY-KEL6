@@ -11,7 +11,10 @@
 
     <style>
         body {
-            background-color: #e8dccb;
+            background-image: url('{{ asset("img/bg_login.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -19,26 +22,36 @@
             font-family: 'Quicksand', sans-serif;
             margin: 0;
             overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(20, 32, 18, 0.55); /* Dark green-tinted overlay */
+            z-index: 1;
         }
 
         /* Container Utama */
         .farm-wrapper {
             position: relative;
             z-index: 10;
+            width: 460px;
+            max-width: 95%;
         }
 
         .login-box {
-            width: 440px;
+            width: 100%;
             background-color: #f5efe6;
             padding: 40px;
             border-radius: 40px;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.3);
             position: relative;
             border: 10px solid transparent;
             background-clip: padding-box;
         }
 
-        /* Bingkai Rumput */
         .login-box::before {
             content: '';
             position: absolute;
@@ -47,90 +60,94 @@
             background-color: #8CA685;
             background-image: url('https://www.transparenttextures.com/patterns/grass.png');
             border-radius: 50px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
         }
 
         /* Icon Sapi di Atas */
         .top-icon {
             position: absolute;
-            top: -60px;
+            top: -55px;
             left: 50%;
             transform: translateX(-50%);
-            background: #e8dccb;
-            padding: 10px;
+            background: #f5efe6;
+            padding: 6px;
             border-radius: 50%;
             z-index: 20;
         }
 
         .top-icon img {
             background: white;
-            border: 2px solid #D2B48C;
+            border: 2px solid #bc9f82;
             border-radius: 50%;
-            padding: 15px;
+            padding: 8px;
             box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            width: 80px;
         }
 
         .title {
             text-align: center;
             font-size: 28px;
             font-family: 'Fredoka', sans-serif;
-            color: #5a2c1b;
+            color: #432118;
             margin-top: 30px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             line-height: 1.1;
         }
 
         .form-label {
             font-weight: bold;
-            color: #5a2c1b;
-            margin-left: 5px;
-            font-size: 18px;
+            color: #432118;
+            margin-left: 2px;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
         }
 
         .form-control {
             border-radius: 12px;
-            border: 2px solid #a67c52;
-            padding: 14px;
+            border: 2px solid #bc9f82;
+            padding: 12px 14px;
             background-color: #fffdfa;
-            font-size: 16px;
+            color: #432118;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control::placeholder {
+            color: #a68c7e;
         }
 
         .form-control:focus {
-            border-color: #8CA685;
-            box-shadow: 0 0 0 0.25rem rgba(140, 166, 133, 0.1);
+            background-color: #ffffff;
+            border-color: #233722;
+            color: #432118;
+            box-shadow: 0 0 0 0.25rem rgba(35, 55, 34, 0.15);
+            outline: none;
         }
 
         /* Tombol Login */
         .btn-login {
             width: 100%;
-            background: #7a2f1c;
+            background: #233722;
             color: white;
             border-radius: 12px;
             padding: 14px;
             font-weight: bold;
-            font-size: 19px;
+            font-size: 18px;
             border: none;
-            box-shadow: 0 6px 0 #5a1f12;
+            box-shadow: 0 6px 0 #152414;
             transition: all 0.1s ease;
-            position: relative;
-            z-index: 5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-login:hover { background: #6b2818; color: white; }
+        .btn-login:hover {
+            background: #1b2a1a;
+            color: white;
+        }
+        
         .btn-login:active {
             transform: translateY(4px);
-            box-shadow: 0 2px 0 #5a1f12;
-        }
-
-        /* Ikon Lumbung (Farm) */
-        .farm-icon-style {
-            position: absolute;
-            bottom: 45px;
-            right: -25px;
-            width: 90px;
-            height: auto;
-            z-index: 10;
-            pointer-events: none;
+            box-shadow: 0 2px 0 #152414;
         }
 
         .password-field {
@@ -140,11 +157,11 @@
         .password-toggle {
             position: absolute;
             top: 50%;
-            right:40px;
+            right: 38px;
             transform: translateY(-50%);
             background: transparent;
             border: none;
-            color: #845a33;
+            color: #8c7054;
             font-size: 18px;
             cursor: pointer;
             padding: 0;
@@ -153,6 +170,7 @@
             justify-content: center;
             width: 32px;
             height: 32px;
+            z-index: 10;
         }
 
         .password-toggle:focus {
@@ -166,7 +184,24 @@
         .login-action-container {
             width: 100%;
             position: relative;
-            margin-top: 20px;
+            margin-top: 25px;
+        }
+
+        .barn-icon {
+            position: absolute;
+            bottom: 40px;
+            right: -10px;
+            width: 75px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .alert-form {
+            padding: 8px 12px;
+            font-size: 13px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #f5c2c7;
         }
     </style>
 </head>
@@ -174,20 +209,20 @@
 
 <div class="farm-wrapper">
     <div class="top-icon">
-        <img src="{{ asset('img/sapii.png') }}" width="70" alt="cow logo">
+        <img src="{{ asset('img/sapii.png') }}" alt="cow logo">
     </div>
 
     <div class="login-box">
         <div class="title">Cimilk</div>
 
         @if(session('success'))
-            <div class="alert alert-success py-2 mb-3" style="font-size: 14px;">
+            <div class="alert alert-success alert-form py-2 mb-3">
                 {{ session('success') }}
             </div>
         @endif
 
         @if($errors->any())
-            <div class="alert alert-danger py-2 mb-3" style="font-size: 14px;">
+            <div class="alert alert-danger alert-form py-2 mb-3">
                 {{ $errors->first() }}
             </div>
         @endif
@@ -200,20 +235,20 @@
                 <input type="text" name="username" class="form-control" placeholder="Masukkan username" required autofocus>
             </div>
 
-           <div class="mb-4 password-field">
-            <label class="form-label">Password</label>
-            <div class="position-relative">
-                <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
-                <button type="button" class="password-toggle" onclick="togglePassword()">
-                    <i id="passwordIcon" class="fa-solid fa-eye"></i>
-                </button>
+            <div class="mb-4 password-field">
+                <label class="form-label">Password</label>
+                <div class="position-relative">
+                    <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword()">
+                        <i id="passwordIcon" class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div class="login-action-container">
-            <img src="{{ asset('img/farm.png') }}" class="farm-icon-style" alt="farm icon">
-            <button type="submit" class="btn btn-login">Login</button>
-        </div>
+            <div class="login-action-container">
+                <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
+                <button type="submit" class="btn btn-login">Login</button>
+            </div>
         </form>
     </div>
 </div>

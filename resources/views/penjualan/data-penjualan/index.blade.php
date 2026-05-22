@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
         
         .page-title-section { margin-bottom: 25px; }
@@ -28,7 +28,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         .search-input-group { display: flex; align-items: center; width: 100%; gap: 10px; }
-        .search-input-group i { color: #5a1f12; font-size: 18px; }
+        .search-input-group i { color: #152414; font-size: 18px; }
         .search-input-group input {
             background: transparent; border: none; outline: none; width: 100%;
             padding: 0px 15px; font-family: 'Quicksand', sans-serif;

@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Peternak - Cimilk Yogurt</title>
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #0f1f10 0%, #1a2e1a 50%, #0d1b0e 100%);
+            background: #f4efe6;
             background-attachment: fixed;
-            color: #ffffff;
+            color: #432118;
             margin: 0;
             overflow-x: hidden;
             display: flex;
@@ -28,40 +28,39 @@
         }
 
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; color: #ffffff; margin: 0 0 4px 0; letter-spacing: -0.5px; }
-        .page-title-section p { color: rgba(110,231,183,0.7); font-weight: 600; margin: 0; font-size: 14px; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         .stat-card {
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(15px);
+            background: #fffcf7;
             padding: 25px;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1.5px solid #e6d5c0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: 0.3s;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             height: 100%;
             text-decoration: none;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(52,211,153,0.3);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 20px rgba(52,211,153,0.1);
-            background: rgba(255,255,255,0.09);
+            border-color: #bc9f82;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+            background: #fffcf7;
         }
 
         .stat-info h2 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Playfair Display', serif;
             margin: 5px 0;
             font-size: 36px;
-            font-weight: 800;
-            color: #ffffff;
+            font-weight: 700;
+            color: #432118;
         }
-        .stat-info span { color: rgba(255,255,255,0.55); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
-        .stat-unit { color: #34d399; font-weight: 800; font-size: 13px; }
+        .stat-info span { color: #845a33; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .stat-unit { color: #5d7a54; font-weight: 800; font-size: 13px; }
 
         .icon-circle {
             width: 60px;
@@ -74,18 +73,19 @@
         }
 
         .bg-custom-green { background: #5d7a54; color: #ffffff; }
-        .bg-custom-blue { background: #799cd1ff; color: #ffffff; }
+        .bg-custom-blue { background: #5d7a54; color: #ffffff; }
         .bg-custom-brown { background: #845a33; color: #ffffff; }
 
         .notification-bar {
-            background: rgba(234,179,8,0.1);
-            border: 1px solid rgba(234,179,8,0.3);
+            background: #fffcf7;
+            border: 1.5px solid #e6d5c0;
             padding: 15px 25px;
-            border-radius: 12px;
+            border-radius: 15px;
             margin-bottom: 35px;
             font-size: 14px;
-            color: rgba(255,255,255,0.85);
+            color: #432118;
             font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
 
         /* Data Sapi Section (view only) */
@@ -96,26 +96,26 @@
             margin-bottom: 20px;
         }
         .section-header h4 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #432118;
             margin: 0;
             font-size: 20px;
         }
         .view-only-badge {
-            background: rgba(52,211,153,0.15);
-            color: #6ee7b7;
+            background: rgba(93, 122, 84, 0.15);
+            color: #5d7a54;
             font-size: 11px;
             font-weight: 700;
             padding: 3px 10px;
             border-radius: 20px;
-            border: 1px solid rgba(52,211,153,0.3);
+            border: 1px solid rgba(93, 122, 84, 0.3);
             text-transform: uppercase;
         }
 
-        .cow-card { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .cow-card h5 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: #ffffff; font-size: 15px; margin-bottom: 6px; }
-        .cow-card p { font-size: 13px; margin: 0; color: rgba(255,255,255,0.6); font-weight: 600; }
+        .cow-card { background: #faf6f0; padding: 20px; border-radius: 16px; border: 1.5px solid #e6d5c0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .cow-card h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; font-size: 15px; margin-bottom: 6px; }
+        .cow-card p { font-size: 13px; margin: 0; color: #6d4c41; font-weight: 600; }
 
         .cards-wrapper {
             display: flex;
@@ -128,12 +128,12 @@
         .cards-wrapper::-webkit-scrollbar { display: none; }
 
         /* Table */
-        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: rgba(255,255,255,0.85); }
-        .table thead th { background-color: rgba(52,211,153,0.15) !important; color: #6ee7b7 !important; padding: 14px !important; text-transform: uppercase; font-size: 11px; border: 1px solid rgba(255,255,255,0.08) !important; letter-spacing: 0.5px; }
-        .table tbody td { padding: 14px !important; border: 1px solid rgba(255,255,255,0.07) !important; font-weight: 600; background: rgba(255,255,255,0.03); }
-        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid rgba(255,255,255,0.08) !important; }
+        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
+        .table thead th { background-color: #4a6344 !important; color: #ffffff !important; padding: 14px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #bc9f82 !important; letter-spacing: 0.5px; }
+        .table tbody td { padding: 14px !important; border: 1px solid #bc9f82 !important; font-weight: 600; background: #faf6f0; }
+        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #bc9f82 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
-        .table tbody tr:hover td { background-color: rgba(52,211,153,0.07) !important; }
+        .table tbody tr:hover td { background-color: rgba(93, 122, 84, 0.05) !important; }
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
     </style>
 </head>
@@ -168,8 +168,8 @@
             </ul>
         </div>
         @else
-        <div class="notification-bar" style="background: #e6f7ff; border-color: #91d5ff; color: #0050b3;">
-            <i class="fa-solid fa-circle-info me-2"></i> Tidak ada jadwal khusus untuk hari ini. Tetap semangat bekerja!
+        <div class="notification-bar">
+            <i class="fa-solid fa-circle-info me-2" style="color: #845a33;"></i> Tidak ada jadwal khusus untuk hari ini. Tetap semangat bekerja!
         </div>
         @endif
 
@@ -216,16 +216,16 @@
         <!-- Charts Section -->
         <div class="row g-4 mt-2 mb-4">
             <div class="col-md-6">
-                <div class="card p-4 shadow-sm border-0" style="background-color: #f5efe6; border-radius: 25px; border: 3px solid #bc9f82 !important;">
-                    <h5 class="fw-bold mb-3" style="font-family: 'Fredoka One', cursive; color: #432118;"><i class="fa-solid fa-wheat-awn me-2" style="color: #845a33;"></i>Grafik Stok Pakan</h5>
+                <div class="card p-4 shadow-sm" style="background-color: #faf6f0; border-radius: 25px; border: 1.5px solid #e6d5c0 !important;">
+                    <h5 class="fw-bold mb-3" style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118;"><i class="fa-solid fa-wheat-awn me-2" style="color: #845a33;"></i>Grafik Stok Pakan</h5>
                     <div style="height: 300px; position: relative;">
                         <canvas id="pakanChart"></canvas>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card p-4 shadow-sm border-0" style="background-color: #f5efe6; border-radius: 25px; border: 3px solid #bc9f82 !important;">
-                    <h5 class="fw-bold mb-3" style="font-family: 'Fredoka One', cursive; color: #432118;"><i class="fa-solid fa-chart-line me-2" style="color: #5d7a54;"></i>Grafik Produksi Susu (7 Hari Terakhir)</h5>
+                <div class="card p-4 shadow-sm" style="background-color: #faf6f0; border-radius: 25px; border: 1.5px solid #e6d5c0 !important;">
+                    <h5 class="fw-bold mb-3" style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118;"><i class="fa-solid fa-chart-line me-2" style="color: #5d7a54;"></i>Grafik Produksi Susu (7 Hari Terakhir)</h5>
                     <div style="height: 300px; position: relative;">
                         <canvas id="produksiChart"></canvas>
                     </div>
@@ -256,7 +256,7 @@
                     label: 'Stok (KG)',
                     data: pakanStok,
                     backgroundColor: '#845a33',
-                    borderColor: '#5a2c1b',
+                    borderColor: '#432118',
                     borderWidth: 2,
                     borderRadius: 10
                 }]

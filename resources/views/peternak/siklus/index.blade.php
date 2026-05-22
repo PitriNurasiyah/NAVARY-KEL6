@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
         .page-title-section { margin-bottom: 25px; }
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
@@ -33,7 +33,7 @@
         .action-bar { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 25px; }
         .search-wrapper { background: #e6d5c0; border: 3px solid #a67c52; padding: 5px 15px; border-radius: 12px; flex-grow: 1; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .search-input-group { display: flex; align-items: center; flex-grow: 1; }
-        .search-input-group i { color: #5a1f12; font-size: 18px; }
+        .search-input-group i { color: #152414; font-size: 18px; }
         .search-input-group input { background: transparent; border: none; outline: none; width: 100%; padding: 8px 15px; font-family: 'Quicksand', sans-serif; font-weight: 600; color: #432118; font-size: 15px; }
 
         .cow-card { background: #f0e2d0; padding: 25px; border-radius: 25px; border: 3px solid #bc9f82; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-width: 280px; }

@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
         .page-title-section { margin-bottom: 25px; }
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
@@ -36,7 +36,7 @@
         .action-bar { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 25px; }
         .search-wrapper { background: #e6d5c0; border: 3px solid #a67c52; padding: 5px 15px; border-radius: 12px; flex-grow: 1; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .search-input-group { display: flex; align-items: center; flex-grow: 1; }
-        .search-input-group i { color: #5a1f12; font-size: 18px; }
+        .search-input-group i { color: #152414; font-size: 18px; }
         .search-input-group input { background: transparent; border: none; outline: none; width: 100%; padding: 8px 15px; font-family: 'Quicksand', sans-serif; font-weight: 600; color: #432118; font-size: 15px; }
 
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; margin-top: 10px; }
@@ -138,7 +138,9 @@
                         <th>SORE (L)</th>
                         <th class="text-center">TOTAL</th>
                         <th>TANGGAL</th>
+                        @if(Auth::user()->role !== 'Admin')
                         <th>HARI LAKTASI</th>
+                        @endif
                         @if(Auth::user()->role === 'Peternak')
                         <th class="text-center">AKSI</th>
                         @endif
@@ -153,7 +155,9 @@
                         <td>{{ $item->jumlah_sore }} L</td>
                         <td class="text-center"><span class="total-badge">{{ $item->total }} L</span></td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
+                        @if(Auth::user()->role !== 'Admin')
                         <td>{{ $item->laktasi_hari_ke ? 'Hari ke-' . $item->laktasi_hari_ke : '-' }}</td>
+                        @endif
                         @if(Auth::user()->role === 'Peternak')
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
@@ -165,7 +169,7 @@
                     </tr>
                     @empty
                     <tr id="noDataRow">
-                        <td colspan="8" class="text-center py-5">
+                        <td @if(Auth::user()->role === 'Admin') colspan="6" @else colspan="8" @endif class="text-center py-5">
                             <div class="d-flex flex-column align-items-center">
                                 <i class="fa-solid fa-bucket mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                 <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>
@@ -181,12 +185,13 @@
             {{ $produksi->links() }}
         </div>
 
+        @if(Auth::user()->role !== 'Admin')
         <div class="chart-container">
             <h4 class="chart-title" id="chartTitle">Grafik Produksi Laktasi: {{ $sapiList->first()->nama ?? 'N/A' }} 📈</h4>
             
             <!-- Sapi Filter List -->
             <div class="mb-4">
-                <p style="font-weight: 700; color: #5a2c1b; margin-bottom: 8px; font-size: 14px;"><i class="fa-solid fa-cow"></i> Pilih Sapi untuk Melihat Grafik Laktasi:</p>
+                <p style="font-weight: 700; color: #432118; margin-bottom: 8px; font-size: 14px;"><i class="fa-solid fa-cow"></i> Pilih Sapi untuk Melihat Grafik Laktasi:</p>
                 <div class="sapi-list-scroll">
                     @foreach($sapiList as $index => $s)
                         <button type="button" class="btn btn-sm sapi-filter-btn {{ $index === 0 ? 'btn-active-sapi' : '' }}" 
@@ -205,6 +210,7 @@
             </div>
             <canvas id="productionChart" height="100"></canvas>
         </div>
+        @endif
     </div>
 
     <div class="confirm-overlay" id="confirmOverlay">
@@ -259,79 +265,82 @@
         });
 
         // Chart
-        const lactationChartData = @json($lactationData);
-        const ctx = document.getElementById('productionChart').getContext('2d');
-        
-        // Find initially active cow ID
-        const initialActiveBtn = document.querySelector('.btn-active-sapi');
-        const initialSapiId = initialActiveBtn ? initialActiveBtn.getAttribute('data-sapi-id') : null;
-        
-        let initialLabels = ['Hari 1 - 100', 'Hari 101 - 200', 'Hari 201 - 300'];
-        let initialData = [0, 0, 0];
-        
-        if (initialSapiId && lactationChartData[initialSapiId]) {
-            initialLabels = lactationChartData[initialSapiId].labels;
-            initialData = lactationChartData[initialSapiId].data;
-            if (!lactationChartData[initialSapiId].has_data) {
-                document.getElementById('noChartDataMessage').classList.remove('d-none');
-                document.getElementById('productionChart').style.display = 'none';
-            }
-        }
-        
-        const productionChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: initialLabels,
-                datasets: [{
-                    label: 'Total Produksi Susu (Liter)',
-                    data: initialData,
-                    backgroundColor: '#8CA685',
-                    borderColor: '#4a6344',
-                    borderWidth: 2,
-                    borderRadius: 12,
-                    barThickness: 50
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(0, 0, 0, 0.05)' }
-                    },
-                    x: {
-                        grid: { display: false }
-                    }
-                },
-                plugins: {
-                    legend: { display: false }
+        const productionChartEl = document.getElementById('productionChart');
+        if (productionChartEl) {
+            const lactationChartData = @json($lactationData);
+            const ctx = productionChartEl.getContext('2d');
+            
+            // Find initially active cow ID
+            const initialActiveBtn = document.querySelector('.btn-active-sapi');
+            const initialSapiId = initialActiveBtn ? initialActiveBtn.getAttribute('data-sapi-id') : null;
+            
+            let initialLabels = ['Hari 1 - 100', 'Hari 101 - 200', 'Hari 201 - 300'];
+            let initialData = [0, 0, 0];
+            
+            if (initialSapiId && lactationChartData[initialSapiId]) {
+                initialLabels = lactationChartData[initialSapiId].labels;
+                initialData = lactationChartData[initialSapiId].data;
+                if (!lactationChartData[initialSapiId].has_data) {
+                    document.getElementById('noChartDataMessage').classList.remove('d-none');
+                    productionChartEl.style.display = 'none';
                 }
             }
-        });
-
-        function selectSapiChart(sapiId, sapiName) {
-            document.querySelectorAll('.sapi-filter-btn').forEach(btn => {
-                btn.classList.remove('btn-active-sapi');
+            
+            const productionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: initialLabels,
+                    datasets: [{
+                        label: 'Total Produksi Susu (Liter)',
+                        data: initialData,
+                        backgroundColor: '#8CA685',
+                        borderColor: '#4a6344',
+                        borderWidth: 2,
+                        borderRadius: 12,
+                        barThickness: 50
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
             });
-            const clickedBtn = document.querySelector(`.sapi-filter-btn[data-sapi-id="${sapiId}"]`);
-            if (clickedBtn) {
-                clickedBtn.classList.add('btn-active-sapi');
-            }
-            
-            document.getElementById('chartTitle').textContent = `Grafik Produksi Laktasi: ${sapiName} 📈`;
-            
-            const cowData = lactationChartData[sapiId];
-            if (cowData) {
-                productionChart.data.labels = cowData.labels;
-                productionChart.data.datasets[0].data = cowData.data;
-                productionChart.update();
+
+            window.selectSapiChart = function(sapiId, sapiName) {
+                document.querySelectorAll('.sapi-filter-btn').forEach(btn => {
+                    btn.classList.remove('btn-active-sapi');
+                });
+                const clickedBtn = document.querySelector(`.sapi-filter-btn[data-sapi-id="${sapiId}"]`);
+                if (clickedBtn) {
+                    clickedBtn.classList.add('btn-active-sapi');
+                }
                 
-                if (cowData.has_data) {
-                    document.getElementById('noChartDataMessage').classList.add('d-none');
-                    document.getElementById('productionChart').style.display = 'block';
-                } else {
-                    document.getElementById('noChartDataMessage').classList.remove('d-none');
-                    document.getElementById('productionChart').style.display = 'none';
+                document.getElementById('chartTitle').textContent = `Grafik Produksi Laktasi: ${sapiName} 📈`;
+                
+                const cowData = lactationChartData[sapiId];
+                if (cowData) {
+                    productionChart.data.labels = cowData.labels;
+                    productionChart.data.datasets[0].data = cowData.data;
+                    productionChart.update();
+                    
+                    if (cowData.has_data) {
+                        document.getElementById('noChartDataMessage').classList.add('d-none');
+                        productionChartEl.style.display = 'block';
+                    } else {
+                        document.getElementById('noChartDataMessage').classList.remove('d-none');
+                        productionChartEl.style.display = 'none';
+                    }
                 }
             }
         }

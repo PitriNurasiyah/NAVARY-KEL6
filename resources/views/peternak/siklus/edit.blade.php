@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { font-family: 'Quicksand', sans-serif; background-color: #dcc8ae; color: #432118; margin: 0; display: flex; overflow-x: hidden; }
+        body { font-family: 'Quicksand', sans-serif; background-color: #f5efe6; color: #432118; margin: 0; display: flex; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
         .page-title-section { margin-bottom: 25px; }
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
@@ -24,7 +24,7 @@
             background-color: #5d7a54; background-image: url('https://www.transparenttextures.com/patterns/grass.png'); border-radius: 35px;
         }
 
-        .form-label { font-weight: 700; color: #5a2c1b; margin-bottom: 4px; display: block; font-size: 14px; }
+        .form-label { font-weight: 700; color: #432118; margin-bottom: 4px; display: block; font-size: 14px; }
         .form-control, .form-select { border-radius: 10px; border: 2px solid #a67c52; padding: 10px; font-size: 14px; background-color: #fffdfa; }
         .btn-save { background: #5d7a54; color: white; font-weight: bold; border: none; padding: 10px 20px; border-radius: 10px; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; }
         .btn-cancel { background: #e2e8f0; color: #475569; font-weight: bold; border: none; padding: 10px 20px; border-radius: 10px; text-decoration: none; display: inline-block; }

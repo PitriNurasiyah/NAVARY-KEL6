@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Penjualan - Cimilk Yogurt</title>
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #dcc8ae;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4efe6;
             color: #432118;
             margin: 0;
             overflow-x: hidden;
@@ -26,30 +26,38 @@
         }
 
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #432118; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         .alert-box {
-            background-color: #faf5ff;
+            background-color: #fffcf7;
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 30px;
-            color: #6b21a8;
+            color: #432118;
             font-weight: 700;
             font-size: 16px;
-            border: 2px solid #d8b4fe;
+            border: 1.5px solid #e6d5c0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
 
         .dashboard-card {
-            background: #ffffff;
+            background: #fffcf7;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #e0e0e0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            border: 1.5px solid #e6d5c0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 100%;
+            transition: 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            border-color: #bc9f82;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
         }
 
         .card-info h5 {
@@ -60,7 +68,8 @@
         }
 
         .card-info h2 {
-            font-family: 'Fredoka One', cursive;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
             color: #3a150c;
             font-size: 32px;
             margin: 0;
@@ -88,11 +97,11 @@
         .icon-orange { background-color: #ffedd5; color: #f97316; }
 
         .chart-card {
-            background: #ffffff;
+            background: #fffcf7;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #e0e0e0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            border: 1.5px solid #e6d5c0;
         }
 
         .chart-placeholder {

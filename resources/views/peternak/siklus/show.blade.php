@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #dcc8ae; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
         .page-title-section { margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
         .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
@@ -21,7 +21,7 @@
         .timeline-item { position: relative; padding-left: 70px; margin-bottom: 30px; }
         .timeline-icon { position: absolute; left: 15px; top: 0; width: 34px; height: 34px; background: #fff; border: 4px solid #a67c52; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1; color: #a67c52; font-size: 14px; }
         .timeline-content { background: white; padding: 20px; border-radius: 15px; border: 2px solid #e6d5c0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .timeline-content h5 { font-family: 'Fredoka One', cursive; margin-bottom: 5px; color: #5a2c1b; }
+        .timeline-content h5 { font-family: 'Fredoka One', cursive; margin-bottom: 5px; color: #432118; }
         .timeline-content .date { color: #845a33; font-size: 13px; font-weight: bold; margin-bottom: 10px; display: block; }
         
         .status-badge { padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; }
@@ -36,7 +36,7 @@
         .btn-danger-action:hover { background: #a93226; transform: translateY(2px); box-shadow: 0 2px 0 #7b241c; color: white; }
 
         .form-control { border-radius: 10px; border: 2px solid #a67c52; }
-        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #5a1f12; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #152414; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
         .btn-back:hover { background: #6d4c41; color: #fff; transform: translateY(-2px); }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -149,7 +149,7 @@
                         <div class="text-end">
                             <span class="status-badge {{ $sik->status == 'Selesai' ? 'bg-success text-white' : ($sik->status == 'Batal' ? 'bg-danger text-white' : 'bg-warning text-dark') }} d-inline-block mb-2">{{ $sik->status }}</span>
                             <div class="d-flex gap-2 justify-content-end">
-                                <a href="{{ route('siklus.edit', $sik->id) }}" class="btn btn-sm btn-outline-secondary" style="border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: bold; border-color: #bc9f82; color: #5a2c1b;"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                                <a href="{{ route('siklus.edit', $sik->id) }}" class="btn btn-sm btn-outline-secondary" style="border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: bold; border-color: #bc9f82; color: #432118;"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
                                 <form action="{{ route('siklus.destroy', $sik->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data siklus ini?')">
                                     @csrf
                                     @method('DELETE')

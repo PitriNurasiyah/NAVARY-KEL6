@@ -1,7 +1,4 @@
-{{-- ====================================================
-     HEADER PROFILE COMPONENT
-     Usage: @include('layouts.header', ['pageTitle' => 'Judul', 'pageSubtitle' => 'Sub'])
-     ====================================================--}}
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 <style>
     /* ===== TOP HEADER BAR ===== */
     .top-header {
@@ -10,17 +7,16 @@
         left: 260px;
         right: 0;
         height: 70px;
-        background: rgba(15, 31, 16, 0.95);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        background: #f5efe6;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 35px;
         z-index: 999;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         transition: left 0.3s ease;
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     .top-header.sidebar-hidden {
@@ -58,17 +54,17 @@
     }
 
     .header-page-info h6 {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 16px;
+        font-family: 'Playfair Display', serif;
+        font-size: 22px;
         font-weight: 700;
-        color: #ffffff;
+        color: #432118;
         margin: 0;
         line-height: 1.2;
     }
 
     .header-page-info p {
         font-size: 11px;
-        color: rgba(110,231,183,0.7);
+        color: #6d4c41;
         margin: 0;
         font-weight: 600;
     }
@@ -84,16 +80,16 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #34d399, #059669);
+        background: #233722;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Playfair Display', serif;
         font-size: 16px;
         font-weight: 800;
-        border: 2px solid rgba(52,211,153,0.3);
-        box-shadow: 0 0 15px rgba(52,211,153,0.2);
+        border: none;
+        box-shadow: none;
     }
 
     .profile-info {
@@ -103,35 +99,36 @@
     .profile-info .name {
         font-weight: 700;
         font-size: 13px;
-        color: #ffffff;
+        color: #432118;
         line-height: 1.2;
     }
 
     .profile-info .role {
         font-size: 10px;
-        color: rgba(110,231,183,0.7);
+        color: #5d7a54;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
 
     .btn-logout {
-        border: 1px solid rgba(52,211,153,0.3);
-        background: rgba(52,211,153,0.1);
+        border: none;
+        background: #6d4534;
         padding: 7px 16px;
         border-radius: 10px;
         font-weight: 700;
-        color: #6ee7b7;
-        box-shadow: 0 0 15px rgba(52,211,153,0.1);
+        color: #ffffff;
+        box-shadow: 0 4px 0 #502e21;
         transition: 0.2s;
         font-size: 12px;
         white-space: nowrap;
         cursor: pointer;
     }
 
-    .btn-logout:hover { background: rgba(52,211,153,0.2); color: #fff; }
+    .btn-logout:hover { background: #502e21; color: #fff; }
     .btn-logout:active {
         transform: translateY(2px);
+        box-shadow: 0 2px 0 #502e21;
     }
 
     /* Adjust main content for fixed header */
@@ -158,15 +155,15 @@
     }
     
     .notification-btn {
-        background: rgba(255,255,255,0.07);
-        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(0,0,0,0.04);
+        border: 1px solid rgba(0,0,0,0.08);
         width: 40px;
         height: 40px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: rgba(255,255,255,0.7);
+        color: #432118;
         font-size: 17px;
         cursor: pointer;
         transition: 0.3s;
@@ -174,9 +171,9 @@
     }
     
     .notification-btn:hover {
-        background: rgba(52,211,153,0.15);
-        color: #6ee7b7;
-        border-color: rgba(52,211,153,0.3);
+        background: rgba(93,122,84,0.15);
+        color: #5d7a54;
+        border-color: rgba(93,122,84,0.3);
     }
     
     .notification-badge {
@@ -193,7 +190,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        border: 2px solid #f0e2d0;
+        border: 2px solid #f5efe6;
     }
     
     .notification-dropdown {
@@ -201,11 +198,10 @@
         top: 55px;
         right: -10px;
         width: 320px;
-        background: rgba(15,31,16,0.97);
-        backdrop-filter: blur(20px);
+        background: #f4efe6;
         border-radius: 15px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        border: 1.5px solid #e6d5c0;
         display: none;
         flex-direction: column;
         overflow: hidden;
@@ -217,9 +213,9 @@
     }
     
     .notification-header {
-        background: rgba(255,255,255,0.05);
+        background: #4d624a;
         padding: 15px;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        border-bottom: 1px solid #e6d5c0;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -227,7 +223,7 @@
     
     .notification-header h6 {
         margin: 0;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: inherit;
         font-weight: 700;
         color: #ffffff;
         font-size: 14px;
@@ -235,14 +231,14 @@
     
     .notification-header span {
         font-size: 11px;
-        color: rgba(110,231,183,0.7);
+        color: #dccb96;
         font-weight: 600;
         cursor: pointer;
     }
     
     .notification-header span:hover {
         text-decoration: underline;
-        color: #6ee7b7;
+        color: #ffffff;
     }
     
     .notification-body {
@@ -261,13 +257,14 @@
         gap: 12px;
         padding: 12px;
         border-radius: 10px;
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.07);
+        background: #fffcf7;
+        border: 1px solid #e6d5c0;
         transition: 0.2s;
     }
     
     .notification-item:hover {
-        background: rgba(255,255,255,0.09);
+        background: #f0e8da;
+        border-color: #bc9f82;
     }
     
     .notification-icon-bg {
@@ -285,20 +282,36 @@
     .notification-content p {
         margin: 0;
         font-size: 12px;
-        color: rgba(255,255,255,0.85);
+        color: #432118 !important;
         font-weight: 600;
         line-height: 1.4;
     }
     
     .notification-content span {
         font-size: 10px;
-        color: rgba(110,231,183,0.6);
+        color: #845a33 !important;
         font-weight: 600;
     }
     
     .notification-body::-webkit-scrollbar { width: 6px; }
-    .notification-body::-webkit-scrollbar-track { background: #fdfaf6; }
+    .notification-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.5); }
     .notification-body::-webkit-scrollbar-thumb { background: #bc9f82; border-radius: 10px; }
+
+    /* Global typography override to match landing page theme */
+    body, p, span, td, th, input, select, textarea, button, a, div.name, div.role {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+    h1, h2, h3, h4, h5, h6, .brand h4, .page-title-section h3, .stat-info h2, .card-info h2 {
+        font-family: 'Playfair Display', serif !important;
+    }
+
+    /* Global background and header text colors to match landing page theme */
+    body, .top-header {
+        background-color: #f4efe6 !important;
+    }
+    .header-page-info h6, .page-title-section h3 {
+        color: #4d624a !important;
+    }
 </style>
 
 <div class="top-header" id="topHeader">
@@ -480,15 +493,15 @@
                 iconBgStyle = 'background: rgba(220,53,69,0.15); color: #dc3545;';
                 iconClass = 'fa-solid fa-triangle-exclamation';
             } else if(n.type === 'warning') {
-                bgStyle = 'background: #fdfaf6; border-color: #e6d5c0;';
+                bgStyle = 'background: #fffcf7; border-color: #e6d5c0;';
                 iconBgStyle = 'background: rgba(231,76,60,0.15); color: #e74c3c;';
                 iconClass = 'fa-solid fa-triangle-exclamation';
             } else if(n.type === 'cart') {
-                bgStyle = 'background: #fdfaf6; border-color: #e6d5c0;';
+                bgStyle = 'background: #fffcf7; border-color: #e6d5c0;';
                 iconBgStyle = 'background: rgba(166,124,82,0.15); color: #a67c52;';
                 iconClass = 'fa-solid fa-cart-shopping';
             } else {
-                bgStyle = 'background: #fdfaf6; border-color: #e6d5c0;';
+                bgStyle = 'background: #fffcf7; border-color: #e6d5c0;';
                 iconBgStyle = 'background: rgba(93,122,84,0.15); color: #5d7a54;';
                 iconClass = 'fa-solid fa-check';
             }
@@ -503,8 +516,8 @@
                         <i class="${iconClass}"></i>
                     </div>
                     <div class="notification-content" style="flex:1;">
-                        <p style="margin-bottom:2px;">${n.text}</p>
-                        <span style="font-size:10px; opacity:0.8;">${n.time}</span>
+                        <p style="margin-bottom:2px; color: #432118 !important;">${n.text}</p>
+                        <span style="font-size:10px; color: #845a33 !important;">${n.time}</span>
                     </div>
                     <button onclick="window.deleteNotification(${n.id}, event)" style="background:none; border:none; color:#dc3545; cursor:pointer; padding:5px; flex-shrink:0; transition:0.2s; border-radius:5px;" title="Hapus" onmouseover="this.style.background='rgba(220,53,69,0.1)'" onmouseout="this.style.background='none'">
                         <i class="fa-solid fa-trash-can" style="font-size:14px;"></i>
