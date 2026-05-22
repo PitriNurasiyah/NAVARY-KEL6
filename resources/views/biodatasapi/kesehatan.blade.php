@@ -146,7 +146,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($sapi->pemantauanKesehatan->sortByDesc('tanggal') as $log)
+                                @forelse($kesehatan as $log)
                                 <tr>
                                     <td style="white-space: nowrap;">{{ \Carbon\Carbon::parse($log->tanggal)->format('d M Y') }}</td>
                                     <td><span class="fw-bold">{{ $log->kondisi_sekarang }}</span></td>
@@ -173,6 +173,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+                    <div class="mt-3">
+                        {{ $kesehatan->links() }}
                     </div>
                 </div>
             </div>

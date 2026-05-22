@@ -160,6 +160,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="mt-3">
+            {{ $produksi->links() }}
+        </div>
 
         <div class="chart-container">
             <h4 class="chart-title">Produksi Per Sapi (Hari Ini)</h4>

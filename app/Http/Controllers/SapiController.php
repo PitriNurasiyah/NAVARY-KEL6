@@ -9,7 +9,7 @@ class SapiController extends Controller
 {
     public function index()
     {
-        $sapi = Sapi::all();
+        $sapi = Sapi::paginate(10);
         return view('biodatasapi.biodata_sapi', compact('sapi'));
     }
 
@@ -23,8 +23,7 @@ class SapiController extends Controller
         $request->validate([
             'kode_sapi' => 'required|unique:biodata_sapi',
             'nama' => 'required',
-            'jenis' => 'required',
-            'status_kesehatan' => 'required'
+            'jenis' => 'required'
         ]);
 
         Sapi::create([
@@ -32,9 +31,11 @@ class SapiController extends Controller
             'nama' => $request->nama,
             'jenis' => $request->jenis,
             'jenis_kelamin' => $request->jenis_kelamin,
-            'umur' => $request->umur ?? 0,
+            'umur' => $request->umur,
             'berat' => $request->berat,
-            'status_kesehatan' => $request->status_kesehatan
+            'status_kesehatan' => 'Sehat',
+            'ayah' => $request->ayah,
+            'ibu' => $request->ibu
         ]);
 
         return redirect()->route('sapi.index')->with('success', 'Data sapi berhasil ditambahkan!');
@@ -52,8 +53,7 @@ class SapiController extends Controller
         $request->validate([
             'kode_sapi' => 'required|unique:biodata_sapi,kode_sapi,'.$sapi->id,
             'nama' => 'required',
-            'jenis' => 'required',
-            'status_kesehatan' => 'required'
+            'jenis' => 'required'
         ]);
 
         $sapi->update([
@@ -61,9 +61,10 @@ class SapiController extends Controller
             'nama' => $request->nama,
             'jenis' => $request->jenis,
             'jenis_kelamin' => $request->jenis_kelamin,
-            'umur' => $request->umur ?? 0,
+            'umur' => $request->umur,
             'berat' => $request->berat,
-            'status_kesehatan' => $request->status_kesehatan
+            'ayah' => $request->ayah,
+            'ibu' => $request->ibu
         ]);
 
         return redirect()->route('sapi.index')->with('success', 'Data sapi berhasil diperbarui!');

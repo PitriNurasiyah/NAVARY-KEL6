@@ -12,51 +12,11 @@ class SiklusSapiController extends Controller
 {
     public function index()
     {
-        $siklus = SiklusSapi::with('sapi')->orderBy('tanggal_mulai', 'desc')->get();
-        $sapi = Sapi::all();
+        $sapi = Sapi::with(['siklusSapi' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->where('jenis_kelamin', 'Betina')->paginate(10);
 
-        // Siapkan data grafik untuk sapi yang sedang laktasi
-        $laktasiSiklus = $siklus->where('fase', 'Laktasi');
-        $laktasiChartData = [];
-
-        foreach ($laktasiSiklus as $sik) {
-            // Titik 0 laktasi sebenarnya = tanggal mulai dikurangi "hari ke"
-            $hariKe = $sik->hari_ke ?? 0;
-            $awalLaktasi = Carbon::parse($sik->tanggal_mulai)->subDays($hariKe);
-            
-            $hari100_start = $awalLaktasi->copy();
-            $hari100_end = $awalLaktasi->copy()->addDays(99);
-            
-            $hari200_start = $awalLaktasi->copy()->addDays(100);
-            $hari200_end = $awalLaktasi->copy()->addDays(199);
-            
-            $hari300_start = $awalLaktasi->copy()->addDays(200);
-            $hari300_end = $awalLaktasi->copy()->addDays(299);
-
-            $produksi100 = ProduksiSusu::where('sapi_id', $sik->sapi_id)
-                ->whereDate('tanggal', '>=', $hari100_start)
-                ->whereDate('tanggal', '<=', $hari100_end)
-                ->sum('total');
-                
-            $produksi200 = ProduksiSusu::where('sapi_id', $sik->sapi_id)
-                ->whereDate('tanggal', '>=', $hari200_start)
-                ->whereDate('tanggal', '<=', $hari200_end)
-                ->sum('total');
-                
-            $produksi300 = ProduksiSusu::where('sapi_id', $sik->sapi_id)
-                ->whereDate('tanggal', '>=', $hari300_start)
-                ->whereDate('tanggal', '<=', $hari300_end)
-                ->sum('total');
-
-            $laktasiChartData[] = [
-                'nama' => $sik->sapi->nama ?? 'Sapi',
-                'produksi100' => $produksi100,
-                'produksi200' => $produksi200,
-                'produksi300' => $produksi300,
-            ];
-        }
-
-        return view('peternak.siklus.index', compact('siklus', 'sapi', 'laktasiChartData'));
+        return view('peternak.siklus.index', compact('sapi'));
     }
 
     public function create()
@@ -97,6 +57,52 @@ class SiklusSapiController extends Controller
         }
 
         return redirect()->route('siklus.index')->with('success', 'Data siklus berhasil disimpan!');
+    }
+
+    public function show($id)
+    {
+        $sapi = Sapi::with(['siklusSapi' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->where('jenis_kelamin', 'Betina')->findOrFail($id);
+
+        $laktasiSiklus = $sapi->siklusSapi->where('fase', 'Laktasi')->first();
+        $laktasiChartData = null;
+
+        if ($laktasiSiklus) {
+            $hariKe = $laktasiSiklus->hari_ke ?? 0;
+            $awalLaktasi = Carbon::parse($laktasiSiklus->tanggal_mulai)->subDays($hariKe);
+            
+            $hari100_start = $awalLaktasi->copy();
+            $hari100_end = $awalLaktasi->copy()->addDays(100);
+            
+            $hari200_start = $awalLaktasi->copy()->addDays(101);
+            $hari200_end = $awalLaktasi->copy()->addDays(200);
+            
+            $hari300_start = $awalLaktasi->copy()->addDays(201);
+            $hari300_end = $awalLaktasi->copy()->addDays(300);
+
+            $produksi100 = ProduksiSusu::where('sapi_id', $laktasiSiklus->sapi_id)
+                ->whereDate('tanggal', '>=', $hari100_start)
+                ->whereDate('tanggal', '<=', $hari100_end)
+                ->sum('total');
+                
+            $produksi200 = ProduksiSusu::where('sapi_id', $laktasiSiklus->sapi_id)
+                ->whereDate('tanggal', '>=', $hari200_start)
+                ->whereDate('tanggal', '<=', $hari200_end)
+                ->sum('total');
+                
+            $produksi300 = ProduksiSusu::where('sapi_id', $laktasiSiklus->sapi_id)
+                ->whereDate('tanggal', '>=', $hari300_start)
+                ->whereDate('tanggal', '<=', $hari300_end)
+                ->sum('total');
+
+            $laktasiChartData = [
+                'labels' => ['Hari 1 - 100', 'Hari 101 - 200', 'Hari 201 - 300'],
+                'data' => [$produksi100, $produksi200, $produksi300]
+            ];
+        }
+
+        return view('peternak.siklus.show', compact('sapi', 'laktasiChartData'));
     }
 
     public function edit($id)
@@ -158,5 +164,70 @@ class SiklusSapiController extends Controller
         ]);
 
         return redirect()->route('siklus.index')->with('success', 'Data produksi susu berhasil ditambahkan!');
+    }
+    public function actionCekBirahi(Request $request, $id)
+    {
+        $siklus = SiklusSapi::findOrFail($id);
+        
+        if ($request->hasil == 'berhasil') {
+            $siklus->update(['status' => 'Selesai', 'keterangan' => 'IB Berhasil']);
+            SiklusSapi::create([
+                'sapi_id' => $siklus->sapi_id,
+                'fase' => 'Bunting',
+                'tanggal_mulai' => date('Y-m-d'),
+                'estimasi_selesai' => Carbon::now()->addMonths(9)->format('Y-m-d'),
+                'status' => 'Berjalan'
+            ]);
+            return back()->with('success', 'Selamat! Sapi kini memasuki fase Bunting (Kehamilan).');
+        } else {
+            $siklus->update(['status' => 'Batal', 'keterangan' => 'IB Gagal']);
+            SiklusSapi::create([
+                'sapi_id' => $siklus->sapi_id,
+                'fase' => 'IB',
+                'tanggal_mulai' => date('Y-m-d'),
+                'status' => 'Berjalan',
+                'keterangan' => 'Mengulang IB karena sebelumnya gagal.'
+            ]);
+            return back()->with('error', 'IB Gagal. Sistem telah membuat jadwal IB baru secara otomatis.');
+        }
+    }
+
+    public function actionMelahirkan($id)
+    {
+        $siklus = SiklusSapi::findOrFail($id);
+        $siklus->update(['status' => 'Selesai', 'keterangan' => 'Sapi telah melahirkan']);
+        
+        SiklusSapi::create([
+            'sapi_id' => $siklus->sapi_id,
+            'fase' => 'Laktasi',
+            'tanggal_mulai' => date('Y-m-d'),
+            'status' => 'Berjalan'
+        ]);
+
+        return back()->with('success', 'Sapi telah melahirkan dan sekarang memasuki fase Laktasi!');
+    }
+
+    public function actionKering($id)
+    {
+        $siklus = SiklusSapi::findOrFail($id);
+        $siklus->update(['status' => 'Selesai', 'keterangan' => 'Masa laktasi selesai']);
+        
+        SiklusSapi::create([
+            'sapi_id' => $siklus->sapi_id,
+            'fase' => 'Kering Kandang',
+            'tanggal_mulai' => date('Y-m-d'),
+            'estimasi_selesai' => Carbon::now()->addMonths(1)->format('Y-m-d'),
+            'status' => 'Berjalan'
+        ]);
+
+        return back()->with('success', 'Masa Laktasi berakhir. Sapi kini memasuki Masa Kering.');
+    }
+
+    public function actionSelesaiKering($id)
+    {
+        $siklus = SiklusSapi::findOrFail($id);
+        $siklus->update(['status' => 'Selesai', 'keterangan' => 'Masa kering selesai. Sapi siap IB kembali.']);
+        
+        return back()->with('success', 'Masa kering selesai. Sapi kini siap untuk memulai siklus IB yang baru.');
     }
 }

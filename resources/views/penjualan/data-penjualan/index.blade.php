@@ -145,6 +145,9 @@
                 </table>
             </div>
         </div>
+        <div class="mt-3">
+            {{ $penjualan->links() }}
+        </div>
     </div>
 
     <!-- Custom Confirm Delete Modal -->

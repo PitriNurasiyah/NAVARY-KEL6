@@ -160,6 +160,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="mt-3">
+            {{ $pakan->links() }}
+        </div>
     </div>
 
     <!-- Custom Confirm Delete Modal -->

@@ -195,6 +195,9 @@
                 </table>
             </div>
         </div>
+        <div class="mt-3">
+            {{ $penjualan->links() }}
+        </div>
 
     </div>
 

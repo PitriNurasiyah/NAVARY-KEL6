@@ -9,7 +9,7 @@ class PakanController extends Controller
 {
     public function index()
     {
-        $pakan = Pakan::orderBy('created_at', 'desc')->get();
+        $pakan = Pakan::orderBy('created_at', 'desc')->paginate(10);
         return view('peternak.pakan.index', compact('pakan'));
     }
 

@@ -10,7 +10,7 @@ class ProduksiSusuController extends Controller
 {
     public function index()
     {
-        $produksi = ProduksiSusu::with('sapi')->orderBy('tanggal', 'desc')->get();
+        $produksi = ProduksiSusu::with('sapi')->orderBy('tanggal', 'desc')->paginate(10);
         $sapi = Sapi::all();
         
         // Data untuk grafik (Produksi per Sapi hari ini)

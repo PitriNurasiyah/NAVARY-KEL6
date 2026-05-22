@@ -11,8 +11,9 @@ class PemantauanKesehatanController extends Controller
 {
     public function history($sapi_id)
     {
-        $sapi = Sapi::with('pemantauanKesehatan')->findOrFail($sapi_id);
-        return view('biodatasapi.kesehatan', compact('sapi'));
+        $sapi = Sapi::findOrFail($sapi_id);
+        $kesehatan = $sapi->pemantauanKesehatan()->orderBy('tanggal', 'desc')->paginate(10);
+        return view('biodatasapi.kesehatan', compact('sapi', 'kesehatan'));
     }
 
     public function store(Request $request)

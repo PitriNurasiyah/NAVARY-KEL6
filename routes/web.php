@@ -37,6 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('pakan', App\Http\Controllers\PakanController::class);
     Route::resource('siklus', App\Http\Controllers\SiklusSapiController::class);
     Route::post('/siklus/produksi', [App\Http\Controllers\SiklusSapiController::class, 'storeProduksi'])->name('siklus.storeProduksi');
+    Route::post('/siklus/{id}/action/cek-birahi', [App\Http\Controllers\SiklusSapiController::class, 'actionCekBirahi'])->name('siklus.action.cek_birahi');
+    Route::post('/siklus/{id}/action/melahirkan', [App\Http\Controllers\SiklusSapiController::class, 'actionMelahirkan'])->name('siklus.action.melahirkan');
+    Route::post('/siklus/{id}/action/kering', [App\Http\Controllers\SiklusSapiController::class, 'actionKering'])->name('siklus.action.kering');
+    Route::post('/siklus/{id}/action/selesai-kering', [App\Http\Controllers\SiklusSapiController::class, 'actionSelesaiKering'])->name('siklus.action.selesai_kering');
     Route::get('/siklus/{id}/pantau', [App\Http\Controllers\SiklusSapiController::class, 'pantau'])->name('siklus.pantau');
     Route::resource('produksi', App\Http\Controllers\ProduksiSusuController::class);
     Route::resource('kesehatan', App\Http\Controllers\PemantauanKesehatanController::class);
@@ -49,12 +53,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/input-penjualan/{id}', [App\Http\Controllers\PenjualanController::class, 'update'])->name('penjualan.update');
     Route::delete('/input-penjualan/{id}', [App\Http\Controllers\PenjualanController::class, 'destroy'])->name('penjualan.destroy');
     Route::get('/data-penjualan', function() { 
-        $penjualan = \App\Models\Penjualan::orderBy('created_at', 'desc')->get();
+        $penjualan = \App\Models\Penjualan::orderBy('created_at', 'desc')->paginate(10);
         return view('penjualan.data-penjualan.index', compact('penjualan')); 
     })->name('penjualan.data');
     Route::get('/laporan-admin', function() { return view('laporan.index'); })->name('laporan.index');
     Route::get('/laporan-produksi', function() { 
-        $produksi = \App\Models\ProduksiSusu::with('sapi')->orderBy('tanggal', 'desc')->get();
+        $produksi = \App\Models\ProduksiSusu::with('sapi')->orderBy('tanggal', 'desc')->paginate(10);
         return view('laporan.produksi', compact('produksi')); 
     })->name('laporan.produksi');
     Route::get('/laporan-penjualan', function(Illuminate\Http\Request $request) { 
@@ -67,9 +71,11 @@ Route::middleware('auth')->group(function () {
             $query->whereDate('tanggal', '<=', $request->sampai_tanggal);
         }
 
-        $penjualan = $query->orderBy('tanggal', 'desc')->get();
-        $totalPenjualan = $penjualan->sum('total_harga');
-        $totalLiter = $penjualan->sum('jumlah');
+        $queryClone = clone $query;
+        $totalPenjualan = $queryClone->sum('total_harga');
+        $totalLiter = $queryClone->sum('jumlah');
+        
+        $penjualan = $query->orderBy('tanggal', 'desc')->paginate(10)->withQueryString();
         
         return view('laporan.penjualan', compact('penjualan', 'totalPenjualan', 'totalLiter')); 
     })->name('laporan.penjualan');

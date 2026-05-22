@@ -18,11 +18,18 @@ class Sapi extends Model
         'jenis_kelamin',
         'umur',
         'berat',
-        'status_kesehatan'
+        'status_kesehatan',
+        'ayah',
+        'ibu'
     ];
 
     public function pemantauanKesehatan()
     {
         return $this->hasMany(PemantauanKesehatan::class);
+    }
+
+    public function siklusSapi()
+    {
+        return $this->hasMany(SiklusSapi::class);
     }
 }

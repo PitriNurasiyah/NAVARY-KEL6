@@ -213,9 +213,15 @@
                     <input type="text" name="berat" class="form-control" placeholder="Contoh: 450 kg" value="{{ old('berat') }}">
                 </div>
 
+
                 <div class="mb-2">
-                    <label class="form-label">Kondisi / Status Kesehatan</label>
-                    <input type="text" name="status_kesehatan" class="form-control" placeholder="Cth: Sehat, Sakit, Demam..." value="{{ old('status_kesehatan') }}" required>
+                    <label class="form-label">Ayah</label>
+                    <input type="text" name="ayah" class="form-control" placeholder="Nama/ID Ayah" value="{{ old('ayah') }}">
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label">Ibu</label>
+                    <input type="text" name="ibu" class="form-control" placeholder="Nama/ID Ibu" value="{{ old('ibu') }}">
                 </div>
 
                     <div class="position-relative mt-4">

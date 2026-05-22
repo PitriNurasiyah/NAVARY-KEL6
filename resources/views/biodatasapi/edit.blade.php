@@ -230,9 +230,15 @@
                         <input type="text" name="berat" class="form-control" placeholder="Contoh: 450 kg" value="{{ old('berat', $sapi->berat) }}">
                     </div>
 
+
                     <div class="mb-3">
-                        <label class="form-label">Kondisi / Status Kesehatan</label>
-                        <input type="text" name="status_kesehatan" class="form-control" placeholder="Cth: Sehat, Sakit, Demam..." value="{{ old('status_kesehatan', $sapi->status_kesehatan) }}" required>
+                        <label class="form-label">Ayah</label>
+                        <input type="text" name="ayah" class="form-control" placeholder="Nama/ID Ayah (Opsional)" value="{{ old('ayah', $sapi->ayah) }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ibu</label>
+                        <input type="text" name="ibu" class="form-control" placeholder="Nama/ID Ibu (Opsional)" value="{{ old('ibu', $sapi->ibu) }}">
                     </div>
 
                     <div class="position-relative mt-4">

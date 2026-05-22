@@ -209,9 +209,10 @@
                     ID: {{ $s->kode_sapi }}<br>
                     Jenis: {{ $s->jenis }}<br>
                     Umur: {{ $s->umur ?? '-' }}<br>
-                    Status Kesehatan: <span class="{{ strtolower($s->status_kesehatan) == 'sehat' ? 'text-success' : (strtolower($s->status_kesehatan) == 'sakit' ? 'text-danger' : 'text-warning') }} fw-bold">{{ $s->status_kesehatan }}</span>
+                    Status Kesehatan: <span class="{{ strtolower($s->status_kesehatan) == 'sehat' ? 'text-success' : (strtolower($s->status_kesehatan) == 'sakit' ? 'text-danger' : 'text-warning') }} fw-bold">{{ $s->status_kesehatan }}</span><br>
+                    Ayah: {{ $s->ayah ?? '-' }} | Ibu: {{ $s->ibu ?? '-' }}
                 </p>
-                <button type="button" class="btn btn-sm text-dark fw-bold px-3 py-1" style="background-color: #e2e8f0; border-radius: 8px;" onclick="showCowDetail('{{ $s->kode_sapi }}', '{{ addslashes($s->nama) }}', '{{ $s->jenis }}', '{{ $s->jenis_kelamin ?? '-' }}', '{{ $s->umur ?? '-' }}', '{{ $s->berat ?? '-' }}', '{{ $s->status_kesehatan }}')">Lihat Detail</button>
+                <button type="button" class="btn btn-sm text-dark fw-bold px-3 py-1" style="background-color: #e2e8f0; border-radius: 8px;" onclick="showCowDetail('{{ $s->kode_sapi }}', '{{ addslashes($s->nama) }}', '{{ $s->jenis }}', '{{ $s->jenis_kelamin ?? '-' }}', '{{ $s->umur ?? '-' }}', '{{ $s->berat ?? '-' }}', '{{ $s->status_kesehatan }}', '{{ addslashes($s->ayah ?? '-') }}', '{{ addslashes($s->ibu ?? '-') }}')">Lihat Detail</button>
             </div>
             @endforeach
         </div>
@@ -239,6 +240,8 @@
                         <th>J. KELAMIN</th>
                         <th>UMUR</th>
                         <th>BERAT</th>
+                        <th>AYAH</th>
+                        <th>IBU</th>
                         <th>STATUS</th>
                         <th class="text-center">AKSI</th>
                     </tr>
@@ -252,6 +255,8 @@
                         <td>{{ $s->jenis_kelamin ?? '-' }}</td>
                         <td>{{ $s->umur ?? '-' }}</td>
                         <td>{{ $s->berat ?? '-' }}</td>
+                        <td>{{ $s->ayah ?? '-' }}</td>
+                        <td>{{ $s->ibu ?? '-' }}</td>
                         <td>
                             <span class="badge {{ strtolower($s->status_kesehatan) == 'sehat' ? 'bg-success' : 
                                 (strtolower($s->status_kesehatan) == 'sakit' ? 
@@ -261,7 +266,9 @@
                         </td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
+                                @if(Auth::user()->role === 'Peternak')
                                 <a href="{{ route('sapi.kesehatan', $s->id) }}" class="btn btn-sm text-white shadow-sm fw-bold" style="background-color: #a67c52;"><i class="fa-solid fa-notes-medical me-1"></i> Kesehatan</a>
+                                @endif
                                 @if(Auth::user()->role !== 'Peternak')
                                 <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('sapi.edit', $s->id) }}">Edit</button>
                                 <button type="button"
@@ -275,7 +282,7 @@
                     </tr>
                     @endforeach
                     <tr id="noDataRow" @if(count($sapi) > 0) style="display: none;" @endif>
-                        <td colspan="8" class="text-center py-5">
+                        <td colspan="10" class="text-center py-5">
                             <div class="d-flex flex-column align-items-center">
                                 <i class="fa-solid fa-cow mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                 <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>
@@ -285,6 +292,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="mt-3">
+            {{ $sapi->links() }}
         </div>
     </div>
 
@@ -334,6 +344,14 @@
                     <span class="text-muted">Berat</span>
                     <span id="detail-berat" class="fw-bold"></span>
                 </div>
+                <div class="d-flex justify-content-between border-bottom pb-2 border-secondary border-opacity-25">
+                    <span class="text-muted">Ayah</span>
+                    <span id="detail-ayah" class="fw-bold"></span>
+                </div>
+                <div class="d-flex justify-content-between border-bottom pb-2 border-secondary border-opacity-25">
+                    <span class="text-muted">Ibu</span>
+                    <span id="detail-ibu" class="fw-bold"></span>
+                </div>
                 <div class="d-flex justify-content-between pb-1">
                     <span class="text-muted">Status Kesehatan</span>
                     <span id="detail-status" class="fw-bold"></span>
@@ -368,13 +386,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // ====== Show Detail Modal ======
-        function showCowDetail(id, nama, jenis, jk, umur, berat, status) {
+        function showCowDetail(id, nama, jenis, jk, umur, berat, status, ayah, ibu) {
             document.getElementById('detail-id').textContent = id;
             document.getElementById('detail-nama').textContent = nama;
             document.getElementById('detail-jenis').textContent = jenis;
             document.getElementById('detail-jk').textContent = jk;
             document.getElementById('detail-umur').textContent = umur;
             document.getElementById('detail-berat').textContent = berat;
+            document.getElementById('detail-ayah').textContent = ayah;
+            document.getElementById('detail-ibu').textContent = ibu;
             document.getElementById('detail-status').textContent = status;
             
             let statusEl = document.getElementById('detail-status');
