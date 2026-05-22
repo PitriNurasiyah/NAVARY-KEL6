@@ -22,8 +22,9 @@
         .btn-print:hover { background: #4a6344; transform: translateY(-2px); box-shadow: 0 6px 0 #3a4d33; color: white; }
         .btn-print:active { transform: translateY(2px); box-shadow: 0 2px 0 #3a4d33; }
 
-        .btn-back { background: #e2e8f0; color: #475569; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-back:hover { background: #cbd5e1; color: #1e293b; }
+        .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #5a1f12; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-back:hover { background: #6d4c41; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 0 #5a1f12; }
+        .btn-back:active { transform: translateY(2px); box-shadow: 0 2px 0 #5a1f12; }
 
         .custom-table { border-collapse: separate; border-spacing: 0; width: 100%; border-radius: 15px; overflow: hidden; border: 1px solid #bc9f82; }
         .custom-table thead th { background-color: #5d7a54 !important; color: white !important; padding: 18px 15px; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
@@ -56,13 +57,20 @@
             <a href="{{ route('laporan.index') }}" class="btn-back">
                 <i class="fa-solid fa-arrow-left"></i> Kembali
             </a>
-            <button class="btn-print" onclick="window.print()">
-                <i class="fa-solid fa-print me-2"></i> Cetak Laporan
-            </button>
+            <div class="dropdown">
+                <button class="btn-print dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-print me-2"></i> Cetak Laporan
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="dropdownMenuButton" style="border-radius: 12px; overflow: hidden; border: 2px solid #bc9f82 !important;">
+                    <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="exportToExcel('dataTable', 'Laporan_Produksi'); return false;" style="color: #217346;"><i class="fa-solid fa-file-excel me-2"></i>Cetak Excel</a></li>
+                    <li><hr class="dropdown-divider m-0" style="border-color: #bc9f82;"></li>
+                    <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="window.print(); return false;" style="color: #c0392b;"><i class="fa-solid fa-file-pdf me-2"></i>Cetak PDF</a></li>
+                </ul>
+            </div>
         </div>
 
         <div class="table-responsive">
-            <table class="table custom-table align-middle">
+            <table class="table custom-table align-middle" id="dataTable">
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 60px;">NO</th>
@@ -101,5 +109,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        function exportToExcel(tableId, filename) {
+            var wb = XLSX.utils.table_to_book(document.getElementById(tableId), {sheet: "Laporan"});
+            XLSX.writeFile(wb, filename + ".xlsx");
+        }
+    </script>
 </body>
 </html>

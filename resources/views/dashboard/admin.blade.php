@@ -148,8 +148,111 @@
                 </a>
             </div>
         </div>
+        <div class="row g-4 mt-2">
+            <div class="col-12">
+                <div class="stat-card" style="display: block; padding: 25px;">
+                    <h3 style="font-family: 'Fredoka One', cursive; font-size: 20px; color: #432118; margin-bottom: 20px;">Grafik Ringkasan</h3>
+                    <div style="position: relative; height: 350px; width: 100%;">
+                        <canvas id="dashboardChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('dashboardChart').getContext('2d');
+            var dashboardChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Populasi Sapi', 'Hasil Produksi', 'Omzet Penjualan'],
+                    datasets: [{
+                        label: 'Statistik',
+                        data: [
+                            {{ $totalSapi ?? 0 }}, 
+                            {{ $totalProduksi ?? 0 }}, 
+                            {{ ($totalPenjualan ?? 0) / 1000 }} // Scale down Omzet for better visualization
+                        ],
+                        backgroundColor: [
+                            'rgba(93, 122, 84, 0.8)',  // Green
+                            'rgba(132, 90, 51, 0.8)',  // Brown
+                            'rgba(166, 124, 82, 0.8)'  // Tan
+                        ],
+                        borderColor: [
+                            '#5d7a54',
+                            '#845a33',
+                            '#a67c52'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 8,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(166, 124, 82, 0.2)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#432118',
+                                font: {
+                                    family: 'Quicksand',
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#432118',
+                                font: {
+                                    family: 'Quicksand',
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#432118',
+                            titleFont: { family: 'Quicksand', size: 14 },
+                            bodyFont: { family: 'Quicksand', size: 14, weight: 'bold' },
+                            padding: 12,
+                            cornerRadius: 8,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.parsed.y;
+                                    if (context.dataIndex === 0) {
+                                        return value + ' Ekor';
+                                    } else if (context.dataIndex === 1) {
+                                        return value + ' Liter Susu';
+                                    } else if (context.dataIndex === 2) {
+                                        return 'Rp ' + (value * 1000).toLocaleString('id-ID');
+                                    }
+                                    return value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

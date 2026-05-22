@@ -215,7 +215,7 @@
                     <input type="text" id="searchInput" placeholder="Cari nama atau username pengguna...">
                 </div>
             </div>
-            <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#registerModal" id="btnTambahAkun">
+            <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#registerModal" id="btnTambahAkun" data-route="{{ route('manajemen-akun.create') }}">
                 <i class="fa-solid fa-user-plus me-2"></i> Tambah Akun
             </button>
         </div>
@@ -258,7 +258,7 @@
                         <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : '-' }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('manajemen-akun.edit', $user->id) }}" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
+                                <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('manajemen-akun.edit', $user->id) }}">Edit</button>
                                 <button type="button"
                                     class="btn btn-sm btn-outline-danger shadow-sm"
                                     onclick="confirmDelete('{{ route('manajemen-akun.destroy', $user->id) }}', '{{ $user->name }}')">
@@ -334,14 +334,13 @@
             document.getElementById('noDataRow').style.display = visibleCount === 0 ? '' : 'none';
         });
 
-        // ====== Modal: Reload iframe setiap kali modal dibuka ======
         const registerModal = document.getElementById('registerModal');
         const registerIframe = document.getElementById('registerIframe');
-        const iframeSrc = "{{ route('manajemen-akun.create', ['mode' => 'modal']) }}";
 
-        registerModal.addEventListener('show.bs.modal', function() {
-            // Reload fresh iframe every time modal opens (clear old state/notification)
-            registerIframe.src = iframeSrc;
+        registerModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const routeUrl = button.getAttribute('data-route') || "{{ route('manajemen-akun.create') }}";
+            registerIframe.src = routeUrl + (routeUrl.includes('?') ? '&' : '?') + "mode=modal";
         });
 
         registerModal.addEventListener('hide.bs.modal', function() {

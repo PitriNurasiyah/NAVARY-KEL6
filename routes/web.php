@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/siklus/produksi', [App\Http\Controllers\SiklusSapiController::class, 'storeProduksi'])->name('siklus.storeProduksi');
     Route::get('/siklus/{id}/pantau', [App\Http\Controllers\SiklusSapiController::class, 'pantau'])->name('siklus.pantau');
     Route::resource('produksi', App\Http\Controllers\ProduksiSusuController::class);
+    Route::resource('kesehatan', App\Http\Controllers\PemantauanKesehatanController::class);
+    Route::get('/biodata-sapi/{sapi_id}/kesehatan', [App\Http\Controllers\PemantauanKesehatanController::class, 'history'])->name('sapi.kesehatan');
     
     Route::get('/dashboard-penjualan', [DashboardPenjualanController::class, 'index'])->name('penjualan.dashboard');
     Route::get('/input-penjualan', function() { return view('penjualan.input-penjualan.index'); })->name('penjualan.input');

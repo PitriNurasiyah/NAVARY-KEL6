@@ -149,7 +149,7 @@
         <!-- Table -->
         <div class="table-container">
             <div class="table-responsive">
-                <table class="table align-middle">
+                <table class="table align-middle" id="dataTable">
                     <thead>
                         <tr>
                             <th>ID Transaksi</th>
@@ -183,13 +183,27 @@
         </div>
 
         <div class="mt-4 text-end">
-            <button class="btn btn-filter" onclick="window.print()">
-                <i class="fa-solid fa-print me-2"></i> Cetak Laporan (PDF)
-            </button>
+            <div class="dropdown d-inline-block">
+                <button class="btn btn-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-print me-2"></i> Cetak Laporan
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="dropdownMenuButton" style="border-radius: 12px; overflow: hidden; border: 2px solid #bc9f82 !important;">
+                    <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="exportToExcel('dataTable', 'Laporan_Penjualan'); return false;" style="color: #217346;"><i class="fa-solid fa-file-excel me-2"></i>Cetak Excel</a></li>
+                    <li><hr class="dropdown-divider m-0" style="border-color: #bc9f82;"></li>
+                    <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="window.print(); return false;" style="color: #c0392b;"><i class="fa-solid fa-file-pdf me-2"></i>Cetak PDF</a></li>
+                </ul>
+            </div>
         </div>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        function exportToExcel(tableId, filename) {
+            var wb = XLSX.utils.table_to_book(document.getElementById(tableId), {sheet: "Laporan"});
+            XLSX.writeFile(wb, filename + ".xlsx");
+        }
+    </script>
 </body>
 </html>

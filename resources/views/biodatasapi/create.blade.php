@@ -214,11 +214,8 @@
                 </div>
 
                 <div class="mb-2">
-                    <label class="form-label">Status Kesehatan</label>
-                    <select name="status_kesehatan" class="form-select" required>
-                        <option value="Sehat" {{ old('status_kesehatan') == 'Sehat' ? 'selected' : '' }}>Sehat</option>
-                        <option value="Sakit" {{ old('status_kesehatan') == 'Sakit' ? 'selected' : '' }}>Sakit</option>
-                    </select>
+                    <label class="form-label">Kondisi / Status Kesehatan</label>
+                    <input type="text" name="status_kesehatan" class="form-control" placeholder="Cth: Sehat, Sakit, Demam..." value="{{ old('status_kesehatan') }}" required>
                 </div>
 
                     <div class="position-relative mt-4">

@@ -20,4 +20,9 @@ class Sapi extends Model
         'berat',
         'status_kesehatan'
     ];
+
+    public function pemantauanKesehatan()
+    {
+        return $this->hasMany(PemantauanKesehatan::class);
+    }
 }

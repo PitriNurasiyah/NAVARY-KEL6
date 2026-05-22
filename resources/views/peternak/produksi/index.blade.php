@@ -140,7 +140,7 @@
                         @if(Auth::user()->role === 'Peternak')
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('produksi.edit', $item->id) }}" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
+                                <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('produksi.edit', $item->id) }}">Edit</button>
                                 <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete('{{ route('produksi.destroy', $item->id) }}', '{{ $item->sapi->kode_sapi ?? 'Sapi' }}')">Hapus</button>
                             </div>
                         </td>

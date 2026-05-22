@@ -240,9 +240,7 @@
                         <th>UMUR</th>
                         <th>BERAT</th>
                         <th>STATUS</th>
-                        @if(Auth::user()->role !== 'Peternak')
                         <th class="text-center">AKSI</th>
-                        @endif
                     </tr>
                 </thead>
                 <tbody id="sapiTableBody">
@@ -261,18 +259,19 @@
                                 {{ $s->status_kesehatan }}
                             </span>
                         </td>
-                        @if(Auth::user()->role !== 'Peternak')
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('sapi.edit', $s->id) }}" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
+                                <a href="{{ route('sapi.kesehatan', $s->id) }}" class="btn btn-sm text-white shadow-sm fw-bold" style="background-color: #a67c52;"><i class="fa-solid fa-notes-medical me-1"></i> Kesehatan</a>
+                                @if(Auth::user()->role !== 'Peternak')
+                                <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('sapi.edit', $s->id) }}">Edit</button>
                                 <button type="button"
                                     class="btn btn-sm btn-outline-danger shadow-sm"
                                     onclick="confirmDelete('{{ route('sapi.destroy', $s->id) }}', '{{ $s->nama }}')">
                                     Hapus
                                 </button>
+                                @endif
                             </div>
                         </td>
-                        @endif
                     </tr>
                     @endforeach
                     <tr id="noDataRow" @if(count($sapi) > 0) style="display: none;" @endif>
