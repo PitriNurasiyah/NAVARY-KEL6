@@ -6,34 +6,35 @@
     <title>Data Penjualan - Cimilk Yogurt</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
         
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         /* Action Bar */
         .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 15px; }
         .search-wrapper {
-            background: #e6d5c0;
-            border: 3px solid #a67c52;
+            background: #fffcf7;
+            border: 1.5px solid #e6d5c0;
             padding: 10.5px 15px;
             border-radius: 12px;
             flex-grow: 1;
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
         .search-input-group { display: flex; align-items: center; width: 100%; gap: 10px; }
         .search-input-group i { color: #152414; font-size: 18px; }
         .search-input-group input {
             background: transparent; border: none; outline: none; width: 100%;
-            padding: 0px 15px; font-family: 'Quicksand', sans-serif;
+            padding: 0px 15px; font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600; color: #432118; font-size: 15px;
         }
+        .search-input-group input::placeholder { color: #845a33; opacity: 0.6; }
 
         .btn-add {
             border: none; background: #5d7a54; padding: 10px 20px;
@@ -47,8 +48,8 @@
         /* Tabel */
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; margin-top: 10px; }
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
-        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
-        .table tbody td { padding: 16px !important; border: 1px solid #bc9f82 !important; font-weight: 600; background: white; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
+        .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; font-weight: 600; background: #fffcf7; }
     </style>
 </head>
 <body>
@@ -152,9 +153,9 @@
 
     <!-- Custom Confirm Delete Modal -->
     <div class="confirm-overlay" id="confirmOverlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; align-items: center; justify-content: center;">
-        <div class="confirm-box" style="background: #f5efe6; border-radius: 20px; padding: 35px 40px; max-width: 420px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.3); text-align: center; border: 6px solid #8CA685;">
+        <div class="confirm-box" style="background: #fffcf7; border-radius: 20px; padding: 35px 40px; max-width: 420px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.15); text-align: center; border: 1.5px solid #e6d5c0;">
             <div class="confirm-icon" style="font-size: 48px; color: #c0392b; margin-bottom: 15px;"><i class="fa-solid fa-triangle-exclamation"></i></div>
-            <h5 style="font-family: 'Fredoka One', cursive; color: #432118; font-size: 20px; margin-bottom: 8px;">Hapus Transaksi?</h5>
+            <h5 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; font-size: 20px; margin-bottom: 8px;">Hapus Transaksi?</h5>
             <p id="confirmMessage" style="color: #6d4c41; font-weight: 600; font-size: 14px; margin-bottom: 25px;">Apakah Anda yakin ingin menghapus data penjualan ini?</p>
             <div class="confirm-actions" style="display: flex; gap: 12px; justify-content: center;">
                 <button class="btn-confirm-yes" id="confirmYesBtn" style="background: #c0392b; color: #fff; border: none; padding: 10px 28px; border-radius: 12px; font-weight: 700; box-shadow: 0 4px 0 #922b21; cursor: pointer;">Ya, Hapus</button>

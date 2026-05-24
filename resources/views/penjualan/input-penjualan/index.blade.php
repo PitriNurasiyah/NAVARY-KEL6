@@ -10,51 +10,41 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         .form-container {
-            background-color: #f5efe6;
+            background-color: #fffcf7;
             padding: 35px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             position: relative;
-            border: 8px solid transparent;
-            background-clip: padding-box;
+            border: 1.5px solid #e6d5c0;
             max-width: 650px;
         }
 
-        .form-container::before {
-            content: '';
-            position: absolute;
-            top: -12px; left: -12px; right: -12px; bottom: -12px;
-            z-index: -1;
-            background-color: #5d7a54;
-            background-image: url('https://www.transparenttextures.com/patterns/grass.png');
-            border-radius: 38px;
-        }
-
         .form-title {
-            font-family: 'Fredoka One', cursive;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
             font-size: 20px;
             color: #432118;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 2px dashed #bc9f82;
+            border-bottom: 2px dashed #e6d5c0;
         }
 
         .form-label { font-weight: 700; color: #432118; margin-bottom: 6px; font-size: 14px; }
         .form-control {
             border-radius: 12px;
-            border: 2px solid #a67c52;
+            border: 2.5px solid #d4c2ab;
             padding: 12px;
             font-size: 14px;
-            background-color: #fffdfa;
+            background-color: #fffcf7;
             color: #432118;
             font-weight: 600;
         }
@@ -88,7 +78,7 @@
         .input-group-text {
             background-color: #bc9f82;
             color: white;
-            border: 2px solid #a67c52;
+            border: 2.5px solid #d4c2ab;
             border-right: none;
             font-weight: 700;
             border-radius: 12px 0 0 12px;

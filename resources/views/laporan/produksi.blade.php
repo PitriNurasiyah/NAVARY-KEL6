@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         .action-buttons { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
@@ -26,9 +26,9 @@
         .btn-back:hover { background: #6d4c41; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 0 #152414; }
         .btn-back:active { transform: translateY(2px); box-shadow: 0 2px 0 #152414; }
 
-        .custom-table { border-collapse: separate; border-spacing: 0; width: 100%; border-radius: 15px; overflow: hidden; border: 1px solid #bc9f82; }
-        .custom-table thead th { background-color: #5d7a54 !important; color: white !important; padding: 18px 15px; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
-        .custom-table tbody td { padding: 15px; border: 1px solid #bc9f82 !important; font-weight: 600; background: white; }
+        .custom-table { border-collapse: separate; border-spacing: 0; width: 100%; border-radius: 15px; overflow: hidden; border: 1.5px solid #e6d5c0; }
+        .custom-table thead th { background-color: #4a6344 !important; color: white !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
+        .custom-table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; font-weight: 600; background: #fffcf7; }
 
         @media print {
             .sidebar, .top-header, .header, .btn-print, .btn-back, .page-title-section p, .brand, .sidebar-toggle { 
@@ -61,9 +61,9 @@
                 <button class="btn-print dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-print me-2"></i> Cetak Laporan
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="dropdownMenuButton" style="border-radius: 12px; overflow: hidden; border: 2px solid #bc9f82 !important;">
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="dropdownMenuButton" style="border-radius: 12px; overflow: hidden; border: 1.5px solid #e6d5c0 !important;">
                     <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="exportToExcel('dataTable', 'Laporan_Produksi'); return false;" style="color: #217346;"><i class="fa-solid fa-file-excel me-2"></i>Cetak Excel</a></li>
-                    <li><hr class="dropdown-divider m-0" style="border-color: #bc9f82;"></li>
+                    <li><hr class="dropdown-divider m-0" style="border-color: #e6d5c0;"></li>
                     <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="window.print(); return false;" style="color: #c0392b;"><i class="fa-solid fa-file-pdf me-2"></i>Cetak PDF</a></li>
                 </ul>
             </div>

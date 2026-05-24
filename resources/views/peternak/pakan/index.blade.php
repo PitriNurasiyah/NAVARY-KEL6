@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         /* Notifikasi CRUD */
@@ -38,26 +38,55 @@
         .btn-add:hover { background: #4a6344; color: #fff; }
 
         .action-bar { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 25px; }
-        .search-wrapper { background: #e6d5c0; border: 3px solid #a67c52; padding: 5px 15px; border-radius: 12px; flex-grow: 1; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .search-wrapper {
+            background: #fffcf7;
+            border: 1.5px solid #e6d5c0;
+            padding: 5px 15px;
+            border-radius: 12px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        }
         .search-input-group { display: flex; align-items: center; flex-grow: 1; }
         .search-input-group i { color: #152414; font-size: 18px; }
-        .search-input-group input { background: transparent; border: none; outline: none; width: 100%; padding: 8px 15px; font-family: 'Quicksand', sans-serif; font-weight: 600; color: #432118; font-size: 15px; }
-        .search-input-group input::placeholder { color: #845a33; opacity: 0.7; }
+        .search-input-group input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 8px 15px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            color: #432118;
+            font-size: 15px;
+        }
+        .search-input-group input::placeholder { color: #845a33; opacity: 0.6; }
 
         /* Tabel */
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
-        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
-        .table tbody td { padding: 16px !important; border: 1px solid #bc9f82 !important; background: white; }
-        .table tbody tr:hover { background-color: rgba(93, 122, 84, 0.05) !important; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
+        .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; }
+        .table tbody tr:hover td { background-color: rgba(93, 122, 84, 0.05) !important; }
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
 
         /* Custom Delete Confirm Modal */
-        .confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; align-items: center; justify-content: center; }
+        .confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
         .confirm-overlay.active { display: flex; }
-        .confirm-box { background: #f5efe6; border-radius: 20px; padding: 35px 40px; max-width: 420px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.3); text-align: center; border: 6px solid #8CA685; animation: popIn 0.25s ease; }
+        .confirm-box {
+            background: #fffcf7;
+            border-radius: 20px;
+            padding: 35px 40px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            text-align: center;
+            border: 1.5px solid #e6d5c0;
+            animation: popIn 0.25s ease;
+        }
         @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .confirm-icon { font-size: 48px; color: #c0392b; margin-bottom: 15px; }
-        .confirm-box h5 { font-family: 'Fredoka One', cursive; color: #432118; font-size: 20px; margin-bottom: 8px; }
+        .confirm-box h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; font-size: 20px; margin-bottom: 8px; }
         .confirm-box p { color: #6d4c41; font-weight: 600; font-size: 14px; margin-bottom: 25px; }
         .confirm-actions { display: flex; gap: 12px; justify-content: center; }
         .btn-confirm-yes { background: #c0392b; color: #fff; border: none; padding: 10px 28px; border-radius: 12px; font-weight: 700; box-shadow: 0 4px 0 #922b21; cursor: pointer; transition: 0.2s; }
@@ -140,7 +169,7 @@
                         @if(Auth::user()->role === 'Peternak')
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('pakan.edit', $item->id) }}" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
+                                <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('pakan.edit', $item->id) }}">Edit</button>
                                 <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete('{{ route('pakan.destroy', $item->id) }}', '{{ $item->nama_pakan }}')">Hapus</button>
                             </div>
                         </td>

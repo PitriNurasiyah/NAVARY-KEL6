@@ -9,13 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         /* Page title */
         .page-title-section { margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         .btn-back { border: none; background: #845a33; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #152414; transition: 0.2s; text-decoration: none; white-space: nowrap; }
@@ -25,11 +25,11 @@
         .btn-add:hover { background: #4a6344; color: #fff; transform: translateY(-2px); }
 
         /* Form Card */
-        .form-card { background: #f0e2d0; padding: 30px; border-radius: 25px; border: 3px solid #bc9f82; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 30px; }
-        .form-card h5 { font-family: 'Fredoka One', cursive; color: #432118; margin-bottom: 20px; }
+        .form-card { background: #fffcf7; padding: 30px; border-radius: 20px; border: 1.5px solid #e6d5c0; box-shadow: 0 8px 20px rgba(0,0,0,0.03); margin-bottom: 30px; }
+        .form-card h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; margin-bottom: 20px; }
         
         .form-control, .form-select {
-            background-color: #fdfbf7; border: 2px solid #d4c2ab; border-radius: 12px;
+            background-color: #fdfbf7; border: 2.5px solid #d4c2ab; border-radius: 12px;
             padding: 12px 16px; font-weight: 600; color: #432118; transition: all 0.3s ease;
         }
         .form-control:focus, .form-select:focus {
@@ -39,12 +39,12 @@
 
         /* Tabel */
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
-        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; background: white; border-radius: 15px; overflow: hidden; }
-        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
-        .table tbody td { padding: 12px 16px !important; border: 1px solid #bc9f82 !important; background: white; }
-        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #bc9f82 !important; }
+        .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; background: #fffcf7; border-radius: 15px; overflow: hidden; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
+        .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; }
+        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #e6d5c0 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
-        .table tbody tr:hover { background-color: rgba(74, 99, 68, 0.05) !important; }
+        .table tbody tr:hover td { background-color: rgba(93, 122, 84, 0.05) !important; }
 
         .crud-notification {
             display: flex; align-items: center; gap: 12px; padding: 15px 25px; border-radius: 12px;
@@ -242,7 +242,7 @@
                             <i class="fa-solid fa-circle-xmark"></i>
                         </button>
 
-                        <div class="title" style="font-family: 'Fredoka', sans-serif;">Tambah Log Kesehatan</div>
+                        <div class="title" style="font-family: 'Quicksand', sans-serif;">Tambah Log Kesehatan</div>
 
                         <form action="{{ route('kesehatan.store') }}" method="POST">
                             @csrf

@@ -12,46 +12,48 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         .page-title-section { margin-bottom: 25px; display: flex; justify-content: space-between; align-items: flex-end; }
-        .page-title-section .left h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section .left h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section .left p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         /* Toggle Buttons */
         .toggle-group {
-            background: #fffdfa;
+            background: #fffcf7;
             padding: 5px;
             border-radius: 12px;
             display: flex;
             gap: 5px;
-            border: 2px solid #a67c52;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1.5px solid #e6d5c0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
         .btn-toggle {
             padding: 8px 20px;
             border-radius: 8px;
             font-weight: 700;
             font-size: 14px;
+            border: none;
+            background: transparent;
             text-decoration: none;
             transition: 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .btn-toggle.active { background: #432118; color: white !important; }
+        .btn-toggle.active { background: #4a6344; color: white !important; }
         .btn-toggle:not(.active) { color: #6d4c41; }
         .btn-toggle:not(.active):hover { background: #f0e2d0; }
 
         /* Chart Card */
         .chart-card {
-            background: white;
-            border-radius: 25px;
+            background: #fffcf7;
+            border-radius: 20px;
             padding: 35px;
-            border: 3px solid #bc9f82;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+            border: 1.5px solid #e6d5c0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
 
         .chart-container { position: relative; height: 400px; width: 100%; }
@@ -102,7 +104,7 @@
                     <span class="dot" style="background: #5d7a54;"></span> Volume (Liter)
                 </div>
                 <div class="legend-item">
-                    <span class="dot" style="background: #bc9f82;"></span> Pendapatan (Rp)
+                    <span class="dot" style="background: #845a33;"></span> Pendapatan (Rp)
                 </div>
             </div>
         </div>
@@ -143,12 +145,12 @@
                     {
                         label: 'Pendapatan (Rp)',
                         data: mData.revenues,
-                        borderColor: '#bc9f82',
-                        backgroundColor: 'rgba(188, 159, 130, 0.1)',
+                        borderColor: '#845a33',
+                        backgroundColor: 'rgba(132, 90, 51, 0.1)',
                         borderWidth: 4,
                         tension: 0.4,
                         pointRadius: 6,
-                        pointBackgroundColor: '#bc9f82',
+                        pointBackgroundColor: '#845a33',
                         yAxisID: 'y1',
                     }
                 ]

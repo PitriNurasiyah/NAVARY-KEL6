@@ -56,7 +56,7 @@
         background: #485c46 !important;
         color: #ffffff !important;
         border-color: transparent;
-        box-shadow: none;
+        box-shadow: 0 4px 15px rgba(72, 92, 70, 0.4);
     }
     .nav-link.active i { color: #ffffff !important; }
 </style>

@@ -270,11 +270,11 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        ticks: { color: '#432118', font: { family: 'Quicksand', weight: 'bold' } },
+                        ticks: { color: '#432118', font: { family: 'Plus Jakarta Sans', weight: 'bold' } },
                         grid: { color: 'rgba(67, 33, 24, 0.1)' }
                     },
                     x: {
-                        ticks: { color: '#432118', font: { family: 'Quicksand', weight: 'bold' } },
+                        ticks: { color: '#432118', font: { family: 'Plus Jakarta Sans', weight: 'bold' } },
                         grid: { display: false }
                     }
                 }
@@ -308,11 +308,11 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        ticks: { color: '#432118', font: { family: 'Quicksand', weight: 'bold' } },
+                        ticks: { color: '#432118', font: { family: 'Plus Jakarta Sans', weight: 'bold' } },
                         grid: { color: 'rgba(67, 33, 24, 0.1)' }
                     },
                     x: {
-                        ticks: { color: '#432118', font: { family: 'Quicksand', weight: 'bold' } },
+                        ticks: { color: '#432118', font: { family: 'Plus Jakarta Sans', weight: 'bold' } },
                         grid: { display: false }
                     }
                 }

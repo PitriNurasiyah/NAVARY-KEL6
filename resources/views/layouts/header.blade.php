@@ -198,10 +198,12 @@
         top: 55px;
         right: -10px;
         width: 320px;
-        background: #f4efe6;
+        background: rgba(244, 239, 230, 0.85);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         border-radius: 15px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        border: 1.5px solid #e6d5c0;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        border: 1.5px solid rgba(230, 213, 192, 0.8);
         display: none;
         flex-direction: column;
         overflow: hidden;
@@ -215,7 +217,7 @@
     .notification-header {
         background: #4d624a;
         padding: 15px;
-        border-bottom: 1px solid #e6d5c0;
+        border-bottom: 1px solid rgba(230, 213, 192, 0.8);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -257,21 +259,22 @@
         gap: 12px;
         padding: 12px;
         border-radius: 10px;
-        background: #fffcf7;
-        border: 1px solid #e6d5c0;
+        background: rgba(255, 252, 247, 0.65);
+        border: 1px solid rgba(230, 213, 192, 0.6);
         transition: 0.2s;
+        backdrop-filter: blur(4px);
     }
     
     .notification-item:hover {
-        background: #f0e8da;
-        border-color: #bc9f82;
+        background: rgba(240, 232, 218, 0.85);
+        border-color: rgba(188, 159, 130, 0.8);
     }
     
     .notification-icon-bg {
         width: 35px;
         height: 35px;
         border-radius: 50%;
-        background: rgba(93,122,84,0.15);
+        background: #ffffff;
         color: #5d7a54;
         display: flex;
         align-items: center;
@@ -377,9 +380,11 @@
 <script>
     // Notification Logic using LocalStorage
     const STORAGE_KEY = 'app_notifications';
+    const DELETED_KEY = 'app_deleted_notifications';
     
-    // Load existing notifications
+    // Load existing notifications and deleted trackers
     let notifications = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    let deletedAlerts = JSON.parse(localStorage.getItem(DELETED_KEY)) || [];
 
     let hasNewFlash = false;
 
@@ -415,41 +420,63 @@
         }
     @endif
 
-    // ─── Siklus Sapi Alerts (jadwal hari ini dari database) ──────────
+    // ─── Siklus Sapi Alerts (real-time active cycles dari database) ──
     @php
-        $today = \Carbon\Carbon::today()->toDateString();
         $headerAlerts = \App\Models\SiklusSapi::with('sapi')
-            ->where(function($q) use ($today) {
-                $q->whereDate('tanggal_mulai', $today)
-                  ->orWhereDate('estimasi_selesai', $today);
-            })
             ->where('status', 'Berjalan')
             ->get();
     @endphp
 
     @foreach($headerAlerts as $alert)
     @php
-        if ($alert->tanggal_mulai == $today) {
-            $alertText = '🐄 ' . ($alert->sapi->nama ?? 'Sapi') . ' (' . ($alert->sapi->kode_sapi ?? '-') . '): Mulai Fase ' . $alert->fase . ' hari ini.';
-        } else {
-            $alertText = '⏰ ' . ($alert->sapi->nama ?? 'Sapi') . ' (' . ($alert->sapi->kode_sapi ?? '-') . '): Estimasi selesai Fase ' . $alert->fase . ' hari ini.';
-        }
-        $alertId = 'siklus_' . $alert->id . '_' . $today;
+        // Start Alert
+        $alertStartText = '🐄 ' . ($alert->sapi->nama ?? 'Sapi') . ' (' . ($alert->sapi->kode_sapi ?? '-') . '): Mulai Fase ' . $alert->fase . ' tanggal ' . \Carbon\Carbon::parse($alert->tanggal_mulai)->translatedFormat('d M Y') . '.';
+        $alertStartTime = \Carbon\Carbon::parse($alert->tanggal_mulai)->translatedFormat('d M Y');
+        $alertStartId = 'siklus_start_' . $alert->id;
+        
+        // End Alert
+        $alertEndText = $alert->estimasi_selesai ? '⏰ ' . ($alert->sapi->nama ?? 'Sapi') . ' (' . ($alert->sapi->kode_sapi ?? '-') . '): Estimasi selesai Fase ' . $alert->fase . ' tanggal ' . \Carbon\Carbon::parse($alert->estimasi_selesai)->translatedFormat('d M Y') . '.' : null;
+        $alertEndTime = $alert->estimasi_selesai ? \Carbon\Carbon::parse($alert->estimasi_selesai)->translatedFormat('d M Y') : null;
+        $alertEndId = 'siklus_end_' . $alert->id;
     @endphp
     (function() {
-        var txt = {!! json_encode($alertText) !!};
-        var uid = {!! json_encode($alertId) !!};
-        var exists = notifications.some(function(n) { return n.id == uid; });
-        if (!exists) {
-            notifications.unshift({
-                id: uid,
-                type: 'warning',
-                text: txt,
-                time: 'Jadwal Hari Ini',
-                read: false
-            });
-            hasNewFlash = true;
+        var startTxt = {!! json_encode($alertStartText) !!};
+        var startTime = {!! json_encode($alertStartTime) !!};
+        var startUid = {!! json_encode($alertStartId) !!};
+        
+        if (!deletedAlerts.includes(String(startUid))) {
+            var exists = notifications.some(function(n) { return String(n.id) === String(startUid); });
+            if (!exists) {
+                notifications.unshift({
+                    id: startUid,
+                    type: 'warning',
+                    text: startTxt,
+                    time: 'Mulai: ' + startTime,
+                    read: false
+                });
+                hasNewFlash = true;
+            }
         }
+        
+        @if($alertEndText)
+        var endTxt = {!! json_encode($alertEndText) !!};
+        var endTime = {!! json_encode($alertEndTime) !!};
+        var endUid = {!! json_encode($alertEndId) !!};
+        
+        if (!deletedAlerts.includes(String(endUid))) {
+            var existsEnd = notifications.some(function(n) { return String(n.id) === String(endUid); });
+            if (!existsEnd) {
+                notifications.unshift({
+                    id: endUid,
+                    type: 'warning',
+                    text: endTxt,
+                    time: 'Estimasi Selesai: ' + endTime,
+                    read: false
+                });
+                hasNewFlash = true;
+            }
+        }
+        @endif
     })();
     @endforeach
 
@@ -485,24 +512,24 @@
             let bgStyle, iconBgStyle, iconClass;
             
             if(n.type === 'success') {
-                bgStyle = 'background: #e6f4ea; border-color: #c3e6cb;';
-                iconBgStyle = 'background: rgba(40,167,69,0.15); color: #28a745;';
+                bgStyle = 'background: rgba(230, 244, 234, 0.65); border-color: rgba(195, 230, 203, 0.8);';
+                iconBgStyle = 'background: #ffffff; color: #28a745; border: 1.5px solid rgba(40,167,69,0.3);';
                 iconClass = 'fa-solid fa-check-double';
             } else if(n.type === 'error') {
-                bgStyle = 'background: #fdf3f4; border-color: #f5c6cb;';
-                iconBgStyle = 'background: rgba(220,53,69,0.15); color: #dc3545;';
+                bgStyle = 'background: rgba(253, 243, 244, 0.65); border-color: rgba(245, 198, 203, 0.8);';
+                iconBgStyle = 'background: #ffffff; color: #dc3545; border: 1.5px solid rgba(220,53,69,0.3);';
                 iconClass = 'fa-solid fa-triangle-exclamation';
             } else if(n.type === 'warning') {
-                bgStyle = 'background: #fffcf7; border-color: #e6d5c0;';
-                iconBgStyle = 'background: rgba(231,76,60,0.15); color: #e74c3c;';
+                bgStyle = 'background: rgba(255, 252, 247, 0.65); border-color: rgba(230, 213, 192, 0.8);';
+                iconBgStyle = 'background: #ffffff; color: #e74c3c; border: 1.5px solid rgba(231,76,60,0.3);';
                 iconClass = 'fa-solid fa-triangle-exclamation';
             } else if(n.type === 'cart') {
-                bgStyle = 'background: #fffcf7; border-color: #e6d5c0;';
-                iconBgStyle = 'background: rgba(166,124,82,0.15); color: #a67c52;';
+                bgStyle = 'background: rgba(255, 252, 247, 0.65); border-color: rgba(230, 213, 192, 0.8);';
+                iconBgStyle = 'background: #ffffff; color: #a67c52; border: 1.5px solid rgba(166,124,82,0.3);';
                 iconClass = 'fa-solid fa-cart-shopping';
             } else {
-                bgStyle = 'background: #fffcf7; border-color: #e6d5c0;';
-                iconBgStyle = 'background: rgba(93,122,84,0.15); color: #5d7a54;';
+                bgStyle = 'background: rgba(255, 252, 247, 0.65); border-color: rgba(230, 213, 192, 0.8);';
+                iconBgStyle = 'background: #ffffff; color: #5d7a54; border: 1.5px solid rgba(93,122,84,0.3);';
                 iconClass = 'fa-solid fa-check';
             }
             
@@ -519,7 +546,7 @@
                         <p style="margin-bottom:2px; color: #432118 !important;">${n.text}</p>
                         <span style="font-size:10px; color: #845a33 !important;">${n.time}</span>
                     </div>
-                    <button onclick="window.deleteNotification(${n.id}, event)" style="background:none; border:none; color:#dc3545; cursor:pointer; padding:5px; flex-shrink:0; transition:0.2s; border-radius:5px;" title="Hapus" onmouseover="this.style.background='rgba(220,53,69,0.1)'" onmouseout="this.style.background='none'">
+                    <button onclick="window.deleteNotification('${n.id}', event)" style="background:none; border:none; color:#dc3545; cursor:pointer; padding:5px; flex-shrink:0; transition:0.2s; border-radius:5px;" title="Hapus" onmouseover="this.style.background='rgba(220,53,69,0.1)'" onmouseout="this.style.background='none'">
                         <i class="fa-solid fa-trash-can" style="font-size:14px;"></i>
                     </button>
                 </div>
@@ -535,7 +562,15 @@
 
     window.deleteNotification = function(id, event) {
         if(event) event.stopPropagation();
-        notifications = notifications.filter(n => n.id !== id);
+        
+        // Track in deleted alerts so it doesn't get re-added on page reload
+        let deleted = JSON.parse(localStorage.getItem(DELETED_KEY)) || [];
+        if(!deleted.includes(String(id))) {
+            deleted.push(String(id));
+            localStorage.setItem(DELETED_KEY, JSON.stringify(deleted));
+        }
+
+        notifications = notifications.filter(n => String(n.id) !== String(id));
         localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications));
         renderNotifications();
     }

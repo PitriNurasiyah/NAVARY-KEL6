@@ -154,7 +154,7 @@
         <div class="row g-4 mt-2">
             <div class="col-12">
                 <div class="stat-card" style="display: block; padding: 25px;">
-                    <h3 style="font-family: 'Fredoka One', cursive; font-size: 20px; color: #432118; margin-bottom: 20px;">Grafik Ringkasan</h3>
+                    <h3 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 20px; color: #432118; margin-bottom: 20px;">Grafik Ringkasan</h3>
                     <div style="position: relative; height: 350px; width: 100%;">
                         <canvas id="dashboardChart"></canvas>
                     </div>
@@ -207,7 +207,7 @@
                             ticks: {
                                 color: '#432118',
                                 font: {
-                                    family: 'Quicksand',
+                                    family: 'Plus Jakarta Sans',
                                     weight: 'bold'
                                 }
                             }
@@ -220,7 +220,7 @@
                             ticks: {
                                 color: '#432118',
                                 font: {
-                                    family: 'Quicksand',
+                                    family: 'Plus Jakarta Sans',
                                     weight: 'bold',
                                     size: 14
                                 }
@@ -233,8 +233,8 @@
                         },
                         tooltip: {
                             backgroundColor: '#432118',
-                            titleFont: { family: 'Quicksand', size: 14 },
-                            bodyFont: { family: 'Quicksand', size: 14, weight: 'bold' },
+                            titleFont: { family: 'Plus Jakarta Sans', size: 14 },
+                            bodyFont: { family: 'Plus Jakarta Sans', size: 14, weight: 'bold' },
                             padding: 12,
                             cornerRadius: 8,
                             displayColors: false,

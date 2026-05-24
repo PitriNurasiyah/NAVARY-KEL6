@@ -9,13 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         /* Page title */
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         /* Notifikasi CRUD */
@@ -50,14 +50,14 @@
         }
 
         .search-wrapper {
-            background: #e6d5c0;
-            border: 3px solid #a67c52;
+            background: #fffcf7;
+            border: 1.5px solid #e6d5c0;
             padding: 5px 15px;
             border-radius: 12px;
             flex-grow: 1;
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
 
         .search-input-group {
@@ -74,16 +74,17 @@
             outline: none;
             width: 100%;
             padding: 8px 15px;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600;
             color: #432118;
             font-size: 15px;
         }
 
-        .search-input-group input::placeholder { color: #845a33; opacity: 0.7; }
+        .search-input-group input::placeholder { color: #845a33; opacity: 0.6; }
 
-        .cow-card { background: #f0e2d0; padding: 25px; border-radius: 25px; border: 3px solid #bc9f82; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-width: 280px; }
-        .cow-card h5 { font-family: 'Fredoka One', cursive; color: #432118; }
+        .cow-card { background: #fffcf7; padding: 25px; border-radius: 20px; border: 1.5px solid #e6d5c0; box-shadow: 0 8px 20px rgba(0,0,0,0.03); min-width: 280px; transition: 0.3s; }
+        .cow-card:hover { transform: translateY(-5px); border-color: #bc9f82; box-shadow: 0 12px 25px rgba(0,0,0,0.08); }
+        .cow-card h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; }
 
         .cards-wrapper {
             display: flex;
@@ -98,11 +99,11 @@
 
         /* Tabel */
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
-        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 16px !important; text-transform: uppercase; font-size: 13px; border: 1px solid #bc9f82 !important; }
-        .table tbody td { padding: 16px !important; border: 1px solid #bc9f82 !important; }
-        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #bc9f82 !important; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
+        .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; font-weight: 600; }
+        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #e6d5c0 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
-        .table tbody tr:hover { background-color: rgba(93, 122, 84, 0.05) !important; }
+        .table tbody tr:hover td { background-color: rgba(93, 122, 84, 0.05) !important; }
 
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
 
@@ -118,14 +119,14 @@
         }
         .confirm-overlay.active { display: flex; }
         .confirm-box {
-            background: #f5efe6;
+            background: #fffcf7;
             border-radius: 20px;
             padding: 35px 40px;
             max-width: 420px;
             width: 90%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             text-align: center;
-            border: 6px solid #8CA685;
+            border: 1.5px solid #e6d5c0;
             animation: popIn 0.25s ease;
         }
         @keyframes popIn {
@@ -133,7 +134,7 @@
             to { transform: scale(1); opacity: 1; }
         }
         .confirm-icon { font-size: 48px; color: #c0392b; margin-bottom: 15px; }
-        .confirm-box h5 { font-family: 'Fredoka One', cursive; color: #432118; font-size: 20px; margin-bottom: 8px; }
+        .confirm-box h5 { font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; font-size: 20px; margin-bottom: 8px; }
         .confirm-box p { color: #6d4c41; font-weight: 600; font-size: 14px; margin-bottom: 25px; }
         .confirm-actions { display: flex; gap: 12px; justify-content: center; }
         .btn-confirm-yes {
@@ -182,19 +183,19 @@
 
         {{-- Notifikasi CRUD (posisi di atas search) --}}
         @if(session('success'))
-            <div class="crud-notification success" id="crudNotif">
+            <div class="crud-notification success">
                 <i class="fa-solid fa-circle-check"></i>
                 <span>{{ session('success') }}</span>
-                <button class="notif-close" onclick="document.getElementById('crudNotif').remove()">
+                <button class="notif-close" onclick="this.parentElement.remove()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
         @endif
         @if(session('error'))
-            <div class="crud-notification error" id="crudNotif">
+            <div class="crud-notification error">
                 <i class="fa-solid fa-circle-xmark"></i>
                 <span>{{ session('error') }}</span>
-                <button class="notif-close" onclick="document.getElementById('crudNotif').remove()">
+                <button class="notif-close" onclick="this.parentElement.remove()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -314,9 +315,9 @@
     <!-- Modal Detail Sapi -->
     <div class="modal fade" id="cowDetailModal" tabindex="-1" aria-labelledby="cowDetailModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 20px; border: 4px solid #8CA685; background-color: #f5efe6;">
-          <div class="modal-header" style="border-bottom: 2px solid #a67c52;">
-            <h5 class="modal-title fw-bold" id="cowDetailModalLabel" style="font-family: 'Fredoka One', cursive; color: #432118;">Detail Sapi</h5>
+        <div class="modal-content" style="border-radius: 20px; border: 1.5px solid #e6d5c0; background-color: #fffcf7; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+          <div class="modal-header" style="border-bottom: 2px dashed #e6d5c0;">
+            <h5 class="modal-title fw-bold" id="cowDetailModalLabel" style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118;">Detail Sapi</h5>
           </div>
           <div class="modal-body" style="color: #432118; font-weight: 600;">
             <div class="d-flex flex-column gap-2">
@@ -453,14 +454,14 @@
         });
 
         // ====== Auto-dismiss notification ======
-        const notif = document.getElementById('crudNotif');
-        if (notif) {
+        const notifs = document.querySelectorAll('.crud-notification');
+        notifs.forEach(notif => {
             setTimeout(() => {
                 notif.style.opacity = '0';
                 notif.style.transition = 'opacity 0.5s ease';
                 setTimeout(() => notif.remove(), 500);
             }, 5000);
-        }
+        });
     </script>
 
     <script>

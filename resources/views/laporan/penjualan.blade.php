@@ -10,45 +10,47 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { background-color: #f5efe6; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
         .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         /* Filter Section */
         .filter-section {
-            background: #f5efe6;
+            background: #fffcf7;
             padding: 25px;
             border-radius: 20px;
             margin-bottom: 30px;
-            border: 4px solid #bc9f82;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1.5px solid #e6d5c0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
-        .filter-title { font-weight: 800; font-size: 18px; margin-bottom: 15px; color: #432118; }
+        .filter-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; margin-bottom: 15px; color: #432118; }
         .form-label { font-weight: 700; color: #432118; margin-bottom: 5px; font-size: 14px; }
-        .form-control { border-radius: 12px; border: 2px solid #a67c52; padding: 10px; font-size: 14px; background-color: #fffdfa; }
+        .form-control { border-radius: 12px; border: 2.5px solid #d4c2ab; padding: 10px; font-size: 14px; background-color: #fffcf7; color: #432118; font-weight: 600; }
+        .form-control:focus { border-color: #5d7a54; background-color: #ffffff; box-shadow: 0 0 0 0.25rem rgba(93,122,84,0.1); }
 
         /* Summary Cards */
         .summary-wrapper { display: flex; gap: 20px; margin-bottom: 35px; }
         .summary-card {
             flex: 1;
-            background: #fefefe;
+            background: #fffcf7;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 0 #bc9f82;
+            border: 1.5px solid #e6d5c0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
-        .summary-card p { margin: 0; font-weight: 700; color: #432118; font-size: 15px; }
-        .summary-card h2 { margin: 10px 0 0; font-family: 'Fredoka One', cursive; font-size: 32px; color: #1a1a1a; }
+        .summary-card p { margin: 0; font-weight: 700; color: #6d4c41; font-size: 15px; }
+        .summary-card h2 { margin: 10px 0 0; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 32px; color: #432118; }
 
         /* Table Section */
         .table-container {
-            background: white;
+            background: #fffcf7;
             border-radius: 20px;
             padding: 0;
-            border: 2px solid #bc9f82;
+            border: 1.5px solid #e6d5c0;
             overflow: hidden;
             margin-top: 10px;
         }
@@ -56,18 +58,19 @@
         .table thead th {
             background-color: #4a6344 !important;
             color: #ffffff !important;
-            padding: 18px 15px;
-            font-weight: 800;
-            font-size: 13px;
+            padding: 14px 16px !important;
+            font-weight: 700;
+            font-size: 11px;
             text-transform: uppercase;
-            border: 1px solid #bc9f82 !important;
+            border: 1px solid #e6d5c0 !important;
+            letter-spacing: 0.5px;
         }
         .table tbody td {
-            padding: 15px;
-            border: 1px solid #bc9f82 !important;
+            padding: 14px 16px !important;
+            border: 1px solid #e6d5c0 !important;
             font-weight: 600;
             color: #432118;
-            background: white;
+            background: #fffcf7;
         }
 
         .btn-filter {
@@ -133,7 +136,7 @@
 
         <!-- Judul khusus saat cetak -->
         <div class="print-only-header" style="display: none;">
-            <h2 style="font-family: 'Fredoka One', cursive; color: #000; margin-bottom: 5px;">CIMILK YOGURT</h2>
+            <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #000; margin-bottom: 5px;">CIMILK YOGURT</h2>
             <h4 style="font-weight: 700; color: #000;">LAPORAN PENJUALAN HARIAN</h4>
             <hr style="border: 1px solid #000; margin-top: 10px;">
         </div>
@@ -167,13 +170,13 @@
 
         <!-- Summary Cards -->
         <div class="summary-wrapper">
-            <div class="summary-card" style="background: #fffdfa; border: 3px solid #bc9f82; box-shadow: 0 8px 0 #bc9f82; padding: 30px; border-radius: 15px; flex: 1;">
+            <div class="summary-card" style="background: #fffcf7; border: 1.5px solid #e6d5c0; box-shadow: 0 8px 20px rgba(0,0,0,0.02); padding: 30px; border-radius: 15px; flex: 1;">
                 <p style="color: #6d4c41; margin: 0; font-weight: 700; font-size: 15px;">Total Penjualan</p>
-                <h2 style="font-family: 'Fredoka One', cursive; color: #432118; margin: 10px 0 0; font-size: 32px;">Rp {{ number_format($totalPenjualan, 0, ',', '.') }}</h2>
+                <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; margin: 10px 0 0; font-size: 32px;">Rp {{ number_format($totalPenjualan, 0, ',', '.') }}</h2>
             </div>
-            <div class="summary-card" style="background: #fffdfa; border: 3px solid #bc9f82; box-shadow: 0 8px 0 #bc9f82; padding: 30px; border-radius: 15px; flex: 1;">
+            <div class="summary-card" style="background: #fffcf7; border: 1.5px solid #e6d5c0; box-shadow: 0 8px 20px rgba(0,0,0,0.02); padding: 30px; border-radius: 15px; flex: 1;">
                 <p style="color: #6d4c41; margin: 0; font-weight: 700; font-size: 15px;">Total Liter Terjual</p>
-                <h2 style="font-family: 'Fredoka One', cursive; color: #432118; margin: 10px 0 0; font-size: 32px;">{{ number_format($totalLiter, 0, '.', ',') }} Liter</h2>
+                <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; margin: 10px 0 0; font-size: 32px;">{{ number_format($totalLiter, 0, '.', ',') }} Liter</h2>
             </div>
         </div>
 
@@ -192,9 +195,9 @@
                 <button class="btn btn-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-print me-2"></i> Cetak Laporan
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="dropdownMenuButton" style="border-radius: 12px; overflow: hidden; border: 2px solid #bc9f82 !important;">
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="dropdownMenuButton" style="border-radius: 12px; overflow: hidden; border: 1.5px solid #e6d5c0 !important;">
                     <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="exportToExcel('dataTable', 'Laporan_Penjualan'); return false;" style="color: #217346;"><i class="fa-solid fa-file-excel me-2"></i>Cetak Excel</a></li>
-                    <li><hr class="dropdown-divider m-0" style="border-color: #bc9f82;"></li>
+                    <li><hr class="dropdown-divider m-0" style="border-color: #e6d5c0;"></li>
                     <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="window.print(); return false;" style="color: #c0392b;"><i class="fa-solid fa-file-pdf me-2"></i>Cetak PDF</a></li>
                 </ul>
             </div>
