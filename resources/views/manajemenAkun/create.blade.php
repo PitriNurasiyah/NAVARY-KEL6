@@ -167,9 +167,46 @@
         .footer-link { text-align: center; margin-top: 15px; font-size: 14px; }
         .footer-link a { color: #233722; font-weight: bold; text-decoration: none; }
 
-        /* Error alert */
-        /* Error alert */
-        .alert-form { padding: 8px 12px; font-size: 13px; border-radius: 12px; margin-bottom: 10px; border: 2px solid #f5c2c7; }
+        /* Custom Inline Alert (Toast style) */
+        .alert-inline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+            margin-bottom: 20px;
+        }
+
+        .alert-inline .btn-close-alert {
+            background: none;
+            border: none;
+            color: #991b1b;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: auto;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .alert-inline .btn-close-alert:hover {
+            opacity: 1;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
         
         /* Page title section for full page mode */
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
@@ -207,8 +244,9 @@
                 <div class="title">Tambah Akun</div>
 
                 @if($errors->any())
-                    <div class="alert alert-danger alert-form">
-                        {{ $errors->first() }}
+                    <div class="alert-inline" id="errorAlert">
+                        <i class="fa-solid fa-circle-xmark" style="font-size: 16px;"></i>
+                        <span>{{ $errors->first() }}</span>
                     </div>
                 @endif
 
@@ -285,6 +323,16 @@
                 window.history.back();
             }
         });
+    }
+
+    // Auto-dismiss floating error alert after 5s
+    const errorAlert = document.getElementById('errorAlert');
+    if (errorAlert) {
+        setTimeout(() => {
+            errorAlert.style.opacity = '0';
+            errorAlert.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => errorAlert.remove(), 500);
+        }, 5000);
     }
 
     // ====== Jika sukses register: langsung close modal & redirect (tanpa delay) ======

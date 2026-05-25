@@ -24,6 +24,12 @@ class PakanController extends Controller
             'nama_pakan' => 'required',
             'stok' => 'required|numeric|min:0',
             'satuan' => 'required',
+        ], [
+            'nama_pakan.required' => 'Nama pakan wajib diisi.',
+            'stok.required' => 'Stok wajib diisi.',
+            'stok.numeric' => 'Stok harus berupa angka.',
+            'stok.min' => 'Stok tidak boleh kurang dari 0.',
+            'satuan.required' => 'Satuan wajib dipilih.',
         ]);
 
         Pakan::create([
@@ -33,6 +39,10 @@ class PakanController extends Controller
             'tanggal_pemberian' => $request->tanggal_pemberian ?? now(),
             'keterangan' => $request->keterangan,
         ]);
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Data pakan berhasil ditambahkan!');
+        }
 
         return redirect()->route('pakan.index')->with('success', 'Data pakan berhasil ditambahkan!');
     }
@@ -50,9 +60,19 @@ class PakanController extends Controller
             'nama_pakan' => 'required',
             'stok' => 'required|numeric|min:0',
             'satuan' => 'required',
+        ], [
+            'nama_pakan.required' => 'Nama pakan wajib diisi.',
+            'stok.required' => 'Stok wajib diisi.',
+            'stok.numeric' => 'Stok harus berupa angka.',
+            'stok.min' => 'Stok tidak boleh kurang dari 0.',
+            'satuan.required' => 'Satuan wajib dipilih.',
         ]);
 
         $pakan->update($request->all());
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Data pakan berhasil diperbarui!');
+        }
 
         return redirect()->route('pakan.index')->with('success', 'Data pakan berhasil diperbarui!');
     }

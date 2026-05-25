@@ -18,11 +18,23 @@
         .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
-        /* Notifikasi CRUD */
+        /* Notifikasi CRUD (Floating / Toast style) */
         .crud-notification {
-            display: flex; align-items: center; gap: 12px; padding: 15px 25px; border-radius: 12px;
-            font-weight: 700; font-size: 14px; margin-bottom: 25px; animation: fadeInDown 0.4s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 320px;
+            max-width: 450px;
         }
         .crud-notification.success { background: #dcfce7; border: 2px solid #22c55e; color: #166534; }
         .crud-notification.error { background: #fee2e2; border: 2px solid #ef4444; color: #991b1b; }
@@ -33,9 +45,10 @@
             display: flex; align-items: center; justify-content: center;
         }
         .notif-close:hover { opacity: 1; }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .btn-add { border: none; background: #5d7a54; padding: 10px 20px; border-radius: 12px; font-weight: 700; color: #ffffff; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; text-decoration: none; white-space: nowrap; }
@@ -182,19 +195,19 @@
         </div>
 
         {{-- Notifikasi CRUD (posisi di atas search) --}}
-        @if(session('success'))
+        @if(session('success') || request('success'))
             <div class="crud-notification success">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>{{ session('success') }}</span>
+                <span>{{ session('success') ?? request('success') }}</span>
                 <button class="notif-close" onclick="this.parentElement.remove()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
         @endif
-        @if(session('error'))
+        @if(session('error') || request('error'))
             <div class="crud-notification error">
                 <i class="fa-solid fa-circle-xmark"></i>
-                <span>{{ session('error') }}</span>
+                <span>{{ session('error') ?? request('error') }}</span>
                 <button class="notif-close" onclick="this.parentElement.remove()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -458,7 +471,8 @@
         notifs.forEach(notif => {
             setTimeout(() => {
                 notif.style.opacity = '0';
-                notif.style.transition = 'opacity 0.5s ease';
+                notif.style.transform = 'translateX(50px)';
+                notif.style.transition = 'all 0.5s ease';
                 setTimeout(() => notif.remove(), 500);
             }, 5000);
         });

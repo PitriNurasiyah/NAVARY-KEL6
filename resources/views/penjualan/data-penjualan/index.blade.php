@@ -50,6 +50,126 @@
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
         .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
         .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; font-weight: 600; background: #fffcf7; }
+
+        /* Modal Floating Styling */
+        .modal-content-custom {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        .modal-backdrop.show { opacity: 0.6; background-color: #000; }
+        .iframe-container {
+            width: 100%;
+            height: auto;
+            border: none;
+            overflow: hidden;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            border: none;
+        }
+
+        /* Custom Delete Confirm Modal */
+        .confirm-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .confirm-overlay.active { display: flex; }
+        .confirm-box {
+            background: #fffcf7;
+            border-radius: 20px;
+            padding: 35px 40px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            text-align: center;
+            border: 1.5px solid #e6d5c0;
+            animation: popIn 0.25s ease;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .confirm-box .confirm-icon {
+            font-size: 48px;
+            color: #c0392b;
+            margin-bottom: 15px;
+        }
+        .confirm-box h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #432118;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .confirm-box p {
+            color: #6d4c41;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .confirm-actions { display: flex; gap: 12px; justify-content: center; }
+        .btn-confirm-yes {
+            background: #c0392b;
+            color: #fff;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 0 #922b21;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-confirm-yes:active { transform: translateY(3px); box-shadow: 0 1px 0 #922b21; }
+        .btn-confirm-no {
+            background: #e2e8f0;
+            color: #475569;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-confirm-no:hover { background: #cbd5e1; }
+
+        /* Notifikasi CRUD (Floating / Toast style) */
+        .crud-notification {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 320px;
+            max-width: 450px;
+        }
+        .crud-notification.success { background: #dcfce7; border: 2px solid #22c55e; color: #166534; }
+        .crud-notification.error { background: #fee2e2; border: 2px solid #ef4444; color: #991b1b; }
+        
+        .notif-close {
+            margin-left: auto; background: none; border: none; color: inherit;
+            font-size: 18px; cursor: pointer; opacity: 0.5; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .notif-close:hover { opacity: 1; }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
     </style>
 </head>
 <body>
@@ -61,12 +181,20 @@
             <p>Riwayat transaksi penjualan Cimilk.</p>
         </div>
         
-        {{-- Notifikasi CRUD --}}
-        @if(session('success') || request()->query('success'))
-            <div class="crud-notification success" id="crudNotif" style="display: flex; align-items: center; gap: 12px; padding: 15px 25px; border-radius: 12px; font-weight: 700; font-size: 14px; margin-bottom: 25px; background: #dcfce7; border: 2px solid #22c55e; color: #166534; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        @if(session('success') || request('success'))
+            <div class="crud-notification success" id="crudNotif">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>{{ session('success') ?? request()->query('success') }}</span>
-                <button class="notif-close" onclick="document.getElementById('crudNotif').remove()" style="margin-left: auto; background: none; border: none; color: inherit; font-size: 18px; cursor: pointer; opacity: 0.5;">
+                <span>{{ session('success') ?? request('success') }}</span>
+                <button class="notif-close" onclick="document.getElementById('crudNotif').remove()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        @endif
+        @if(session('error') || request('error'))
+            <div class="crud-notification error" id="crudNotif">
+                <i class="fa-solid fa-circle-xmark"></i>
+                <span>{{ session('error') ?? request('error') }}</span>
+                <button class="notif-close" onclick="document.getElementById('crudNotif').remove()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -80,9 +208,9 @@
                 </div>
             </div>
             @if(Auth::user()->role !== 'Admin')
-            <a href="{{ route('penjualan.input') }}" class="btn-add">
+            <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('penjualan.input') }}">
                 <i class="fa-solid fa-plus me-2"></i> Tambah Transaksi
-            </a>
+            </button>
             @endif
         </div>
 
@@ -118,12 +246,11 @@
                             @if(Auth::user()->role !== 'Admin')
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('penjualan.edit', $item->id) }}" class="btn btn-sm btn-outline-primary shadow-sm" style="border-radius: 8px; font-weight: 700; padding: 5px 12px;">
+                                    <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('penjualan.edit', $item->id) }}">
                                         Edit
-                                    </a>
+                                    </button>
                                     <button type="button" 
                                         class="btn btn-sm btn-outline-danger shadow-sm" 
-                                        style="border-radius: 8px; font-weight: 700; padding: 5px 12px;"
                                         onclick="confirmDelete('{{ route('penjualan.destroy', $item->id) }}', '{{ $item->pembeli }}')">
                                         Hapus
                                     </button>
@@ -151,15 +278,26 @@
         </div>
     </div>
 
+    <!-- Modal Register/Create/Edit -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="iframe-container">
+                    <iframe id="registerIframe" src="" scrolling="no" onload="setTimeout(() => { if(this.contentWindow.document.body) { this.style.height = (this.contentWindow.document.body.scrollHeight + 50) + 'px'; } }, 50);" ></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Custom Confirm Delete Modal -->
-    <div class="confirm-overlay" id="confirmOverlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; align-items: center; justify-content: center;">
-        <div class="confirm-box" style="background: #fffcf7; border-radius: 20px; padding: 35px 40px; max-width: 420px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.15); text-align: center; border: 1.5px solid #e6d5c0;">
-            <div class="confirm-icon" style="font-size: 48px; color: #c0392b; margin-bottom: 15px;"><i class="fa-solid fa-triangle-exclamation"></i></div>
-            <h5 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; font-size: 20px; margin-bottom: 8px;">Hapus Transaksi?</h5>
-            <p id="confirmMessage" style="color: #6d4c41; font-weight: 600; font-size: 14px; margin-bottom: 25px;">Apakah Anda yakin ingin menghapus data penjualan ini?</p>
-            <div class="confirm-actions" style="display: flex; gap: 12px; justify-content: center;">
-                <button class="btn-confirm-yes" id="confirmYesBtn" style="background: #c0392b; color: #fff; border: none; padding: 10px 28px; border-radius: 12px; font-weight: 700; box-shadow: 0 4px 0 #922b21; cursor: pointer;">Ya, Hapus</button>
-                <button class="btn-confirm-no" onclick="closeConfirm()" style="background: #e2e8f0; color: #475569; border: none; padding: 10px 28px; border-radius: 12px; font-weight: 700; cursor: pointer;">Batal</button>
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-box">
+            <div class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h5>Hapus Transaksi?</h5>
+            <p id="confirmMessage">Apakah Anda yakin ingin menghapus data penjualan ini?</p>
+            <div class="confirm-actions">
+                <button class="btn-confirm-yes" id="confirmYesBtn">Ya, Hapus</button>
+                <button class="btn-confirm-no" onclick="closeConfirm()">Batal</button>
             </div>
         </div>
     </div>
@@ -188,11 +326,11 @@
             deleteUrl = url;
             document.getElementById('confirmMessage').textContent = 
                 'Apakah Anda yakin ingin menghapus transaksi atas nama "' + name + '"? Tindakan ini tidak bisa dibatalkan.';
-            document.getElementById('confirmOverlay').style.display = 'flex';
+            document.getElementById('confirmOverlay').classList.add('active');
         }
 
         function closeConfirm() {
-            document.getElementById('confirmOverlay').style.display = 'none';
+            document.getElementById('confirmOverlay').classList.remove('active');
         }
 
         document.getElementById('confirmYesBtn').addEventListener('click', function() {
@@ -211,9 +349,27 @@
         if (notif) {
             setTimeout(() => {
                 notif.style.opacity = '0';
-                notif.style.transition = 'opacity 0.5s ease';
+                notif.style.transform = 'translateX(50px)';
+                notif.style.transition = 'all 0.5s ease';
                 setTimeout(() => notif.remove(), 500);
             }, 5000);
+        }
+
+        // ====== Modal: Reload iframe ======
+        const registerModal = document.getElementById('registerModal');
+        const registerIframe = document.getElementById('registerIframe');
+        
+        if (registerModal && registerIframe) {
+            registerModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const routeUrl = button.getAttribute('data-route');
+                if (routeUrl) {
+                    registerIframe.src = routeUrl + (routeUrl.includes('?') ? '&' : '?') + "mode=modal";
+                }
+            });
+            registerModal.addEventListener('hide.bs.modal', function() {
+                registerIframe.src = '';
+            });
         }
     </script>
 </body>

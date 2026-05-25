@@ -10,41 +10,107 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
-
-        .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
-
-        .page-title-section { margin-bottom: 25px; }
-        .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
-        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
-
-        .form-container {
-            background-color: #fffcf7;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
-            position: relative;
-            border: 1.5px solid #e6d5c0;
-            max-width: 650px;
-        }
-
-        .form-title {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 20px;
+        body {
+            background-color: {{ request('mode') == 'modal' ? 'transparent' : (Auth::check() ? '#f4efe6' : '#f4efe6') }};
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            overflow-y: {{ request('mode') == 'modal' ? 'hidden' : 'auto' }};
+            scrollbar-width: none;
+            -ms-overflow-style: none;
             color: #432118;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px dashed #e6d5c0;
+        }
+        body::-webkit-scrollbar { display: none; }
+
+        .register-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: {{ request('mode') == 'modal' ? 'flex-start' : 'center' }};
+            padding-top: {{ request('mode') == 'modal' ? '100px' : '40px' }};
+            padding-bottom: {{ request('mode') == 'modal' ? '60px' : '40px' }};
+            @if(Auth::check() && request()->query('mode') != 'modal')
+                margin-left: 260px;
+            @endif
         }
 
-        .form-label { font-weight: 700; color: #432118; margin-bottom: 6px; font-size: 14px; }
+        .farm-wrapper { position: relative; width: 480px; max-width: 95%; }
+
+        .login-box {
+            width: 100%;
+            background-color: #f5efe6;
+            padding: 25px 25px 30px;
+            border-radius: 40px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+            position: relative;
+            border: 10px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            z-index: -1;
+            background-color: #8CA685;
+            background-image: url('https://www.transparenttextures.com/patterns/grass.png');
+            border-radius: 50px;
+        }
+
+        .top-icon {
+            position: absolute;
+            top: -55px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f5efe6;
+            padding: 6px;
+            border-radius: 50%;
+            z-index: 20;
+        }
+
+        .top-icon img {
+            background: white;
+            border: 2px solid #D2B48C;
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            width: 65px;
+        }
+
+        .btn-close-custom {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            color: #8CA685;
+            cursor: pointer;
+            z-index: 30;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-family: 'Fredoka One', cursive;
+            font-weight: bold;
+            color: #432118;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .form-label { font-weight: bold; color: #432118; font-size: 14px; margin-bottom: 4px; }
+        
         .form-control {
             border-radius: 12px;
-            border: 2.5px solid #d4c2ab;
-            padding: 12px;
+            border: 2px solid #a67c52;
+            padding: 10px 14px;
+            background-color: #fffdfa;
             font-size: 14px;
-            background-color: #fffcf7;
             color: #432118;
             font-weight: 600;
         }
@@ -59,78 +125,159 @@
             border-color: #ced4da;
         }
 
-        .btn-submit {
-            background: #5d7a54;
-            color: white;
-            font-weight: 800;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 0 #3a4d33;
-            transition: all 0.2s;
+        .btn-register {
             width: 100%;
-            font-size: 16px;
-            margin-top: 10px;
+            background: #233722;
+            color: white;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            box-shadow: 0 6px 0 #152414;
+            transition: all 0.1s ease;
         }
-        .btn-submit:hover { background: #4a6344; transform: translateY(-2px); box-shadow: 0 7px 0 #3a4d33; color: white; }
-        .btn-submit:active { transform: translateY(2px); box-shadow: 0 2px 0 #3a4d33; }
+        .btn-register:active { transform: translateY(4px); box-shadow: 0 2px 0 #152414; }
+
+        .btn-cancel {
+            width: 100%;
+            background: #8c7b6f;
+            color: white;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            box-shadow: 0 6px 0 #5e5149;
+            transition: all 0.1s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-cancel:active { transform: translateY(4px); box-shadow: 0 2px 0 #5e5149; }
+
+        .barn-icon {
+            position: absolute;
+            bottom: 40px;
+            right: -10px;
+            width: 75px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Custom Inline Alert (Toast style) */
+        .alert-inline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+            margin-bottom: 20px;
+        }
+
+        .alert-inline .btn-close-alert {
+            background: none;
+            border: none;
+            color: #991b1b;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: auto;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .alert-inline .btn-close-alert:hover {
+            opacity: 1;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
+        .page-title-section { margin-bottom: 25px; }
+        .page-title-section h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: #432118; margin: 0 0 4px 0; }
+        .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         .input-group-text {
             background-color: #bc9f82;
             color: white;
-            border: 2.5px solid #d4c2ab;
+            border: 2px solid #a67c52;
             border-right: none;
             font-weight: 700;
             border-radius: 12px 0 0 12px;
+            display: flex;
+            align-items: center;
         }
         .has-prefix .form-control { border-radius: 0 12px 12px 0; }
     </style>
 </head>
 <body>
 
-    @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Input Penjualan', 'pageSubtitle' => 'Input data penjualan susu'])
+    @if(request('mode') != 'modal')
+        @include('layouts.sidebar')
+        @include('layouts.header', ['pageTitle' => 'Input Penjualan', 'pageSubtitle' => 'Input data penjualan susu'])
+        
+        <div class="main-content">
+            <div class="page-title-section">
+                <h3>Transaksi Penjualan Baru 💰</h3>
+                <p>Silahkan lengkapi detail transaksi di bawah ini.</p>
+            </div>
+    @endif
 
-    <div class="main-content">
-        <div class="page-title-section">
-            <h3>Transaksi Penjualan Baru 💰</h3>
-            <p>Silahkan lengkapi detail transaksi di bawah ini.</p>
-        </div>
-
-        <div class="form-container">
-            <div class="form-title">
-                <i class="fa-solid fa-receipt me-2"></i> Form Penjualan
+    <div class="register-wrapper" style="{{ request('mode') != 'modal' ? 'padding-top: 20px;' : '' }}">
+        <div class="farm-wrapper">
+            <div class="top-icon">
+                <img src="{{ asset('img/sapii.png') }}" width="80" alt="logo">
             </div>
 
-            @if($errors->any())
-                <div class="alert alert-danger rounded-4 mb-4">
-                    <ul class="mb-0">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            <div class="login-box">
+                @if(Auth::check() && request('mode') == 'modal')
+                <button type="button" class="btn-close-custom" id="closeModalBtn">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+                @endif
 
-            <form action="{{ route('penjualan.store') }}" method="POST" id="penjualanForm">
-                @csrf
-                <div class="row">
-                    <div class="col-md-12 mb-3">
+                <div class="title">Tambah Transaksi</div>
+
+                @if($errors->any())
+                    <div class="alert-inline" id="errorAlert">
+                        <i class="fa-solid fa-circle-xmark" style="font-size: 16px;"></i>
+                        <span>{{ $errors->first() }}</span>
+                    </div>
+                @endif
+
+                <form action="{{ route('penjualan.store') }}" method="POST" id="penjualanForm">
+                    @csrf
+                    <input type="hidden" name="mode" value="{{ request('mode') }}">
+                    
+                    <div class="mb-2">
                         <label class="form-label">Tanggal</label>
                         <input type="date" name="tanggal" class="form-control" value="{{ date('Y-m-d') }}" required>
                     </div>
 
-                    <div class="col-md-12 mb-3">
+                    <div class="mb-2">
                         <label class="form-label">Pembeli</label>
                         <input type="text" name="pembeli" class="form-control" placeholder="Masukkan nama pembeli" required>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="mb-2">
                         <label class="form-label">Jumlah (Liter)</label>
                         <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="0" min="0" required>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="mb-2">
                         <label class="form-label">Harga Satuan (Rp/Liter)</label>
                         <div class="input-group has-prefix">
                             <span class="input-group-text">Rp</span>
@@ -138,26 +285,29 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 mb-4">
+                    <div class="mb-3">
                         <label class="form-label">Total Harga (Otomatis)</label>
                         <div class="input-group has-prefix">
                             <span class="input-group-text">Rp</span>
                             <input type="number" name="total_harga" id="total_harga" class="form-control" value="0" readonly>
                         </div>
                     </div>
-                </div>
 
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-submit">
-                        <i class="fa-solid fa-save me-2"></i> Simpan Transaksi
-                    </button>
-                    <a href="{{ route('penjualan.data') }}" class="btn btn-cancel" style="background: #e2e8f0; color: #475569; font-weight: bold; border: none; padding: 14px 30px; border-radius: 15px; text-decoration: none; transition: all 0.2s; width: 100%; font-size: 16px; margin-top: 10px; display: block; text-align: center;">
-                        Batal
-                    </a>
-                </div>
-            </form>
+                    <div class="position-relative mt-4">
+                        <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-cancel w-100" id="cancelBtn" onclick="if(window.parent && window.parent.document.getElementById('registerModal')){ window.parent.bootstrap.Modal.getInstance(window.parent.document.getElementById('registerModal')).hide(); } else { window.location.href='{{ route('penjualan.data') }}'; }">Batal</button>
+                            <button type="submit" class="btn btn-register w-100">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
+    @if(request('mode') != 'modal')
+        </div>
+    @endif
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -173,6 +323,40 @@
 
         jumlahInput.addEventListener('input', calculateTotal);
         hargaInput.addEventListener('input', calculateTotal);
+
+        const closeBtn = document.getElementById('closeModalBtn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                try {
+                    const modal = window.parent.bootstrap.Modal.getInstance(
+                        window.parent.document.getElementById('registerModal')
+                    );
+                    if (modal) modal.hide();
+                } catch(e) {
+                    window.history.back();
+                }
+            });
+        }
+
+        // Auto-dismiss floating error alert after 5s
+        const errorAlert = document.getElementById('errorAlert');
+        if (errorAlert) {
+            setTimeout(() => {
+                errorAlert.style.opacity = '0';
+                errorAlert.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => errorAlert.remove(), 500);
+            }, 5000);
+        }
+
+        @if(session('success'))
+        window.addEventListener('DOMContentLoaded', (event) => {
+            try {
+                window.top.location.href = "{{ route('penjualan.data') }}?success=" + encodeURIComponent("{{ session('success') }}");
+            } catch(e) {
+                window.location.href = "{{ route('penjualan.data') }}";
+            }
+        });
+        @endif
     </script>
 </body>
 </html>

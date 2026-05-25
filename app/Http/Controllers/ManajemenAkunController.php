@@ -71,6 +71,12 @@ class ManajemenAkunController extends Controller
             'username' => 'required|unique:users,username,'.$user->id,
             'role' => 'required',
             'status' => 'required'
+        ], [
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'username.required' => 'Username wajib diisi.',
+            'username.unique' => 'Username sudah terdaftar, silakan gunakan yang lain.',
+            'role.required' => 'Silakan pilih role pengguna.',
+            'status.required' => 'Silakan pilih status.'
         ]);
 
         $user->update([
@@ -85,6 +91,10 @@ class ManajemenAkunController extends Controller
                 'password' => $request->password,
                 'plain_password' => $request->password
             ]);
+        }
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Akun berhasil diperbarui!');
         }
 
         return redirect()->route('manajemen.akun')->with('success', 'Akun berhasil diperbarui!');

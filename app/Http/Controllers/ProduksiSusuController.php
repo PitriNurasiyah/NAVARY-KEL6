@@ -79,6 +79,19 @@ class ProduksiSusuController extends Controller
             'jumlah_pagi' => 'required|numeric|min:0',
             'jumlah_sore' => 'required|numeric|min:0',
             'laktasi_hari_ke' => 'nullable|integer|min:0',
+        ], [
+            'sapi_id.required' => 'Sapi wajib dipilih.',
+            'sapi_id.exists' => 'Sapi yang dipilih tidak valid.',
+            'tanggal.required' => 'Tanggal wajib diisi.',
+            'tanggal.date' => 'Format tanggal tidak valid.',
+            'jumlah_pagi.required' => 'Hasil pagi wajib diisi.',
+            'jumlah_pagi.numeric' => 'Hasil pagi harus berupa angka.',
+            'jumlah_pagi.min' => 'Hasil pagi tidak boleh kurang dari 0.',
+            'jumlah_sore.required' => 'Hasil sore wajib diisi.',
+            'jumlah_sore.numeric' => 'Hasil sore harus berupa angka.',
+            'jumlah_sore.min' => 'Hasil sore tidak boleh kurang dari 0.',
+            'laktasi_hari_ke.integer' => 'Hari laktasi harus berupa angka.',
+            'laktasi_hari_ke.min' => 'Hari laktasi tidak boleh kurang dari 0.',
         ]);
 
         $total = $request->jumlah_pagi + $request->jumlah_sore;
@@ -91,6 +104,10 @@ class ProduksiSusuController extends Controller
             'total' => $total,
             'laktasi_hari_ke' => $request->laktasi_hari_ke,
         ]);
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Data produksi berhasil disimpan!');
+        }
 
         return redirect()->route('produksi.index')->with('success', 'Data produksi berhasil disimpan!');
     }
@@ -107,6 +124,13 @@ class ProduksiSusuController extends Controller
         $request->validate([
             'jumlah_pagi' => 'required|numeric|min:0',
             'jumlah_sore' => 'required|numeric|min:0',
+        ], [
+            'jumlah_pagi.required' => 'Hasil pagi wajib diisi.',
+            'jumlah_pagi.numeric' => 'Hasil pagi harus berupa angka.',
+            'jumlah_pagi.min' => 'Hasil pagi tidak boleh kurang dari 0.',
+            'jumlah_sore.required' => 'Hasil sore wajib diisi.',
+            'jumlah_sore.numeric' => 'Hasil sore harus berupa angka.',
+            'jumlah_sore.min' => 'Hasil sore tidak boleh kurang dari 0.',
         ]);
 
         $total = $request->jumlah_pagi + $request->jumlah_sore;
@@ -116,6 +140,10 @@ class ProduksiSusuController extends Controller
             'jumlah_sore' => $request->jumlah_sore,
             'total' => $total,
         ]);
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Data produksi berhasil diperbarui!');
+        }
 
         return redirect()->route('produksi.index')->with('success', 'Data produksi berhasil diperbarui!');
     }

@@ -46,15 +46,38 @@
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
         .table tbody tr:hover td { background-color: rgba(93, 122, 84, 0.05) !important; }
 
+        /* Notifikasi CRUD (Floating / Toast style) */
         .crud-notification {
-            display: flex; align-items: center; gap: 12px; padding: 15px 25px; border-radius: 12px;
-            font-weight: 700; font-size: 14px; margin-bottom: 25px; animation: fadeInDown 0.4s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 320px;
+            max-width: 450px;
         }
         .crud-notification.success { background: #dcfce7; border: 2px solid #22c55e; color: #166534; }
-        .notif-close { margin-left: auto; background: none; border: none; color: inherit; font-size: 18px; cursor: pointer; opacity: 0.5; transition: 0.2s; }
+        .crud-notification.error { background: #fee2e2; border: 2px solid #ef4444; color: #991b1b; }
+        
+        .notif-close {
+            margin-left: auto; background: none; border: none; color: inherit;
+            font-size: 18px; cursor: pointer; opacity: 0.5; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
         .notif-close:hover { opacity: 1; }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
 
         /* Farm Modal Styles */
         .farm-wrapper { position: relative; width: 100%; max-width: 500px; margin: auto; }
@@ -155,10 +178,10 @@
             </div>
         </div>
 
-        @if(session('success'))
+        @if(session('success') || request('success'))
             <div class="crud-notification success" id="crudNotif">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>{{ session('success') }}</span>
+                <span>{{ session('success') ?? request('success') }}</span>
                 <button class="notif-close" onclick="document.getElementById('crudNotif').remove()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -231,7 +254,7 @@
     <!-- Modal Tambah Log Kesehatan -->
     <div class="modal fade" id="tambahLogModal" tabindex="-1" aria-labelledby="tambahLogModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-            <div class="modal-content" style="background: transparent; border: none; box-shadow: none;">
+            <div class="modal-content" style="background: transparent; border: none; box-shadow: none; overflow: visible; padding-top: 60px;">
                 <div class="farm-wrapper">
                     <div class="top-icon">
                         <img src="{{ asset('img/sapii.png') }}" width="80" alt="logo">
@@ -295,7 +318,8 @@
         if (notif) {
             setTimeout(() => {
                 notif.style.opacity = '0';
-                notif.style.transition = 'opacity 0.5s ease';
+                notif.style.transform = 'translateX(50px)';
+                notif.style.transition = 'all 0.5s ease';
                 setTimeout(() => notif.remove(), 500);
             }, 5000);
         }

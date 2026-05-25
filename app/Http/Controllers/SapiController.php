@@ -24,6 +24,11 @@ class SapiController extends Controller
             'kode_sapi' => 'required|unique:biodata_sapi',
             'nama' => 'required',
             'jenis' => 'required'
+        ], [
+            'kode_sapi.required' => 'ID Sapi wajib diisi.',
+            'kode_sapi.unique' => 'ID Sapi sudah terdaftar.',
+            'nama.required' => 'Nama Sapi wajib diisi.',
+            'jenis.required' => 'Jenis Sapi wajib diisi.'
         ]);
 
         Sapi::create([
@@ -37,6 +42,10 @@ class SapiController extends Controller
             'ayah' => $request->ayah,
             'ibu' => $request->ibu
         ]);
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Data sapi berhasil ditambahkan!');
+        }
 
         return redirect()->route('sapi.index')->with('success', 'Data sapi berhasil ditambahkan!');
     }
@@ -54,6 +63,11 @@ class SapiController extends Controller
             'kode_sapi' => 'required|unique:biodata_sapi,kode_sapi,'.$sapi->id,
             'nama' => 'required',
             'jenis' => 'required'
+        ], [
+            'kode_sapi.required' => 'ID Sapi wajib diisi.',
+            'kode_sapi.unique' => 'ID Sapi sudah terdaftar.',
+            'nama.required' => 'Nama Sapi wajib diisi.',
+            'jenis.required' => 'Jenis Sapi wajib diisi.'
         ]);
 
         $sapi->update([
@@ -66,6 +80,10 @@ class SapiController extends Controller
             'ayah' => $request->ayah,
             'ibu' => $request->ibu
         ]);
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Data sapi berhasil diperbarui!');
+        }
 
         return redirect()->route('sapi.index')->with('success', 'Data sapi berhasil diperbarui!');
     }

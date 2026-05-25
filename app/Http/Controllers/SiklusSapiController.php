@@ -33,6 +33,13 @@ class SiklusSapiController extends Controller
             'fase' => 'required',
             'tanggal_mulai' => 'required|date',
             'hari_ke' => 'nullable|integer',
+        ], [
+            'sapi_id.required' => 'Sapi wajib dipilih.',
+            'sapi_id.exists' => 'Sapi yang dipilih tidak valid.',
+            'fase.required' => 'Fase siklus wajib dipilih.',
+            'tanggal_mulai.required' => 'Tanggal mulai wajib diisi.',
+            'tanggal_mulai.date' => 'Format tanggal tidak valid.',
+            'hari_ke.integer' => 'Hari ke harus berupa angka.',
         ]);
 
         SiklusSapi::create([
@@ -55,6 +62,10 @@ class SiklusSapiController extends Controller
                 'jumlah_sore' => $sore,
                 'total' => $pagi + $sore,
             ]);
+        }
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Data siklus berhasil disimpan!');
         }
 
         return redirect()->route('siklus.show', $request->sapi_id)->with('success', 'Data siklus berhasil disimpan!');
@@ -133,6 +144,10 @@ class SiklusSapiController extends Controller
                     'total' => $pagi + $sore,
                 ]
             );
+        }
+
+        if ($request->input('mode') === 'modal') {
+            return redirect()->back()->with('success', 'Data siklus berhasil diperbarui!');
         }
 
         return redirect()->route('siklus.show', $siklus->sapi_id)->with('success', 'Data siklus berhasil diperbarui!');

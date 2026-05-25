@@ -1,0 +1,1698 @@
+{
+    "_type": "Project",
+    "_id": "AAAAAAFF+h6SjaM2UMg=",
+    "name": "Navary_Siklus_Sapi",
+    "ownedElements": [
+        {
+            "_type": "UMLModel",
+            "_id": "AAAA0af418048beddd1eaec2",
+            "_parent": {
+                "$ref": "AAAAAAFF+h6SjaM2UMg="
+            },
+            "name": "SiklusSapiModel",
+            "ownedElements": [
+                {
+                    "_type": "UMLActor",
+                    "_id": "AAAA928f63a95390221e37cc",
+                    "_parent": {
+                        "$ref": "AAAA0af418048beddd1eaec2"
+                    },
+                    "name": "Peternak"
+                },
+                {
+                    "_type": "UMLBoundary",
+                    "_id": "AAAA0f4d46b39bf791bd9596",
+                    "_parent": {
+                        "$ref": "AAAA0af418048beddd1eaec2"
+                    },
+                    "name": "Views (Blade)"
+                },
+                {
+                    "_type": "UMLClass",
+                    "_id": "AAAA1f958b13104ac3558d36",
+                    "_parent": {
+                        "$ref": "AAAA0af418048beddd1eaec2"
+                    },
+                    "name": "SiklusSapiController"
+                },
+                {
+                    "_type": "UMLClass",
+                    "_id": "AAAAb99e1aa1814cda544624",
+                    "_parent": {
+                        "$ref": "AAAA0af418048beddd1eaec2"
+                    },
+                    "name": "Models (Sapi/Siklus)"
+                },
+                {
+                    "_type": "UMLInterface",
+                    "_id": "AAAA6921a41f245736921bd7",
+                    "_parent": {
+                        "$ref": "AAAA0af418048beddd1eaec2"
+                    },
+                    "name": "Database (MySQL)"
+                },
+                {
+                    "_type": "UMLCollaboration",
+                    "_id": "AAAAf9bccd78a566f01df637",
+                    "_parent": {
+                        "$ref": "AAAA0af418048beddd1eaec2"
+                    },
+                    "name": "Collaboration",
+                    "ownedElements": [
+                        {
+                            "_type": "UMLInteraction",
+                            "_id": "AAAAe5b47dd12811958a4ef3",
+                            "_parent": {
+                                "$ref": "AAAAf9bccd78a566f01df637"
+                            },
+                            "name": "Interaction",
+                            "ownedElements": [
+                                {
+                                    "_type": "UMLSequenceDiagram",
+                                    "_id": "AAAAd860433effcb521f1845",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "Sequence_Kelola_Siklus_Sapi",
+                                    "ownedViews": [
+                                        {
+                                            "_type": "UMLSeqLifelineView",
+                                            "_id": "AAAA54fdbe2da9e5e40eb824_view",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "left": 70,
+                                            "top": 40,
+                                            "width": 100,
+                                            "height": 1560,
+                                            "lineColor": "#000000",
+                                            "fillColor": "#ffffff"
+                                        },
+                                        {
+                                            "_type": "UMLSeqLifelineView",
+                                            "_id": "AAAA4c8d6566a4410e6786cf_view",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "left": 270,
+                                            "top": 40,
+                                            "width": 100,
+                                            "height": 1560,
+                                            "lineColor": "#000000",
+                                            "fillColor": "#ffffff"
+                                        },
+                                        {
+                                            "_type": "UMLSeqLifelineView",
+                                            "_id": "AAAA0d1338a3757ec593e87e_view",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "left": 500,
+                                            "top": 40,
+                                            "width": 100,
+                                            "height": 1560,
+                                            "lineColor": "#000000",
+                                            "fillColor": "#ffffff"
+                                        },
+                                        {
+                                            "_type": "UMLSeqLifelineView",
+                                            "_id": "AAAAfc912a24b7d342106ae5_view",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "left": 730,
+                                            "top": 40,
+                                            "width": 100,
+                                            "height": 1560,
+                                            "lineColor": "#000000",
+                                            "fillColor": "#ffffff"
+                                        },
+                                        {
+                                            "_type": "UMLSeqLifelineView",
+                                            "_id": "AAAAcbff64457ce5afb8f88f_view",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "left": 930,
+                                            "top": 40,
+                                            "width": 100,
+                                            "height": 1560,
+                                            "lineColor": "#000000",
+                                            "fillColor": "#ffffff"
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAb65931e42ecddf16f845",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA959616dd8a905b8f8f0e"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 120,
+                                                    "y": 150
+                                                },
+                                                {
+                                                    "x": 320,
+                                                    "y": 150
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA761cf6855000ac062d74",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAa6c43e9ebb52380b02b5"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 320,
+                                                    "y": 190
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 190
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA0cc775f8417d38498554",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAc34f89fc9c44b300e856"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 230
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 230
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA0d1cb5198e676cdad910",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAd3fca8a1d4493fd4ab62"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 270
+                                                },
+                                                {
+                                                    "x": 780,
+                                                    "y": 270
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAbb6988a5731aa411bdc0",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA1fbbe30daa55c568aac6"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 780,
+                                                    "y": 310
+                                                },
+                                                {
+                                                    "x": 980,
+                                                    "y": 310
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAc760691638d748f771f2",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA270837d7103b792d396e"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 980,
+                                                    "y": 350
+                                                },
+                                                {
+                                                    "x": 780,
+                                                    "y": 350
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA847db6fc978fb4ce3086",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA629467ef1d1b636aa8b7"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 780,
+                                                    "y": 390
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 390
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA446e829de799bf2d329d",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA70d1de2418ad3ce21ef1"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 430
+                                                },
+                                                {
+                                                    "x": 320,
+                                                    "y": 430
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA1d7969e2fed4bbfde208",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA95844b80bdf82910fd3d"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 320,
+                                                    "y": 470
+                                                },
+                                                {
+                                                    "x": 120,
+                                                    "y": 470
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAbe5bb216eac9cc0eba35",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAef47a6312bf474bd2928"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 120,
+                                                    "y": 510
+                                                },
+                                                {
+                                                    "x": 320,
+                                                    "y": 510
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA282875a5448e32cc2200",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAaf9b545b278a84941d3f"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 320,
+                                                    "y": 550
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 550
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA606bddbafcdede69fec5",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA5b4614a3c739c29a20f6"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 590
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 590
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAda543de58e201b70523f",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA4b4575aaff722a6ecd3c"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 630
+                                                },
+                                                {
+                                                    "x": 780,
+                                                    "y": 630
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA72ba8a6033a104e8f1be",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA0efdd2f892189e4b1062"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 780,
+                                                    "y": 670
+                                                },
+                                                {
+                                                    "x": 980,
+                                                    "y": 670
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA0d9087d5c5e7e8999f5c",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAff1bfb58fa47156c296f"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 980,
+                                                    "y": 710
+                                                },
+                                                {
+                                                    "x": 780,
+                                                    "y": 710
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA749ce0250678f2cb078e",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAa0ed3bc76822fae3bd8c"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 780,
+                                                    "y": 750
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 750
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA8e418a27c590af2c7379",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA4fa8d78a5392f50bd825"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 790
+                                                },
+                                                {
+                                                    "x": 320,
+                                                    "y": 790
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA46ece0a9ee8bc1ac69bb",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA8cbc36d2de704135c1c8"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 320,
+                                                    "y": 830
+                                                },
+                                                {
+                                                    "x": 120,
+                                                    "y": 830
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA93c906f17501942e833f",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAd6738700c9ae0ffb690d"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 120,
+                                                    "y": 870
+                                                },
+                                                {
+                                                    "x": 320,
+                                                    "y": 870
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAd22dde78900c22290aef",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA9682d8799d3c4d2ba78c"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 320,
+                                                    "y": 910
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 910
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA40ab301de7618b2f2d42",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAaec3abfc9b2bb78a6fc0"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 950
+                                                },
+                                                {
+                                                    "x": 780,
+                                                    "y": 950
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAcc7af39384f36e15c05b",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA1e9a4005029398a7141c"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 780,
+                                                    "y": 990
+                                                },
+                                                {
+                                                    "x": 980,
+                                                    "y": 990
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAf7a97a3c7458a1276f8f",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA4886d6bcb3a52d6a5bc7"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 980,
+                                                    "y": 1030
+                                                },
+                                                {
+                                                    "x": 780,
+                                                    "y": 1030
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA2668b5dea0d4fd1e18ac",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA98c69243c3843fde359c"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 780,
+                                                    "y": 1070
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 1070
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAa0ab96723e2dc8a39e3e",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA7f2089d0821f3f58174d"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 1110
+                                                },
+                                                {
+                                                    "x": 320,
+                                                    "y": 1110
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAba3ff7dbd70597706aa5",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA389d93078e472003659e"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 320,
+                                                    "y": 1150
+                                                },
+                                                {
+                                                    "x": 120,
+                                                    "y": 1150
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA57aa47a0328ceb42f10b",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA146e9186a888f1d8044d"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 120,
+                                                    "y": 1190
+                                                },
+                                                {
+                                                    "x": 320,
+                                                    "y": 1190
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA014976c8aa463fafb785",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAe675dcaf8536967b2287"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 320,
+                                                    "y": 1230
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 1230
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA4be8c6759c04be04ad1b",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA4d6ed6150154bb2f18bc"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 1270
+                                                },
+                                                {
+                                                    "x": 550,
+                                                    "y": 1270
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA8a9fc4d895922e35b771",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA6876b40aea242b39e976"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 1310
+                                                },
+                                                {
+                                                    "x": 780,
+                                                    "y": 1310
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAbe7cfe8baef7254c3f1c",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAb3b5031358ffd6082815"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 780,
+                                                    "y": 1350
+                                                },
+                                                {
+                                                    "x": 980,
+                                                    "y": 1350
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA178066e4d5890a8da514",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAAd47f78d0063390b29be8"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAAcbff64457ce5afb8f88f_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAAfc912a24b7d342106ae5_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 980,
+                                                    "y": 1390
+                                                },
+                                                {
+                                                    "x": 780,
+                                                    "y": 1390
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAA1eb8da9c4305837423ae",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA8e903d9d0e632aaec1b5"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA0d1338a3757ec593e87e_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 550,
+                                                    "y": 1430
+                                                },
+                                                {
+                                                    "x": 320,
+                                                    "y": 1430
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "_type": "UMLSeqMessageView",
+                                            "_id": "AAAAd8518e64115a357f4b57",
+                                            "_parent": {
+                                                "$ref": "AAAAd860433effcb521f1845"
+                                            },
+                                            "model": {
+                                                "$ref": "AAAA6b8766963ceaf8564a2e"
+                                            },
+                                            "font": "Arial;13;0",
+                                            "lineColor": "#000000",
+                                            "tail": {
+                                                "$ref": "AAAA4c8d6566a4410e6786cf_view"
+                                            },
+                                            "head": {
+                                                "$ref": "AAAA54fdbe2da9e5e40eb824_view"
+                                            },
+                                            "points": [
+                                                {
+                                                    "x": 320,
+                                                    "y": 1470
+                                                },
+                                                {
+                                                    "x": 120,
+                                                    "y": 1470
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "lifelines": [
+                                {
+                                    "_type": "UMLLifeline",
+                                    "_id": "AAAA54fdbe2da9e5e40eb824",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "Peternak",
+                                    "represent": {
+                                        "$ref": "AAAA928f63a95390221e37cc"
+                                    },
+                                    "isMultiInstance": false
+                                },
+                                {
+                                    "_type": "UMLLifeline",
+                                    "_id": "AAAA4c8d6566a4410e6786cf",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "Views (Blade)",
+                                    "represent": {
+                                        "$ref": "AAAA0f4d46b39bf791bd9596"
+                                    },
+                                    "isMultiInstance": false
+                                },
+                                {
+                                    "_type": "UMLLifeline",
+                                    "_id": "AAAA0d1338a3757ec593e87e",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "SiklusSapiController",
+                                    "represent": {
+                                        "$ref": "AAAA1f958b13104ac3558d36"
+                                    },
+                                    "isMultiInstance": false
+                                },
+                                {
+                                    "_type": "UMLLifeline",
+                                    "_id": "AAAAfc912a24b7d342106ae5",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "Models (Sapi/Siklus)",
+                                    "represent": {
+                                        "$ref": "AAAAb99e1aa1814cda544624"
+                                    },
+                                    "isMultiInstance": false
+                                },
+                                {
+                                    "_type": "UMLLifeline",
+                                    "_id": "AAAAcbff64457ce5afb8f88f",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "Database (MySQL)",
+                                    "represent": {
+                                        "$ref": "AAAA6921a41f245736921bd7"
+                                    },
+                                    "isMultiInstance": false
+                                }
+                            ],
+                            "messages": [
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA959616dd8a905b8f8f0e",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "1. Buka halaman Siklus Sapi",
+                                    "source": {
+                                        "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAa6c43e9ebb52380b02b5",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "2. GET /siklus (index)",
+                                    "source": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAc34f89fc9c44b300e856",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "3. checkAutoTransitions()",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAd3fca8a1d4493fd4ab62",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "4. Sapi::with(\"siklusSapi\")->get()",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA1fbbe30daa55c568aac6",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "5. SELECT * FROM biodata_sapi & siklus_sapi",
+                                    "source": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAcbff64457ce5afb8f88f"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA270837d7103b792d396e",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "6. data sapi betina",
+                                    "source": {
+                                        "$ref": "AAAAcbff64457ce5afb8f88f"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA629467ef1d1b636aa8b7",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "7. Collection Sapi",
+                                    "source": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA70d1de2418ad3ce21ef1",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "8. view(\"peternak.siklus.index\", $sapi)",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA95844b80bdf82910fd3d",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "9. Tampilkan Halaman Daftar Siklus Sapi",
+                                    "source": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAef47a6312bf474bd2928",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "10. Pilih Sapi Betina (Detail Siklus)",
+                                    "source": {
+                                        "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAaf9b545b278a84941d3f",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "11. GET /siklus/{id} (show)",
+                                    "source": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA5b4614a3c739c29a20f6",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "12. checkAutoTransitions()",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA4b4575aaff722a6ecd3c",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "13. Sapi::with(\"siklusSapi\")->findOrFail($id)",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA0efdd2f892189e4b1062",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "14. SELECT * FROM biodata_sapi WHERE id = {id}",
+                                    "source": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAcbff64457ce5afb8f88f"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAff1bfb58fa47156c296f",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "15. data sapi & riwayat siklus",
+                                    "source": {
+                                        "$ref": "AAAAcbff64457ce5afb8f88f"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAa0ed3bc76822fae3bd8c",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "16. Sapi object",
+                                    "source": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA4fa8d78a5392f50bd825",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "17. view(\"peternak.siklus.show\", $sapi)",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA8cbc36d2de704135c1c8",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "18. Tampilkan Halaman Detail Riwayat Siklus Sapi",
+                                    "source": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAd6738700c9ae0ffb690d",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "19. Klik Tombol \"Tambah Siklus\"",
+                                    "source": {
+                                        "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA9682d8799d3c4d2ba78c",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "20. GET /siklus/create (create)",
+                                    "source": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAaec3abfc9b2bb78a6fc0",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "21. Sapi::where(\"jenis_kelamin\",\"Betina\")->get()",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA1e9a4005029398a7141c",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "22. SELECT * FROM biodata_sapi WHERE jk = \"Betina\"",
+                                    "source": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAcbff64457ce5afb8f88f"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA4886d6bcb3a52d6a5bc7",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "23. data sapi betina",
+                                    "source": {
+                                        "$ref": "AAAAcbff64457ce5afb8f88f"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA98c69243c3843fde359c",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "24. List Sapi",
+                                    "source": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA7f2089d0821f3f58174d",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "25. view(\"peternak.siklus.create\", $sapi)",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA389d93078e472003659e",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "26. Tampilkan Form Tambah Siklus",
+                                    "source": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA146e9186a888f1d8044d",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "27. Isi Form & Klik \"Simpan\"",
+                                    "source": {
+                                        "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAe675dcaf8536967b2287",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "28. POST /siklus (store)",
+                                    "source": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA4d6ed6150154bb2f18bc",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "29. validate($request)",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA6876b40aea242b39e976",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "30. SiklusSapi::create($request->all())",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAb3b5031358ffd6082815",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "31. INSERT INTO siklus_sapi (...)",
+                                    "source": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAcbff64457ce5afb8f88f"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAAd47f78d0063390b29be8",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "32. Success",
+                                    "source": {
+                                        "$ref": "AAAAcbff64457ce5afb8f88f"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAAfc912a24b7d342106ae5"
+                                    },
+                                    "messageSort": "reply"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA8e903d9d0e632aaec1b5",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "33. redirect()->route(\"siklus.show\", $sapi_id)",
+                                    "source": {
+                                        "$ref": "AAAA0d1338a3757ec593e87e"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "messageSort": "synchCall"
+                                },
+                                {
+                                    "_type": "UMLMessage",
+                                    "_id": "AAAA6b8766963ceaf8564a2e",
+                                    "_parent": {
+                                        "$ref": "AAAAe5b47dd12811958a4ef3"
+                                    },
+                                    "name": "34. Halaman Detail memuat notifikasi sukses",
+                                    "source": {
+                                        "$ref": "AAAA4c8d6566a4410e6786cf"
+                                    },
+                                    "target": {
+                                        "$ref": "AAAA54fdbe2da9e5e40eb824"
+                                    },
+                                    "messageSort": "reply"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
