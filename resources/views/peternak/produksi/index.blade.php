@@ -80,7 +80,10 @@
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; margin-top: 10px; }
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
         .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
-        .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; }
+        .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; font-weight: 600; }
+        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #e6d5c0 !important; }
+        .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
+        .table tbody tr:hover td { background-color: rgba(93, 122, 84, 0.05) !important; }
         
         .total-badge { background: rgba(93, 122, 84, 0.15); padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(93, 122, 84, 0.3); font-weight: 800; color: #4a6344; }
 
@@ -174,10 +177,9 @@
             @endif
         </div>
 
-
-
+        <!-- Tarik Data table-bordered-custom -->
         <div class="custom-table">
-            <table class="table align-middle">
+            <table class="table table-bordered-custom align-middle">
                 <thead>
                     <tr>
                         <th style="width: 50px;">NO</th>
@@ -186,7 +188,7 @@
                         <th>SORE (L)</th>
                         <th class="text-center">TOTAL</th>
                         <th>TANGGAL</th>
-                        @if(Auth::user()->role !== 'Admin')
+                        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan')
                         <th>HARI LAKTASI</th>
                         @endif
                         @if(Auth::user()->role === 'Peternak')
@@ -203,7 +205,7 @@
                         <td>{{ $item->jumlah_sore }} L</td>
                         <td class="text-center"><span class="total-badge">{{ $item->total }} L</span></td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
-                        @if(Auth::user()->role !== 'Admin')
+                        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan')
                         <td>{{ $item->laktasi_hari_ke ? 'Hari ke-' . $item->laktasi_hari_ke : '-' }}</td>
                         @endif
                         @if(Auth::user()->role === 'Peternak')
@@ -217,7 +219,7 @@
                     </tr>
                     @empty
                     <tr id="noDataRow">
-                        <td @if(Auth::user()->role === 'Admin') colspan="6" @else colspan="8" @endif class="text-center py-5">
+                        <td @if(Auth::user()->role === 'Admin' || Auth::user()->role === 'Penjualan') colspan="6" @else colspan="8" @endif class="text-center py-5">
                             <div class="d-flex flex-column align-items-center">
                                 <i class="fa-solid fa-bucket mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                 <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>

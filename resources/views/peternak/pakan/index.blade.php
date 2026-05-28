@@ -81,7 +81,9 @@
         /* Tabel */
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
         .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
-        .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; }
+        .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; font-weight: 600; }
+        .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #e6d5c0 !important; }
+        .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
         .table tbody tr:hover td { background-color: rgba(93, 122, 84, 0.05) !important; }
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
 
@@ -160,7 +162,7 @@
         </div>
 
         <div class="custom-table">
-            <table class="table align-middle">
+            <table class="table table-bordered-custom align-middle">
                 <thead>
                     <tr>
                         <th style="width: 50px;">NO</th>

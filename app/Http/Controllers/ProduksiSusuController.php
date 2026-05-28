@@ -67,7 +67,7 @@ class ProduksiSusuController extends Controller
 
     public function create()
     {
-        $sapi = Sapi::all();
+        $sapi = Sapi::where('jenis_kelamin', 'Betina')->get();
         return view('peternak.produksi.create', compact('sapi'));
     }
 
@@ -124,6 +124,7 @@ class ProduksiSusuController extends Controller
         $request->validate([
             'jumlah_pagi' => 'required|numeric|min:0',
             'jumlah_sore' => 'required|numeric|min:0',
+            'laktasi_hari_ke' => 'nullable|integer|min:0',
         ], [
             'jumlah_pagi.required' => 'Hasil pagi wajib diisi.',
             'jumlah_pagi.numeric' => 'Hasil pagi harus berupa angka.',
@@ -131,6 +132,8 @@ class ProduksiSusuController extends Controller
             'jumlah_sore.required' => 'Hasil sore wajib diisi.',
             'jumlah_sore.numeric' => 'Hasil sore harus berupa angka.',
             'jumlah_sore.min' => 'Hasil sore tidak boleh kurang dari 0.',
+            'laktasi_hari_ke.integer' => 'Hari laktasi harus berupa angka.',
+            'laktasi_hari_ke.min' => 'Hari laktasi tidak boleh kurang dari 0.',
         ]);
 
         $total = $request->jumlah_pagi + $request->jumlah_sore;
@@ -139,6 +142,7 @@ class ProduksiSusuController extends Controller
             'jumlah_pagi' => $request->jumlah_pagi,
             'jumlah_sore' => $request->jumlah_sore,
             'total' => $total,
+            'laktasi_hari_ke' => $request->laktasi_hari_ke,
         ]);
 
         if ($request->input('mode') === 'modal') {
