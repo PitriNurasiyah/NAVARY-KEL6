@@ -259,6 +259,28 @@
                 <p class="text-muted fw-bold mb-0">Sapi ini belum memasuki fase laktasi atau belum memiliki data produksi laktasi.</p>
             </div>
             <canvas id="productionChart" height="100"></canvas>
+
+            <!-- Stats per 100 days -->
+            <div class="row g-3 mt-4" id="lactationStatsContainer">
+                <div class="col-md-4">
+                    <div class="p-3 text-center" style="background: #fffcf7; border: 1.5px solid #e6d5c0; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
+                        <span class="text-muted fw-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Hari 1 - 100 Laktasi 🥛</span>
+                        <h4 class="fw-bold mt-2 mb-0" style="color: #4a6344; font-family: 'Playfair Display', serif;" id="textSum100">0 Liter</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 text-center" style="background: #fffcf7; border: 1.5px solid #e6d5c0; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
+                        <span class="text-muted fw-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Hari 101 - 200 Laktasi 🥛</span>
+                        <h4 class="fw-bold mt-2 mb-0" style="color: #845a33; font-family: 'Playfair Display', serif;" id="textSum200">0 Liter</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 text-center" style="background: #fffcf7; border: 1.5px solid #e6d5c0; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
+                        <span class="text-muted fw-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Hari 201 - 300 Laktasi 🥛</span>
+                        <h4 class="fw-bold mt-2 mb-0" style="color: #6d4c41; font-family: 'Playfair Display', serif;" id="textSum300">0 Liter</h4>
+                    </div>
+                </div>
+            </div>
         </div>
         @endif
     </div>
@@ -330,9 +352,15 @@
             if (initialSapiId && lactationChartData[initialSapiId]) {
                 initialLabels = lactationChartData[initialSapiId].labels;
                 initialData = lactationChartData[initialSapiId].data;
+                
+                document.getElementById('textSum100').textContent = (lactationChartData[initialSapiId].sum100 || 0).toLocaleString('id-ID') + ' Liter';
+                document.getElementById('textSum200').textContent = (lactationChartData[initialSapiId].sum200 || 0).toLocaleString('id-ID') + ' Liter';
+                document.getElementById('textSum300').textContent = (lactationChartData[initialSapiId].sum300 || 0).toLocaleString('id-ID') + ' Liter';
+
                 if (!lactationChartData[initialSapiId].has_data) {
                     document.getElementById('noChartDataMessage').classList.remove('d-none');
                     productionChartEl.style.display = 'none';
+                    document.getElementById('lactationStatsContainer').classList.add('d-none');
                 }
             }
             
@@ -384,12 +412,18 @@
                     productionChart.data.datasets[0].data = cowData.data;
                     productionChart.update();
                     
+                    document.getElementById('textSum100').textContent = (cowData.sum100 || 0).toLocaleString('id-ID') + ' Liter';
+                    document.getElementById('textSum200').textContent = (cowData.sum200 || 0).toLocaleString('id-ID') + ' Liter';
+                    document.getElementById('textSum300').textContent = (cowData.sum300 || 0).toLocaleString('id-ID') + ' Liter';
+
                     if (cowData.has_data) {
                         document.getElementById('noChartDataMessage').classList.add('d-none');
                         productionChartEl.style.display = 'block';
+                        document.getElementById('lactationStatsContainer').classList.remove('d-none');
                     } else {
                         document.getElementById('noChartDataMessage').classList.remove('d-none');
                         productionChartEl.style.display = 'none';
+                        document.getElementById('lactationStatsContainer').classList.add('d-none');
                     }
                 }
             }

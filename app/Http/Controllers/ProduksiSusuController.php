@@ -20,6 +20,10 @@ class ProduksiSusuController extends Controller
                 ->orderBy('laktasi_hari_ke', 'asc')
                 ->get();
                 
+            $sum100 = ProduksiSusu::where('sapi_id', $s->id)->whereBetween('laktasi_hari_ke', [1, 100])->sum('total');
+            $sum200 = ProduksiSusu::where('sapi_id', $s->id)->whereBetween('laktasi_hari_ke', [101, 200])->sum('total');
+            $sum300 = ProduksiSusu::where('sapi_id', $s->id)->whereBetween('laktasi_hari_ke', [201, 300])->sum('total');
+                
             if ($records->count() > 0) {
                 $labels = [];
                 $data = [];
@@ -30,13 +34,19 @@ class ProduksiSusuController extends Controller
                 $lactationData[$s->id] = [
                     'labels' => $labels,
                     'data' => $data,
-                    'has_data' => true
+                    'has_data' => true,
+                    'sum100' => floatval($sum100),
+                    'sum200' => floatval($sum200),
+                    'sum300' => floatval($sum300)
                 ];
             } else {
                 $lactationData[$s->id] = [
                     'labels' => ['Hari 1'],
                     'data' => [0],
-                    'has_data' => false
+                    'has_data' => false,
+                    'sum100' => 0,
+                    'sum200' => 0,
+                    'sum300' => 0
                 ];
             }
         }
