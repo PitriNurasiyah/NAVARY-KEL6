@@ -174,41 +174,55 @@
         @endif
 
         <!-- Cards Section -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-4">
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <span>Populasi Sapi</span>
-                        <h2>{{ $totalSapi }}</h2>
-                        <div class="stat-unit">Ekor Sapi</div>
-                    </div>
-                    <div class="icon-circle bg-custom-green">
-                        <i class="fa-solid fa-cow"></i>
-                    </div>
+        <div class="cards-wrapper mb-4">
+            <div class="stat-card flex-shrink-0" style="width: 280px;">
+                <div class="stat-info">
+                    <span>Populasi Sapi</span>
+                    <h2>{{ $totalSapi }}</h2>
+                    <div class="stat-unit">Ekor Sapi</div>
+                </div>
+                <div class="icon-circle bg-custom-green">
+                    <i class="fa-solid fa-cow"></i>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <span>Tugas Input Hari Ini</span>
-                        <h2>{{ $tugasInput }}</h2>
-                        <div class="stat-unit">Belum Diinput</div>
-                    </div>
-                    <div class="icon-circle bg-custom-blue">
-                        <i class="fa-solid fa-clipboard-check"></i>
-                    </div>
+            <div class="stat-card flex-shrink-0" style="width: 280px;">
+                <div class="stat-info">
+                    <span>Tugas Input Hari Ini</span>
+                    <h2>{{ $tugasInput }}</h2>
+                    <div class="stat-unit">Belum Diinput</div>
+                </div>
+                <div class="icon-circle bg-custom-blue">
+                    <i class="fa-solid fa-clipboard-check"></i>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <span>Total Produksi</span>
-                        <h2>{{ number_format($totalProduksi, 0, ',', '.') }}</h2>
-                        <div class="stat-unit">Liter Susu</div>
-                    </div>
-                    <div class="icon-circle bg-custom-brown">
-                        <i class="fa-solid fa-bucket"></i>
-                    </div>
+            <div class="stat-card flex-shrink-0" style="width: 280px;">
+                <div class="stat-info">
+                    <span>Total Produksi</span>
+                    <h2>{{ number_format($totalProduksi, 0, ',', '.') }}</h2>
+                    <div class="stat-unit">Liter Susu</div>
+                </div>
+                <div class="icon-circle bg-custom-brown">
+                    <i class="fa-solid fa-bucket"></i>
+                </div>
+            </div>
+            <div class="stat-card flex-shrink-0" style="width: 280px;">
+                <div class="stat-info">
+                    <span>Total Persediaan Pakan</span>
+                    <h2>{{ number_format($totalStok, 0, ',', '.') }}</h2>
+                    <div class="stat-unit">KG Pakan</div>
+                </div>
+                <div class="icon-circle bg-custom-green">
+                    <i class="fa-solid fa-warehouse"></i>
+                </div>
+            </div>
+            <div class="stat-card flex-shrink-0" style="width: 280px;">
+                <div class="stat-info">
+                    <span>Total Pakan Digunakan</span>
+                    <h2>{{ number_format($totalDigunakan, 0, ',', '.') }}</h2>
+                    <div class="stat-unit">KG Pakan</div>
+                </div>
+                <div class="icon-circle bg-custom-brown">
+                    <i class="fa-solid fa-utensils"></i>
                 </div>
             </div>
         </div>

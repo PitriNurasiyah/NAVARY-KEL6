@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Produksi - Cimilk Yogurt</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <title>Tambah Pemberian Pakan - Cimilk Yogurt</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -16,8 +17,6 @@
             display: flex;
             min-height: 100vh;
             overflow-y: {{ request('mode') == 'modal' ? 'hidden' : 'auto' }};
-            scrollbar-width: none;
-            -ms-overflow-style: none;
         }
         body::-webkit-scrollbar { display: none; }
 
@@ -33,7 +32,7 @@
             @endif
         }
 
-        .farm-wrapper { position: relative; width: 400px; max-width: 95%; }
+        .farm-wrapper { position: relative; width: 500px; max-width: 95%; }
 
         .login-box {
             width: 100%;
@@ -124,22 +123,6 @@
         }
         .btn-register:active { transform: translateY(4px); box-shadow: 0 2px 0 #152414; }
 
-        .btn-cancel {
-            width: 100%;
-            background: #8c7b6f;
-            color: white;
-            border-radius: 12px;
-            padding: 12px;
-            font-weight: bold;
-            font-size: 18px;
-            border: none;
-            box-shadow: 0 6px 0 #5e5149;
-            transition: all 0.1s ease;
-            text-align: center;
-            text-decoration: none;
-        }
-        .btn-cancel:active { transform: translateY(4px); box-shadow: 0 2px 0 #5e5149; }
-
         .barn-icon {
             position: absolute;
             bottom: 40px;
@@ -200,11 +183,11 @@
 
     @if(request('mode') != 'modal')
         @include('layouts.sidebar')
-        @include('layouts.header', ['pageTitle' => 'Produksi Susu', 'pageSubtitle' => 'Edit data produksi'])
+        @include('layouts.header', ['pageTitle' => 'Tambah Pemberian Pakan', 'pageSubtitle' => 'Input data baru'])
         
         <div class="main-content">
             <div class="page-title-section">
-                <h3>Edit Produksi Susu 🥛</h3>
+                <h3>Tambah Pemberian Pakan 🐄</h3>
             </div>
     @endif
 
@@ -215,13 +198,13 @@
             </div>
 
             <div class="login-box">
-                @if(Auth::check() && request('mode') == 'modal')
+                @if(Auth::check())
                 <button type="button" class="btn-close-custom" id="closeModalBtn">
                     <i class="fa-solid fa-circle-xmark"></i>
                 </button>
                 @endif
 
-                <div class="title">Edit Produksi</div>
+                <div class="title">Tambah Pemberian Pakan</div>
 
                 @if($errors->any())
                     <div class="alert-inline" id="errorAlert">
@@ -230,44 +213,50 @@
                     </div>
                 @endif
 
-                <form action="{{ route('produksi.update', $produksi->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
+                <form action="{{ route('pemberian-pakan.store') }}" method="POST">
+                @csrf
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
-                    
-                    <div class="mb-2">
-                        <label class="form-label">Sapi</label>
-                        <input type="text" class="form-control" value="{{ $produksi->sapi->kode_sapi }} - {{ $produksi->sapi->nama }}" disabled>
-                    </div>
-
-                    <div class="mb-2">
-                        <label class="form-label">Tanggal</label>
-                        <input type="date" name="tanggal" class="form-control" value="{{ $produksi->tanggal }}" required>
-                    </div>
-
-                    <div class="mb-2">
-                        <label class="form-label">Hasil Pagi (Liter)</label>
-                        <input type="number" step="0.1" name="jumlah_pagi" class="form-control" value="{{ $produksi->jumlah_pagi }}" required>
-                    </div>
-
-                    <div class="mb-2">
-                        <label class="form-label">Hasil Sore (Liter)</label>
-                        <input type="number" step="0.1" name="jumlah_sore" class="form-control" value="{{ $produksi->jumlah_sore }}" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Hari Laktasi Ke-</label>
-                        <input type="number" name="laktasi_hari_ke" class="form-control" value="{{ $produksi->laktasi_hari_ke }}" placeholder="Masukkan hari laktasi ke.." min="1">
-                    </div>
-
+                <div class="mb-2">
+                    <label class="form-label">Sapi</label>
+                    <select name="sapi_id" class="form-select" required>
+                        <option value="">--Pilih Sapi--</option>
+                        @foreach($sapi as $cow)
+                            <option value="{{ $cow->id }}">{{ $cow->nama }} ({{ $cow->kode_sapi }})</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Jenis Pakan</label>
+                    <input type="text" name="nama_pakan" class="form-control" placeholder="Contoh: Rumput Gajah" required>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Jumlah Pemberian</label>
+                    <input type="number" name="stok" class="form-control" placeholder="0" required>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Satuan</label>
+                    <select name="satuan" class="form-select" required>
+                        <option value="KG">KG</option>
+                        <option value="TON">TON</option>
+                        <option value="IKAT">IKAT</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Tanggal Pemberian</label>
+                    <input type="date" name="tanggal_pemberian" class="form-control" value="{{ date('Y-m-d') }}">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Keterangan (Opsional)</label>
+                    <textarea name="keterangan" class="form-control" rows="3" placeholder="Tambahkan catatan..."></textarea>
+                </div>
                     <div class="position-relative mt-4">
                         <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-cancel w-100" id="cancelBtn" onclick="if(window.parent && window.parent.document.getElementById('registerModal')){ window.parent.bootstrap.Modal.getInstance(window.parent.document.getElementById('registerModal')).hide(); } else { window.location.href='{{ route('produksi.index') }}'; }">Batal</button>
-                            <button type="submit" class="btn btn-register w-100">Simpan</button>
+                            <button type="button" class="btn btn-secondary w-100 fw-bold" style="border-radius: 12px; padding: 12px; background-color: #8c7b6f; border: none; box-shadow: 0 6px 0 #5e5149;" id="cancelBtn" onclick="if(window.parent && window.parent.document.getElementById('registerModal')){ window.parent.bootstrap.Modal.getInstance(window.parent.document.getElementById('registerModal')).hide(); } else { window.history.back(); }">Batal</button>
+                            <button type="submit" class="btn btn-register w-100">Simpan Data</button>
                         </div>
                     </div>
-                </form>
+            </form>
 
             </div>
         </div>
@@ -276,41 +265,41 @@
         </div>
     @endif
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const closeBtn = document.getElementById('closeModalBtn');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function() {
-                try {
-                    const modal = window.parent.bootstrap.Modal.getInstance(
-                        window.parent.document.getElementById('registerModal')
-                    );
-                    if (modal) modal.hide();
-                } catch(e) {
-                    window.history.back();
-                }
-            });
-        }
-
-        // Auto-dismiss floating error alert after 5s
-        const errorAlert = document.getElementById('errorAlert');
-        if (errorAlert) {
-            setTimeout(() => {
-                errorAlert.style.opacity = '0';
-                errorAlert.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => errorAlert.remove(), 500);
-            }, 5000);
-        }
-
-        @if(session('success'))
-        window.addEventListener('DOMContentLoaded', (event) => {
+<script>
+    const closeBtn = document.getElementById('closeModalBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
             try {
-                window.top.location.href = "{{ route('produksi.index') }}?success=" + encodeURIComponent("{{ session('success') }}");
+                const modal = window.parent.bootstrap.Modal.getInstance(
+                    window.parent.document.getElementById('registerModal')
+                );
+                if (modal) modal.hide();
             } catch(e) {
-                window.location.href = "{{ route('produksi.index') }}";
+                window.history.back();
             }
         });
-        @endif
-    </script>
+    }
+
+    // Auto-dismiss floating error alert after 5s
+    const errorAlert = document.getElementById('errorAlert');
+    if (errorAlert) {
+        setTimeout(() => {
+            errorAlert.style.opacity = '0';
+            errorAlert.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => errorAlert.remove(), 500);
+        }, 5000);
+    }
+
+    @if(session('success'))
+    window.addEventListener('DOMContentLoaded', (event) => {
+        try {
+            window.top.location.href = "{{ route('pakan.index') }}?success=" + encodeURIComponent("{{ session('success') }}");
+        } catch(e) {
+            window.location.href = "{{ route('pakan.index') }}";
+        }
+    });
+    @endif
+</script>
+
 </body>
 </html>

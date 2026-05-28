@@ -162,12 +162,17 @@
             z-index: 10;
             pointer-events: none;
         }
-        #tambahLogModal, #tambahLogModal .form-control, #tambahLogModal .form-select, #tambahLogModal .form-label {
-            font-family: 'Quicksand', sans-serif;
+        #tambahLogModal, #tambahLogModal .form-control, #tambahLogModal .form-select, #tambahLogModal .form-label, #tambahLogModal input, #tambahLogModal textarea, #tambahLogModal select, #tambahLogModal .form-control::placeholder, #tambahLogModal textarea::placeholder {
+            font-family: 'Quicksand', sans-serif !important;
         }
-        #tambahLogModal .form-control, #tambahLogModal .form-select {
+        #tambahLogModal .form-control, #tambahLogModal .form-select, #tambahLogModal textarea, #tambahLogModal input, #tambahLogModal select {
             font-size: 14px !important;
             padding: 10px 14px !important;
+            border: 2px solid #a67c52 !important;
+            background-color: #fffdfa !important;
+            border-radius: 12px !important;
+            color: #432118 !important;
+            font-weight: 500 !important;
         }
         #tambahLogModal .form-label {
             font-size: 14px !important;
@@ -355,7 +360,7 @@
                                 <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
                                 <div class="d-flex gap-2">
                                     <button type="button" class="btn btn-secondary w-100 fw-bold" style="border-radius: 12px; padding: 12px; background-color: #8c7b6f; border: none; box-shadow: 0 6px 0 #5e5149; color: white;" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn-register w-100"><i class="fa-solid fa-notes-medical me-2"></i>Simpan Log</button>
+                                    <button type="submit" class="btn-register w-100">Simpan Log</button>
                                 </div>
                             </div>
                         </form>
@@ -416,7 +421,7 @@
                                 <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
                                 <div class="d-flex gap-2">
                                     <button type="button" class="btn btn-secondary w-100 fw-bold" style="border-radius: 12px; padding: 12px; background-color: #8c7b6f; border: none; box-shadow: 0 6px 0 #5e5149; color: white;" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn-register w-100"><i class="fa-solid fa-notes-medical me-2"></i>Simpan Perubahan</button>
+                                    <button type="submit" class="btn-register w-100">Simpan Perubahan</button>
                                 </div>
                             </div>
                         </form>
@@ -427,12 +432,17 @@
     </div>
 
     <style>
-        #editLogModal, #editLogModal .form-control, #editLogModal .form-select, #editLogModal .form-label {
-            font-family: 'Quicksand', sans-serif;
+        #editLogModal, #editLogModal .form-control, #editLogModal .form-select, #editLogModal .form-label, #editLogModal input, #editLogModal textarea, #editLogModal select, #editLogModal .form-control::placeholder, #editLogModal textarea::placeholder {
+            font-family: 'Quicksand', sans-serif !important;
         }
-        #editLogModal .form-control, #editLogModal .form-select {
+        #editLogModal .form-control, #editLogModal .form-select, #editLogModal textarea, #editLogModal input, #editLogModal select {
             font-size: 14px !important;
             padding: 10px 14px !important;
+            border: 2px solid #a67c52 !important;
+            background-color: #fffdfa !important;
+            border-radius: 12px !important;
+            color: #432118 !important;
+            font-weight: 500 !important;
         }
         #editLogModal .form-label {
             font-size: 14px !important;

@@ -232,7 +232,6 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
-                    
                     <div class="mb-2">
                         <label class="form-label">Nama Pakan</label>
                         <input type="text" name="nama_pakan" class="form-control" value="{{ $pakan->nama_pakan }}" required>
@@ -243,7 +242,11 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label">Satuan</label>
-                        <input type="text" name="satuan" class="form-control" value="{{ $pakan->satuan }}" required>
+                        <select name="satuan" class="form-select" required>
+                            <option value="KG" @if($pakan->satuan == 'KG') selected @endif>KG</option>
+                            <option value="TON" @if($pakan->satuan == 'TON') selected @endif>TON</option>
+                            <option value="IKAT" @if($pakan->satuan == 'IKAT') selected @endif>IKAT</option>
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label">Tanggal Pemberian</label>

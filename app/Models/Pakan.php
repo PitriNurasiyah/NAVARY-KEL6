@@ -12,10 +12,16 @@ class Pakan extends Model
     protected $table = 'pakan';
 
     protected $fillable = [
+        'sapi_id',
         'nama_pakan',
         'stok',
         'satuan',
         'tanggal_pemberian',
         'keterangan'
     ];
+
+    public function sapi()
+    {
+        return $this->belongsTo(Sapi::class, 'sapi_id');
+    }
 }

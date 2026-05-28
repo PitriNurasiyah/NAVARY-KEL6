@@ -346,8 +346,8 @@
                         backgroundColor: '#8CA685',
                         borderColor: '#4a6344',
                         borderWidth: 2,
-                        borderRadius: 12,
-                        barThickness: 50
+                        borderRadius: 8,
+                        maxBarThickness: 45
                     }]
                 },
                 options: {

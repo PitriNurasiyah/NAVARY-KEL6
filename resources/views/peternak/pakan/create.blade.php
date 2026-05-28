@@ -206,7 +206,7 @@
                 </button>
                 @endif
 
-                <div class="title">Tambah Pakan</div>
+                <div class="title">Tambah Data Pakan</div>
 
                 @if($errors->any())
                     <div class="alert-inline" id="errorAlert">
@@ -217,7 +217,7 @@
 
                 <form action="{{ route('pakan.store') }}" method="POST">
                 @csrf
-                    <input type="hidden" name="mode" value="{{ request('mode') }}">
+                <input type="hidden" name="mode" value="{{ request('mode') }}">
                 <div class="mb-2">
                     <label class="form-label">Nama Pakan</label>
                     <input type="text" name="nama_pakan" class="form-control" placeholder="Contoh: Rumput Gajah" required>

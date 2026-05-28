@@ -33,8 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/manajemen-akun/{id}/edit', [ManajemenAkunController::class, 'edit'])->name('manajemen-akun.edit');
     Route::put('/manajemen-akun/{id}', [ManajemenAkunController::class, 'update'])->name('manajemen-akun.update');
     Route::delete('/manajemen-akun/{id}', [ManajemenAkunController::class, 'destroy'])->name('manajemen-akun.destroy');
+    
     Route::get('/dashboard-peternak', [DashboardPeternakController::class, 'index'])->name('peternak.dashboard');
     Route::resource('pakan', App\Http\Controllers\PakanController::class);
+    Route::get('/pemberian-pakan/create', [App\Http\Controllers\PakanController::class, 'createPemberian'])->name('pemberian-pakan.create');
+    Route::post('/pemberian-pakan', [App\Http\Controllers\PakanController::class, 'storePemberian'])->name('pemberian-pakan.store');
+    Route::get('/pemberian-pakan/{id}/edit', [App\Http\Controllers\PakanController::class, 'editPemberian'])->name('pemberian-pakan.edit');
+    Route::put('/pemberian-pakan/{id}', [App\Http\Controllers\PakanController::class, 'updatePemberian'])->name('pemberian-pakan.update');
     Route::resource('siklus', App\Http\Controllers\SiklusSapiController::class);
     Route::post('/siklus/produksi', [App\Http\Controllers\SiklusSapiController::class, 'storeProduksi'])->name('siklus.storeProduksi');
     Route::post('/siklus/{id}/action/cek-birahi', [App\Http\Controllers\SiklusSapiController::class, 'actionCekBirahi'])->name('siklus.action.cek_birahi');

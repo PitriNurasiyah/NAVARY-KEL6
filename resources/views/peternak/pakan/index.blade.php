@@ -87,6 +87,37 @@
         .table tbody tr:hover td { background-color: rgba(93, 122, 84, 0.05) !important; }
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
 
+        .cards-wrapper {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .cards-wrapper::-webkit-scrollbar { display: none; }
+        .stat-card {
+            background: #fffcf7;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1.5px solid #e6d5c0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            text-decoration: none;
+            height: 100%;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #bc9f82 !important;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08) !important;
+        }
+        .stat-info span { color: #845a33; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .stat-info h2 { font-family: 'Playfair Display', serif; margin: 5px 0; font-size: 32px; font-weight: 700; color: #432118; }
+        .stat-unit { color: #5d7a54; font-weight: 800; font-size: 12px; }
+
         /* Custom Delete Confirm Modal */
         .confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
         .confirm-overlay.active { display: flex; }
@@ -137,9 +168,11 @@
 
     <div class="main-content">
         <div class="page-title-section">
-            <h3>Manajemen Pakan 🌾</h3>
+            <h3>Manajemen Pakan Sapi 🌾</h3>
             <p>Kelola stok dan jadwal pemberian pakan sapi.</p>
         </div>
+
+
 
         @if(session('success') || request('success'))
             <div class="crud-notification success" id="crudNotif">
@@ -149,11 +182,38 @@
             </div>
         @endif
 
+        <!-- Section: Ringkasan Tiap Jenis Pakan -->
+        <div class="mb-5">
+            <div class="cards-wrapper">
+                @forelse($ringkasanPakan as $pakanItem)
+                <div class="stat-card flex-shrink-0" style="width: 280px; display: flex; justify-content: space-between; align-items: center;">
+                    <div class="stat-info">
+                        <span>{{ $pakanItem->nama_pakan }} 🌾</span>
+                        <h2 class="fw-bold mt-2 mb-1" style="font-family: 'Playfair Display', serif; font-size: 20px; color: #432118;">
+                            <span class="text-success">{{ number_format($pakanItem->total_stok ?? 0, 0, ',', '.') }} <span style="font-size: 13px; font-weight: 700; font-family: 'Quicksand', sans-serif;">{{ $pakanItem->satuan }}</span></span> / 
+                            <span class="text-warning">{{ number_format($pakanItem->total_digunakan ?? 0, 0, ',', '.') }} <span style="font-size: 13px; font-weight: 700; font-family: 'Quicksand', sans-serif;">{{ $pakanItem->satuan }}</span></span>
+                        </h2>
+                        <div class="stat-unit">Stok / Digunakan</div>
+                    </div>
+                    <div class="icon-circle bg-custom-green d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 15px; background: rgba(93, 122, 84, 0.1); color: #5d7a54; font-size: 20px;">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                </div>
+                @empty
+                <div class="text-muted p-3">Belum ada ringkasan akumulasi pakan.</div>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- Section: Persediaan Stok Pakan -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold m-0" style="color: #432118; font-family: 'Playfair Display', serif;">Persediaan Stok Pakan 📦</h4>
+        </div>
         <div class="action-bar">
             <div class="search-wrapper">
                 <div class="search-input-group">
                     <i class="fa-solid fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Cari data pakan berdasarkan nama...">
+                    <input type="text" id="searchInputStok" placeholder="Cari stok pakan berdasarkan nama...">
                 </div>
             </div>
             @if(Auth::user()->role === 'Peternak')
@@ -161,27 +221,25 @@
             @endif
         </div>
 
-        <div class="custom-table">
+        <div class="custom-table mb-4">
             <table class="table table-bordered-custom align-middle">
                 <thead>
                     <tr>
                         <th style="width: 50px;">NO</th>
                         <th>NAMA PAKAN</th>
                         <th>STOK</th>
-                        <th>TANGGAL PEMBERIAN</th>
                         <th>KETERANGAN</th>
                         @if(Auth::user()->role === 'Peternak')
                         <th class="text-center">AKSI</th>
                         @endif
                     </tr>
                 </thead>
-                <tbody id="pakanTableBody">
-                    @forelse($pakan as $index => $item)
+                <tbody id="stokTableBody">
+                    @forelse($stokPakan as $index => $item)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td class="fw-bold">{{ $item->nama_pakan }}</td>
                         <td>{{ $item->stok }} {{ $item->satuan }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->tanggal_pemberian)->format('d M Y') }}</td>
                         <td>{{ $item->keterangan ?? '-' }}</td>
                         @if(Auth::user()->role === 'Peternak')
                         <td class="text-center">
@@ -193,12 +251,12 @@
                         @endif
                     </tr>
                     @empty
-                    <tr id="noDataRow">
-                        <td colspan="6" class="text-center py-5">
+                    <tr id="noStokRow">
+                        <td colspan="5" class="text-center py-5">
                             <div class="d-flex flex-column align-items-center">
-                                <i class="fa-solid fa-seedling mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
-                                <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>
-                                <p class="text-muted mb-0">Belum ada data pemberian pakan yang tersimpan.</p>
+                                <i class="fa-solid fa-box-open mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
+                                <h5 class="fw-bold mb-1" style="color: #432118;">Stok Kosong</h5>
+                                <p class="text-muted mb-0">Belum ada data persediaan stok pakan yang tersimpan.</p>
                             </div>
                         </td>
                     </tr>
@@ -206,8 +264,75 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-3">
-            {{ $pakan->links() }}
+        <div class="mt-2 mb-5">
+            {{ $stokPakan->links() }}
+        </div>
+
+        <!-- Section: Monitoring Pemberian Pakan Sapi -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold m-0" style="color: #432118; font-family: 'Playfair Display', serif;">Monitoring Pemberian Pakan Sapi 🐄</h4>
+        </div>
+        <div class="action-bar">
+            <div class="search-wrapper">
+                <div class="search-input-group">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchInputPemberian" placeholder="Cari pemberian pakan berdasarkan sapi atau jenis pakan...">
+                </div>
+            </div>
+            @if(Auth::user()->role === 'Peternak')
+            <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('pemberian-pakan.create') }}"><i class="fa-solid fa-plus me-2"></i>Tambah Pemberian Pakan</button>
+            @endif
+        </div>
+
+        <div class="custom-table">
+            <table class="table table-bordered-custom align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">NO</th>
+                        <th>TANGGAL PEMBERIAN</th>
+                        <th>NAMA SAPI</th>
+                        <th>JENIS PAKAN</th>
+                        <th>JUMLAH PEMBERIAN</th>
+                        <th>KETERANGAN</th>
+                        @if(Auth::user()->role === 'Peternak')
+                        <th class="text-center">AKSI</th>
+                        @endif
+                    </tr>
+                </thead>
+                <tbody id="pemberianTableBody">
+                    @forelse($pemberianPakan as $index => $item)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->tanggal_pemberian)->format('d M Y') }}</td>
+                        <td class="fw-bold">{{ $item->sapi ? $item->sapi->nama . ' (' . $item->sapi->kode_sapi . ')' : '-' }}</td>
+                        <td>{{ $item->nama_pakan }}</td>
+                        <td>{{ $item->stok }} {{ $item->satuan }}</td>
+                        <td>{{ $item->keterangan ?? '-' }}</td>
+                        @if(Auth::user()->role === 'Peternak')
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-2">
+                                <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('pemberian-pakan.edit', $item->id) }}">Edit</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete('{{ route('pakan.destroy', $item->id) }}', '{{ $item->nama_pakan }}')">Hapus</button>
+                            </div>
+                        </td>
+                        @endif
+                    </tr>
+                    @empty
+                    <tr id="noPemberianRow">
+                        <td colspan="7" class="text-center py-5">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fa-solid fa-clipboard-list mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
+                                <h5 class="fw-bold mb-1" style="color: #432118;">Log Kosong</h5>
+                                <p class="text-muted mb-0">Belum ada data pemberian pakan sapi yang tercatat.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-2">
+            {{ $pemberianPakan->links() }}
         </div>
     </div>
 
@@ -245,9 +370,9 @@
     <script>
         document.getElementById('searchInput').addEventListener('input', function() {
             let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#pakanTableBody tr');
+            let rows = document.querySelectorAll('#stokTableBody tr, #pemberianTableBody tr');
             rows.forEach(row => {
-                if (row.id === 'noDataRow') return;
+                if (row.id === 'noStokRow' || row.id === 'noPemberianRow') return;
                 let text = row.innerText.toLowerCase();
                 row.style.display = text.includes(filter) ? '' : 'none';
             });

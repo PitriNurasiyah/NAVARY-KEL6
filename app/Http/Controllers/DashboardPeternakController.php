@@ -38,6 +38,10 @@ class DashboardPeternakController extends Controller
             ->groupBy('nama_pakan')
             ->get();
 
+        // Data Ringkasan Pakan (Total Persediaan & Total Digunakan)
+        $totalStok = \App\Models\Pakan::whereNull('sapi_id')->sum('stok');
+        $totalDigunakan = \App\Models\Pakan::whereNotNull('sapi_id')->sum('stok');
+
         // 6. Data Grafik Produksi Susu Harian (7 Hari Terakhir)
         $produksiData = \App\Models\ProduksiSusu::select('tanggal', \DB::raw('SUM(total) as total_produksi'))
             ->groupBy('tanggal')
@@ -46,7 +50,7 @@ class DashboardPeternakController extends Controller
             ->get();
 
         return view('dashboard.peternak', compact(
-            'totalSapi', 'tugasInput', 'totalProduksi', 'alerts', 'pakanData', 'produksiData'
+            'totalSapi', 'tugasInput', 'totalProduksi', 'alerts', 'pakanData', 'produksiData', 'totalStok', 'totalDigunakan'
         ));
     }
 }

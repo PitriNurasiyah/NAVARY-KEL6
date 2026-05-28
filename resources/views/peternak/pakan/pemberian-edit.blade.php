@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Produksi - Cimilk Yogurt</title>
+    <title>Edit Pemberian Pakan - Cimilk Yogurt</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,8 +16,6 @@
             display: flex;
             min-height: 100vh;
             overflow-y: {{ request('mode') == 'modal' ? 'hidden' : 'auto' }};
-            scrollbar-width: none;
-            -ms-overflow-style: none;
         }
         body::-webkit-scrollbar { display: none; }
 
@@ -33,7 +31,7 @@
             @endif
         }
 
-        .farm-wrapper { position: relative; width: 400px; max-width: 95%; }
+        .farm-wrapper { position: relative; width: 500px; max-width: 95%; }
 
         .login-box {
             width: 100%;
@@ -200,11 +198,11 @@
 
     @if(request('mode') != 'modal')
         @include('layouts.sidebar')
-        @include('layouts.header', ['pageTitle' => 'Produksi Susu', 'pageSubtitle' => 'Edit data produksi'])
+        @include('layouts.header', ['pageTitle' => 'Edit Pemberian Pakan', 'pageSubtitle' => 'Edit data pakan'])
         
         <div class="main-content">
             <div class="page-title-section">
-                <h3>Edit Produksi Susu 🥛</h3>
+                <h3>Edit Pemberian Pakan 🌾</h3>
             </div>
     @endif
 
@@ -221,7 +219,7 @@
                 </button>
                 @endif
 
-                <div class="title">Edit Produksi</div>
+                <div class="title">Edit Pemberian Pakan</div>
 
                 @if($errors->any())
                     <div class="alert-inline" id="errorAlert">
@@ -230,52 +228,60 @@
                     </div>
                 @endif
 
-                <form action="{{ route('produksi.update', $produksi->id) }}" method="POST">
+                <form action="{{ route('pemberian-pakan.update', $pakan->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
                     
                     <div class="mb-2">
                         <label class="form-label">Sapi</label>
-                        <input type="text" class="form-control" value="{{ $produksi->sapi->kode_sapi }} - {{ $produksi->sapi->nama }}" disabled>
+                        <select name="sapi_id" class="form-select" required>
+                            <option value="">--Pilih Sapi--</option>
+                            @foreach($sapi as $cow)
+                                <option value="{{ $cow->id }}" {{ $pakan->sapi_id == $cow->id ? 'selected' : '' }}>{{ $cow->nama }} ({{ $cow->kode_sapi }})</option>
+                            @endforeach
+                        </select>
                     </div>
-
                     <div class="mb-2">
-                        <label class="form-label">Tanggal</label>
-                        <input type="date" name="tanggal" class="form-control" value="{{ $produksi->tanggal }}" required>
+                        <label class="form-label">Jenis Pakan</label>
+                        <input type="text" name="nama_pakan" class="form-control" value="{{ $pakan->nama_pakan }}" required>
                     </div>
-
                     <div class="mb-2">
-                        <label class="form-label">Hasil Pagi (Liter)</label>
-                        <input type="number" step="0.1" name="jumlah_pagi" class="form-control" value="{{ $produksi->jumlah_pagi }}" required>
+                        <label class="form-label">Jumlah Pemberian</label>
+                        <input type="number" name="stok" class="form-control" value="{{ $pakan->stok }}" required>
                     </div>
-
                     <div class="mb-2">
-                        <label class="form-label">Hasil Sore (Liter)</label>
-                        <input type="number" step="0.1" name="jumlah_sore" class="form-control" value="{{ $produksi->jumlah_sore }}" required>
+                        <label class="form-label">Satuan</label>
+                        <select name="satuan" class="form-select" required>
+                            <option value="KG" {{ $pakan->satuan == 'KG' ? 'selected' : '' }}>KG</option>
+                            <option value="TON" {{ $pakan->satuan == 'TON' ? 'selected' : '' }}>TON</option>
+                            <option value="IKAT" {{ $pakan->satuan == 'IKAT' ? 'selected' : '' }}>IKAT</option>
+                        </select>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Hari Laktasi Ke-</label>
-                        <input type="number" name="laktasi_hari_ke" class="form-control" value="{{ $produksi->laktasi_hari_ke }}" placeholder="Masukkan hari laktasi ke.." min="1">
+                    <div class="mb-2">
+                        <label class="form-label">Tanggal Pemberian</label>
+                        <input type="date" name="tanggal_pemberian" class="form-control" value="{{ $pakan->tanggal_pemberian }}">
                     </div>
-
+                    <div class="mb-4">
+                        <label class="form-label">Keterangan (Opsional)</label>
+                        <textarea name="keterangan" class="form-control" rows="3">{{ $pakan->keterangan }}</textarea>
+                    </div>
+                    
                     <div class="position-relative mt-4">
                         <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-cancel w-100" id="cancelBtn" onclick="if(window.parent && window.parent.document.getElementById('registerModal')){ window.parent.bootstrap.Modal.getInstance(window.parent.document.getElementById('registerModal')).hide(); } else { window.location.href='{{ route('produksi.index') }}'; }">Batal</button>
+                            <button type="button" class="btn btn-cancel w-100" id="cancelBtn" onclick="if(window.parent && window.parent.document.getElementById('registerModal')){ window.parent.bootstrap.Modal.getInstance(window.parent.document.getElementById('registerModal')).hide(); } else { window.location.href='{{ route('pakan.index') }}'; }">Batal</button>
                             <button type="submit" class="btn btn-register w-100">Simpan</button>
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
     @if(request('mode') != 'modal')
         </div>
     @endif
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const closeBtn = document.getElementById('closeModalBtn');
@@ -305,9 +311,9 @@
         @if(session('success'))
         window.addEventListener('DOMContentLoaded', (event) => {
             try {
-                window.top.location.href = "{{ route('produksi.index') }}?success=" + encodeURIComponent("{{ session('success') }}");
+                window.top.location.href = "{{ route('pakan.index') }}?success=" + encodeURIComponent("{{ session('success') }}");
             } catch(e) {
-                window.location.href = "{{ route('produksi.index') }}";
+                window.location.href = "{{ route('pakan.index') }}";
             }
         });
         @endif
