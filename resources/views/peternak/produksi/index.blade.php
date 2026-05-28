@@ -235,7 +235,7 @@
             {{ $produksi->links() }}
         </div>
 
-        @if(Auth::user()->role !== 'Admin')
+        @if(Auth::user()->role !== 'Penjualan')
         <div class="chart-container">
             <h4 class="chart-title" id="chartTitle">Grafik Produksi Laktasi: {{ $sapiList->first()->nama ?? 'N/A' }} 📈</h4>
             

@@ -8,8 +8,23 @@ use App\Models\ProduksiSusu;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class SiklusSapiController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class SiklusSapiController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(function ($request, $next) {
+                $role = auth()->user()->role ?? '';
+                if (strtolower($role) === 'penjualan') {
+                    abort(403, 'Unauthorized action.');
+                }
+                return $next($request);
+            }),
+        ];
+    }
     public function index()
     {
         $this->checkAutoTransitions();
