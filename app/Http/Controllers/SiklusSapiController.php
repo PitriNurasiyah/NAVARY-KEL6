@@ -57,11 +57,22 @@ class SiklusSapiController extends Controller implements HasMiddleware
             'hari_ke.integer' => 'Hari ke harus berupa angka.',
         ]);
 
+        $estimasi_selesai = $request->estimasi_selesai;
+        if (!$estimasi_selesai) {
+            if ($request->fase === 'IB') {
+                $estimasi_selesai = Carbon::parse($request->tanggal_mulai)->addDays(14)->format('Y-m-d');
+            } elseif ($request->fase === 'Bunting') {
+                $estimasi_selesai = Carbon::parse($request->tanggal_mulai)->addMonths(9)->format('Y-m-d');
+            } elseif ($request->fase === 'Kering Kandang') {
+                $estimasi_selesai = Carbon::parse($request->tanggal_mulai)->addMonth()->format('Y-m-d');
+            }
+        }
+
         SiklusSapi::create([
             'sapi_id' => $request->sapi_id,
             'fase' => $request->fase,
             'tanggal_mulai' => $request->tanggal_mulai,
-            'estimasi_selesai' => $request->estimasi_selesai,
+            'estimasi_selesai' => $estimasi_selesai,
             'hari_ke' => $request->hari_ke ?? 0,
             'status' => $request->status ?? 'Berjalan',
             'keterangan' => $request->keterangan,
@@ -202,6 +213,10 @@ class SiklusSapiController extends Controller implements HasMiddleware
     {
         $siklus = SiklusSapi::findOrFail($id);
         
+        if ($siklus->estimasi_selesai && Carbon::today()->lt(Carbon::parse($siklus->estimasi_selesai))) {
+            return back()->with('error', 'Cek birahi belum dapat dilakukan sebelum tanggal estimasi selesai (' . Carbon::parse($siklus->estimasi_selesai)->format('d/m/Y') . ').');
+        }
+        
         if ($request->hasil == 'berhasil') {
             $siklus->update(['status' => 'Selesai', 'keterangan' => 'IB Berhasil']);
             SiklusSapi::create([
@@ -222,6 +237,7 @@ class SiklusSapiController extends Controller implements HasMiddleware
                 'sapi_id' => $siklus->sapi_id,
                 'fase' => 'IB',
                 'tanggal_mulai' => date('Y-m-d'),
+                'estimasi_selesai' => Carbon::now()->addDays(14)->format('Y-m-d'),
                 'status' => 'Berjalan',
                 'keterangan' => 'Mengulang IB karena sebelumnya gagal.'
             ]);
@@ -232,6 +248,11 @@ class SiklusSapiController extends Controller implements HasMiddleware
     public function actionMelahirkan($id)
     {
         $siklus = SiklusSapi::findOrFail($id);
+        
+        if ($siklus->estimasi_selesai && Carbon::today()->lt(Carbon::parse($siklus->estimasi_selesai))) {
+            return back()->with('error', 'Sapi belum memasuki waktu melahirkan sesuai estimasi (' . Carbon::parse($siklus->estimasi_selesai)->format('d/m/Y') . ').');
+        }
+
         $siklus->update(['status' => 'Selesai', 'keterangan' => 'Sapi telah melahirkan']);
         
         SiklusSapi::create([
@@ -263,6 +284,11 @@ class SiklusSapiController extends Controller implements HasMiddleware
     public function actionSelesaiKering($id)
     {
         $siklus = SiklusSapi::findOrFail($id);
+        
+        if ($siklus->estimasi_selesai && Carbon::today()->lt(Carbon::parse($siklus->estimasi_selesai))) {
+            return back()->with('error', 'Masa kering belum selesai sesuai estimasi (' . Carbon::parse($siklus->estimasi_selesai)->format('d/m/Y') . ').');
+        }
+
         $siklus->update(['status' => 'Selesai', 'keterangan' => 'Masa kering selesai. Sapi siap IB kembali.']);
         
         return back()->with('success', 'Masa kering selesai. Sapi kini siap untuk memulai siklus IB yang baru.');

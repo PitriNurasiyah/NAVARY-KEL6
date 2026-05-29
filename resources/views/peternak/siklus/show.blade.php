@@ -140,31 +140,43 @@
                 </div>
             @elseif($fase == 'IB')
                 @if($latest->status == 'Berjalan')
-                @php $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); @endphp
+                @php 
+                    $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); 
+                    $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
+                @endphp
                 <div class="action-box">
-                    <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-magnifying-glass fs-3 mb-2 d-block"></i> Menunggu 14-21 hari setelah IB. (Sekarang Hari ke-{{ $daysPassed }}). Lakukan cek birahi untuk memastikan kehamilan.</p>
+                    <p class="mb-3 fw-bold" style="color: #6d4c41;">
+                        <i class="fa-solid fa-magnifying-glass fs-3 mb-2 d-block"></i> 
+                        Menunggu 14-21 hari setelah IB. (Sekarang Hari ke-{{ $daysPassed }}). Lakukan cek birahi untuk memastikan kehamilan.
+                        @if($latest->estimasi_selesai)
+                            <br><span class="text-xs text-muted">Bisa diproses mulai tanggal: {{ \Carbon\Carbon::parse($latest->estimasi_selesai)->format('d/m/Y') }}</span>
+                        @endif
+                    </p>
                     <div class="d-flex justify-content-center gap-3">
                         <form action="{{ route('siklus.action.cek_birahi', $latest->id) }}" method="POST">
                             @csrf
                             <input type="hidden" name="hasil" value="berhasil">
-                            <button type="submit" class="btn btn-action"><i class="fa-solid fa-check me-2"></i>Berhasil (Bunting)</button>
+                            <button type="submit" class="btn btn-action" @if(!$isPastEstimasi) disabled style="opacity: 0.55; cursor: not-allowed;" @endif><i class="fa-solid fa-check me-2"></i>Berhasil (Bunting)</button>
                         </form>
                         <form action="{{ route('siklus.action.cek_birahi', $latest->id) }}" method="POST">
                             @csrf
                             <input type="hidden" name="hasil" value="gagal">
-                            <button type="submit" class="btn btn-danger-action"><i class="fa-solid fa-xmark me-2"></i>Gagal (Ulangi IB)</button>
+                            <button type="submit" class="btn btn-danger-action" @if(!$isPastEstimasi) disabled style="opacity: 0.55; cursor: not-allowed;" @endif><i class="fa-solid fa-xmark me-2"></i>Gagal (Ulangi IB)</button>
                         </form>
                     </div>
                 </div>
                 @endif
             @elseif($fase == 'Bunting')
                 @if($latest->status == 'Berjalan')
-                @php $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); @endphp
+                @php 
+                    $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); 
+                    $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
+                @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-baby-carriage fs-3 mb-2 d-block"></i> Masa kehamilan sapi (±9 bulan). Sudah berjalan: {{ $daysPassed }} hari.<br>Estimasi selesai: {{ \Carbon\Carbon::parse($latest->estimasi_selesai)->format('d/m/Y') }}</p>
                     <form action="{{ route('siklus.action.melahirkan', $latest->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-action" style="background: #4a6344; box-shadow: 0 4px 0 #3a4d33;"><i class="fa-solid fa-cow me-2"></i>Sapi Telah Melahirkan</button>
+                        <button type="submit" class="btn btn-action" style="background: #4a6344; box-shadow: 0 4px 0 #3a4d33; @if(!$isPastEstimasi) opacity: 0.55; cursor: not-allowed; @endif" @if(!$isPastEstimasi) disabled @endif><i class="fa-solid fa-cow me-2"></i>Sapi Telah Melahirkan</button>
                     </form>
                 </div>
                 @endif
@@ -182,12 +194,21 @@
                 @endif
             @elseif($fase == 'Kering Kandang')
                 @if($latest->status == 'Berjalan')
-                @php $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); @endphp
+                @php 
+                    $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); 
+                    $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
+                @endphp
                 <div class="action-box">
-                    <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-bed fs-3 mb-2 d-block"></i> Masa Kering (Istirahat ±1 bulan). Sudah berjalan: {{ $daysPassed }} hari.</p>
+                    <p class="mb-3 fw-bold" style="color: #6d4c41;">
+                        <i class="fa-solid fa-bed fs-3 mb-2 d-block"></i> 
+                        Masa Kering (Istirahat ±1 bulan). Sudah berjalan: {{ $daysPassed }} hari.
+                        @if($latest->estimasi_selesai)
+                            <br><span class="text-xs text-muted">Estimasi selesai: {{ \Carbon\Carbon::parse($latest->estimasi_selesai)->format('d/m/Y') }}</span>
+                        @endif
+                    </p>
                     <form action="{{ route('siklus.action.selesai_kering', $latest->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-action"><i class="fa-solid fa-check-double me-2"></i>Selesaikan Masa Kering</button>
+                        <button type="submit" class="btn btn-action" @if(!$isPastEstimasi) disabled style="opacity: 0.55; cursor: not-allowed;" @endif><i class="fa-solid fa-check-double me-2"></i>Selesaikan Masa Kering</button>
                     </form>
                 </div>
                 @endif
