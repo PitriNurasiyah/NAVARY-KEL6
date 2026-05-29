@@ -8,50 +8,25 @@ use Illuminate\Http\Request;
 
 class ProduksiSusuController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $produksi = ProduksiSusu::with('sapi')->orderBy('tanggal', 'desc')->paginate(10);
-        $sapiList = Sapi::where('jenis_kelamin', 'Betina')->get();
+        $query = ProduksiSusu::with('sapi');
         
-        $lactationData = [];
-        foreach ($sapiList as $s) {
-            $records = ProduksiSusu::where('sapi_id', $s->id)
-                ->whereNotNull('laktasi_hari_ke')
-                ->orderBy('laktasi_hari_ke', 'asc')
-                ->get();
-                
-            $sum100 = ProduksiSusu::where('sapi_id', $s->id)->whereBetween('laktasi_hari_ke', [1, 100])->sum('total');
-            $sum200 = ProduksiSusu::where('sapi_id', $s->id)->whereBetween('laktasi_hari_ke', [101, 200])->sum('total');
-            $sum300 = ProduksiSusu::where('sapi_id', $s->id)->whereBetween('laktasi_hari_ke', [201, 300])->sum('total');
-                
-            if ($records->count() > 0) {
-                $labels = [];
-                $data = [];
-                foreach ($records as $r) {
-                    $labels[] = 'Hari ' . $r->laktasi_hari_ke;
-                    $data[] = floatval($r->total);
-                }
-                $lactationData[$s->id] = [
-                    'labels' => $labels,
-                    'data' => $data,
-                    'has_data' => true,
-                    'sum100' => floatval($sum100),
-                    'sum200' => floatval($sum200),
-                    'sum300' => floatval($sum300)
-                ];
-            } else {
-                $lactationData[$s->id] = [
-                    'labels' => ['Hari 1'],
-                    'data' => [0],
-                    'has_data' => false,
-                    'sum100' => 0,
-                    'sum200' => 0,
-                    'sum300' => 0
-                ];
-            }
+        if ($request->filled('dari_tanggal')) {
+            $query->whereDate('tanggal', '>=', $request->dari_tanggal);
+        }
+        if ($request->filled('sampai_tanggal')) {
+            $query->whereDate('tanggal', '<=', $request->sampai_tanggal);
         }
 
-        return view('peternak.produksi.index', compact('produksi', 'sapiList', 'lactationData'));
+        $queryClone = clone $query;
+        $totalPagi = $queryClone->sum('jumlah_pagi');
+        $totalSore = $queryClone->sum('jumlah_sore');
+        $totalProduksi = $queryClone->sum('total');
+        
+        $produksi = $query->orderBy('tanggal', 'desc')->paginate(10)->withQueryString();
+        
+        return view('peternak.produksi.index', compact('produksi', 'totalPagi', 'totalSore', 'totalProduksi'));
     }
 
     public function create()

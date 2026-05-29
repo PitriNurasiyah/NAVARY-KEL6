@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan Penjualan - Cimilk Yogurt</title>
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -111,19 +111,118 @@
             margin-bottom: 25px;
         }
 
+        /* Print only layouts defaults */
+        .print-header-layout, .print-summary-layout, .print-signature-layout {
+            display: none;
+        }
+
         @media print {
             .sidebar, .top-header, .header, .filter-section, .btn-back, .btn-filter, .action-buttons,
-            .page-title-section p, .summary-wrapper, .mt-4, .toggle-group, .print-only-header {
+            .page-title-section, .summary-wrapper, .mt-3, .toggle-group {
                 display: none !important;
             }
-            body { background: white !important; padding: 0 !important; margin: 0 !important; }
-            .main-content { margin: 0 !important; width: 100% !important; padding: 20px !important; }
-            .table-container { border: none !important; border-radius: 0 !important; margin-top: 0 !important; padding: 0 !important; }
-            .table { border: 1px solid #000 !important; width: 100% !important; border-collapse: separate !important; border-spacing: 0 !important; }
-            .table thead th { background-color: #f0f0f0 !important; color: black !important; border: 1px solid #000 !important; -webkit-print-color-adjust: exact; padding: 10px !important; }
-            .table tbody td { border: 1px solid #000 !important; color: black !important; -webkit-print-color-adjust: exact; padding: 10px !important; }
-            .page-title-section { display: block !important; margin-bottom: 20px !important; }
-            .page-title-section h3 { text-align: center; margin-bottom: 20px; font-size: 20px; color: black !important; }
+            body { background: white !important; padding: 0 !important; margin: 0 !important; font-family: 'Plus Jakarta Sans', sans-serif !important; color: #000 !important; }
+            .main-content { margin: 0 !important; width: 100% !important; padding: 10px 20px !important; }
+            .table-container { border: none !important; border-radius: 0 !important; margin-top: 15px !important; padding: 0 !important; }
+            .table { border: 1px solid #000 !important; width: 100% !important; border-collapse: collapse !important; }
+            .table thead th { background-color: #f0f0f0 !important; color: black !important; border: 1px solid #000 !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
+            .table tbody td { border: 1px solid #000 !important; color: black !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
+            
+            /* Print Layout Styling */
+            .print-header-layout {
+                display: block !important;
+                margin-bottom: 20px;
+            }
+            .print-kop {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            .print-kop h2 {
+                font-family: 'Playfair Display', serif;
+                font-size: 24px;
+                font-weight: 800;
+                margin: 0;
+                color: #000;
+                letter-spacing: 1px;
+            }
+            .print-kop .tagline {
+                font-size: 11px;
+                margin: 3px 0;
+                color: #333;
+                font-weight: 600;
+            }
+            .print-kop .address {
+                font-size: 10px;
+                margin: 0;
+                color: #555;
+            }
+            .print-kop .line {
+                border-bottom: 2px solid #000;
+                margin-top: 8px;
+            }
+            .print-title {
+                text-align: center;
+                font-size: 15px;
+                font-weight: 800;
+                margin: 12px 0 8px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .print-meta {
+                display: flex;
+                justify-content: space-between;
+                font-size: 11px;
+                font-weight: 600;
+                border-bottom: 1px dashed #000;
+                padding-bottom: 4px;
+                margin-bottom: 15px;
+            }
+            
+            .print-summary-layout {
+                display: flex !important;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+            .print-summary-box {
+                flex: 1;
+                border: 1px solid #000;
+                padding: 10px;
+                border-radius: 6px;
+                text-align: center;
+            }
+            .print-summary-box .label {
+                font-size: 11px;
+                font-weight: bold;
+                display: block;
+                margin-bottom: 3px;
+                text-transform: uppercase;
+            }
+            .print-summary-box .value {
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            .print-signature-layout {
+                display: block !important;
+                margin-top: 30px;
+                page-break-inside: avoid;
+            }
+            .signature-box {
+                float: right;
+                text-align: center;
+                width: 200px;
+                font-size: 11px;
+            }
+            .signature-box .date {
+                margin-bottom: 4px;
+            }
+            .signature-box .position {
+                margin-bottom: 50px;
+            }
+            .signature-box .sign-line {
+                border-top: 1px solid #000;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -134,11 +233,30 @@
 
     <div class="main-content">
 
-        <!-- Judul khusus saat cetak -->
-        <div class="print-only-header" style="display: none;">
-            <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #000; margin-bottom: 5px;">CIMILK YOGURT</h2>
-            <h4 style="font-weight: 700; color: #000;">LAPORAN PENJUALAN HARIAN</h4>
-            <hr style="border: 1px solid #000; margin-top: 10px;">
+        <!-- Print-only elements -->
+        <div class="print-header-layout">
+            <div class="print-kop">
+                <h2>CIMILK YOGURT</h2>
+                <p class="tagline">Laporan Hasil Produksi & Penjualan Yogurt Premium</p>
+                <p class="address">Jl. Raya Peternakan No. 123, Cimahi</p>
+                <div class="line"></div>
+            </div>
+            <h3 class="print-title">LAPORAN PENJUALAN HARIAN</h3>
+            <div class="print-meta">
+                <span>Periode: <strong>{{ request('dari_tanggal') ? \Carbon\Carbon::parse(request('dari_tanggal'))->format('d/m/Y') : 'Awal' }} - {{ request('sampai_tanggal') ? \Carbon\Carbon::parse(request('sampai_tanggal'))->format('d/m/Y') : 'Akhir' }}</strong></span>
+                <span>Tanggal Cetak: <strong>{{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</strong></span>
+            </div>
+        </div>
+
+        <div class="print-summary-layout">
+            <div class="print-summary-box">
+                <span class="label">Total Penjualan:</span>
+                <span class="value">Rp {{ number_format($totalPenjualan, 0, ',', '.') }}</span>
+            </div>
+            <div class="print-summary-box">
+                <span class="label">Total Volume Terjual:</span>
+                <span class="value">{{ number_format($totalLiter, 0, '.', ',') }} Liter</span>
+            </div>
         </div>
 
         <div class="page-title-section">
@@ -170,13 +288,13 @@
 
         <!-- Summary Cards -->
         <div class="summary-wrapper">
-            <div class="summary-card" style="background: #fffcf7; border: 1.5px solid #e6d5c0; box-shadow: 0 8px 20px rgba(0,0,0,0.02); padding: 30px; border-radius: 15px; flex: 1;">
-                <p style="color: #6d4c41; margin: 0; font-weight: 700; font-size: 15px;">Total Penjualan</p>
-                <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; margin: 10px 0 0; font-size: 32px;">Rp {{ number_format($totalPenjualan, 0, ',', '.') }}</h2>
+            <div class="summary-card">
+                <p>Total Penjualan</p>
+                <h2>Rp {{ number_format($totalPenjualan, 0, ',', '.') }}</h2>
             </div>
-            <div class="summary-card" style="background: #fffcf7; border: 1.5px solid #e6d5c0; box-shadow: 0 8px 20px rgba(0,0,0,0.02); padding: 30px; border-radius: 15px; flex: 1;">
-                <p style="color: #6d4c41; margin: 0; font-weight: 700; font-size: 15px;">Total Liter Terjual</p>
-                <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; margin: 10px 0 0; font-size: 32px;">{{ number_format($totalLiter, 0, '.', ',') }} Liter</h2>
+            <div class="summary-card">
+                <p>Total Liter Terjual</p>
+                <h2>{{ number_format($totalLiter, 0, '.', ',') }} Liter</h2>
             </div>
         </div>
 
@@ -187,8 +305,8 @@
                     <i class="fa-solid fa-arrow-left"></i> Kembali
                 </a>
             @else
-                <a href="{{ route('laporan.index') }}" class="btn-back">
-                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                <a href="{{ route('admin.dashboard') }}" class="btn-back">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
                 </a>
             @endif
             <div class="dropdown d-inline-block">
@@ -223,7 +341,7 @@
                             <td><span class="text-primary font-monospace">TRX-{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</span></td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m-d') }}</td>
                             <td>{{ $item->pembeli }}</td>
-                            <td>{{ $item->jumlah }}</td>
+                            <td>{{ $item->jumlah }} L</td>
                             <td class="text-end">Rp {{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
                             <td class="text-end fw-bold text-dark">Rp {{ number_format($item->total_harga, 0, ',', '.') }}</td>
                         </tr>
@@ -240,6 +358,15 @@
         </div>
         <div class="mt-3">
             {{ $penjualan->links() }}
+        </div>
+
+        <!-- Signature for printing -->
+        <div class="print-signature-layout">
+            <div class="signature-box">
+                <p class="date">Cimahi, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
+                <p class="position">Mengetahui,<br><strong>Admin Cimilk Yogurt</strong></p>
+                <div class="sign-line"></div>
+            </div>
         </div>
 
     </div>

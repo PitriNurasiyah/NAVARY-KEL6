@@ -61,11 +61,8 @@ Route::middleware('auth')->group(function () {
         $penjualan = \App\Models\Penjualan::orderBy('created_at', 'desc')->paginate(10);
         return view('penjualan.data-penjualan.index', compact('penjualan')); 
     })->name('penjualan.data');
-    Route::get('/laporan-admin', function() { return view('laporan.index'); })->name('laporan.index');
-    Route::get('/laporan-produksi', function() { 
-        $produksi = \App\Models\ProduksiSusu::with('sapi')->orderBy('tanggal', 'desc')->paginate(10);
-        return view('laporan.produksi', compact('produksi')); 
-    })->name('laporan.produksi');
+    Route::get('/laporan-admin', function() { return redirect()->route('laporan.penjualan'); })->name('laporan.index');
+    Route::get('/laporan-produksi', function() { return redirect()->route('produksi.index'); })->name('laporan.produksi');
     Route::get('/laporan-penjualan', function(Illuminate\Http\Request $request) { 
         $query = \App\Models\Penjualan::query();
         

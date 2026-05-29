@@ -98,7 +98,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
+            <a href="{{ route('laporan.penjualan') }}" class="nav-link {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
                 <i class="fas fa-file-lines"></i> <span>Laporan</span>
             </a>
         </li>

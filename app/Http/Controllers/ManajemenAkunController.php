@@ -66,6 +66,11 @@ class ManajemenAkunController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+
+        if (in_array($user->username, ['admin', 'peternak', 'penjualan'])) {
+            return redirect()->route('manajemen.akun')->with('error', 'Akun default tidak dapat diperbarui!');
+        }
+
         $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users,username,'.$user->id,
@@ -103,6 +108,11 @@ class ManajemenAkunController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+
+        if (in_array($user->username, ['admin', 'peternak', 'penjualan'])) {
+            return redirect()->route('manajemen.akun')->with('error', 'Akun default tidak dapat dihapus!');
+        }
+
         $user->delete();
         return redirect()->route('manajemen.akun')->with('success', 'Akun berhasil dihapus!');
     }

@@ -219,7 +219,7 @@
                 
                 <div class="mb-2">
                     <label class="form-label">ID Sapi</label>
-                    <input type="text" name="kode_sapi" class="form-control" placeholder="Contoh: SP001" value="{{ old('kode_sapi') }}" required>
+                    <input type="text" name="kode_sapi" class="form-control" value="{{ $nextKode }}" readonly style="background-color: #e9ecef; color: #495057;">
                 </div>
 
                 <div class="mb-2">
@@ -229,7 +229,13 @@
 
                 <div class="mb-2">
                     <label class="form-label">Jenis</label>
-                    <input type="text" name="jenis" class="form-control" placeholder="Contoh: Holstein" value="{{ old('jenis') }}" required>
+                    <select name="jenis" class="form-select" required>
+                        <option value="">-- Pilih Jenis Sapi --</option>
+                        <option value="Friesian holstein rolex" {{ old('jenis') == 'Friesian holstein rolex' ? 'selected' : '' }}>Friesian holstein rolex</option>
+                        <option value="simmental" {{ old('jenis') == 'simmental' ? 'selected' : '' }}>Simmental</option>
+                        <option value="jersey" {{ old('jenis') == 'jersey' ? 'selected' : '' }}>Jersey</option>
+                        <option value="brown swiss" {{ old('jenis') == 'brown swiss' ? 'selected' : '' }}>Brown Swiss</option>
+                    </select>
                 </div>
 
                 <div class="mb-2">
@@ -242,24 +248,43 @@
                 </div>
 
                 <div class="mb-2">
-                    <label class="form-label">Umur Sapi</label>
-                    <input type="text" name="umur" class="form-control" placeholder="Contoh: 3 Tahun atau 24 Bulan" value="{{ old('umur') }}">
+                    <label class="form-label">Tanggal Lahir</label>
+                    <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" value="{{ old('tanggal_lahir') }}" required>
                 </div>
 
                 <div class="mb-2">
                     <label class="form-label">Berat Sapi</label>
-                    <input type="text" name="berat" class="form-control" placeholder="Contoh: 450 kg" value="{{ old('berat') }}">
+                    <div class="input-group">
+                        <input type="number" step="any" name="berat_nilai" class="form-control" placeholder="Contoh: 450" value="{{ old('berat_nilai') }}">
+                        <select name="berat_satuan" class="form-select" style="max-width: 100px;">
+                            <option value="kg" {{ old('berat_satuan') == 'kg' ? 'selected' : '' }}>kg</option>
+                            <option value="ton" {{ old('berat_satuan') == 'ton' ? 'selected' : '' }}>ton</option>
+                        </select>
+                    </div>
                 </div>
-
 
                 <div class="mb-2">
                     <label class="form-label">Ayah</label>
-                    <input type="text" name="ayah" class="form-control" placeholder="Nama/ID Ayah" value="{{ old('ayah') }}">
+                    <select name="ayah" class="form-select">
+                        <option value="">-- Pilih Ayah (Opsional) --</option>
+                        @foreach($cows as $cow)
+                            <option value="{{ $cow->kode_sapi }}" {{ old('ayah') == $cow->kode_sapi ? 'selected' : '' }}>
+                                {{ $cow->kode_sapi }} - {{ $cow->nama }} ({{ $cow->jenis }})
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-2">
                     <label class="form-label">Ibu</label>
-                    <input type="text" name="ibu" class="form-control" placeholder="Nama/ID Ibu" value="{{ old('ibu') }}">
+                    <select name="ibu" class="form-select">
+                        <option value="">-- Pilih Ibu (Opsional) --</option>
+                        @foreach($cows as $cow)
+                            <option value="{{ $cow->kode_sapi }}" {{ old('ibu') == $cow->kode_sapi ? 'selected' : '' }}>
+                                {{ $cow->kode_sapi }} - {{ $cow->nama }} ({{ $cow->jenis }})
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                     <div class="position-relative mt-4">
@@ -292,6 +317,8 @@
             }
         });
     }
+
+
 
     // Auto-dismiss floating error alert after 5s
     const errorAlert = document.getElementById('errorAlert');

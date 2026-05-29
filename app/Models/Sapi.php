@@ -17,6 +17,7 @@ class Sapi extends Model
         'jenis',
         'jenis_kelamin',
         'umur',
+        'tanggal_lahir',
         'berat',
         'status_kesehatan',
         'ayah',

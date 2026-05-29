@@ -248,7 +248,6 @@
                     <tr>
                         <th>NO</th>
                         <th>USERNAME</th>
-                        <th>PASSWORD</th>
                         <th>NAMA LENGKAP</th>
                         <th>ROLE</th>
                         <th>STATUS</th>
@@ -261,7 +260,6 @@
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $user->username ?? '-' }}</td>
-                        <td><code>{{ $user->plain_password ?? '********' }}</code></td>
                         <td>{{ $user->name }}</td>
                         <td>
                             @php
@@ -279,14 +277,20 @@
                         </td>
                         <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : '-' }}</td>
                         <td class="text-center">
-                            <div class="d-flex justify-content-center gap-2">
-                                <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('manajemen-akun.edit', $user->id) }}">Edit</button>
-                                <button type="button"
-                                    class="btn btn-sm btn-outline-danger shadow-sm"
-                                    onclick="confirmDelete('{{ route('manajemen-akun.destroy', $user->id) }}', '{{ $user->name }}')">
-                                    Hapus
+                            @if(in_array($user->username, ['admin', 'peternak', 'penjualan']))
+                                <button type="button" class="btn btn-sm btn-secondary shadow-sm" disabled style="opacity: 0.65; cursor: not-allowed;">
+                                    <i class="fa-solid fa-lock me-1"></i>
                                 </button>
-                            </div>
+                            @else
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('manajemen-akun.edit', $user->id) }}">Edit</button>
+                                    <button type="button"
+                                        class="btn btn-sm btn-outline-danger shadow-sm"
+                                        onclick="confirmDelete('{{ route('manajemen-akun.destroy', $user->id) }}', '{{ $user->name }}')">
+                                        Hapus
+                                    </button>
+                                </div>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
