@@ -15,6 +15,26 @@
         .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
+        /* Filter Section */
+        .filter-section {
+            background: #fffcf7;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1.5px solid #e6d5c0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        }
+        .filter-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; margin-bottom: 15px; color: #432118; }
+        .form-label { font-weight: 700; color: #432118; margin-bottom: 5px; font-size: 14px; }
+        .form-control { border-radius: 12px; border: 2.5px solid #d4c2ab; padding: 10px; font-size: 14px; background-color: #fffcf7; color: #432118; font-weight: 600; }
+        .form-control:focus { border-color: #5d7a54; background-color: #ffffff; box-shadow: 0 0 0 0.25rem rgba(93,122,84,0.1); }
+
+        .btn-filter {
+            background: #5d7a54; color: white; font-weight: 800; border: none; padding: 12px 25px; border-radius: 12px;
+            box-shadow: 0 4px 0 #3a4d33; transition: 0.2s;
+        }
+        .btn-filter:hover { background: #4a6344; transform: translateY(-2px); color: white; }
+
         /* Action Bar */
         .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 15px; }
         .search-wrapper {
@@ -182,6 +202,28 @@
         <div class="page-title-section">
             <h3>Data Penjualan 📑</h3>
             <p>Riwayat transaksi penjualan Cimilk.</p>
+        </div>
+
+        <!-- Filter Area -->
+        <div class="filter-section">
+            <div class="filter-title">Filter Tanggal</div>
+            <form action="{{ route('penjualan.data') }}" method="GET">
+                <div class="row align-items-end">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Dari Tanggal</label>
+                        <input type="date" name="dari_tanggal" class="form-control" value="{{ request('dari_tanggal') }}">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Sampai Tanggal</label>
+                        <input type="date" name="sampai_tanggal" class="form-control" value="{{ request('sampai_tanggal') }}">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button type="submit" class="btn btn-filter w-100">
+                            <i class="fa-solid fa-filter me-2"></i> Terapkan Filter
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
         
         @if(session('success') || request('success'))

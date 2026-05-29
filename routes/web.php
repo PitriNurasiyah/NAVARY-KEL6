@@ -57,12 +57,39 @@ Route::middleware('auth')->group(function () {
     Route::get('/input-penjualan/{id}/edit', [App\Http\Controllers\PenjualanController::class, 'edit'])->name('penjualan.edit');
     Route::put('/input-penjualan/{id}', [App\Http\Controllers\PenjualanController::class, 'update'])->name('penjualan.update');
     Route::delete('/input-penjualan/{id}', [App\Http\Controllers\PenjualanController::class, 'destroy'])->name('penjualan.destroy');
-    Route::get('/data-penjualan', function() { 
-        $penjualan = \App\Models\Penjualan::orderBy('created_at', 'desc')->paginate(10);
+    Route::get('/data-penjualan', function(Illuminate\Http\Request $request) { 
+        $query = \App\Models\Penjualan::query();
+        
+        if ($request->filled('dari_tanggal')) {
+            $query->whereDate('tanggal', '>=', $request->dari_tanggal);
+        }
+        if ($request->filled('sampai_tanggal')) {
+            $query->whereDate('tanggal', '<=', $request->sampai_tanggal);
+        }
+        
+        $penjualan = $query->orderBy('tanggal', 'desc')->paginate(10)->withQueryString();
         return view('penjualan.data-penjualan.index', compact('penjualan')); 
     })->name('penjualan.data');
-    Route::get('/laporan-admin', function() { return redirect()->route('laporan.penjualan'); })->name('laporan.index');
-    Route::get('/laporan-produksi', function() { return redirect()->route('produksi.index'); })->name('laporan.produksi');
+    Route::get('/laporan-admin', function() { return view('laporan.index'); })->name('laporan.index');
+    Route::get('/laporan-produksi', function(Illuminate\Http\Request $request) { 
+        $query = \App\Models\ProduksiSusu::with('sapi');
+        
+        if ($request->filled('dari_tanggal')) {
+            $query->whereDate('tanggal', '>=', $request->dari_tanggal);
+        }
+        if ($request->filled('sampai_tanggal')) {
+            $query->whereDate('tanggal', '<=', $request->sampai_tanggal);
+        }
+
+        $queryClone = clone $query;
+        $totalPagi = $queryClone->sum('jumlah_pagi');
+        $totalSore = $queryClone->sum('jumlah_sore');
+        $totalProduksi = $queryClone->sum('total');
+        
+        $produksi = $query->orderBy('tanggal', 'desc')->paginate(10)->withQueryString();
+        
+        return view('laporan.produksi', compact('produksi', 'totalPagi', 'totalSore', 'totalProduksi')); 
+    })->name('laporan.produksi');
     Route::get('/laporan-penjualan', function(Illuminate\Http\Request $request) { 
         $query = \App\Models\Penjualan::query();
         

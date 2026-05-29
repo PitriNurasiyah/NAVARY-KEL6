@@ -32,7 +32,16 @@
         </div>
         <div class="row justify-content-center g-4 mt-2">
             <div class="col-md-6 col-lg-5">
-                <a href="{{ route('laporan.penjualan') }}" class="report-card">
+                <a href="{{ route('laporan.produksi') }}" class="report-card">
+                    <div class="icon-wrapper bg-custom-green">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+                    <h4>Laporan Produksi Susu</h4>
+                    <p>Lihat rekap data produksi susu sapi harian dan bulanan.</p>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-5">
+                <a href="{{ route('laporan.penjualan.bulanan') }}" class="report-card">
                     <div class="icon-wrapper bg-custom-tan">
                         <i class="fa-solid fa-chart-line"></i>
                     </div>

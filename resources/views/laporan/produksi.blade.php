@@ -124,9 +124,17 @@
             body { background: white !important; padding: 0 !important; margin: 0 !important; font-family: 'Plus Jakarta Sans', sans-serif !important; color: #000 !important; }
             .main-content { margin: 0 !important; width: 100% !important; padding: 10px 20px !important; }
             .table-container { border: none !important; border-radius: 0 !important; margin-top: 15px !important; padding: 0 !important; }
-            .table { border: 1px solid #000 !important; width: 100% !important; border-collapse: collapse !important; }
-            .table thead th { background-color: #f0f0f0 !important; color: black !important; border: 1px solid #000 !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
-            .table tbody td { border: 1px solid #000 !important; color: black !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
+            .table { border: none !important; border-top: 2px solid #000 !important; border-bottom: 2px solid #000 !important; width: 100% !important; border-collapse: collapse !important; }
+            .table thead th { background-color: #f5f5f5 !important; color: black !important; border: none !important; border-bottom: 1px solid #000 !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
+            .table tbody td { border: none !important; border-bottom: 1px solid #ddd !important; color: black !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
+            .table tbody td .badge {
+                background: transparent !important;
+                color: #000 !important;
+                border: none !important;
+                padding: 0 !important;
+                font-weight: bold !important;
+                font-size: 11px !important;
+            }
             
             /* Print Layout Styling */
             .print-header-layout {
@@ -156,8 +164,13 @@
                 margin: 0;
                 color: #555;
             }
+            .print-kop .contact {
+                font-size: 10px;
+                margin: 2px 0 0 0;
+                color: #555;
+            }
             .print-kop .line {
-                border-bottom: 2px solid #000;
+                border-bottom: 3px double #000;
                 margin-top: 8px;
             }
             .print-title {
@@ -233,17 +246,17 @@
 
     <div class="main-content">
 
-        <!-- Print-only elements -->
         <div class="print-header-layout">
             <div class="print-kop">
-                <h2>CIMILK YOGURT</h2>
-                <p class="tagline">Laporan Hasil Produksi & Penjualan Yogurt Premium</p>
-                <p class="address">Jl. Raya Peternakan No. 123, Cimahi</p>
+                <h2>CIMILK DAIRY FARM</h2>
+                <p class="tagline">Pengolahan & Produksi Susu Segar Murni & Yogurt Premium</p>
+                <p class="address">Kp. Palasari 2 Babakan Waru RT 26, RW 03, Desa Palasari, Kec. Ciater, Kab. Subang, Jawa Barat 41280</p>
+                <p class="contact">Telepon: +62 813-1348-8318 | Instagram: @cimilk.id</p>
                 <div class="line"></div>
             </div>
             <h3 class="print-title">LAPORAN HASIL PRODUKSI SUSU SAPI</h3>
             <div class="print-meta">
-                <span>Periode: <strong>{{ request('dari_tanggal') ? \Carbon\Carbon::parse(request('dari_tanggal'))->format('d/m/Y') : 'Awal' }} - {{ request('sampai_tanggal') ? \Carbon\Carbon::parse(request('sampai_tanggal'))->format('d/m/Y') : 'Akhir' }}</strong></span>
+                <span>Periode: <strong>{{ request('dari_tanggal') ? \Carbon\Carbon::parse(request('dari_tanggal'))->format('d/m/Y') : 'Semua Periode' }} - {{ request('sampai_tanggal') ? \Carbon\Carbon::parse(request('sampai_tanggal'))->format('d/m/Y') : 'Sekarang' }}</strong></span>
                 <span>Tanggal Cetak: <strong>{{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</strong></span>
             </div>
         </div>
@@ -368,7 +381,7 @@
         <!-- Signature for printing -->
         <div class="print-signature-layout">
             <div class="signature-box">
-                <p class="date">Cimahi, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
+                <p class="date">Subang, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
                 <p class="position">Mengetahui,<br><strong>Admin Cimilk Yogurt</strong></p>
                 <div class="sign-line"></div>
             </div>
