@@ -181,7 +181,7 @@
         
         <!-- Grafik Penjualan -->
         <div class="chart-card">
-            <h5 class="fw-bold mb-3" style="color: #3a150c;">Grafik Penjualan Bulanan</h5>
+            <h5 class="fw-bold mb-3" style="color: #3a150c;">Grafik Penjualan Tahun {{ date('Y') }}</h5>
             <div style="height: 300px; position: relative;">
                 <canvas id="dashboardSalesChart"></canvas>
             </div>
@@ -200,24 +200,45 @@
         const data = @json($revenues ?? [0, 0, 0]);
 
         new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'Pendapatan (Rp)',
                     data: data,
-                    backgroundColor: '#5d7a54',
-                    borderRadius: 8,
+                    borderColor: '#5d7a54',
+                    backgroundColor: 'rgba(93, 122, 84, 0.15)',
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.3,
+                    pointBackgroundColor: '#5d7a54',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: false }
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Pendapatan: Rp ' + new Intl.NumberFormat('id-ID').format(context.parsed.y);
+                            }
+                        }
+                    }
                 },
                 scales: {
-                    y: { beginAtZero: true, grid: { color: '#f0f0f0' } },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f0f0f0' },
+                        ticks: {
+                            callback: function(value) {
+                                return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+                            }
+                        }
+                    },
                     x: { grid: { display: false } }
                 }
             }

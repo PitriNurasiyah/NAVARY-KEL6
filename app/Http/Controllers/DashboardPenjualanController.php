@@ -20,18 +20,19 @@ class DashboardPenjualanController extends Controller
         // 4. Penjualan Hari Ini (Rupiah)
         $penjualanHariIni = \App\Models\Penjualan::whereDate('tanggal', date('Y-m-d'))->sum('total_harga');
 
-        // 5. Data untuk Grafik (6 Bulan Terakhir)
-        $monthlyData = \App\Models\Penjualan::selectRaw('MONTH(tanggal) as month, SUM(total_harga) as total')
+        // 5. Data untuk Grafik (Tahun Ini - Perbandingan Per Bulan)
+        $currentYear = date('Y');
+        $monthlyData = \App\Models\Penjualan::whereYear('tanggal', $currentYear)
+            ->selectRaw('MONTH(tanggal) as month, SUM(total_harga) as total')
             ->groupBy('month')
-            ->orderBy('month', 'asc')
-            ->take(6)
-            ->get();
+            ->pluck('total', 'month')
+            ->all();
         
         $labels = [];
         $revenues = [];
-        foreach ($monthlyData as $data) {
-            $labels[] = \Carbon\Carbon::create()->month($data->month)->translatedFormat('M');
-            $revenues[] = $data->total;
+        for ($m = 1; $m <= 12; $m++) {
+            $labels[] = \Carbon\Carbon::create()->month($m)->translatedFormat('M');
+            $revenues[] = $monthlyData[$m] ?? 0;
         }
 
         return view('dashboard.penjualan', compact(

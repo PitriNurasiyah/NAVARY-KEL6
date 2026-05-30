@@ -253,17 +253,17 @@
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
                     
                     <div class="mb-2">
-                        <label class="form-label">Nama Lengkap</label>
+                        <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
                         <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Username</label>
+                        <label class="form-label">Username <span class="text-danger">*</span></label>
                         <input type="text" name="username" class="form-control" value="{{ old('username', $user->username) }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Role</label>
+                        <label class="form-label">Role <span class="text-danger">*</span></label>
                         <select name="role" class="form-select" required>
                             <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin</option>
                             <option value="Peternak" {{ $user->role == 'Peternak' ? 'selected' : '' }}>Peternak</option>
@@ -272,7 +272,7 @@
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Status</label>
+                        <label class="form-label">Status <span class="text-danger">*</span></label>
                         <select name="status" class="form-select" required>
                             <option value="Aktif" {{ $user->status == 'Aktif' ? 'selected' : '' }}>Aktif</option>
                             <option value="Nonaktif" {{ $user->status == 'Nonaktif' ? 'selected' : '' }}>Nonaktif</option>

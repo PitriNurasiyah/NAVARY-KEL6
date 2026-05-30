@@ -56,4 +56,9 @@ class Sapi extends Model
     {
         return $this->hasMany(SiklusSapi::class);
     }
+
+    public function produksiSusu()
+    {
+        return $this->hasMany(ProduksiSusu::class, 'sapi_id');
+    }
 }

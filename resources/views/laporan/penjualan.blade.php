@@ -63,6 +63,7 @@
             text-transform: uppercase;
             border: 1px solid #e6d5c0 !important;
             letter-spacing: 0.5px;
+            text-align: center !important;
         }
         .table tbody td {
             padding: 14px 16px !important;

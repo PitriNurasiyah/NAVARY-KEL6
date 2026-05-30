@@ -75,7 +75,7 @@
         /* Tabel */
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; margin-top: 10px; }
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
-        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; text-align: center !important; }
         .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; font-weight: 600; background: #fffcf7; }
         .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #e6d5c0 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }

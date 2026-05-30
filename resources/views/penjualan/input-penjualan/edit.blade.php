@@ -263,22 +263,22 @@
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
                     
                     <div class="mb-2">
-                        <label class="form-label">Tanggal</label>
+                        <label class="form-label">Tanggal <span class="text-danger">*</span></label>
                         <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', $item->tanggal) }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Pembeli</label>
+                        <label class="form-label">Pembeli <span class="text-danger">*</span></label>
                         <input type="text" name="pembeli" class="form-control" placeholder="Masukkan nama pembeli" value="{{ old('pembeli', $item->pembeli) }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Jumlah (Liter)</label>
+                        <label class="form-label">Jumlah (Liter) <span class="text-danger">*</span></label>
                         <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="0" min="0" value="{{ old('jumlah', $item->jumlah) }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Harga Satuan (Rp/Liter)</label>
+                        <label class="form-label">Harga Satuan (Rp/Liter) <span class="text-danger">*</span></label>
                         <div class="input-group has-prefix">
                             <span class="input-group-text">Rp</span>
                             <input type="number" name="harga_satuan" id="harga_satuan" class="form-control" placeholder="15000" min="0" value="{{ old('harga_satuan', $item->harga_satuan) }}" required>

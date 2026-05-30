@@ -241,24 +241,21 @@
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Tanggal</label>
+                        <label class="form-label">Tanggal <span class="text-danger">*</span></label>
                         <input type="date" name="tanggal" class="form-control" value="{{ $produksi->tanggal }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Hasil Pagi (Liter)</label>
+                        <label class="form-label">Hasil Pagi (Liter) <span class="text-danger">*</span></label>
                         <input type="number" step="0.1" name="jumlah_pagi" class="form-control" value="{{ $produksi->jumlah_pagi }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Hasil Sore (Liter)</label>
+                        <label class="form-label">Hasil Sore (Liter) <span class="text-danger">*</span></label>
                         <input type="number" step="0.1" name="jumlah_sore" class="form-control" value="{{ $produksi->jumlah_sore }}" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Hari Laktasi Ke-</label>
-                        <input type="number" name="laktasi_hari_ke" class="form-control" value="{{ $produksi->laktasi_hari_ke }}" placeholder="Masukkan hari laktasi ke.." min="1">
-                    </div>
+
 
                     <div class="position-relative mt-4">
                         <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">

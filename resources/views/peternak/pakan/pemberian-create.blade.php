@@ -217,7 +217,7 @@
                 @csrf
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
                 <div class="mb-2">
-                    <label class="form-label">Sapi</label>
+                    <label class="form-label">Sapi <span class="text-danger">*</span></label>
                     <select name="sapi_id" class="form-select" required>
                         <option value="">--Pilih Sapi--</option>
                         @foreach($sapi as $cow)
@@ -226,31 +226,33 @@
                     </select>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Jenis Pakan</label>
-                    <input type="text" name="nama_pakan" class="form-control" list="pakanList" placeholder="Pilih atau ketik jenis pakan..." required autocomplete="off">
-                    <datalist id="pakanList">
-                        <option value="Rumput Gajah">
-                        <option value="Singkong">
-                        <option value="Ampas Tahu">
-                        <option value="Konsentrat">
-                        <option value="Jerami">
-                    </datalist>
+                    <label class="form-label">Jenis Pakan <span class="text-danger">*</span></label>
+                    <select name="nama_pakan" id="nama_pakan_select" class="form-select" onchange="toggleCustomInput(this, 'nama_pakan_custom')" required>
+                        <option value="">-- Pilih Jenis Pakan --</option>
+                        <option value="Rumput Gajah">Rumput Gajah</option>
+                        <option value="Singkong">Singkong</option>
+                        <option value="Ampas Tahu">Ampas Tahu</option>
+                        <option value="Konsentrat">Konsentrat</option>
+                        <option value="Jerami">Jerami</option>
+                        <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                    </select>
+                    <input type="text" id="nama_pakan_custom" class="form-control mt-2" placeholder="Ketik jenis pakan baru..." style="display: none;">
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Jumlah Pemberian</label>
+                    <label class="form-label">Tanggal Pemberian</label>
+                    <input type="date" name="tanggal_pemberian" class="form-control" value="{{ date('Y-m-d') }}">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Jumlah Pemberian <span class="text-danger">*</span></label>
                     <input type="number" name="stok" class="form-control" placeholder="0" required>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Satuan</label>
+                    <label class="form-label">Satuan <span class="text-danger">*</span></label>
                     <select name="satuan" class="form-select" required>
                         <option value="KG">KG</option>
                         <option value="TON">TON</option>
                         <option value="IKAT">IKAT</option>
                     </select>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Tanggal Pemberian</label>
-                    <input type="date" name="tanggal_pemberian" class="form-control" value="{{ date('Y-m-d') }}">
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Keterangan (Opsional)</label>
@@ -273,6 +275,31 @@
     @endif
 
 <script>
+    function toggleCustomInput(selectEl, customInputId) {
+        const customInput = document.getElementById(customInputId);
+        if (!customInput) return;
+        
+        if (selectEl.value === 'Lainnya') {
+            customInput.style.display = 'block';
+            customInput.setAttribute('required', 'required');
+            const origName = selectEl.getAttribute('name') || selectEl.dataset.originalName || 'nama_pakan';
+            customInput.setAttribute('name', origName);
+            if (!selectEl.dataset.originalName) {
+                selectEl.dataset.originalName = origName;
+            }
+            selectEl.removeAttribute('name');
+            customInput.focus();
+        } else {
+            customInput.style.display = 'none';
+            customInput.removeAttribute('required');
+            const origName = selectEl.dataset.originalName || selectEl.getAttribute('name') || customInput.getAttribute('name');
+            if (origName) {
+                selectEl.setAttribute('name', origName);
+            }
+            customInput.removeAttribute('name');
+        }
+    }
+
     const closeBtn = document.getElementById('closeModalBtn');
     if (closeBtn) {
         closeBtn.addEventListener('click', function() {

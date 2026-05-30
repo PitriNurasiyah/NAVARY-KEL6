@@ -254,17 +254,17 @@
                     @csrf
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
                     <div class="mb-2">
-                        <label class="form-label">Nama Lengkap</label>
+                        <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
                         <input type="text" name="name" class="form-control" placeholder="Masukkan nama" value="{{ old('name') }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Username</label>
+                        <label class="form-label">Username <span class="text-danger">*</span></label>
                         <input type="text" name="username" class="form-control" placeholder="Masukkan username" value="{{ old('username') }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Role</label>
+                        <label class="form-label">Role <span class="text-danger">*</span></label>
                         <select name="role" class="form-control" required>
                             <option value="" disabled {{ old('role') ? '' : 'selected' }}>Pilih Role</option>
                             <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
@@ -274,7 +274,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Password</label>
+                        <label class="form-label">Password <span class="text-danger">*</span></label>
                         <div class="position-relative">
                             <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
                             <button type="button" class="password-toggle" onclick="togglePassword()">

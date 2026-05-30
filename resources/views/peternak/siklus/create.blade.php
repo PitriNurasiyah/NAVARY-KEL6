@@ -217,7 +217,7 @@
                 @csrf
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
                 <div class="mb-2">
-                    <label class="form-label">Pilih Sapi</label>
+                    <label class="form-label">Pilih Sapi <span class="text-danger">*</span></label>
                     <select name="sapi_id" class="form-select" required>
                         <option value="">-- Pilih Sapi --</option>
                         @foreach($sapi as $s)
@@ -226,7 +226,7 @@
                     </select>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Fase Siklus</label>
+                    <label class="form-label">Fase Siklus <span class="text-danger">*</span></label>
                     <select name="fase" id="faseSelect" class="form-select" required>
                         <option value="IB">IB (Inseminasi Buatan)</option>
                         <option value="Bunting">Bunting</option>
@@ -250,7 +250,7 @@
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Tanggal Mulai</label>
+                    <label class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
                     <input type="date" name="tanggal_mulai" class="form-control" value="{{ date('Y-m-d') }}" required>
                 </div>
                 <div class="mb-2">

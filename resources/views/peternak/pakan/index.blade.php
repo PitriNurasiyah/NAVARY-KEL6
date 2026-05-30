@@ -80,7 +80,7 @@
 
         /* Tabel */
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
-        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; text-align: center !important; }
         .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; font-weight: 600; }
         .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #e6d5c0 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
@@ -227,6 +227,7 @@
                     <tr>
                         <th style="width: 50px;">NO</th>
                         <th>NAMA PAKAN</th>
+                        <th>TANGGAL MASUK</th>
                         <th>STOK</th>
                         <th>KETERANGAN</th>
                         @if(Auth::user()->role === 'Peternak')
@@ -239,6 +240,7 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td class="fw-bold">{{ $item->nama_pakan }}</td>
+                        <td>{{ $item->tanggal_pemberian ? \Carbon\Carbon::parse($item->tanggal_pemberian)->format('d M Y') : '-' }}</td>
                         <td>{{ $item->stok }} {{ $item->satuan }}</td>
                         <td>{{ $item->keterangan ?? '-' }}</td>
                         @if(Auth::user()->role === 'Peternak')
@@ -252,7 +254,7 @@
                     </tr>
                     @empty
                     <tr id="noStokRow">
-                        <td colspan="5" class="text-center py-5">
+                        <td colspan="6" class="text-center py-5">
                             <div class="d-flex flex-column align-items-center">
                                 <i class="fa-solid fa-box-open mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                 <h5 class="fw-bold mb-1" style="color: #432118;">Stok Kosong</h5>
@@ -289,9 +291,9 @@
                 <thead>
                     <tr>
                         <th style="width: 50px;">NO</th>
-                        <th>TANGGAL PEMBERIAN</th>
                         <th>NAMA SAPI</th>
                         <th>JENIS PAKAN</th>
+                        <th>TANGGAL PEMBERIAN</th>
                         <th>JUMLAH PEMBERIAN</th>
                         <th>KETERANGAN</th>
                         @if(Auth::user()->role === 'Peternak')
@@ -303,9 +305,9 @@
                     @forelse($pemberianPakan as $index => $item)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->tanggal_pemberian)->format('d M Y') }}</td>
                         <td class="fw-bold">{{ $item->sapi ? $item->sapi->nama . ' (' . $item->sapi->kode_sapi . ')' : '-' }}</td>
                         <td>{{ $item->nama_pakan }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->tanggal_pemberian)->format('d M Y') }}</td>
                         <td>{{ $item->stok }} {{ $item->satuan }}</td>
                         <td>{{ $item->keterangan ?? '-' }}</td>
                         @if(Auth::user()->role === 'Peternak')

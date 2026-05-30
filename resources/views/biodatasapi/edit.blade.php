@@ -241,12 +241,12 @@
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Nama Sapi</label>
+                        <label class="form-label">Nama Sapi <span class="text-danger">*</span></label>
                         <input type="text" name="nama" class="form-control" value="{{ old('nama', $sapi->nama) }}" required>
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Jenis</label>
+                        <label class="form-label">Jenis <span class="text-danger">*</span></label>
                         <select name="jenis" class="form-select" required>
                             <option value="">-- Pilih Jenis Sapi --</option>
                             <option value="Friesian holstein rolex" {{ old('jenis', $sapi->jenis) == 'Friesian holstein rolex' ? 'selected' : '' }}>Friesian holstein rolex</option>
@@ -266,7 +266,7 @@
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Tanggal Lahir</label>
+                        <label class="form-label">Tanggal Lahir <span class="text-danger">*</span></label>
                         <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" value="{{ old('tanggal_lahir', $sapi->tanggal_lahir) }}" required>
                     </div>
 

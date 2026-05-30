@@ -129,7 +129,7 @@
 
         /* Table */
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; }
-        .table thead th { background-color: #4a6344 !important; color: #ffffff !important; padding: 14px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #bc9f82 !important; letter-spacing: 0.5px; }
+        .table thead th { background-color: #4a6344 !important; color: #ffffff !important; padding: 14px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #bc9f82 !important; letter-spacing: 0.5px; text-align: center !important; }
         .table tbody td { padding: 14px !important; border: 1px solid #bc9f82 !important; font-weight: 600; background: #faf6f0; }
         .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #bc9f82 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }

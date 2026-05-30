@@ -40,7 +40,7 @@
         /* Tabel */
         .custom-table { width: 100%; overflow-x: auto; border-radius: 15px; }
         .table { border-collapse: separate; border-spacing: 0; width: 100%; color: #432118; background: #fffcf7; border-radius: 15px; overflow: hidden; }
-        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; }
+        .table thead th { background-color: #4a6344 !important; color: #fff !important; padding: 14px 16px !important; text-transform: uppercase; font-size: 11px; border: 1px solid #e6d5c0 !important; letter-spacing: 0.5px; text-align: center !important; }
         .table tbody td { padding: 14px 16px !important; border: 1px solid #e6d5c0 !important; background: #fffcf7; font-weight: 600; }
         .table-bordered-custom th, .table-bordered-custom td { border-left: 1px solid #e6d5c0 !important; }
         .table-bordered-custom th:first-child, .table-bordered-custom td:first-child { border-left: none !important; }
@@ -332,13 +332,13 @@
                             <input type="hidden" name="sapi_id" value="{{ $sapi->id }}">
                             
                             <div class="mb-2">
-                                <label class="form-label">Tanggal</label>
+                                <label class="form-label">Tanggal <span class="text-danger">*</span></label>
                                 <input type="date" name="tanggal" class="form-control" value="{{ date('Y-m-d') }}" required>
                             </div>
 
                             <div class="mb-2">
-                                <label class="form-label">Kondisi Sekarang</label>
-                                <select name="kondisi_sekarang" id="add_kondisi_sekarang" class="form-select" onchange="swapToInput(this, 'Lainnya')" required>
+                                <label class="form-label">Kondisi Sekarang <span class="text-danger">*</span></label>
+                                <select name="kondisi_sekarang" id="add_kondisi_sekarang" class="form-select" onchange="toggleCustomInput(this, 'add_kondisi_sekarang_custom')" required>
                                     <option value="Sehat">Sehat</option>
                                     <option value="Sakit">Sakit</option>
                                     <option value="Demam">Demam</option>
@@ -349,11 +349,12 @@
                                     <option value="Kurang Nafsu Makan">Kurang Nafsu Makan</option>
                                     <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
                                 </select>
+                                <input type="text" id="add_kondisi_sekarang_custom" class="form-control mt-2" placeholder="Ketik kondisi baru..." style="display: none;">
                             </div>
 
                             <div class="mb-2">
                                 <label class="form-label">Tindakan / Perawatan</label>
-                                <select name="tindakan_perawatan" id="add_tindakan_perawatan" class="form-select" onchange="swapToInput(this, 'Lainnya')">
+                                <select name="tindakan_perawatan" id="add_tindakan_perawatan" class="form-select" onchange="toggleCustomInput(this, 'add_tindakan_perawatan_custom')">
                                     <option value="-">-</option>
                                     <option value="Pemberian Vaksin PMK">Pemberian Vaksin PMK</option>
                                     <option value="Pemberian Vitamin">Pemberian Vitamin</option>
@@ -364,6 +365,7 @@
                                     <option value="Karantina Mandiri">Karantina Mandiri</option>
                                     <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
                                 </select>
+                                <input type="text" id="add_tindakan_perawatan_custom" class="form-control mt-2" placeholder="Ketik tindakan baru..." style="display: none;">
                             </div>
 
                             <div class="mb-2">
@@ -418,13 +420,13 @@
                             @method('PUT')
                             
                             <div class="mb-2">
-                                <label class="form-label">Tanggal</label>
+                                <label class="form-label">Tanggal <span class="text-danger">*</span></label>
                                 <input type="date" name="tanggal" id="edit_tanggal" class="form-control" required>
                             </div>
 
                             <div class="mb-2">
-                                <label class="form-label">Kondisi Sekarang</label>
-                                <select name="kondisi_sekarang" id="edit_kondisi_sekarang" class="form-select" onchange="swapToInput(this, 'Lainnya')" required>
+                                <label class="form-label">Kondisi Sekarang <span class="text-danger">*</span></label>
+                                <select name="kondisi_sekarang" id="edit_kondisi_sekarang" class="form-select" onchange="toggleCustomInput(this, 'edit_kondisi_sekarang_custom')" required>
                                     <option value="Sehat">Sehat</option>
                                     <option value="Sakit">Sakit</option>
                                     <option value="Demam">Demam</option>
@@ -435,11 +437,12 @@
                                     <option value="Kurang Nafsu Makan">Kurang Nafsu Makan</option>
                                     <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
                                 </select>
+                                <input type="text" id="edit_kondisi_sekarang_custom" class="form-control mt-2" placeholder="Ketik kondisi baru..." style="display: none;">
                             </div>
 
                             <div class="mb-2">
                                 <label class="form-label">Tindakan / Perawatan</label>
-                                <select name="tindakan_perawatan" id="edit_tindakan_perawatan" class="form-select" onchange="swapToInput(this, 'Lainnya')">
+                                <select name="tindakan_perawatan" id="edit_tindakan_perawatan" class="form-select" onchange="toggleCustomInput(this, 'edit_tindakan_perawatan_custom')">
                                     <option value="-">-</option>
                                     <option value="Pemberian Vaksin PMK">Pemberian Vaksin PMK</option>
                                     <option value="Pemberian Vitamin">Pemberian Vitamin</option>
@@ -450,6 +453,7 @@
                                     <option value="Karantina Mandiri">Karantina Mandiri</option>
                                     <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
                                 </select>
+                                <input type="text" id="edit_tindakan_perawatan_custom" class="form-control mt-2" placeholder="Ketik tindakan baru..." style="display: none;">
                             </div>
 
                             <div class="mb-2">
@@ -522,47 +526,58 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Swap select ke input text saat Lainnya dipilih
-        function swapToInput(selectEl, triggerValue) {
-            if (selectEl.value !== triggerValue) return;
-            const fieldName = selectEl.getAttribute('name');
-            const isRequired = selectEl.hasAttribute('required');
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = fieldName;
-            input.className = selectEl.className.replace('form-select','form-control');
-            input.placeholder = 'Ketik nilai baru...';
-            if (isRequired) input.required = true;
-            input.style.cssText = selectEl.style.cssText;
-            // Tombol kembali ke dropdown
-            const backBtn = document.createElement('button');
-            backBtn.type = 'button';
-            backBtn.textContent = '← Kembali ke pilihan';
-            backBtn.style.cssText = 'font-size:11px;color:#845a33;background:none;border:none;padding:2px 0;cursor:pointer;margin-top:3px;';
-            backBtn.onclick = function() {
-                const newSelect = document.createElement('select');
-                newSelect.name = fieldName;
-                newSelect.className = selectEl.className;
-                newSelect.innerHTML = selectEl.innerHTML;
-                if (isRequired) newSelect.required = true;
-                newSelect.addEventListener('change', function() { swapToInput(this, 'Lainnya'); });
-                input.parentNode.replaceChild(newSelect, input);
-                backBtn.remove();
-            };
-            input.parentNode.replaceChild(input, selectEl);
-            input.after(backBtn);
-            input.focus();
+        // Toggle custom input under select when "Lainnya" is selected
+        function toggleCustomInput(selectEl, customInputId) {
+            const customInput = document.getElementById(customInputId);
+            if (!customInput) return;
+            
+            if (selectEl.value === 'Lainnya') {
+                customInput.style.display = 'block';
+                customInput.setAttribute('required', 'required');
+                const origName = selectEl.getAttribute('name') || selectEl.dataset.originalName || (customInputId.includes('kondisi') ? 'kondisi_sekarang' : 'tindakan_perawatan');
+                customInput.setAttribute('name', origName);
+                if (!selectEl.dataset.originalName) {
+                    selectEl.dataset.originalName = origName;
+                }
+                selectEl.removeAttribute('name');
+                customInput.focus();
+            } else {
+                customInput.style.display = 'none';
+                customInput.removeAttribute('required');
+                const origName = selectEl.dataset.originalName || selectEl.getAttribute('name') || customInput.getAttribute('name');
+                if (origName) {
+                    selectEl.setAttribute('name', origName);
+                }
+                customInput.removeAttribute('name');
+                customInput.value = '';
+            }
         }
 
         // Reset Add Modal on open
         const addModalEl = document.getElementById('tambahLogModal');
         if (addModalEl) {
             addModalEl.addEventListener('show.bs.modal', function() {
-                // Restore selects if they were swapped to inputs
-                ['add_kondisi_sekarang','add_tindakan_perawatan'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (!el) return; // might be an input already — leave it for now
-                });
+                const addKondisiSelect = document.getElementById('add_kondisi_sekarang');
+                const addKondisiCustom = document.getElementById('add_kondisi_sekarang_custom');
+                if (addKondisiSelect && addKondisiCustom) {
+                    addKondisiSelect.value = 'Sehat';
+                    addKondisiSelect.setAttribute('name', 'kondisi_sekarang');
+                    addKondisiCustom.removeAttribute('name');
+                    addKondisiCustom.removeAttribute('required');
+                    addKondisiCustom.style.display = 'none';
+                    addKondisiCustom.value = '';
+                }
+
+                const addTindakanSelect = document.getElementById('add_tindakan_perawatan');
+                const addTindakanCustom = document.getElementById('add_tindakan_perawatan_custom');
+                if (addTindakanSelect && addTindakanCustom) {
+                    addTindakanSelect.value = '-';
+                    addTindakanSelect.setAttribute('name', 'tindakan_perawatan');
+                    addTindakanCustom.removeAttribute('name');
+                    addTindakanCustom.removeAttribute('required');
+                    addTindakanCustom.style.display = 'none';
+                    addTindakanCustom.value = '';
+                }
             });
         }
 
@@ -590,32 +605,59 @@
 
                 document.getElementById('edit_tanggal').value = tanggal;
 
-                // Set kondisi - ensure it's a select, add option if not exists
-                let editKondisiEl = document.getElementById('edit_kondisi_sekarang');
-                if (editKondisiEl && editKondisiEl.tagName === 'SELECT') {
-                    let hasOpt = Array.from(editKondisiEl.options).some(o => o.value === kondisi);
-                    if (!hasOpt && kondisi && kondisi !== 'Lainnya') {
-                        const newOpt = document.createElement('option');
-                        newOpt.value = kondisi; newOpt.text = kondisi;
-                        editKondisiEl.insertBefore(newOpt, editKondisiEl.options[editKondisiEl.options.length - 1]);
-                    }
-                    editKondisiEl.value = kondisi;
-                } else if (editKondisiEl) {
-                    editKondisiEl.value = kondisi;
+                const editKondisiSelect = document.getElementById('edit_kondisi_sekarang');
+                const editKondisiCustom = document.getElementById('edit_kondisi_sekarang_custom');
+                const editTindakanSelect = document.getElementById('edit_tindakan_perawatan');
+                const editTindakanCustom = document.getElementById('edit_tindakan_perawatan_custom');
+
+                // Reset states
+                if (editKondisiSelect && editKondisiCustom) {
+                    editKondisiSelect.setAttribute('name', 'kondisi_sekarang');
+                    editKondisiCustom.removeAttribute('name');
+                    editKondisiCustom.removeAttribute('required');
+                    editKondisiCustom.style.display = 'none';
+                    editKondisiCustom.value = '';
+                }
+                if (editTindakanSelect && editTindakanCustom) {
+                    editTindakanSelect.setAttribute('name', 'tindakan_perawatan');
+                    editTindakanCustom.removeAttribute('name');
+                    editTindakanCustom.removeAttribute('required');
+                    editTindakanCustom.style.display = 'none';
+                    editTindakanCustom.value = '';
                 }
 
-                // Set tindakan
-                let editTindakanEl = document.getElementById('edit_tindakan_perawatan');
-                if (editTindakanEl && editTindakanEl.tagName === 'SELECT') {
-                    let hasOpt = Array.from(editTindakanEl.options).some(o => o.value === tindakan);
-                    if (!hasOpt && tindakan && tindakan !== 'Lainnya') {
-                        const newOpt = document.createElement('option');
-                        newOpt.value = tindakan; newOpt.text = tindakan;
-                        editTindakanEl.insertBefore(newOpt, editTindakanEl.options[editTindakanEl.options.length - 1]);
+                // Handle Kondisi Sekarang dropdown
+                if (editKondisiSelect && editKondisiCustom) {
+                    const defaultKondisi = ['Sehat', 'Sakit', 'Demam', 'Luka', 'Kembung', 'Mastitis', 'Pincang', 'Kurang Nafsu Makan'];
+                    if (defaultKondisi.includes(kondisi)) {
+                        editKondisiSelect.value = kondisi;
+                    } else if (kondisi) {
+                        editKondisiSelect.value = 'Lainnya';
+                        editKondisiCustom.style.display = 'block';
+                        editKondisiCustom.setAttribute('required', 'required');
+                        editKondisiCustom.setAttribute('name', 'kondisi_sekarang');
+                        editKondisiSelect.removeAttribute('name');
+                        editKondisiCustom.value = kondisi;
+                    } else {
+                        editKondisiSelect.value = 'Sehat';
                     }
-                    editTindakanEl.value = tindakan || '-';
-                } else if (editTindakanEl) {
-                    editTindakanEl.value = tindakan;
+                }
+
+                // Handle Tindakan dropdown
+                if (editTindakanSelect && editTindakanCustom) {
+                    const defaultTindakan = ['-', 'Pemberian Vaksin PMK', 'Pemberian Vitamin', 'Pemberian Antibiotik', 'Pemberian Obat Cacing', 'Sanitasi Kandang', 'Pemeriksaan Dokter Hewan', 'Karantina Mandiri'];
+                    if (defaultTindakan.includes(tindakan)) {
+                        editTindakanSelect.value = tindakan || '-';
+                    } else if (tindakan) {
+                        editTindakanSelect.value = 'Lainnya';
+                        editTindakanCustom.style.display = 'block';
+                        editTindakanCustom.setAttribute('required', 'required');
+                        editTindakanCustom.setAttribute('name', 'tindakan_perawatan');
+                        editTindakanSelect.removeAttribute('name');
+                        editTindakanCustom.value = tindakan;
+                    } else {
+                        editTindakanSelect.value = '-';
+                    }
                 }
 
                 document.getElementById('edit_catatan_perkembangan').value = catatan;

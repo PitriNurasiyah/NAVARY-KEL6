@@ -238,7 +238,7 @@
                         <input type="text" class="form-control" value="{{ $siklus->sapi->kode_sapi }} - {{ $siklus->sapi->nama }}" disabled>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">Fase Siklus</label>
+                        <label class="form-label">Fase Siklus <span class="text-danger">*</span></label>
                         <select name="fase" id="faseSelectEdit" class="form-select" required>
                             @foreach(['IB', 'Bunting', 'Melahirkan', 'Laktasi', 'Kering Kandang'] as $f)
                             <option value="{{ $f }}" {{ $siklus->fase == $f ? 'selected' : '' }}>{{ $f }}</option>
@@ -260,7 +260,7 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">Tanggal Mulai</label>
+                        <label class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
                         <input type="date" name="tanggal_mulai" class="form-control" value="{{ $siklus->tanggal_mulai }}" required>
                     </div>
                     <div class="mb-2">

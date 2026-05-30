@@ -156,7 +156,64 @@ Route::middleware('auth')->group(function () {
             );
         }
 
-        return view('laporan.penjualan_bulanan', compact('monthlyData', 'totalLiter', 'totalPendapatan'));
+        // Get chronological chart data for Penjualan role visual
+        $chartQuery = \App\Models\Penjualan::query();
+        if ($request->filled('dari_tanggal')) {
+            $chartQuery->whereDate('tanggal', '>=', $request->dari_tanggal);
+        }
+        if ($request->filled('sampai_tanggal')) {
+            $chartQuery->whereDate('tanggal', '<=', $request->sampai_tanggal);
+        }
+
+        $monthlyChartData = (clone $chartQuery)->selectRaw('
+            MONTH(tanggal) as month, 
+            YEAR(tanggal) as year, 
+            SUM(jumlah) as total_liter, 
+            SUM(total_harga) as total_pendapatan
+        ')
+        ->groupBy('year', 'month')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
+
+        $dailyChartData = (clone $chartQuery)->selectRaw('
+            DATE(tanggal) as date, 
+            SUM(jumlah) as total_liter, 
+            SUM(total_harga) as total_pendapatan
+        ')
+        ->groupBy('date')
+        ->orderBy('date', 'asc')
+        ->get();
+
+        $monthlyLabels = [];
+        $monthlyVolume = [];
+        $monthlyRevenue = [];
+        foreach ($monthlyChartData as $item) {
+            $monthlyLabels[] = \Carbon\Carbon::create()->month($item->month)->translatedFormat('F') . ' ' . $item->year;
+            $monthlyVolume[] = (float)$item->total_liter;
+            $monthlyRevenue[] = (float)$item->total_pendapatan;
+        }
+
+        $dailyLabels = [];
+        $dailyVolume = [];
+        $dailyRevenue = [];
+        foreach ($dailyChartData as $item) {
+            $dailyLabels[] = \Carbon\Carbon::parse($item->date)->translatedFormat('d/m');
+            $dailyVolume[] = (float)$item->total_liter;
+            $dailyRevenue[] = (float)$item->total_pendapatan;
+        }
+
+        return view('laporan.penjualan_bulanan', compact(
+            'monthlyData', 
+            'totalLiter', 
+            'totalPendapatan',
+            'monthlyLabels',
+            'monthlyVolume',
+            'monthlyRevenue',
+            'dailyLabels',
+            'dailyVolume',
+            'dailyRevenue'
+        ));
     })->name('laporan.penjualan.bulanan');
 
     Route::post('logout', [CimilkController::class, 'logout'])->name('logout');

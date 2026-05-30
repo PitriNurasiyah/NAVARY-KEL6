@@ -232,12 +232,12 @@
             @csrf
 
             <div class="mb-3">
-                <label class="form-label">Username</label>
+                <label class="form-label">Username <span class="text-danger">*</span></label>
                 <input type="text" name="username" class="form-control" placeholder="Masukkan username" required autofocus>
             </div>
 
             <div class="mb-4 password-field">
-                <label class="form-label">Password</label>
+                <label class="form-label">Password <span class="text-danger">*</span></label>
                 <div class="position-relative">
                     <input id="passwordInput" type="password" name="password" class="form-control" placeholder="Masukkan password" required>
                     <button type="button" class="password-toggle" onclick="togglePassword()">

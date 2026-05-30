@@ -140,6 +140,7 @@
             text-transform: uppercase;
             border: 1px solid #e6d5c0 !important;
             letter-spacing: 0.5px;
+            text-align: center !important;
         }
         .table tbody td {
             padding: 14px 16px !important;
@@ -322,6 +323,32 @@
                 width: 100%;
             }
         }
+        
+        /* Lactation Range Cards Style */
+        .lactation-range-card {
+            border: 1.5px solid #e6d5c0;
+            border-radius: 15px;
+            padding: 18px;
+            text-align: center;
+            background: #f9f5ef;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .lactation-range-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            border-color: #bc9f82 !important;
+        }
+        .lactation-range-card.active {
+            background: #5d7a54 !important;
+            border-color: #5d7a54 !important;
+        }
+        .lactation-range-card.active .range-label {
+            color: #e8f0e6 !important;
+        }
+        .lactation-range-card.active .range-value {
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
@@ -346,7 +373,7 @@
             </div>
         </div>
 
-        @if(Auth::user()->role !== 'Admin')
+        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan')
         <div class="print-summary-layout">
             <div class="print-summary-box">
                 <span class="label">Total Produksi Pagi:</span>
@@ -403,7 +430,7 @@
             </form>
         </div>
 
-        @if(Auth::user()->role !== 'Admin')
+        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan')
         <!-- Summary Cards -->
         <div class="summary-wrapper">
             <div class="summary-card">
@@ -421,44 +448,6 @@
         </div>
         @endif
 
-        @if(Auth::user()->role !== 'Admin' && !empty($laktasiChartData))
-        {{-- Grafik Laktasi Per Sapi --}}
-        <div class="mb-4" style="background:#fffcf7; border-radius:20px; border:1.5px solid #e6d5c0; padding:25px; box-shadow:0 8px 20px rgba(0,0,0,0.02);">
-            <p style="font-weight:700; color:#432118; margin-bottom:14px; font-size:13px; text-transform:uppercase; letter-spacing:.5px;">🐄 Pilih Sapi untuk Melihat Grafik Laktasi:</p>
-            <div class="d-flex flex-wrap gap-2 mb-4" id="sapiTabWrapper">
-                @foreach($laktasiChartData as $i => $chart)
-                <button type="button" onclick="showChart({{ $i }})" id="tabBtn{{ $i }}"
-                    style="padding:8px 18px; border-radius:30px; font-weight:700; font-size:13px; cursor:pointer; border:2px solid {{ $i===0 ? '#5d7a54' : '#d4c2ab' }}; background:{{ $i===0 ? '#5d7a54' : 'transparent' }}; color:{{ $i===0 ? '#fff' : '#432118' }}; transition:.2s;">
-                    🐄 {{ $chart['nama'] }}
-                </button>
-                @endforeach
-            </div>
-
-            <canvas id="laktasiChart" style="max-height:280px;"></canvas>
-
-            {{-- Summary cards hari laktasi --}}
-            <div class="row g-3 mt-3">
-                <div class="col-md-4">
-                    <div style="border:1.5px solid #e6d5c0; border-radius:15px; padding:18px; text-align:center; background:#f9f5ef;">
-                        <div style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px;">HARI 1 – 100 LAKTASI 🌿</div>
-                        <div id="sumH1" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118;">- Liter</div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div style="border:1.5px solid #e6d5c0; border-radius:15px; padding:18px; text-align:center; background:#f9f5ef;">
-                        <div style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px;">HARI 101 – 200 LAKTASI 🌿</div>
-                        <div id="sumH2" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118;">- Liter</div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div style="border:1.5px solid #e6d5c0; border-radius:15px; padding:18px; text-align:center; background:#f9f5ef;">
-                        <div style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px;">HARI 201 – 300 LAKTASI 🌿</div>
-                        <div id="sumH3" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118;">- Liter</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endif
 
         <div class="action-bar">
             <div class="search-wrapper">
@@ -469,18 +458,6 @@
             </div>
             
             <div class="d-flex gap-2">
-                @if(Auth::user()->role !== 'Admin')
-                <div class="dropdown">
-                    <button class="btn btn-filter dropdown-toggle py-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 12px; font-weight: 700; height: 100%;">
-                        <i class="fa-solid fa-print me-2"></i> Cetak Laporan
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="dropdownMenuButton" style="border-radius: 12px; overflow: hidden; border: 1.5px solid #e6d5c0 !important;">
-                        <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="exportToExcel('produksiTable', 'Laporan_Produksi'); return false;" style="color: #217346;"><i class="fa-solid fa-file-excel me-2"></i>Cetak Excel</a></li>
-                        <li><hr class="dropdown-divider m-0" style="border-color: #e6d5c0;"></li>
-                        <li><a class="dropdown-item py-2 fw-bold" href="#" onclick="window.print(); return false;" style="color: #c0392b;"><i class="fa-solid fa-file-pdf me-2"></i>Cetak PDF</a></li>
-                    </ul>
-                </div>
-                @endif
 
                 @if(Auth::user()->role === 'Peternak')
                 <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('produksi.create') }}">
@@ -490,6 +467,14 @@
             </div>
         </div>
 
+        <!-- Filter Active Indicator -->
+        <div id="tableFilterIndicator" class="d-none align-items-center gap-2 mb-3 px-3 py-2" style="background: rgba(93, 122, 84, 0.1); border: 1.5px solid rgba(93, 122, 84, 0.2); border-radius: 12px; font-size: 14px; font-weight: 700; color: #4a6344; transition: all 0.3s ease;">
+            <span><i class="fa-solid fa-filter me-1"></i> Filter Aktif: <strong id="filterText">Sapi: -, Rentang: -</strong></span>
+            <button onclick="resetTableFilters()" class="btn btn-sm btn-link p-0 ms-auto text-decoration-none fw-bold" style="color: #c0392b; font-size: 13px; border: none; background: none;">
+                <i class="fa-solid fa-xmark me-1"></i> Bersihkan Filter
+            </button>
+        </div>
+
         <!-- Tabel Data -->
         <div class="table-container">
             <div class="table-responsive">
@@ -497,11 +482,12 @@
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 50px;">NO</th>
-                            <th>TANGGAL</th>
                             <th>ID SAPI</th>
                             <th>PAGI (L)</th>
                             <th>SORE (L)</th>
-                            <th class="text-center">TOTAL HARIAN</th>
+                            <th class="text-center">TOTAL</th>
+                            <th>TANGGAL</th>
+                            <th class="text-center">HARI LAKTASI</th>
                             @if(Auth::user()->role === 'Peternak')
                             <th class="text-center" style="width: 150px;">AKSI</th>
                             @endif
@@ -510,15 +496,18 @@
                     <tbody id="produksiTableBody">
                         @forelse($produksi as $index => $item)
                         <tr>
-                            <td class="text-center">{{ $index + 1 }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d F Y') }}</td>
+                            <td class="text-center">{{ $produksi->firstItem() + $index }}</td>
                             <td class="fw-bold text-success">{{ $item->sapi->kode_sapi ?? 'N/A' }}</td>
-                            <td>{{ $item->jumlah_pagi }} Liter</td>
-                            <td>{{ $item->jumlah_sore }} Liter</td>
+                            <td>{{ number_format($item->jumlah_pagi, 2) }} L</td>
+                            <td>{{ number_format($item->jumlah_sore, 2) }} L</td>
                             <td class="text-center">
                                 <span class="badge bg-success px-3 py-2" style="border-radius: 8px; font-size: 14px;">
-                                    {{ $item->total }} L
+                                    {{ number_format($item->total, 2) }} L
                                 </span>
+                            </td>
+                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
+                            <td class="text-center fw-bold text-secondary">
+                                {{ $item->laktasi_hari_ke ? 'Hari ke-' . $item->laktasi_hari_ke : '-' }}
                             </td>
                             @if(Auth::user()->role === 'Peternak')
                             <td class="text-center">
@@ -531,7 +520,7 @@
                         </tr>
                         @empty
                         <tr id="noDataRow">
-                            <td @if(Auth::user()->role === 'Peternak') colspan="7" @else colspan="6" @endif class="text-center py-5">
+                            <td @if(Auth::user()->role === 'Peternak') colspan="8" @else colspan="7" @endif class="text-center py-5">
                                 <div class="d-flex flex-column align-items-center">
                                     <i class="fa-solid fa-bucket mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                     <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>
@@ -549,6 +538,45 @@
             {{ $produksi->links() }}
         </div>
 
+        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan' && !empty($laktasiChartData))
+        {{-- Grafik Laktasi Per Sapi --}}
+        <div class="mb-4 mt-5" style="background:#fffcf7; border-radius:20px; border:1.5px solid #e6d5c0; padding:25px; box-shadow:0 8px 20px rgba(0,0,0,0.02);">
+            <p style="font-weight:700; color:#432118; margin-bottom:14px; font-size:13px; text-transform:uppercase; letter-spacing:.5px;">🐄 Pilih Sapi untuk Melihat Grafik Laktasi:</p>
+            <div class="d-flex flex-wrap gap-2 mb-4" id="sapiTabWrapper">
+                @foreach($laktasiChartData as $i => $chart)
+                <button type="button" onclick="showChart({{ $i }})" id="tabBtn{{ $i }}"
+                    style="padding:8px 18px; border-radius:30px; font-weight:700; font-size:13px; cursor:pointer; border:2px solid {{ $i===0 ? '#5d7a54' : '#d4c2ab' }}; background:{{ $i===0 ? '#5d7a54' : 'transparent' }}; color:{{ $i===0 ? '#fff' : '#432118' }}; transition:.2s;">
+                    🐄 {{ $chart['nama'] }}
+                </button>
+                @endforeach
+            </div>
+
+            <canvas id="laktasiChart" style="max-height:280px;"></canvas>
+
+            {{-- Summary cards hari laktasi --}}
+            <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                    <div id="cardH1" class="lactation-range-card" onclick="filterByRange(1)">
+                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 1 – 100 LAKTASI 🌿</div>
+                        <div id="sumH1" class="range-value" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118; transition: color 0.2s;">- Liter</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div id="cardH2" class="lactation-range-card" onclick="filterByRange(2)">
+                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 101 – 200 LAKTASI 🌿</div>
+                        <div id="sumH2" class="range-value" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118; transition: color 0.2s;">- Liter</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div id="cardH3" class="lactation-range-card" onclick="filterByRange(3)">
+                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 201 – 300 LAKTASI 🌿</div>
+                        <div id="sumH3" class="range-value" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118; transition: color 0.2s;">- Liter</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         <!-- Signature for printing -->
         <div class="print-signature-layout">
             <div class="signature-box">
@@ -557,27 +585,6 @@
                 <div class="sign-line"></div>
             </div>
         </div>
-
-        <!-- Grafik Laktasi Per Sapi -->
-        @if(Auth::user()->role !== 'Admin' && !empty($laktasiChartData))
-        <div class="mt-5">
-            <h4 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; margin-bottom: 20px;">
-                📈 Grafik Produksi Susu Per Sapi (Berdasarkan Hari Laktasi)
-            </h4>
-            <div class="row g-4" id="laktasiCharts">
-                @foreach($laktasiChartData as $i => $chart)
-                <div class="col-md-6">
-                    <div class="table-container" style="padding: 20px;">
-                        <div style="font-weight: 700; color: #432118; font-family: 'Playfair Display', serif; margin-bottom: 12px; font-size: 15px;">
-                            🐄 {{ $chart['nama'] }}
-                        </div>
-                        <canvas id="chartSapi{{ $i }}" style="max-height: 220px;"></canvas>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-        @endif
 
     </div>
 
@@ -683,13 +690,18 @@
         }
 
         // Inisialisasi Grafik Laktasi Per Sapi (Tab)
-        @if(Auth::user()->role !== 'Admin' && !empty($laktasiChartData))
+        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan' && !empty($laktasiChartData))
         const laktasiCharts = @json($laktasiChartData);
         let activeChart = null;
         let currentIdx = 0;
+        let activeRangeFilter = null;
 
         function showChart(idx) {
             currentIdx = idx;
+            // Reset range filter when switching cows
+            activeRangeFilter = null;
+            hideTableFilterIndicator();
+
             // Update tab buttons
             laktasiCharts.forEach((_, i) => {
                 const btn = document.getElementById('tabBtn' + i);
@@ -705,28 +717,78 @@
                 }
             });
 
-            const chart = laktasiCharts[idx];
+            updateChartDisplay();
+            
+            // Clean up any previous temp row and make sure rows are reset
+            const tempRow = document.getElementById('tempNoDataRow');
+            if (tempRow) tempRow.remove();
+            let searchFilter = document.getElementById('searchInput').value.toLowerCase();
+            let rows = document.querySelectorAll('#produksiTableBody tr');
+            rows.forEach(row => {
+                if (row.id === 'noDataRow') return;
+                row.style.display = row.innerText.toLowerCase().includes(searchFilter) ? '' : 'none';
+            });
+        }
+
+        function updateChartDisplay() {
+            const chart = laktasiCharts[currentIdx];
             const data = chart.data.map(Number);
             const labels = chart.labels;
+
+            let filteredLabels = [];
+            let filteredData = [];
+
+            // Hitung summary hari laktasi (selalu dihitung dari semua data untuk sapi ini)
+            let s1 = 0, s2 = 0, s3 = 0;
+            labels.forEach((lbl, i) => {
+                const hari = parseInt(lbl.replace('Hari ', '')) || (i + 1);
+                const val = data[i] || 0;
+                if (hari <= 100) s1 += val;
+                else if (hari <= 200) s2 += val;
+                else s3 += val;
+
+                // Filter data untuk grafik
+                if (activeRangeFilter === null) {
+                    filteredLabels.push(lbl);
+                    filteredData.push(val);
+                } else if (activeRangeFilter === 1 && hari <= 100) {
+                    filteredLabels.push(lbl);
+                    filteredData.push(val);
+                } else if (activeRangeFilter === 2 && hari > 100 && hari <= 200) {
+                    filteredLabels.push(lbl);
+                    filteredData.push(val);
+                } else if (activeRangeFilter === 3 && hari > 200 && hari <= 300) {
+                    filteredLabels.push(lbl);
+                    filteredData.push(val);
+                }
+            });
+
+            document.getElementById('sumH1').textContent = s1.toFixed(2) + ' Liter';
+            document.getElementById('sumH2').textContent = s2.toFixed(2) + ' Liter';
+            document.getElementById('sumH3').textContent = s3.toFixed(2) + ' Liter';
 
             // Update or create chart
             const ctx = document.getElementById('laktasiChart').getContext('2d');
             if (activeChart) {
-                activeChart.data.labels = labels;
-                activeChart.data.datasets[0].data = data;
+                activeChart.data.labels = filteredLabels;
+                activeChart.data.datasets[0].data = filteredData;
                 activeChart.update();
             } else {
                 activeChart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
-                        labels: labels,
+                        labels: filteredLabels,
                         datasets: [{
                             label: 'Total Produksi (Liter)',
-                            data: data,
-                            backgroundColor: 'rgba(93,122,84,0.65)',
-                            borderColor: 'rgba(93,122,84,1)',
-                            borderWidth: 1.5,
-                            borderRadius: 6,
+                            data: filteredData,
+                            backgroundColor: 'rgba(93, 122, 84, 0.15)',
+                            borderColor: '#5d7a54',
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.3,
+                            pointBackgroundColor: '#5d7a54',
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
                         }]
                     },
                     options: {
@@ -734,6 +796,16 @@
                         plugins: {
                             legend: { display: false },
                             tooltip: { callbacks: { label: c => c.parsed.y + ' L' } }
+                        },
+                        onClick: (event, elements) => {
+                            if (elements.length > 0) {
+                                const elementIndex = elements[0].index;
+                                const label = activeChart.data.labels[elementIndex]; // e.g. "Hari 5"
+                                const dayNumber = parseInt(label.replace('Hari ', ''));
+                                if (dayNumber) {
+                                    filterTableBySpecificDay(dayNumber);
+                                }
+                            }
                         },
                         scales: {
                             x: { ticks: { font: { size: 10 }, maxTicksLimit: 15 }, grid: { color: 'rgba(0,0,0,0.04)' } },
@@ -743,18 +815,223 @@
                 });
             }
 
-            // Hitung summary hari laktasi (label "Hari N")
-            let s1 = 0, s2 = 0, s3 = 0;
-            labels.forEach((lbl, i) => {
-                const hari = parseInt(lbl.replace('Hari ', '')) || (i + 1);
-                const val = data[i] || 0;
-                if (hari <= 100) s1 += val;
-                else if (hari <= 200) s2 += val;
-                else s3 += val;
+            // Update styles kartu filter
+            updateCardStyles();
+        }
+
+        function filterByRange(rangeNum) {
+            if (activeRangeFilter === rangeNum) {
+                activeRangeFilter = null; // Matikan filter
+                hideTableFilterIndicator();
+            } else {
+                activeRangeFilter = rangeNum;
+                
+                const activeChartObj = laktasiCharts[currentIdx];
+                let match = activeChartObj.nama.match(/\(([^)]+)\)/);
+                let selectedCowCode = match ? match[1] : '';
+                let rangeText = "";
+                if (rangeNum === 1) rangeText = "Hari 1 – 100";
+                else if (rangeNum === 2) rangeText = "Hari 101 – 200";
+                else if (rangeNum === 3) rangeText = "Hari 201 – 300";
+                
+                showTableFilterIndicator(`Sapi: ${selectedCowCode}, Rentang: ${rangeText}`);
+            }
+            
+            updateChartDisplay();
+            filterTableByLaktasiRange();
+        }
+
+        function filterTableByLaktasiRange() {
+            if (activeRangeFilter === null) {
+                resetTableFilters();
+                return;
+            }
+            
+            const activeChartObj = laktasiCharts[currentIdx];
+            let match = activeChartObj.nama.match(/\(([^)]+)\)/);
+            let selectedCowCode = match ? match[1] : '';
+
+            let rows = document.querySelectorAll('#produksiTableBody tr');
+            let hasVisibleRows = false;
+            
+            rows.forEach(row => {
+                if (row.id === 'noDataRow') return;
+                
+                let cowCodeCell = row.cells[1];
+                let laktasiCell = row.cells[6];
+                if (!cowCodeCell || !laktasiCell) return;
+                
+                let cowCode = cowCodeCell.textContent.trim();
+                let laktasiText = laktasiCell.textContent.trim();
+                let laktasiDay = parseInt(laktasiText.replace('Hari ke-', '')) || null;
+                
+                let matchesCow = (cowCode === selectedCowCode);
+                let matchesRange = false;
+                
+                if (laktasiDay !== null) {
+                    if (activeRangeFilter === 1) {
+                        matchesRange = (laktasiDay <= 100);
+                    } else if (activeRangeFilter === 2) {
+                        matchesRange = (laktasiDay > 100 && laktasiDay <= 200);
+                    } else if (activeRangeFilter === 3) {
+                        matchesRange = (laktasiDay > 200 && laktasiDay <= 300);
+                    }
+                }
+                
+                if (matchesCow && matchesRange) {
+                    row.style.display = '';
+                    hasVisibleRows = true;
+                } else {
+                    row.style.display = 'none';
+                }
             });
-            document.getElementById('sumH1').textContent = s1.toFixed(2) + ' Liter';
-            document.getElementById('sumH2').textContent = s2.toFixed(2) + ' Liter';
-            document.getElementById('sumH3').textContent = s3.toFixed(2) + ' Liter';
+            
+            let noDataRow = document.getElementById('noDataRow');
+            if (!hasVisibleRows) {
+                let tempRow = document.getElementById('tempNoDataRow');
+                if (!tempRow) {
+                    const tableBody = document.getElementById('produksiTableBody');
+                    const colSpan = @json(Auth::user()->role === 'Peternak' ? 8 : 7);
+                    const newRow = document.createElement('tr');
+                    newRow.id = 'tempNoDataRow';
+                    newRow.innerHTML = `
+                        <td colspan="${colSpan}" class="text-center py-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fa-solid fa-filter mb-2" style="font-size: 32px; color: #a67c52; opacity: 0.4;"></i>
+                                <h6 class="fw-bold mb-1" style="color: #432118;">Tidak ada data cocok</h6>
+                                <p class="text-muted mb-0" style="font-size: 12px;">Tidak ditemukan data laktasi untuk rentang yang dipilih.</p>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(newRow);
+                }
+                if (noDataRow) noDataRow.style.display = 'none';
+            } else {
+                const tempRow = document.getElementById('tempNoDataRow');
+                if (tempRow) tempRow.remove();
+                if (noDataRow) noDataRow.style.display = 'none';
+            }
+        }
+
+        function filterTableBySpecificDay(dayNumber) {
+            const activeChartObj = laktasiCharts[currentIdx];
+            let match = activeChartObj.nama.match(/\(([^)]+)\)/);
+            let selectedCowCode = match ? match[1] : '';
+            
+            showTableFilterIndicator(`Sapi: ${selectedCowCode}, Hari ke-${dayNumber}`);
+
+            // Reset activeRangeFilter class style if any was selected
+            activeRangeFilter = null;
+            updateCardStyles();
+
+            let rows = document.querySelectorAll('#produksiTableBody tr');
+            let hasVisibleRows = false;
+            
+            rows.forEach(row => {
+                if (row.id === 'noDataRow') return;
+                
+                let cowCodeCell = row.cells[1];
+                let laktasiCell = row.cells[6];
+                if (!cowCodeCell || !laktasiCell) return;
+                
+                let cowCode = cowCodeCell.textContent.trim();
+                let laktasiText = laktasiCell.textContent.trim();
+                let laktasiDay = parseInt(laktasiText.replace('Hari ke-', '')) || null;
+                
+                let matchesCow = (cowCode === selectedCowCode);
+                let matchesDay = (laktasiDay === dayNumber);
+                
+                if (matchesCow && matchesDay) {
+                    row.style.display = '';
+                    hasVisibleRows = true;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            let noDataRow = document.getElementById('noDataRow');
+            if (!hasVisibleRows) {
+                let tempRow = document.getElementById('tempNoDataRow');
+                if (!tempRow) {
+                    const tableBody = document.getElementById('produksiTableBody');
+                    const colSpan = @json(Auth::user()->role === 'Peternak' ? 8 : 7);
+                    const newRow = document.createElement('tr');
+                    newRow.id = 'tempNoDataRow';
+                    newRow.innerHTML = `
+                        <td colspan="${colSpan}" class="text-center py-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fa-solid fa-filter mb-2" style="font-size: 32px; color: #a67c52; opacity: 0.4;"></i>
+                                <h6 class="fw-bold mb-1" style="color: #432118;">Tidak ada data cocok</h6>
+                                <p class="text-muted mb-0" style="font-size: 12px;">Tidak ditemukan data laktasi untuk hari ke-${dayNumber}.</p>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(newRow);
+                }
+                if (noDataRow) noDataRow.style.display = 'none';
+            } else {
+                const tempRow = document.getElementById('tempNoDataRow');
+                if (tempRow) tempRow.remove();
+                if (noDataRow) noDataRow.style.display = 'none';
+            }
+        }
+
+        function updateCardStyles() {
+            for (let i = 1; i <= 3; i++) {
+                const card = document.getElementById('cardH' + i);
+                if (card) {
+                    if (activeRangeFilter === i) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                }
+            }
+        }
+
+        function showTableFilterIndicator(text) {
+            const indicator = document.getElementById('tableFilterIndicator');
+            const textEl = document.getElementById('filterText');
+            if (indicator && textEl) {
+                textEl.textContent = text;
+                indicator.classList.remove('d-none');
+                indicator.classList.add('d-flex');
+            }
+        }
+
+        function hideTableFilterIndicator() {
+            const indicator = document.getElementById('tableFilterIndicator');
+            if (indicator) {
+                indicator.classList.remove('d-flex');
+                indicator.classList.add('d-none');
+            }
+        }
+
+        function resetTableFilters() {
+            activeRangeFilter = null;
+            hideTableFilterIndicator();
+            updateCardStyles();
+            
+            const tempRow = document.getElementById('tempNoDataRow');
+            if (tempRow) tempRow.remove();
+            
+            // Reset table row visibility to default (respecting search input)
+            let searchFilter = document.getElementById('searchInput').value.toLowerCase();
+            let rows = document.querySelectorAll('#produksiTableBody tr');
+            let hasVisibleRows = false;
+            rows.forEach(row => {
+                if (row.id === 'noDataRow') return;
+                const match = row.innerText.toLowerCase().includes(searchFilter);
+                row.style.display = match ? '' : 'none';
+                if (match) hasVisibleRows = true;
+            });
+            
+            let noDataRow = document.getElementById('noDataRow');
+            if (noDataRow) {
+                noDataRow.style.display = hasVisibleRows ? 'none' : '';
+            }
+            
+            updateChartDisplay();
         }
 
         // Show first chart on load
