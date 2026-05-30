@@ -230,6 +230,8 @@
                     <select name="nama_pakan" id="nama_pakan_select" class="form-select" onchange="toggleCustomInput(this, 'nama_pakan_custom')" required>
                         <option value="">-- Pilih Jenis Pakan --</option>
                         <option value="Rumput Gajah">Rumput Gajah</option>
+                        <option value="Dedak Halus">Dedak Halus</option>
+                        <option value="Rumput">Rumput</option>
                         <option value="Singkong">Singkong</option>
                         <option value="Ampas Tahu">Ampas Tahu</option>
                         <option value="Konsentrat">Konsentrat</option>

@@ -204,22 +204,47 @@
             .page-title-section, .summary-wrapper, .mt-3, .toggle-group {
                 display: none !important;
             }
-            body { background: white !important; padding: 0 !important; margin: 0 !important; font-family: 'Plus Jakarta Sans', sans-serif !important; color: #000 !important; }
+            body { 
+                background: white !important; 
+                padding: 0 !important; 
+                margin: 0 !important; 
+                font-family: 'Plus Jakarta Sans', sans-serif !important; 
+                color: #432118 !important;
+            }
             .main-content { margin: 0 !important; width: 100% !important; padding: 10px 20px !important; }
             .table-container { border: none !important; border-radius: 0 !important; margin-top: 15px !important; padding: 0 !important; }
-            .table { border: none !important; border-top: 2px solid #000 !important; border-bottom: 2px solid #000 !important; width: 100% !important; border-collapse: collapse !important; }
-            .table thead th { background-color: #f5f5f5 !important; color: black !important; border: none !important; border-bottom: 1px solid #000 !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
-            .table tbody td { border: none !important; border-bottom: 1px solid #ddd !important; color: black !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
+            .table { 
+                border: 1px solid #a0a0a0 !important; 
+                width: 100% !important; 
+                border-collapse: collapse !important; 
+            }
+            .table thead th { 
+                background-color: #5d7a54 !important; 
+                color: #ffffff !important; 
+                border: 1px solid #a0a0a0 !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+                padding: 8px !important; 
+                font-size: 11px; 
+                text-align: center !important;
+            }
+            .table tbody td { 
+                border: 1px solid #a0a0a0 !important; 
+                color: #432118 !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+                padding: 8px !important; 
+                font-size: 11px; 
+            }
             .table tbody td .badge {
                 background: transparent !important;
-                color: #000 !important;
+                color: #432118 !important;
                 border: none !important;
                 padding: 0 !important;
                 font-weight: bold !important;
                 font-size: 11px !important;
             }
-            .table tbody td:last-child { display: none !important; } /* Hide action column in print */
-            .table thead th:last-child { display: none !important; }
+            .table-actions-column { display: none !important; }
             
             /* Print Layout Styling */
             .print-header-layout {
@@ -488,7 +513,7 @@
                             <th>TANGGAL</th>
                             <th class="text-center">HARI LAKTASI</th>
                             @if(Auth::user()->role === 'Peternak')
-                            <th class="text-center" style="width: 150px;">AKSI</th>
+                            <th class="text-center table-actions-column" style="width: 150px;">AKSI</th>
                             @endif
                         </tr>
                     </thead>
@@ -509,7 +534,7 @@
                                 {{ $item->laktasi_hari_ke ? 'Hari ke-' . $item->laktasi_hari_ke : '-' }}
                             </td>
                             @if(Auth::user()->role === 'Peternak')
-                            <td class="text-center">
+                            <td class="text-center table-actions-column">
                                 <div class="d-flex justify-content-center gap-2">
                                     <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('produksi.edit', $item->id) }}">Edit</button>
                                     <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete('{{ route('produksi.destroy', $item->id) }}', '{{ $item->sapi->kode_sapi ?? 'Sapi' }}')">Hapus</button>
@@ -556,19 +581,19 @@
             <div class="row g-3 mt-3">
                 <div class="col-md-4">
                     <div id="cardH1" class="lactation-range-card" onclick="filterByRange(1)">
-                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 1 – 100 LAKTASI 🌿</div>
+                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 1 – 100 LAKTASI 1</div>
                         <div id="sumH1" class="range-value" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118; transition: color 0.2s;">- Liter</div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div id="cardH2" class="lactation-range-card" onclick="filterByRange(2)">
-                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 101 – 200 LAKTASI 🌿</div>
+                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 101 – 200 LAKTASI 2</div>
                         <div id="sumH2" class="range-value" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118; transition: color 0.2s;">- Liter</div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div id="cardH3" class="lactation-range-card" onclick="filterByRange(3)">
-                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 201 – 300 LAKTASI 🌿</div>
+                        <div class="range-label" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px; transition: color 0.2s;">HARI 201 – 300 LAKTASI 3</div>
                         <div id="sumH3" class="range-value" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118; transition: color 0.2s;">- Liter</div>
                     </div>
                 </div>

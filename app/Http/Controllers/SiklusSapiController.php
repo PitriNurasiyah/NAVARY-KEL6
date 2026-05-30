@@ -91,7 +91,9 @@ class SiklusSapiController extends Controller implements HasMiddleware
         }
 
         if ($request->input('mode') === 'modal') {
-            return redirect()->back()->with('success', 'Data siklus berhasil disimpan!');
+            return redirect()->back()
+                ->with('success', 'Data siklus berhasil disimpan!')
+                ->with('redirect_sapi_id', $request->sapi_id);
         }
 
         return redirect()->route('siklus.show', $request->sapi_id)->with('success', 'Data siklus berhasil disimpan!');
@@ -152,21 +154,68 @@ class SiklusSapiController extends Controller implements HasMiddleware
     public function update(Request $request, $id)
     {
         $siklus = SiklusSapi::findOrFail($id);
-        $siklus->update($request->all());
+        $oldFase = $siklus->fase;
+        $newFase = $request->fase;
 
-        if ($request->fase === 'Laktasi' && ($request->filled('jumlah_pagi') || $request->filled('jumlah_sore'))) {
+        // Auto-calculate estimasi_selesai if not provided
+        $estimasi_selesai = $request->estimasi_selesai;
+        if (!$estimasi_selesai) {
+            $tanggalMulai = $request->tanggal_mulai ?? $siklus->tanggal_mulai;
+            if ($newFase === 'IB') {
+                $estimasi_selesai = Carbon::parse($tanggalMulai)->addDays(14)->format('Y-m-d');
+            } elseif ($newFase === 'Bunting') {
+                $estimasi_selesai = Carbon::parse($tanggalMulai)->addMonths(9)->format('Y-m-d');
+            } elseif ($newFase === 'Kering Kandang') {
+                $estimasi_selesai = Carbon::parse($tanggalMulai)->addMonth()->format('Y-m-d');
+            }
+        }
+
+        // When fase changes TO Melahirkan via edit, apply the full phase transition:
+        // mark this record as Selesai and auto-create the Laktasi phase.
+        if ($newFase === 'Melahirkan' && $oldFase !== 'Melahirkan') {
+            $siklus->update([
+                'fase'             => 'Melahirkan',
+                'status'           => 'Selesai',
+                'keterangan'       => $request->keterangan ?? 'Sapi telah melahirkan',
+                'tanggal_mulai'    => $request->tanggal_mulai ?? $siklus->tanggal_mulai,
+                'estimasi_selesai' => $estimasi_selesai,
+                'hari_ke'          => $request->hari_ke ?? $siklus->hari_ke,
+            ]);
+
+            SiklusSapi::create([
+                'sapi_id'          => $siklus->sapi_id,
+                'fase'             => 'Laktasi',
+                'tanggal_mulai'    => $request->tanggal_mulai ?? $siklus->tanggal_mulai,
+                'estimasi_selesai' => null,
+                'hari_ke'          => 1,
+                'status'           => 'Berjalan',
+                'keterangan'       => 'Mulai masa laktasi setelah melahirkan.',
+            ]);
+
+            if ($request->input('mode') === 'modal') {
+                return redirect()->back()->with('success', 'Sapi berhasil dicatat melahirkan. Fase Laktasi dimulai!');
+            }
+            return redirect()->route('siklus.show', $siklus->sapi_id)->with('success', 'Sapi berhasil dicatat melahirkan. Fase Laktasi dimulai!');
+        }
+
+        // Standard update for all other fase changes
+        $siklus->update(array_merge(
+            $request->except(['mode', '_token', '_method']),
+            ['estimasi_selesai' => $estimasi_selesai]
+        ));
+
+        if ($newFase === 'Laktasi' && ($request->filled('jumlah_pagi') || $request->filled('jumlah_sore'))) {
             $pagi = $request->jumlah_pagi ?? 0;
             $sore = $request->jumlah_sore ?? 0;
-            
             ProduksiSusu::updateOrCreate(
                 [
                     'sapi_id' => $siklus->sapi_id,
-                    'tanggal' => $request->tanggal_mulai,
+                    'tanggal' => $request->tanggal_mulai ?? $siklus->tanggal_mulai,
                 ],
                 [
                     'jumlah_pagi' => $pagi,
                     'jumlah_sore' => $sore,
-                    'total' => $pagi + $sore,
+                    'total'       => $pagi + $sore,
                 ]
             );
         }

@@ -142,36 +142,55 @@
                 padding: 0 !important; 
                 margin: 0 !important; 
                 font-family: 'Plus Jakarta Sans', sans-serif !important; 
-                color: #000 !important;
-                filter: grayscale(100%) !important;
+                color: #432118 !important;
             }
             .main-content { margin: 0 !important; width: 100% !important; padding: 10px 20px !important; }
             .table-container { border: none !important; border-radius: 0 !important; margin-top: 15px !important; padding: 0 !important; }
-            .table { border: none !important; border-top: 2px solid #000 !important; border-bottom: 2px solid #000 !important; width: 100% !important; border-collapse: collapse !important; }
-            .table thead th { background-color: #f5f5f5 !important; color: black !important; border: none !important; border-bottom: 1px solid #000 !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
-            .table tbody td { border: none !important; border-bottom: 1px solid #ddd !important; color: black !important; -webkit-print-color-adjust: exact; padding: 8px !important; font-size: 11px; }
+            .table { 
+                border: 1px solid #a0a0a0 !important; 
+                width: 100% !important; 
+                border-collapse: collapse !important; 
+            }
+            .table thead th { 
+                background-color: #5d7a54 !important; 
+                color: #ffffff !important; 
+                border: 1px solid #a0a0a0 !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+                padding: 8px !important; 
+                font-size: 11px; 
+                text-align: center !important;
+            }
+            .table tbody td { 
+                border: 1px solid #a0a0a0 !important; 
+                color: #432118 !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+                padding: 8px !important; 
+                font-size: 11px; 
+            }
+            .table tbody td .badge {
+                background: transparent !important;
+                color: #432118 !important;
+                border: none !important;
+                padding: 0 !important;
+                font-weight: bold !important;
+                font-size: 11px !important;
+            }
             
             .table tfoot {
                 display: table-footer-group !important;
             }
             .table tfoot td {
-                border: none !important;
-                border-top: 2px solid #000 !important;
-                border-bottom: 2px solid #000 !important;
-                color: black !important;
-                -webkit-print-color-adjust: exact;
+                border: 1px solid #a0a0a0 !important;
+                border-bottom: 3px double #a0a0a0 !important;
+                color: #432118 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
                 padding: 8px !important;
                 font-size: 11px !important;
                 font-weight: bold !important;
-                background-color: #f5f5f5 !important;
-            }
-            
-            /* Force all table text, badges, and colors to be strictly black and white */
-            .text-success, .text-primary, .text-danger, .badge,
-            .table thead th, .table thead th *, 
-            .table tbody td, .table tbody td *, 
-            .table tfoot td, .table tfoot td * {
-                color: #000 !important;
+                background-color: #f5efe6 !important;
             }
             
             /* Print Layout Styling */

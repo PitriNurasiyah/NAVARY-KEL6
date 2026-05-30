@@ -264,16 +264,36 @@
                                     <th>Kondisi</th>
                                     <th>Tindakan</th>
                                     <th>Catatan</th>
+                                    <th>Status</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($kesehatan as $log)
+                                @php
+                                    $kondisi = strtolower($log->kondisi_sekarang);
+                                    $statusColor = match(true) {
+                                        $kondisi === 'sehat'                => ['bg' => '#dcfce7', 'color' => '#166534', 'border' => '#22c55e'],
+                                        in_array($kondisi, ['sakit','demam','mastitis','kembung','luka','pincang']) => ['bg' => '#fee2e2', 'color' => '#991b1b', 'border' => '#ef4444'],
+                                        $kondisi === 'kurang nafsu makan'   => ['bg' => '#fef9c3', 'color' => '#713f12', 'border' => '#eab308'],
+                                        default                             => ['bg' => '#f3f4f6', 'color' => '#374151', 'border' => '#9ca3af'],
+                                    };
+                                    $statusLabel = match(true) {
+                                        $kondisi === 'sehat'                => 'Sehat',
+                                        in_array($kondisi, ['sakit','demam','mastitis','kembung','luka','pincang','kurang nafsu makan']) => 'Sakit',
+                                        default                             => 'Perlu Perhatian',
+                                    };
+                                @endphp
                                 <tr>
                                     <td style="white-space: nowrap;">{{ \Carbon\Carbon::parse($log->tanggal)->format('d M Y') }}</td>
                                     <td><span class="fw-bold">{{ $log->kondisi_sekarang }}</span></td>
                                     <td>{{ $log->tindakan_perawatan ?? '-' }}</td>
                                     <td>{{ $log->catatan_perkembangan ?? '-' }}</td>
+                                    <td>
+                                        <span style="display:inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; background: {{ $statusColor['bg'] }}; color: {{ $statusColor['color'] }}; border: 1.5px solid {{ $statusColor['border'] }};">
+                                            {{ $statusLabel }}
+                                        </span>
+                                    </td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
                                             <button type="button" class="btn btn-sm btn-outline-primary shadow-sm btn-edit-log" 
@@ -292,7 +312,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="5" class="text-center py-5">
+                                    <td colspan="6" class="text-center py-5">
                                         <div class="d-flex flex-column align-items-center">
                                             <i class="fa-solid fa-clipboard-list mb-3" style="font-size: 40px; color: #a67c52; opacity: 0.4;"></i>
                                             <h6 class="fw-bold mb-1" style="color: #432118;">Belum Ada Riwayat</h6>
@@ -347,7 +367,7 @@
                                     <option value="Mastitis">Mastitis</option>
                                     <option value="Pincang">Pincang</option>
                                     <option value="Kurang Nafsu Makan">Kurang Nafsu Makan</option>
-                                    <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                                    <option value="Lainnya">✏️ Lainnya</option>
                                 </select>
                                 <input type="text" id="add_kondisi_sekarang_custom" class="form-control mt-2" placeholder="Ketik kondisi baru..." style="display: none;">
                             </div>

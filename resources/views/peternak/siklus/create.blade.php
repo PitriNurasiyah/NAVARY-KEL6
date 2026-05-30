@@ -221,7 +221,7 @@
                     <select name="sapi_id" class="form-select" required>
                         <option value="">-- Pilih Sapi --</option>
                         @foreach($sapi as $s)
-                        <option value="{{ $s->id }}">{{ $s->kode_sapi }} - {{ $s->nama }}</option>
+                        <option value="{{ $s->id }}" {{ request('sapi_id') == $s->id ? 'selected' : '' }}>{{ $s->kode_sapi }} - {{ $s->nama }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -309,7 +309,11 @@
     @if(session('success'))
     window.addEventListener('DOMContentLoaded', (event) => {
         try {
+            @if(session('redirect_sapi_id'))
+            window.top.location.href = "{{ route('siklus.show', session('redirect_sapi_id')) }}?success=" + encodeURIComponent("{{ session('success') }}");
+            @else
             window.top.location.href = "{{ route('siklus.index') }}?success=" + encodeURIComponent("{{ session('success') }}");
+            @endif
         } catch(e) {
             window.location.href = "{{ route('siklus.index') }}";
         }
