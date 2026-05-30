@@ -30,15 +30,37 @@
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
         .alert-box {
-            background-color: #fffcf7;
-            border-radius: 12px;
-            padding: 20px;
+            background: linear-gradient(135deg, #fffdfa 0%, #faf6ef 100%);
+            border: 1px solid #e8dec9;
+            border-left: 5px solid #5d7a54;
+            padding: 16px 24px;
+            border-radius: 16px;
             margin-bottom: 30px;
+            font-size: 15px;
             color: #432118;
             font-weight: 700;
-            font-size: 16px;
-            border: 1.5px solid #e6d5c0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            box-shadow: 0 6px 15px rgba(93, 122, 84, 0.03);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .alert-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(93, 122, 84, 0.07);
+            border-color: #d8cdb6;
+        }
+        .alert-icon-wrapper {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(93, 122, 84, 0.1);
+            color: #5d7a54;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 14px;
+            flex-shrink: 0;
         }
 
         .dashboard-card {
@@ -130,7 +152,8 @@
 
         <!-- Alert Section -->
         <div class="alert-box">
-            <i class="fa-solid fa-boxes-stacking me-2"></i> Stok Susu Tersedia: <strong>{{ number_format($stokSusu, 0, '.', ',') }} Liter</strong>
+            <span class="alert-icon-wrapper"><i class="fa-solid fa-boxes-stacking"></i></span>
+            <div>Stok Susu Tersedia: <strong style="color: #5d7a54;">{{ number_format($stokSusu, 0, '.', ',') }} Liter</strong></div>
         </div>
 
         <!-- Cards Section -->

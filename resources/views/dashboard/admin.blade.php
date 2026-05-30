@@ -26,15 +26,56 @@
         }
 
         .notification-bar {
-            background: #fffcf7;
-            border: 1.5px solid #e6d5c0;
-            padding: 15px 25px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #fffdfa 0%, #faf6ef 100%);
+            border: 1px solid #e8dec9;
+            border-left: 5px solid #5d7a54;
+            padding: 16px 24px;
+            border-radius: 16px;
             margin-bottom: 35px;
             font-size: 14px;
             color: #432118;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            box-shadow: 0 6px 15px rgba(93, 122, 84, 0.03);
+            display: flex;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .notification-bar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(93, 122, 84, 0.07);
+            border-color: #d8cdb6;
+        }
+        .notification-icon-wrapper {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(93, 122, 84, 0.1);
+            color: #5d7a54;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .notification-bar.alert-success {
+            border-left-color: #22c55e;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e8f9ee 100%);
+            border-color: #bbf7d0;
+            color: #14532d;
+        }
+        .notification-bar.alert-success .notification-icon-wrapper {
+            background-color: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        .notification-bar .btn-close {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            margin-left: auto;
+            padding: 1.25rem 1.5rem;
         }
 
         .stat-card {
@@ -98,15 +139,15 @@
         </div>
 
         @if(session('success'))
-        <div class="notification-bar alert alert-dismissible fade show" role="alert" style="background-color: #dcfce7; border-color: #22c55e; color: #166534;">
-            <i class="fa-solid fa-circle-check me-2"></i>
-            <strong>Berhasil!</strong> {{ session('success') }}
+        <div class="notification-bar alert alert-dismissible fade show alert-success" role="alert">
+            <span class="notification-icon-wrapper"><i class="fa-solid fa-circle-check"></i></span>
+            <div style="padding-right: 35px;"><strong>Berhasil!</strong> {{ session('success') }}</div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @else
         <div class="notification-bar alert alert-dismissible fade show" role="alert">
-            <i class="fa-solid fa-bell me-2" style="color: #152414;"></i>
-            <strong>Update Sistem:</strong> Sinkronisasi data berhasil. Selamat bekerja, {{ Auth::user()->name ?? 'Admin' }}!
+            <span class="notification-icon-wrapper"><i class="fa-solid fa-bell"></i></span>
+            <div style="padding-right: 35px;"><strong>Update Sistem:</strong> Sinkronisasi data berhasil. Selamat bekerja, {{ Auth::user()->name ?? 'Admin' }}!</div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif

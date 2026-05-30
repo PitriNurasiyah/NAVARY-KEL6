@@ -258,8 +258,8 @@
                     <input type="number" name="hari_ke" id="hari_ke_input" class="form-control" placeholder="1" readonly>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Estimasi Selesai</label>
-                    <input type="date" name="estimasi_selesai" class="form-control">
+                    <label class="form-label">Estimasi Selesai (Otomatis)</label>
+                    <input type="date" name="estimasi_selesai" id="estimasi_selesai_input" class="form-control" readonly>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Keterangan (Opsional)</label>
@@ -341,9 +341,10 @@
         }
     }
 
-    // Auto-update Hari Ke based on Tanggal Mulai
+    // Auto-update Hari Ke and Estimasi Selesai based on Tanggal Mulai & Fase
     const tanggalMulaiInput = document.querySelector('input[name="tanggal_mulai"]');
     const hariKeInput = document.getElementById('hari_ke_input');
+    const estimasiSelesaiInput = document.getElementById('estimasi_selesai_input');
 
     function updateHariKe() {
         if (!tanggalMulaiInput || !hariKeInput) return;
@@ -361,10 +362,49 @@
         }
     }
 
-    if (tanggalMulaiInput) {
-        tanggalMulaiInput.addEventListener('change', updateHariKe);
-        updateHariKe();
+    function updateEstimasiSelesai() {
+        if (!tanggalMulaiInput || !estimasiSelesaiInput || !faseSelect) return;
+        const startVal = tanggalMulaiInput.value;
+        const faseVal = faseSelect.value;
+        
+        if (startVal && faseVal) {
+            const startDate = new Date(startVal);
+            if (isNaN(startDate.getTime())) return;
+            
+            let endDate = new Date(startDate);
+            if (faseVal === 'IB') {
+                endDate.setDate(endDate.getDate() + 14);
+            } else if (faseVal === 'Bunting') {
+                endDate.setMonth(endDate.getMonth() + 9);
+            } else if (faseVal === 'Kering Kandang') {
+                endDate.setMonth(endDate.getMonth() + 1);
+            } else {
+                // Melahirkan and Laktasi have no predefined duration estimation in the database logic
+                estimasiSelesaiInput.value = '';
+                return;
+            }
+            
+            // Format to YYYY-MM-DD
+            const yyyy = endDate.getFullYear();
+            const mm = String(endDate.getMonth() + 1).padStart(2, '0');
+            const dd = String(endDate.getDate()).padStart(2, '0');
+            estimasiSelesaiInput.value = `${yyyy}-${mm}-${dd}`;
+        }
     }
+
+    if (tanggalMulaiInput) {
+        tanggalMulaiInput.addEventListener('change', () => {
+            updateHariKe();
+            updateEstimasiSelesai();
+        });
+    }
+    if (faseSelect) {
+        faseSelect.addEventListener('change', updateEstimasiSelesai);
+    }
+
+    // Run initially
+    updateHariKe();
+    updateEstimasiSelesai();
 </script>
 
 </body>

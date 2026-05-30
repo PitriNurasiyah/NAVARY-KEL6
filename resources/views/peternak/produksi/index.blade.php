@@ -51,16 +51,15 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
-        /* Filter Section */
         .filter-section {
             background: #fffcf7;
-            padding: 25px;
+            padding: 12px 25px;
             border-radius: 20px;
             margin-bottom: 30px;
             border: 1.5px solid #e6d5c0;
             box-shadow: 0 8px 20px rgba(0,0,0,0.02);
         }
-        .filter-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; margin-bottom: 15px; color: #432118; }
+        .filter-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; margin-bottom: 8px; color: #432118; }
         .form-label { font-weight: 700; color: #432118; margin-bottom: 5px; font-size: 14px; }
         .form-control { border-radius: 12px; border: 2.5px solid #d4c2ab; padding: 10px; font-size: 14px; background-color: #fffcf7; color: #432118; font-weight: 600; }
         .form-control:focus { border-color: #5d7a54; background-color: #ffffff; box-shadow: 0 0 0 0.25rem rgba(93,122,84,0.1); }
@@ -373,7 +372,7 @@
             </div>
         </div>
 
-        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan')
+        @if(Auth::user()->role !== 'Penjualan')
         <div class="print-summary-layout">
             <div class="print-summary-box">
                 <span class="label">Total Produksi Pagi:</span>
@@ -408,15 +407,15 @@
             <div class="filter-title">Filter Tanggal</div>
             <form action="{{ route('produksi.index') }}" method="GET">
                 <div class="row align-items-end">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-2 mb-md-0">
                         <label class="form-label">Dari Tanggal</label>
                         <input type="date" name="dari_tanggal" class="form-control" value="{{ request('dari_tanggal') }}">
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-2 mb-md-0">
                         <label class="form-label">Sampai Tanggal</label>
                         <input type="date" name="sampai_tanggal" class="form-control" value="{{ request('sampai_tanggal') }}">
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-2 mb-md-0">
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-filter flex-grow-1">
                                 <i class="fa-solid fa-filter me-2"></i>Filter
@@ -430,7 +429,7 @@
             </form>
         </div>
 
-        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan')
+        @if(Auth::user()->role !== 'Penjualan')
         <!-- Summary Cards -->
         <div class="summary-wrapper">
             <div class="summary-card">
@@ -538,7 +537,7 @@
             {{ $produksi->links() }}
         </div>
 
-        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan' && !empty($laktasiChartData))
+        @if(Auth::user()->role !== 'Penjualan' && !empty($laktasiChartData))
         {{-- Grafik Laktasi Per Sapi --}}
         <div class="mb-4 mt-5" style="background:#fffcf7; border-radius:20px; border:1.5px solid #e6d5c0; padding:25px; box-shadow:0 8px 20px rgba(0,0,0,0.02);">
             <p style="font-weight:700; color:#432118; margin-bottom:14px; font-size:13px; text-transform:uppercase; letter-spacing:.5px;">🐄 Pilih Sapi untuk Melihat Grafik Laktasi:</p>
@@ -690,7 +689,7 @@
         }
 
         // Inisialisasi Grafik Laktasi Per Sapi (Tab)
-        @if(Auth::user()->role !== 'Admin' && Auth::user()->role !== 'Penjualan' && !empty($laktasiChartData))
+        @if(Auth::user()->role !== 'Penjualan' && !empty($laktasiChartData))
         const laktasiCharts = @json($laktasiChartData);
         let activeChart = null;
         let currentIdx = 0;

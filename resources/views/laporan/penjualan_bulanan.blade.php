@@ -18,11 +18,10 @@
         .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #432118; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
 
-        /* Filter Area */
         .filter-section {
             background: #fffcf7;
             border-radius: 20px;
-            padding: 25px;
+            padding: 12px 25px;
             border: 1.5px solid #e6d5c0;
             margin-bottom: 30px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.02);
@@ -31,7 +30,7 @@
             font-size: 16px;
             font-weight: 800;
             color: #432118;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
         .form-label {
             font-weight: 700;
@@ -350,15 +349,15 @@
                 <div class="filter-title">Filter Tanggal</div>
                 <form action="{{ route('laporan.penjualan.bulanan') }}" method="GET">
                     <div class="row align-items-end">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-2 mb-md-0">
                             <label class="form-label">Dari Tanggal</label>
                             <input type="date" name="dari_tanggal" class="form-control" value="{{ request('dari_tanggal') }}">
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-2 mb-md-0">
                             <label class="form-label">Sampai Tanggal</label>
                             <input type="date" name="sampai_tanggal" class="form-control" value="{{ request('sampai_tanggal') }}">
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-2 mb-md-0">
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-filter flex-grow-1">
                                     <i class="fa-solid fa-filter me-2"></i>Filter
@@ -463,83 +462,316 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
     <script>
-        function exportToExcel(tableId, filename, titleText, periodText) {
-            var table = document.getElementById(tableId);
-            var rows = [];
+        function exportToExcel(tableId, filename, titleText, periodText, callback) {
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Laporan');
             
-            // Add Kop Surat
-            rows.push(["CIMILK DAIRY FARM"]);
-            rows.push(["Pengolahan & Produksi Susu Segar Murni & Yogurt Premium"]);
-            rows.push(["Kp. Palasari 2 Babakan Waru RT 26, RW 03, Desa Palasari, Kec. Ciater, Kab. Subang, Jawa Barat 41280"]);
-            rows.push(["Telepon: +62 813-1348-8318 | Instagram: @cimilk.id"]);
-            rows.push([]);
-            rows.push([titleText]);
-            rows.push([periodText]);
-            rows.push([]);
+            const table = document.getElementById(tableId);
             
-            // Add Table Headers
-            var headerRow = [];
-            var ths = table.querySelectorAll("thead th");
+            // 1. Add Kop Surat
+            worksheet.addRow(["CIMILK DAIRY FARM"]);
+            worksheet.addRow(["Pengolahan & Produksi Susu Segar Murni & Yogurt Premium"]);
+            worksheet.addRow(["Kp. Palasari 2 Babakan Waru RT 26, RW 03, Desa Palasari, Kec. Ciater, Kab. Subang, Jawa Barat 41280"]);
+            worksheet.addRow(["Telepon: +62 813-1348-8318 | Instagram: @cimilk.id"]);
+            worksheet.addRow([]);
+            worksheet.addRow([titleText]);
+            worksheet.addRow([periodText]);
+            worksheet.addRow([]);
+            
+            // 2. Add Table Headers
+            const ths = table.querySelectorAll("thead th");
+            const headerRow = [];
             ths.forEach(function(th) {
+                const span = th.colSpan || 1;
                 headerRow.push(th.innerText.trim());
+                for (let i = 1; i < span; i++) {
+                    headerRow.push("");
+                }
             });
-            rows.push(headerRow);
+            const colCount = headerRow.length;
+            worksheet.addRow(headerRow);
             
-            // Add Table Body Rows
-            var trs = table.querySelectorAll("tbody tr");
-            trs.forEach(function(tr) {
-                var rowData = [];
-                var tds = tr.querySelectorAll("td");
-                tds.forEach(function(td) {
-                    rowData.push(td.innerText.trim());
+            // Helper function to clean numeric values and return float or clean string
+            function cleanVal(val) {
+                if (val === undefined || val === null) return "";
+                let clean = val.replace(/\s+/g, ' ').trim();
+                if (clean === "") return "";
+                
+                let isCurr = clean.startsWith('Rp');
+                let isLit = clean.toLowerCase().endsWith(' liter') || clean.toLowerCase().endsWith(' l');
+                
+                if (isCurr || isLit) {
+                    let numericPart = clean.replace(/[^\d.,-]/g, '');
+                    let dotCount = (numericPart.match(/\./g) || []).length;
+                    let commaCount = (numericPart.match(/,/g) || []).length;
+                    
+                    if (dotCount > 0 && commaCount > 0) {
+                        if (numericPart.indexOf(',') < numericPart.indexOf('.')) {
+                            numericPart = numericPart.replace(/,/g, '');
+                        } else {
+                            numericPart = numericPart.replace(/\./g, '').replace(',', '.');
+                        }
+                    } else if (dotCount > 1) {
+                        numericPart = numericPart.replace(/\./g, '');
+                    } else if (commaCount > 1) {
+                        numericPart = numericPart.replace(/,/g, '');
+                    } else if (dotCount === 1 && commaCount === 0) {
+                        if (numericPart.length - numericPart.indexOf('.') === 4 && numericPart.indexOf('.') > 0) {
+                            numericPart = numericPart.replace(/\./g, '');
+                        }
+                    } else if (commaCount === 1 && dotCount === 0) {
+                        if (numericPart.length - numericPart.indexOf(',') === 4 && numericPart.indexOf(',') > 0) {
+                            numericPart = numericPart.replace(/,/g, '');
+                        } else {
+                            numericPart = numericPart.replace(',', '.');
+                        }
+                    }
+                    
+                    let num = parseFloat(numericPart);
+                    if (!isNaN(num)) return num;
+                }
+                
+                let num = parseFloat(clean.replace(/\./g, '').replace(',', '.'));
+                let standardNum = parseFloat(clean);
+                if (!isNaN(standardNum) && String(standardNum) === clean) return standardNum;
+                if (!isNaN(num) && /^\d+$/.test(clean.replace(/[.,]/g, ''))) return num;
+                
+                return clean;
+            }
+            
+            // 3. Add Table Body and Footer Rows dynamically handling colspan
+            let currentRowNum = 10;
+            
+            function addTableRows(trs) {
+                trs.forEach(function(tr) {
+                    if (tr.id === 'noDataRow' || tr.id === 'tempNoDataRow') return;
+                    const rowData = [];
+                    const merges = [];
+                    let currentCol = 1;
+                    
+                    const tds = tr.querySelectorAll("td, th");
+                    tds.forEach(function(td) {
+                        const span = td.colSpan || 1;
+                        rowData.push(cleanVal(td.innerText.trim()));
+                        if (span > 1) {
+                            merges.push({
+                                s: { r: currentRowNum, c: currentCol },
+                                e: { r: currentRowNum, c: currentCol + span - 1 }
+                            });
+                        }
+                        for (let i = 1; i < span; i++) {
+                            rowData.push("");
+                        }
+                        currentCol += span;
+                    });
+                    
+                    worksheet.addRow(rowData);
+                    merges.forEach(m => {
+                        worksheet.mergeCells(m.s.r, m.s.c, m.e.r, m.e.c);
+                    });
+                    currentRowNum++;
                 });
-                rows.push(rowData);
-            });
+            }
             
-            // Add Table Footer (Total)
-            var tfootTrs = table.querySelectorAll("tfoot tr");
-            tfootTrs.forEach(function(tr) {
-                var rowData = [];
-                var tds = tr.querySelectorAll("td");
-                tds.forEach(function(td) {
-                    rowData.push(td.innerText.trim());
+            // Add body and footer rows
+            addTableRows(table.querySelectorAll("tbody tr"));
+            const bodyEndRowNum = currentRowNum - 1;
+            addTableRows(table.querySelectorAll("tfoot tr"));
+            
+            // 5. Add Signature
+            const dateStr = "Subang, " + new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+            const sigCol = colCount > 2 ? colCount - 2 : 1;
+            const lastRow = worksheet.lastRow.number;
+            
+            worksheet.getCell(lastRow + 2, sigCol + 1).value = dateStr;
+            worksheet.getCell(lastRow + 3, sigCol + 1).value = "Mengetahui,";
+            worksheet.getCell(lastRow + 4, sigCol + 1).value = "Admin Cimilk Yogurt";
+            worksheet.getCell(lastRow + 8, sigCol + 1).value = "( ____________________ )";
+            
+            // Merging cells for Kop & Title
+            worksheet.mergeCells(1, 1, 1, colCount);
+            worksheet.mergeCells(2, 1, 2, colCount);
+            worksheet.mergeCells(3, 1, 3, colCount);
+            worksheet.mergeCells(4, 1, 4, colCount);
+            worksheet.mergeCells(6, 1, 6, colCount);
+            worksheet.mergeCells(7, 1, 7, colCount);
+            
+            // 6. STYLING THE SHEET
+            // Font Calibri for the entire sheet
+            worksheet.eachRow(row => {
+                row.eachCell(cell => {
+                    cell.font = { name: 'Calibri', size: 11, color: { argb: 'FF432118' } };
                 });
-                rows.push(rowData);
             });
             
-            rows.push([]);
+            // Kop 1: CIMILK DAIRY FARM
+            const r1 = worksheet.getRow(1);
+            r1.height = 25;
+            r1.getCell(1).font = { name: 'Calibri', size: 16, bold: true, color: { argb: 'FF4A6344' } };
+            r1.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
             
-            // Add Signature
-            var dateStr = "Subang, " + new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
-            var colCount = headerRow.length;
-            var sigCol = colCount > 2 ? colCount - 2 : 1;
+            // Kop 2-4: Tagline, Address, Contact
+            for (let i = 2; i <= 4; i++) {
+                const r = worksheet.getRow(i);
+                r.height = 18;
+                r.getCell(1).font = { name: 'Calibri', size: 9, italic: i === 2, color: { argb: 'FF6D4C41' } };
+                r.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
+            }
+            // Kop Underline (Row 4 Bottom Border)
+            worksheet.getRow(4).eachCell(cell => {
+                cell.border = { bottom: { style: 'double', color: { argb: 'FF000000' } } };
+            });
             
-            var sigRow1 = Array(colCount).fill(""); sigRow1[sigCol] = dateStr; rows.push(sigRow1);
-            var sigRow2 = Array(colCount).fill(""); sigRow2[sigCol] = "Mengetahui,"; rows.push(sigRow2);
-            var sigRow3 = Array(colCount).fill(""); sigRow3[sigCol] = "Admin Cimilk Yogurt"; rows.push(sigRow3);
-            rows.push([]);
-            rows.push([]);
-            rows.push([]);
-            var sigRow4 = Array(colCount).fill(""); sigRow4[sigCol] = "( ____________________ )"; rows.push(sigRow4);
+            // Title row 6
+            const r6 = worksheet.getRow(6);
+            r6.height = 22;
+            r6.getCell(1).font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FF432118' } };
+            r6.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
             
-            // Generate sheet
-            var ws = XLSX.utils.aoa_to_sheet(rows);
+            // Period row 7
+            const r7 = worksheet.getRow(7);
+            r7.height = 18;
+            r7.getCell(1).font = { name: 'Calibri', size: 10, italic: true, color: { argb: 'FF6D4C41' } };
+            r7.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
             
-            // Merging cells for header
-            ws['!merges'] = [
-                { s: { r: 0, c: 0 }, e: { r: 0, c: colCount - 1 } },
-                { s: { r: 1, c: 0 }, e: { r: 1, c: colCount - 1 } },
-                { s: { r: 2, c: 0 }, e: { r: 2, c: colCount - 1 } },
-                { s: { r: 3, c: 0 }, e: { r: 3, c: colCount - 1 } },
-                { s: { r: 5, c: 0 }, e: { r: 5, c: colCount - 1 } },
-                { s: { r: 6, c: 0 }, e: { r: 6, c: colCount - 1 } }
-            ];
+            // Table Header Row 9 (Green theme background)
+            const headerRowObj = worksheet.getRow(9);
+            headerRowObj.height = 28;
+            for (let c = 1; c <= colCount; c++) {
+                const cell = headerRowObj.getCell(c);
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FF5D7A54' } // Beautiful themed green background
+                };
+                cell.font = { name: 'Calibri', size: 11, bold: true, color: { argb: 'FFFFFFFF' } };
+                cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
+                cell.border = {
+                    top: { style: 'thin', color: { argb: 'FF000000' } },
+                    left: { style: 'thin', color: { argb: 'FF000000' } },
+                    bottom: { style: 'medium', color: { argb: 'FF000000' } },
+                    right: { style: 'thin', color: { argb: 'FF000000' } }
+                };
+            }
             
-            var wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Laporan");
-            XLSX.writeFile(wb, filename + ".xlsx");
+            // Format Table Data & Footer rows
+            for (let r = 10; r < currentRowNum; r++) {
+                const row = worksheet.getRow(r);
+                row.height = 20;
+                const isFooter = (r > bodyEndRowNum);
+                const isEven = (r % 2 === 0);
+                
+                for (let c = 1; c <= colCount; c++) {
+                    const cell = row.getCell(c);
+                    
+                    if (isFooter) {
+                        cell.font = { name: 'Calibri', size: 11, bold: true, color: { argb: 'FF432118' } };
+                        cell.fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FFEAEAEA' }
+                        };
+                        cell.border = {
+                            top: { style: 'thin', color: { argb: 'FF000000' } },
+                            left: { style: 'thin', color: { argb: 'FF000000' } },
+                            bottom: { style: 'double', color: { argb: 'FF000000' } },
+                            right: { style: 'thin', color: { argb: 'FF000000' } }
+                        };
+                    } else {
+                        if (isEven) {
+                            cell.fill = {
+                                type: 'pattern',
+                                pattern: 'solid',
+                                fgColor: { argb: 'FFF9F9F9' }
+                            };
+                        }
+                        cell.border = {
+                            top: { style: 'thin', color: { argb: 'FFBFBFBF' } },
+                            left: { style: 'thin', color: { argb: 'FFBFBFBF' } },
+                            bottom: { style: 'thin', color: { argb: 'FFBFBFBF' } },
+                            right: { style: 'thin', color: { argb: 'FFBFBFBF' } }
+                        };
+                    }
+                    
+                    let val = cell.value;
+                    if (typeof val === 'number') {
+                        cell.alignment = { horizontal: 'right', vertical: 'middle' };
+                        const colHeader = (headerRow[c - 1] || '').toLowerCase();
+                        const isCurrency = colHeader.includes('harga') || colHeader.includes('satuan') || colHeader.includes('pendapatan') || colHeader.includes('omzet');
+                        const isVolume = colHeader.includes('volume') || colHeader.includes('liter') || colHeader.includes('pagi') || colHeader.includes('sore') || colHeader.includes('jumlah') || colHeader.includes('total harian') || colHeader.includes('total volume');
+                        
+                        if (isCurrency) {
+                            cell.numFmt = '"Rp "#,##0';
+                        } else if (isVolume) {
+                            cell.numFmt = '#,##0.00" L"';
+                        } else {
+                            cell.numFmt = '#,##0';
+                        }
+                    } else {
+                        if (isFooter) {
+                            cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                        } else {
+                            const colHeader = (headerRow[c - 1] || '').toLowerCase();
+                            if (colHeader.includes('no') || colHeader.includes('tanggal') || colHeader.includes('id') || colHeader.includes('kode') || colHeader.includes('bulan')) {
+                                cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                            } else {
+                                cell.alignment = { horizontal: 'left', vertical: 'middle' };
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Auto-fit column widths (only using headers & table data from row 9 down)
+            worksheet.columns.forEach((column, i) => {
+                let maxLength = 10;
+                column.eachCell({ includeEmpty: false }, cell => {
+                    if (cell.row >= 9) {
+                        let valText = cell.value;
+                        if (valText !== undefined && valText !== null) {
+                            if (typeof valText === 'number') {
+                                const colHeader = (headerRow[i] || '').toLowerCase();
+                                const isCurrency = colHeader.includes('harga') || colHeader.includes('satuan') || colHeader.includes('pendapatan') || colHeader.includes('omzet');
+                                const isVolume = colHeader.includes('volume') || colHeader.includes('liter') || colHeader.includes('pagi') || colHeader.includes('sore') || colHeader.includes('jumlah') || colHeader.includes('total harian') || colHeader.includes('total volume');
+                                if (isCurrency) {
+                                    valText = "Rp " + Math.round(valText).toLocaleString('id-ID');
+                                } else if (isVolume) {
+                                    valText = valText.toFixed(2) + " L";
+                                } else {
+                                    valText = String(valText);
+                                }
+                            } else {
+                                valText = String(valText);
+                            }
+                            let columnLength = valText.length;
+                            if (columnLength > maxLength) {
+                                maxLength = columnLength;
+                            }
+                        }
+                    }
+                });
+                column.width = maxLength < 10 ? 12 : maxLength + 4;
+            });
+            
+            // Write buffer and download
+            workbook.xlsx.writeBuffer().then(function(buffer) {
+                const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const url = window.URL.createObjectURL(blob);
+                const anchor = document.createElement('a');
+                anchor.href = url;
+                anchor.download = filename + '.xlsx';
+                anchor.click();
+                
+                setTimeout(function() {
+                    window.URL.revokeObjectURL(url);
+                }, 3000);
+                
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            });
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -701,14 +933,14 @@
             @if(request('export_excel') === 'true')
                 window.addEventListener('load', function() {
                     setTimeout(function() {
-                        exportToExcel('dataTable', 'Laporan_Penjualan_Bulanan', 'LAPORAN REKAPITULASI PENJUALAN BULANAN', 'Periode: {{ request('dari_tanggal') ? \Carbon\Carbon::parse(request('dari_tanggal'))->format('d/m/Y') : 'Semua Periode' }} - {{ request('sampai_tanggal') ? \Carbon\Carbon::parse(request('sampai_tanggal'))->format('d/m/Y') : 'Sekarang' }}');
-                        
-                        setTimeout(function() {
-                            var url = new URL(window.location.href);
-                            url.searchParams.delete('all');
-                            url.searchParams.delete('export_excel');
-                            window.location.href = url.toString();
-                        }, 500);
+                        exportToExcel('dataTable', 'Laporan_Penjualan_Bulanan', 'LAPORAN REKAPITULASI PENJUALAN BULANAN', 'Periode: {{ request('dari_tanggal') ? \Carbon\Carbon::parse(request('dari_tanggal'))->format('d/m/Y') : 'Semua Periode' }} - {{ request('sampai_tanggal') ? \Carbon\Carbon::parse(request('sampai_tanggal'))->format('d/m/Y') : 'Sekarang' }}', function() {
+                            setTimeout(function() {
+                                var url = new URL(window.location.href);
+                                url.searchParams.delete('all');
+                                url.searchParams.delete('export_excel');
+                                window.location.href = url.toString();
+                            }, 2000);
+                        });
                     }, 500);
                 });
             @elseif(request('all') === 'true')

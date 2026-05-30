@@ -253,7 +253,7 @@
                             @foreach($defaultOptions as $opt)
                                 <option value="{{ $opt }}" {{ !$isCustom && $pakan->nama_pakan == $opt ? 'selected' : '' }}>{{ $opt }}</option>
                             @endforeach
-                            <option value="Lainnya" {{ $isCustom ? 'selected' : '' }}>✏️ Lainnya (ketik sendiri)...</option>
+                            <option value="Lainnya" {{ $isCustom ? 'selected' : '' }}>✏️ Lainnya</option>
                         </select>
                         <input type="text" id="nama_pakan_custom" class="form-control mt-2" placeholder="Ketik jenis pakan baru..." 
                                value="{{ $isCustom ? $pakan->nama_pakan : '' }}" 

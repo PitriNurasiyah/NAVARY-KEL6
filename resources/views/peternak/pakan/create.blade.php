@@ -227,7 +227,7 @@
                         <option value="Ampas Tahu">Ampas Tahu</option>
                         <option value="Konsentrat">Konsentrat</option>
                         <option value="Jerami">Jerami</option>
-                        <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                        <option value="Lainnya">✏️ Lainnya</option>
                     </select>
                     <input type="text" id="nama_pakan_custom" class="form-control mt-2" placeholder="Ketik jenis pakan baru..." style="display: none;">
                 </div>

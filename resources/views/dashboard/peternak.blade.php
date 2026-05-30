@@ -77,15 +77,149 @@
         .bg-custom-brown { background: #845a33; color: #ffffff; }
 
         .notification-bar {
-            background: #fffcf7;
-            border: 1.5px solid #e6d5c0;
-            padding: 15px 25px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #fffdfa 0%, #faf6ef 100%);
+            border: 1px solid #e8dec9;
+            border-left: 5px solid #5d7a54;
+            padding: 16px 24px;
+            border-radius: 16px;
             margin-bottom: 35px;
             font-size: 14px;
             color: #432118;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            box-shadow: 0 6px 15px rgba(93, 122, 84, 0.03);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .notification-bar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(93, 122, 84, 0.07);
+            border-color: #d8cdb6;
+        }
+        .notification-icon-wrapper {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(93, 122, 84, 0.1);
+            color: #5d7a54;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Task Board Styling */
+        .task-board-container {
+            background: linear-gradient(135deg, #fffcf7 0%, #faf6ef 100%);
+            border: 1.5px solid #e6d5c0;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 25px rgba(93, 122, 84, 0.03);
+        }
+        .task-board-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1.5px dashed #e6d5c0;
+            padding-bottom: 20px;
+            gap: 15px;
+        }
+        .task-board-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(93, 122, 84, 0.1);
+            color: #5d7a54;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .task-board-title-group h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            color: #432118;
+            margin: 0 0 3px 0;
+            font-size: 20px;
+        }
+        .task-board-title-group p {
+            color: #6d4c41;
+            font-size: 13px;
+            margin: 0;
+            font-weight: 600;
+        }
+        .task-item-card {
+            background: #ffffff;
+            border: 1px solid #e6d5c0;
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
+            height: 100%;
+        }
+        .task-item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(93, 122, 84, 0.08);
+            border-color: #bc9f82;
+        }
+        .task-item-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 5px;
+        }
+        .task-item-icon-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #faf6f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .task-item-info {
+            flex-grow: 1;
+        }
+        .task-item-info h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #432118;
+            margin: 0 0 2px 0;
+            font-size: 16px;
+        }
+        .task-item-code {
+            font-size: 11px;
+            font-weight: 700;
+            color: #845a33;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .badge-action-start {
+            background-color: rgba(93, 122, 84, 0.15) !important;
+            color: #5d7a54 !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            padding: 5px 12px !important;
+            border-radius: 8px !important;
+        }
+        .badge-action-end {
+            background-color: rgba(212, 163, 115, 0.15) !important;
+            color: #845a33 !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            padding: 5px 12px !important;
+            border-radius: 8px !important;
         }
 
         /* Data Sapi Section (view only) */
@@ -151,25 +285,45 @@
         </div>
 
         @if($alerts->count() > 0)
-        <div class="notification-bar">
-            <div class="fw-bold mb-2" style="color: #a77000; font-size: 16px;">
-                <i class="fa-solid fa-circle-exclamation me-2"></i> Peringatan Jadwal Hari Ini
+        <div class="task-board-container">
+            <div class="task-board-header">
+                <div class="task-board-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="task-board-title-group">
+                    <h4>Jadwal & Tugas Hari Ini</h4>
+                    <p>Daftar fase siklus sapi yang memerlukan tindakan hari ini</p>
+                </div>
+                <span class="badge bg-custom-green px-3 py-2 rounded-pill ms-auto" style="font-weight: 700; font-size: 12px;">
+                    {{ $alerts->count() }} Tugas
+                </span>
             </div>
-            <ul class="mb-0 ps-3">
+            <div class="row g-3">
                 @foreach($alerts as $alert)
-                    <li>{{ $alert->sapi->nama ?? 'Sapi' }} ({{ $alert->sapi->kode_sapi }}): 
-                        @if($alert->tanggal_mulai == date('Y-m-d'))
-                            Mulai Fase {{ $alert->fase }}
-                        @else
-                            Estimasi Selesai Fase {{ $alert->fase }}
-                        @endif
-                    </li>
+                    <div class="col-md-6">
+                        <div class="task-item-card">
+                            <div class="task-item-indicator" style="background-color: {{ $alert->fase === 'Kering' ? '#5d7a54' : ($alert->fase === 'Melahirkan' ? '#c0392b' : '#845a33') }};"></div>
+                            <div class="task-item-icon-circle">
+                                <i class="fa-solid fa-cow" style="color: {{ $alert->fase === 'Kering' ? '#5d7a54' : ($alert->fase === 'Melahirkan' ? '#c0392b' : '#845a33') }};"></i>
+                            </div>
+                            <div class="task-item-info">
+                                <h5>{{ $alert->sapi->nama ?? 'Sapi' }}</h5>
+                                <span class="task-item-code">{{ $alert->sapi->kode_sapi }}</span>
+                                <div class="task-item-action mt-2">
+                                    @if($alert->tanggal_mulai == date('Y-m-d'))
+                                        <span class="badge badge-action-start"><i class="fa-solid fa-play me-1"></i> Mulai Fase {{ $alert->fase }}</span>
+                                    @else
+                                        <span class="badge badge-action-end"><i class="fa-solid fa-flag-checkered me-1"></i> Selesai Fase {{ $alert->fase }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
-            </ul>
+            </div>
         </div>
         @else
         <div class="notification-bar">
-            <i class="fa-solid fa-circle-info me-2" style="color: #845a33;"></i> Tidak ada jadwal khusus untuk hari ini. Tetap semangat bekerja!
+            <span class="notification-icon-wrapper"><i class="fa-solid fa-circle-info"></i></span>
+            <div>Tidak ada jadwal khusus untuk hari ini. Tetap semangat bekerja!</div>
         </div>
         @endif
 

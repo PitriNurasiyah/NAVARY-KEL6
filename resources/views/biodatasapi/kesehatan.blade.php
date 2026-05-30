@@ -363,7 +363,7 @@
                                     <option value="Sanitasi Kandang">Sanitasi Kandang</option>
                                     <option value="Pemeriksaan Dokter Hewan">Pemeriksaan Dokter Hewan</option>
                                     <option value="Karantina Mandiri">Karantina Mandiri</option>
-                                    <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                                    <option value="Lainnya">✏️ Lainnya</option>
                                 </select>
                                 <input type="text" id="add_tindakan_perawatan_custom" class="form-control mt-2" placeholder="Ketik tindakan baru..." style="display: none;">
                             </div>
