@@ -234,7 +234,14 @@
                     <input type="hidden" name="mode" value="{{ request('mode') }}">
                     <div class="mb-2">
                         <label class="form-label">Nama Pakan</label>
-                        <input type="text" name="nama_pakan" class="form-control" value="{{ $pakan->nama_pakan }}" required>
+                        <input type="text" name="nama_pakan" class="form-control" list="pakanList" value="{{ $pakan->nama_pakan }}" placeholder="Pilih atau ketik nama pakan..." required autocomplete="off">
+                        <datalist id="pakanList">
+                            <option value="Rumput Gajah">
+                            <option value="Singkong">
+                            <option value="Ampas Tahu">
+                            <option value="Konsentrat">
+                            <option value="Jerami">
+                        </datalist>
                     </div>
                     <div class="mb-2">
                         <label class="form-label">Stok</label>

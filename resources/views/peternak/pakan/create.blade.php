@@ -220,7 +220,15 @@
                 <input type="hidden" name="mode" value="{{ request('mode') }}">
                 <div class="mb-2">
                     <label class="form-label">Nama Pakan</label>
-                    <input type="text" name="nama_pakan" class="form-control" placeholder="Contoh: Rumput Gajah" required>
+                    <select name="nama_pakan" class="form-select" onchange="swapToInput(this,'Lainnya')" required>
+                        <option value="">-- Pilih Jenis Pakan --</option>
+                        <option value="Rumput Gajah">Rumput Gajah</option>
+                        <option value="Singkong">Singkong</option>
+                        <option value="Ampas Tahu">Ampas Tahu</option>
+                        <option value="Konsentrat">Konsentrat</option>
+                        <option value="Jerami">Jerami</option>
+                        <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                    </select>
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Stok</label>

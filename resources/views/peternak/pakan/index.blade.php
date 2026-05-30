@@ -312,7 +312,7 @@
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-2">
                                 <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('pemberian-pakan.edit', $item->id) }}">Edit</button>
-                                <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete('{{ route('pakan.destroy', $item->id) }}', '{{ $item->nama_pakan }}')">Hapus</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDeletePemberian('{{ route('pemberian-pakan.destroy', $item->id) }}', '{{ $item->nama_pakan }}')">Hapus</button>
                             </div>
                         </td>
                         @endif
@@ -353,6 +353,10 @@
         @csrf
         @method('DELETE')
     </form>
+    <form id="deletePemberianForm" method="POST" style="display:none;">
+        @csrf
+        @method('DELETE')
+    </form>
 
     
     <!-- Modal Register/Create -->
@@ -368,27 +372,63 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('searchInput').addEventListener('input', function() {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#stokTableBody tr, #pemberianTableBody tr');
-            rows.forEach(row => {
-                if (row.id === 'noStokRow' || row.id === 'noPemberianRow') return;
-                let text = row.innerText.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
+        // Search stok
+        const searchStok = document.getElementById('searchInputStok');
+        if (searchStok) {
+            searchStok.addEventListener('input', function() {
+                let filter = this.value.toLowerCase();
+                document.querySelectorAll('#stokTableBody tr').forEach(row => {
+                    if (row.id === 'noStokRow') return;
+                    row.style.display = row.innerText.toLowerCase().includes(filter) ? '' : 'none';
+                });
             });
-        });
+        }
+
+        // Search pemberian
+        const searchPemberian = document.getElementById('searchInputPemberian');
+        if (searchPemberian) {
+            searchPemberian.addEventListener('input', function() {
+                let filter = this.value.toLowerCase();
+                document.querySelectorAll('#pemberianTableBody tr').forEach(row => {
+                    if (row.id === 'noPemberianRow') return;
+                    row.style.display = row.innerText.toLowerCase().includes(filter) ? '' : 'none';
+                });
+            });
+        }
 
         let deleteUrl = '';
+        let deletePemberianUrl = '';
+
         function confirmDelete(url, name) {
             deleteUrl = url;
+            document.getElementById('confirmYesBtn').dataset.mode = 'stok';
             document.getElementById('confirmMessage').textContent = 'Apakah Anda yakin ingin menghapus data pakan "' + name + '"?';
             document.getElementById('confirmOverlay').classList.add('active');
         }
-        function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('active'); }
+        function confirmDeletePemberian(url, name) {
+            deletePemberianUrl = url;
+            document.getElementById('confirmYesBtn').dataset.mode = 'pemberian';
+            document.getElementById('confirmMessage').textContent = 'Hapus log pemberian "' + name + '"? Stok akan dikembalikan otomatis.';
+            document.getElementById('confirmOverlay').classList.add('active');
+        }
+        function closeConfirm() {
+            document.getElementById('confirmOverlay').classList.remove('active');
+        }
+
+        document.getElementById('confirmOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeConfirm();
+        });
+
         document.getElementById('confirmYesBtn').addEventListener('click', function() {
-            const form = document.getElementById('deleteForm');
-            form.action = deleteUrl;
-            form.submit();
+            if (this.dataset.mode === 'pemberian') {
+                const form = document.getElementById('deletePemberianForm');
+                form.action = deletePemberianUrl;
+                form.submit();
+            } else {
+                const form = document.getElementById('deleteForm');
+                form.action = deleteUrl;
+                form.submit();
+            }
         });
 
         const notif = document.getElementById('crudNotif');

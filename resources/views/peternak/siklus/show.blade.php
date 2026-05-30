@@ -141,7 +141,7 @@
             @elseif($fase == 'IB')
                 @if($latest->status == 'Berjalan')
                 @php 
-                    $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); 
+                    $daysPassed = $latest->hari_ke; 
                     $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
                 @endphp
                 <div class="action-box">
@@ -169,7 +169,7 @@
             @elseif($fase == 'Bunting')
                 @if($latest->status == 'Berjalan')
                 @php 
-                    $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); 
+                    $daysPassed = $latest->hari_ke; 
                     $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
                 @endphp
                 <div class="action-box">
@@ -182,7 +182,7 @@
                 @endif
             @elseif($fase == 'Laktasi')
                 @if($latest->status == 'Berjalan')
-                @php $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); @endphp
+                @php $daysPassed = $latest->hari_ke; @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-jug-detergent fs-3 mb-2 d-block"></i> Masa Laktasi. Sapi sedang menghasilkan susu (Hari ke-{{ $daysPassed }}).</p>
                     <a href="{{ route('produksi.index') }}" class="btn btn-action mb-2"><i class="fa-solid fa-plus me-2"></i>Input Produksi Susu</a>
@@ -195,7 +195,7 @@
             @elseif($fase == 'Kering Kandang')
                 @if($latest->status == 'Berjalan')
                 @php 
-                    $daysPassed = intval(\Carbon\Carbon::parse($latest->tanggal_mulai)->diffInDays(\Carbon\Carbon::now()) + 1); 
+                    $daysPassed = $latest->hari_ke; 
                     $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
                 @endphp
                 <div class="action-box">

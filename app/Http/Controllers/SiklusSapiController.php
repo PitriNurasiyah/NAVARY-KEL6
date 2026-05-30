@@ -108,8 +108,7 @@ class SiklusSapiController extends Controller implements HasMiddleware
         $laktasiChartData = null;
 
         if ($laktasiSiklus) {
-            $hariKe = $laktasiSiklus->hari_ke ?? 0;
-            $awalLaktasi = Carbon::parse($laktasiSiklus->tanggal_mulai)->subDays($hariKe);
+            $awalLaktasi = Carbon::parse($laktasiSiklus->tanggal_mulai);
             
             $hari100_start = $awalLaktasi->copy();
             $hari100_end = $awalLaktasi->copy()->addDays(100);

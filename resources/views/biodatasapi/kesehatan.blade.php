@@ -338,12 +338,32 @@
 
                             <div class="mb-2">
                                 <label class="form-label">Kondisi Sekarang</label>
-                                <input type="text" name="kondisi_sekarang" class="form-control" placeholder="Contoh: Demam, Sehat, etc..." required>
+                                <select name="kondisi_sekarang" id="add_kondisi_sekarang" class="form-select" onchange="swapToInput(this, 'Lainnya')" required>
+                                    <option value="Sehat">Sehat</option>
+                                    <option value="Sakit">Sakit</option>
+                                    <option value="Demam">Demam</option>
+                                    <option value="Luka">Luka</option>
+                                    <option value="Kembung">Kembung</option>
+                                    <option value="Mastitis">Mastitis</option>
+                                    <option value="Pincang">Pincang</option>
+                                    <option value="Kurang Nafsu Makan">Kurang Nafsu Makan</option>
+                                    <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                                </select>
                             </div>
 
                             <div class="mb-2">
                                 <label class="form-label">Tindakan / Perawatan</label>
-                                <input type="text" name="tindakan_perawatan" class="form-control" placeholder="Contoh: Pemberian Vaksin PMK">
+                                <select name="tindakan_perawatan" id="add_tindakan_perawatan" class="form-select" onchange="swapToInput(this, 'Lainnya')">
+                                    <option value="-">-</option>
+                                    <option value="Pemberian Vaksin PMK">Pemberian Vaksin PMK</option>
+                                    <option value="Pemberian Vitamin">Pemberian Vitamin</option>
+                                    <option value="Pemberian Antibiotik">Pemberian Antibiotik</option>
+                                    <option value="Pemberian Obat Cacing">Pemberian Obat Cacing</option>
+                                    <option value="Sanitasi Kandang">Sanitasi Kandang</option>
+                                    <option value="Pemeriksaan Dokter Hewan">Pemeriksaan Dokter Hewan</option>
+                                    <option value="Karantina Mandiri">Karantina Mandiri</option>
+                                    <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                                </select>
                             </div>
 
                             <div class="mb-2">
@@ -353,7 +373,12 @@
 
                             <div class="mb-4">
                                 <label class="form-label">Update Status Sapi</label>
-                                <input type="text" name="update_status_sapi" class="form-control" placeholder="Kosongkan jika tidak ada perubahan status">
+                                <select name="update_status_sapi" class="form-select">
+                                    <option value="">-- Jangan Ubah Status --</option>
+                                    <option value="Sehat">Sehat</option>
+                                    <option value="Sakit">Sakit</option>
+                                    <option value="Karantina">Karantina</option>
+                                </select>
                             </div>
 
                             <div class="position-relative mt-4">
@@ -399,12 +424,32 @@
 
                             <div class="mb-2">
                                 <label class="form-label">Kondisi Sekarang</label>
-                                <input type="text" name="kondisi_sekarang" id="edit_kondisi_sekarang" class="form-control" required>
+                                <select name="kondisi_sekarang" id="edit_kondisi_sekarang" class="form-select" onchange="swapToInput(this, 'Lainnya')" required>
+                                    <option value="Sehat">Sehat</option>
+                                    <option value="Sakit">Sakit</option>
+                                    <option value="Demam">Demam</option>
+                                    <option value="Luka">Luka</option>
+                                    <option value="Kembung">Kembung</option>
+                                    <option value="Mastitis">Mastitis</option>
+                                    <option value="Pincang">Pincang</option>
+                                    <option value="Kurang Nafsu Makan">Kurang Nafsu Makan</option>
+                                    <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                                </select>
                             </div>
 
                             <div class="mb-2">
                                 <label class="form-label">Tindakan / Perawatan</label>
-                                <input type="text" name="tindakan_perawatan" id="edit_tindakan_perawatan" class="form-control">
+                                <select name="tindakan_perawatan" id="edit_tindakan_perawatan" class="form-select" onchange="swapToInput(this, 'Lainnya')">
+                                    <option value="-">-</option>
+                                    <option value="Pemberian Vaksin PMK">Pemberian Vaksin PMK</option>
+                                    <option value="Pemberian Vitamin">Pemberian Vitamin</option>
+                                    <option value="Pemberian Antibiotik">Pemberian Antibiotik</option>
+                                    <option value="Pemberian Obat Cacing">Pemberian Obat Cacing</option>
+                                    <option value="Sanitasi Kandang">Sanitasi Kandang</option>
+                                    <option value="Pemeriksaan Dokter Hewan">Pemeriksaan Dokter Hewan</option>
+                                    <option value="Karantina Mandiri">Karantina Mandiri</option>
+                                    <option value="Lainnya">✏️ Lainnya (ketik sendiri)...</option>
+                                </select>
                             </div>
 
                             <div class="mb-2">
@@ -414,7 +459,12 @@
 
                             <div class="mb-4">
                                 <label class="form-label">Update Status Sapi</label>
-                                <input type="text" name="update_status_sapi" id="edit_update_status_sapi" class="form-control" placeholder="Kosongkan jika tidak ada perubahan status">
+                                <select name="update_status_sapi" id="edit_update_status_sapi" class="form-select">
+                                    <option value="">-- Jangan Ubah Status --</option>
+                                    <option value="Sehat">Sehat</option>
+                                    <option value="Sakit">Sakit</option>
+                                    <option value="Karantina">Karantina</option>
+                                </select>
                             </div>
 
                             <div class="position-relative mt-4">
@@ -472,6 +522,50 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Swap select ke input text saat Lainnya dipilih
+        function swapToInput(selectEl, triggerValue) {
+            if (selectEl.value !== triggerValue) return;
+            const fieldName = selectEl.getAttribute('name');
+            const isRequired = selectEl.hasAttribute('required');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = fieldName;
+            input.className = selectEl.className.replace('form-select','form-control');
+            input.placeholder = 'Ketik nilai baru...';
+            if (isRequired) input.required = true;
+            input.style.cssText = selectEl.style.cssText;
+            // Tombol kembali ke dropdown
+            const backBtn = document.createElement('button');
+            backBtn.type = 'button';
+            backBtn.textContent = '← Kembali ke pilihan';
+            backBtn.style.cssText = 'font-size:11px;color:#845a33;background:none;border:none;padding:2px 0;cursor:pointer;margin-top:3px;';
+            backBtn.onclick = function() {
+                const newSelect = document.createElement('select');
+                newSelect.name = fieldName;
+                newSelect.className = selectEl.className;
+                newSelect.innerHTML = selectEl.innerHTML;
+                if (isRequired) newSelect.required = true;
+                newSelect.addEventListener('change', function() { swapToInput(this, 'Lainnya'); });
+                input.parentNode.replaceChild(newSelect, input);
+                backBtn.remove();
+            };
+            input.parentNode.replaceChild(input, selectEl);
+            input.after(backBtn);
+            input.focus();
+        }
+
+        // Reset Add Modal on open
+        const addModalEl = document.getElementById('tambahLogModal');
+        if (addModalEl) {
+            addModalEl.addEventListener('show.bs.modal', function() {
+                // Restore selects if they were swapped to inputs
+                ['add_kondisi_sekarang','add_tindakan_perawatan'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el) return; // might be an input already — leave it for now
+                });
+            });
+        }
+
         const notif = document.getElementById('crudNotif');
         if (notif) {
             setTimeout(() => {
@@ -495,10 +589,38 @@
                 form.action = "{{ url('kesehatan') }}/" + id;
 
                 document.getElementById('edit_tanggal').value = tanggal;
-                document.getElementById('edit_kondisi_sekarang').value = kondisi;
-                document.getElementById('edit_tindakan_perawatan').value = tindakan;
+
+                // Set kondisi - ensure it's a select, add option if not exists
+                let editKondisiEl = document.getElementById('edit_kondisi_sekarang');
+                if (editKondisiEl && editKondisiEl.tagName === 'SELECT') {
+                    let hasOpt = Array.from(editKondisiEl.options).some(o => o.value === kondisi);
+                    if (!hasOpt && kondisi && kondisi !== 'Lainnya') {
+                        const newOpt = document.createElement('option');
+                        newOpt.value = kondisi; newOpt.text = kondisi;
+                        editKondisiEl.insertBefore(newOpt, editKondisiEl.options[editKondisiEl.options.length - 1]);
+                    }
+                    editKondisiEl.value = kondisi;
+                } else if (editKondisiEl) {
+                    editKondisiEl.value = kondisi;
+                }
+
+                // Set tindakan
+                let editTindakanEl = document.getElementById('edit_tindakan_perawatan');
+                if (editTindakanEl && editTindakanEl.tagName === 'SELECT') {
+                    let hasOpt = Array.from(editTindakanEl.options).some(o => o.value === tindakan);
+                    if (!hasOpt && tindakan && tindakan !== 'Lainnya') {
+                        const newOpt = document.createElement('option');
+                        newOpt.value = tindakan; newOpt.text = tindakan;
+                        editTindakanEl.insertBefore(newOpt, editTindakanEl.options[editTindakanEl.options.length - 1]);
+                    }
+                    editTindakanEl.value = tindakan || '-';
+                } else if (editTindakanEl) {
+                    editTindakanEl.value = tindakan;
+                }
+
                 document.getElementById('edit_catatan_perkembangan').value = catatan;
-                document.getElementById('edit_update_status_sapi').value = '';
+                const statusEl = document.getElementById('edit_update_status_sapi');
+                if (statusEl) statusEl.value = '';
             });
         });
 
@@ -509,6 +631,7 @@
             document.getElementById('confirmOverlay').classList.add('active');
         }
         function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('active'); }
+        document.getElementById('confirmOverlay').addEventListener('click', e => { if(e.target===document.getElementById('confirmOverlay')) closeConfirm(); });
         document.getElementById('confirmYesBtn').addEventListener('click', function() {
             const form = document.getElementById('deleteForm');
             form.action = deleteUrl;

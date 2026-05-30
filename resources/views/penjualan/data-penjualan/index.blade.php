@@ -35,6 +35,13 @@
         }
         .btn-filter:hover { background: #4a6344; transform: translateY(-2px); color: white; }
 
+        .btn-reset {
+            background: #e6d5c0; color: #432118; font-weight: 800; border: none; padding: 12px 25px; border-radius: 12px;
+            box-shadow: 0 4px 0 #c8b7a1; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .btn-reset:hover { background: #dccab3; transform: translateY(-2px); color: #432118; box-shadow: 0 6px 0 #c8b7a1; }
+        .btn-reset:active { transform: translateY(2px); box-shadow: 0 2px 0 #c8b7a1; }
+
         /* Action Bar */
         .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 15px; }
         .search-wrapper {
@@ -218,9 +225,14 @@
                         <input type="date" name="sampai_tanggal" class="form-control" value="{{ request('sampai_tanggal') }}">
                     </div>
                     <div class="col-md-4 mb-3">
-                        <button type="submit" class="btn btn-filter w-100">
-                            <i class="fa-solid fa-filter me-2"></i> Terapkan Filter
-                        </button>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-filter flex-grow-1">
+                                <i class="fa-solid fa-filter me-2"></i>Filter
+                            </button>
+                            <a href="{{ route('penjualan.data') }}" class="btn-reset flex-grow-1">
+                                <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+                            </a>
+                        </div>
                     </div>
                 </div>
             </form>

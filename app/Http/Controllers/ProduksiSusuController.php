@@ -26,7 +26,24 @@ class ProduksiSusuController extends Controller
         
         $produksi = $query->orderBy('tanggal', 'desc')->paginate(10)->withQueryString();
         
-        return view('peternak.produksi.index', compact('produksi', 'totalPagi', 'totalSore', 'totalProduksi'));
+        // Data grafik laktasi per sapi: semua data dikelompokkan per sapi
+        $sapiList = Sapi::whereHas('produksiSusu')->get();
+        $laktasiChartData = [];
+        foreach ($sapiList as $s) {
+            $records = ProduksiSusu::where('sapi_id', $s->id)
+                ->orderBy('tanggal', 'asc')
+                ->get();
+            if ($records->isNotEmpty()) {
+                $firstDate = \Carbon\Carbon::parse($records->first()->tanggal);
+                $laktasiChartData[] = [
+                    'nama' => $s->nama . ' (' . $s->kode_sapi . ')',
+                    'labels' => $records->map(fn($r) => 'Hari ' . (\Carbon\Carbon::parse($r->tanggal)->diffInDays($firstDate) + 1))->values()->toArray(),
+                    'data' => $records->pluck('total')->toArray(),
+                ];
+            }
+        }
+        
+        return view('peternak.produksi.index', compact('produksi', 'totalPagi', 'totalSore', 'totalProduksi', 'laktasiChartData'));
     }
 
     public function create()

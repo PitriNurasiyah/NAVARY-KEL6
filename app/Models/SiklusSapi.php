@@ -25,4 +25,38 @@ class SiklusSapi extends Model
     {
         return $this->belongsTo(Sapi::class, 'sapi_id');
     }
+
+    public function getHariKeAttribute($value)
+    {
+        if ($this->status === 'Berjalan' && $this->tanggal_mulai) {
+            $start = \Carbon\Carbon::parse($this->tanggal_mulai);
+            $today = \Carbon\Carbon::today();
+            if ($today->greaterThanOrEqualTo($start)) {
+                return $start->diffInDays($today) + 1;
+            }
+            return 1;
+        }
+        return $value ?? 0;
+    }
+
+    protected static function booted()
+    {
+        static::saving(function ($model) {
+            if ($model->status !== 'Berjalan' && $model->tanggal_mulai) {
+                $start = \Carbon\Carbon::parse($model->tanggal_mulai);
+                $endDate = \Carbon\Carbon::today();
+                if ($model->estimasi_selesai) {
+                    $est = \Carbon\Carbon::parse($model->estimasi_selesai);
+                    if ($est->lt($endDate)) {
+                        $endDate = $est;
+                    }
+                }
+                if ($endDate->greaterThanOrEqualTo($start)) {
+                    $model->hari_ke = $start->diffInDays($endDate) + 1;
+                } else {
+                    $model->hari_ke = 1;
+                }
+            }
+        });
+    }
 }

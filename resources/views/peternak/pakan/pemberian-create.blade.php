@@ -227,7 +227,14 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Jenis Pakan</label>
-                    <input type="text" name="nama_pakan" class="form-control" placeholder="Contoh: Rumput Gajah" required>
+                    <input type="text" name="nama_pakan" class="form-control" list="pakanList" placeholder="Pilih atau ketik jenis pakan..." required autocomplete="off">
+                    <datalist id="pakanList">
+                        <option value="Rumput Gajah">
+                        <option value="Singkong">
+                        <option value="Ampas Tahu">
+                        <option value="Konsentrat">
+                        <option value="Jerami">
+                    </datalist>
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Jumlah Pemberian</label>

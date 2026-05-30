@@ -264,8 +264,8 @@
                         <input type="date" name="tanggal_mulai" class="form-control" value="{{ $siklus->tanggal_mulai }}" required>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">Hari Ke</label>
-                        <input type="number" name="hari_ke" class="form-control" value="{{ $siklus->hari_ke }}">
+                        <label class="form-label">Hari Ke (Otomatis)</label>
+                        <input type="number" name="hari_ke" id="hari_ke_input" class="form-control" value="{{ $siklus->hari_ke }}" readonly>
                     </div>
                     <div class="mb-2">
                         <label class="form-label">Status</label>
@@ -354,6 +354,31 @@
                 inputSusuFields.style.display = 'block';
                 setTimeout(adjustIframeHeight, 100);
             }
+        }
+
+        // Auto-update Hari Ke based on Tanggal Mulai
+        const tanggalMulaiInput = document.querySelector('input[name="tanggal_mulai"]');
+        const hariKeInput = document.getElementById('hari_ke_input');
+
+        function updateHariKe() {
+            if (!tanggalMulaiInput || !hariKeInput) return;
+            const startVal = tanggalMulaiInput.value;
+            if (startVal) {
+                const startDate = new Date(startVal);
+                startDate.setHours(0,0,0,0);
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                
+                let diffTime = today.getTime() - startDate.getTime();
+                let diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                if (diffDays < 1) diffDays = 1;
+                hariKeInput.value = diffDays;
+            }
+        }
+
+        if (tanggalMulaiInput) {
+            tanggalMulaiInput.addEventListener('change', updateHariKe);
+            updateHariKe();
         }
     </script>
 </body>

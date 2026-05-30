@@ -93,8 +93,53 @@ class PakanController extends Controller
     public function destroy($id)
     {
         $pakan = Pakan::findOrFail($id);
+        
+        if ($pakan->sapi_id !== null) {
+            // Return stock back to stock records
+            $latestStock = Pakan::where('nama_pakan', $pakan->nama_pakan)
+                ->whereNull('sapi_id')
+                ->orderBy('created_at', 'desc')
+                ->first();
+            if ($latestStock) {
+                $latestStock->stok += $pakan->stok;
+                $latestStock->save();
+            } else {
+                Pakan::create([
+                    'nama_pakan' => $pakan->nama_pakan,
+                    'stok' => $pakan->stok,
+                    'satuan' => $pakan->satuan,
+                    'tanggal_pemberian' => now(),
+                    'keterangan' => 'Pengembalian stok dari pembatalan pemberian pakan',
+                ]);
+            }
+        }
+        
         $pakan->delete();
         return redirect()->back()->with('success', 'Data pakan berhasil dihapus!');
+    }
+
+    public function destroyPemberian($id)
+    {
+        $pakan = Pakan::findOrFail($id);
+        // Return stock back to stock records
+        $latestStock = Pakan::where('nama_pakan', $pakan->nama_pakan)
+            ->whereNull('sapi_id')
+            ->orderBy('created_at', 'desc')
+            ->first();
+        if ($latestStock) {
+            $latestStock->stok += $pakan->stok;
+            $latestStock->save();
+        } else {
+            Pakan::create([
+                'nama_pakan' => $pakan->nama_pakan,
+                'stok' => $pakan->stok,
+                'satuan' => $pakan->satuan,
+                'tanggal_pemberian' => now(),
+                'keterangan' => 'Pengembalian stok dari pembatalan pemberian pakan',
+            ]);
+        }
+        $pakan->delete();
+        return redirect()->back()->with('success', 'Log pemberian pakan berhasil dihapus!');
     }
 
     public function createPemberian()
@@ -119,6 +164,33 @@ class PakanController extends Controller
             'stok.min' => 'Jumlah pemberian tidak boleh kurang dari 0.',
             'satuan.required' => 'Satuan wajib dipilih.',
         ]);
+
+        $totalAvailable = Pakan::where('nama_pakan', $request->nama_pakan)->whereNull('sapi_id')->sum('stok');
+        if ($request->stok > $totalAvailable) {
+            return redirect()->back()->withErrors(['stok' => 'Stok pakan tidak mencukupi. Tersedia: ' . $totalAvailable . ' ' . $request->satuan])->withInput();
+        }
+
+        // Deduct using FIFO
+        $amountToDeduct = $request->stok;
+        $stockRecords = Pakan::where('nama_pakan', $request->nama_pakan)
+            ->whereNull('sapi_id')
+            ->where('stok', '>', 0)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        foreach ($stockRecords as $stock) {
+            if ($amountToDeduct <= 0) break;
+            
+            if ($stock->stok >= $amountToDeduct) {
+                $stock->stok -= $amountToDeduct;
+                $stock->save();
+                $amountToDeduct = 0;
+            } else {
+                $amountToDeduct -= $stock->stok;
+                $stock->stok = 0;
+                $stock->save();
+            }
+        }
 
         Pakan::create([
             'sapi_id' => $request->sapi_id,
@@ -160,6 +232,111 @@ class PakanController extends Controller
             'stok.min' => 'Jumlah pemberian tidak boleh kurang dari 0.',
             'satuan.required' => 'Satuan wajib dipilih.',
         ]);
+
+        $oldNamaPakan = $pakan->nama_pakan;
+        $newNamaPakan = $request->nama_pakan;
+        $oldStok = $pakan->stok;
+        $newStok = $request->stok;
+
+        if ($oldNamaPakan !== $newNamaPakan) {
+            // Return old stock to old feed name
+            $latestStockOld = Pakan::where('nama_pakan', $oldNamaPakan)
+                ->whereNull('sapi_id')
+                ->orderBy('created_at', 'desc')
+                ->first();
+            if ($latestStockOld) {
+                $latestStockOld->stok += $oldStok;
+                $latestStockOld->save();
+            } else {
+                Pakan::create([
+                    'nama_pakan' => $oldNamaPakan,
+                    'stok' => $oldStok,
+                    'satuan' => $pakan->satuan,
+                    'tanggal_pemberian' => now(),
+                    'keterangan' => 'Pengembalian karena pergantian jenis pakan',
+                ]);
+            }
+
+            // Deduct new stock from new feed name
+            $totalAvailable = Pakan::where('nama_pakan', $newNamaPakan)->whereNull('sapi_id')->sum('stok');
+            if ($newStok > $totalAvailable) {
+                // Rollback the old feed return first to be safe
+                if ($latestStockOld) {
+                    $latestStockOld->stok -= $oldStok;
+                    $latestStockOld->save();
+                }
+                return redirect()->back()->withErrors(['stok' => 'Stok pakan baru tidak mencukupi. Tersedia: ' . $totalAvailable . ' ' . $request->satuan])->withInput();
+            }
+
+            $amountToDeduct = $newStok;
+            $stockRecords = Pakan::where('nama_pakan', $newNamaPakan)
+                ->whereNull('sapi_id')
+                ->where('stok', '>', 0)
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            foreach ($stockRecords as $stock) {
+                if ($amountToDeduct <= 0) break;
+                
+                if ($stock->stok >= $amountToDeduct) {
+                    $stock->stok -= $amountToDeduct;
+                    $stock->save();
+                    $amountToDeduct = 0;
+                } else {
+                    $amountToDeduct -= $stock->stok;
+                    $stock->stok = 0;
+                    $stock->save();
+                }
+            }
+        } else {
+            // Same feed name, standard diff logic
+            $diff = $newStok - $oldStok;
+            if ($diff > 0) {
+                $totalAvailable = Pakan::where('nama_pakan', $newNamaPakan)->whereNull('sapi_id')->sum('stok');
+                if ($diff > $totalAvailable) {
+                    return redirect()->back()->withErrors(['stok' => 'Stok pakan tidak mencukupi untuk penambahan ini. Tersedia: ' . $totalAvailable])->withInput();
+                }
+                
+                $amountToDeduct = $diff;
+                $stockRecords = Pakan::where('nama_pakan', $newNamaPakan)
+                    ->whereNull('sapi_id')
+                    ->where('stok', '>', 0)
+                    ->orderBy('created_at', 'asc')
+                    ->get();
+
+                foreach ($stockRecords as $stock) {
+                    if ($amountToDeduct <= 0) break;
+                    
+                    if ($stock->stok >= $amountToDeduct) {
+                        $stock->stok -= $amountToDeduct;
+                        $stock->save();
+                        $amountToDeduct = 0;
+                    } else {
+                        $amountToDeduct -= $stock->stok;
+                        $stock->stok = 0;
+                        $stock->save();
+                    }
+                }
+            } elseif ($diff < 0) {
+                $amountToReturn = abs($diff);
+                $latestStock = Pakan::where('nama_pakan', $newNamaPakan)
+                    ->whereNull('sapi_id')
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+                if ($latestStock) {
+                    $latestStock->stok += $amountToReturn;
+                    $latestStock->save();
+                } else {
+                    Pakan::create([
+                        'nama_pakan' => $newNamaPakan,
+                        'stok' => $amountToReturn,
+                        'satuan' => $request->satuan,
+                        'tanggal_pemberian' => now(),
+                        'keterangan' => 'Pengembalian penyesuaian pemberian pakan',
+                    ]);
+                }
+            }
+        }
 
         $pakan->update($request->all());
 

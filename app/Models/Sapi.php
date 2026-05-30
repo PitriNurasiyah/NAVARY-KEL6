@@ -24,6 +24,29 @@ class Sapi extends Model
         'ibu'
     ];
 
+    //menghitung umur sapi
+    public function getUmurAttribute()
+    {
+        if (!$this->tanggal_lahir) {
+            return '-';
+        }
+        $dob = \Carbon\Carbon::parse($this->tanggal_lahir);
+        $diff = $dob->diff(now());
+        
+        $umurStr = '';
+        if ($diff->y > 0) {
+            $umurStr .= $diff->y . ' Tahun ';
+        }
+        if ($diff->m > 0) {
+            $umurStr .= $diff->m . ' Bulan';
+        }
+        if (empty(trim($umurStr))) {
+            $umurStr = $diff->d . ' Hari';
+        }
+        
+        return trim($umurStr);
+    }
+
     public function pemantauanKesehatan()
     {
         return $this->hasMany(PemantauanKesehatan::class);

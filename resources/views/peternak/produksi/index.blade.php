@@ -114,6 +114,13 @@
         }
         .btn-filter:hover { background: #4a6344; transform: translateY(-2px); color: white; }
 
+        .btn-reset {
+            background: #e6d5c0; color: #432118; font-weight: 800; border: none; padding: 12px 25px; border-radius: 12px;
+            box-shadow: 0 4px 0 #c8b7a1; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .btn-reset:hover { background: #dccab3; transform: translateY(-2px); color: #432118; box-shadow: 0 6px 0 #c8b7a1; }
+        .btn-reset:active { transform: translateY(2px); box-shadow: 0 2px 0 #c8b7a1; }
+
         /* Table Section */
         .table-container {
             background: #fffcf7;
@@ -383,9 +390,14 @@
                         <input type="date" name="sampai_tanggal" class="form-control" value="{{ request('sampai_tanggal') }}">
                     </div>
                     <div class="col-md-4 mb-3">
-                        <button type="submit" class="btn btn-filter w-100">
-                            <i class="fa-solid fa-filter me-2"></i> Terapkan Filter
-                        </button>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-filter flex-grow-1">
+                                <i class="fa-solid fa-filter me-2"></i>Filter
+                            </button>
+                            <a href="{{ route('produksi.index') }}" class="btn-reset flex-grow-1">
+                                <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+                            </a>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -405,6 +417,45 @@
             <div class="summary-card">
                 <p>Total Produksi Susu</p>
                 <h2>{{ number_format($totalProduksi, 0, '.', ',') }} Liter</h2>
+            </div>
+        </div>
+        @endif
+
+        @if(Auth::user()->role !== 'Admin' && !empty($laktasiChartData))
+        {{-- Grafik Laktasi Per Sapi --}}
+        <div class="mb-4" style="background:#fffcf7; border-radius:20px; border:1.5px solid #e6d5c0; padding:25px; box-shadow:0 8px 20px rgba(0,0,0,0.02);">
+            <p style="font-weight:700; color:#432118; margin-bottom:14px; font-size:13px; text-transform:uppercase; letter-spacing:.5px;">🐄 Pilih Sapi untuk Melihat Grafik Laktasi:</p>
+            <div class="d-flex flex-wrap gap-2 mb-4" id="sapiTabWrapper">
+                @foreach($laktasiChartData as $i => $chart)
+                <button type="button" onclick="showChart({{ $i }})" id="tabBtn{{ $i }}"
+                    style="padding:8px 18px; border-radius:30px; font-weight:700; font-size:13px; cursor:pointer; border:2px solid {{ $i===0 ? '#5d7a54' : '#d4c2ab' }}; background:{{ $i===0 ? '#5d7a54' : 'transparent' }}; color:{{ $i===0 ? '#fff' : '#432118' }}; transition:.2s;">
+                    🐄 {{ $chart['nama'] }}
+                </button>
+                @endforeach
+            </div>
+
+            <canvas id="laktasiChart" style="max-height:280px;"></canvas>
+
+            {{-- Summary cards hari laktasi --}}
+            <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                    <div style="border:1.5px solid #e6d5c0; border-radius:15px; padding:18px; text-align:center; background:#f9f5ef;">
+                        <div style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px;">HARI 1 – 100 LAKTASI 🌿</div>
+                        <div id="sumH1" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118;">- Liter</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div style="border:1.5px solid #e6d5c0; border-radius:15px; padding:18px; text-align:center; background:#f9f5ef;">
+                        <div style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px;">HARI 101 – 200 LAKTASI 🌿</div>
+                        <div id="sumH2" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118;">- Liter</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div style="border:1.5px solid #e6d5c0; border-radius:15px; padding:18px; text-align:center; background:#f9f5ef;">
+                        <div style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:#845a33; margin-bottom:6px;">HARI 201 – 300 LAKTASI 🌿</div>
+                        <div id="sumH3" style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#432118;">- Liter</div>
+                    </div>
+                </div>
             </div>
         </div>
         @endif
@@ -439,7 +490,7 @@
             </div>
         </div>
 
-        <!-- Tarik Data table-bordered-custom -->
+        <!-- Tabel Data -->
         <div class="table-container">
             <div class="table-responsive">
                 <table class="table align-middle" id="produksiTable">
@@ -507,6 +558,27 @@
             </div>
         </div>
 
+        <!-- Grafik Laktasi Per Sapi -->
+        @if(Auth::user()->role !== 'Admin' && !empty($laktasiChartData))
+        <div class="mt-5">
+            <h4 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; margin-bottom: 20px;">
+                📈 Grafik Produksi Susu Per Sapi (Berdasarkan Hari Laktasi)
+            </h4>
+            <div class="row g-4" id="laktasiCharts">
+                @foreach($laktasiChartData as $i => $chart)
+                <div class="col-md-6">
+                    <div class="table-container" style="padding: 20px;">
+                        <div style="font-weight: 700; color: #432118; font-family: 'Playfair Display', serif; margin-bottom: 12px; font-size: 15px;">
+                            🐄 {{ $chart['nama'] }}
+                        </div>
+                        <canvas id="chartSapi{{ $i }}" style="max-height: 220px;"></canvas>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
     </div>
 
     <!-- Confirm Delete Modal Overlay -->
@@ -537,6 +609,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
         // Instant search
         document.getElementById('searchInput').addEventListener('input', function() {
@@ -608,6 +681,85 @@
                 setTimeout(() => notif.remove(), 500);
             }, 5000);
         }
+
+        // Inisialisasi Grafik Laktasi Per Sapi (Tab)
+        @if(Auth::user()->role !== 'Admin' && !empty($laktasiChartData))
+        const laktasiCharts = @json($laktasiChartData);
+        let activeChart = null;
+        let currentIdx = 0;
+
+        function showChart(idx) {
+            currentIdx = idx;
+            // Update tab buttons
+            laktasiCharts.forEach((_, i) => {
+                const btn = document.getElementById('tabBtn' + i);
+                if (!btn) return;
+                if (i === idx) {
+                    btn.style.background = '#5d7a54';
+                    btn.style.color = '#fff';
+                    btn.style.borderColor = '#5d7a54';
+                } else {
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#432118';
+                    btn.style.borderColor = '#d4c2ab';
+                }
+            });
+
+            const chart = laktasiCharts[idx];
+            const data = chart.data.map(Number);
+            const labels = chart.labels;
+
+            // Update or create chart
+            const ctx = document.getElementById('laktasiChart').getContext('2d');
+            if (activeChart) {
+                activeChart.data.labels = labels;
+                activeChart.data.datasets[0].data = data;
+                activeChart.update();
+            } else {
+                activeChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Total Produksi (Liter)',
+                            data: data,
+                            backgroundColor: 'rgba(93,122,84,0.65)',
+                            borderColor: 'rgba(93,122,84,1)',
+                            borderWidth: 1.5,
+                            borderRadius: 6,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: c => c.parsed.y + ' L' } }
+                        },
+                        scales: {
+                            x: { ticks: { font: { size: 10 }, maxTicksLimit: 15 }, grid: { color: 'rgba(0,0,0,0.04)' } },
+                            y: { beginAtZero: true, ticks: { font: { size: 11 }, callback: v => v + ' L' }, grid: { color: 'rgba(0,0,0,0.04)' } }
+                        }
+                    }
+                });
+            }
+
+            // Hitung summary hari laktasi (label "Hari N")
+            let s1 = 0, s2 = 0, s3 = 0;
+            labels.forEach((lbl, i) => {
+                const hari = parseInt(lbl.replace('Hari ', '')) || (i + 1);
+                const val = data[i] || 0;
+                if (hari <= 100) s1 += val;
+                else if (hari <= 200) s2 += val;
+                else s3 += val;
+            });
+            document.getElementById('sumH1').textContent = s1.toFixed(2) + ' Liter';
+            document.getElementById('sumH2').textContent = s2.toFixed(2) + ' Liter';
+            document.getElementById('sumH3').textContent = s3.toFixed(2) + ' Liter';
+        }
+
+        // Show first chart on load
+        if (laktasiCharts.length > 0) showChart(0);
+        @endif
     </script>
 </body>
 </html>
