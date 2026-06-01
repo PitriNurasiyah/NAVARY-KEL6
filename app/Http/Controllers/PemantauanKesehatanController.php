@@ -16,6 +16,23 @@ class PemantauanKesehatanController extends Controller
         return view('biodatasapi.kesehatan', compact('sapi', 'kesehatan'));
     }
 
+    /**
+     * Tentukan status kesehatan sapi secara otomatis berdasarkan kondisi.
+     */
+    private function resolveStatusFromKondisi(string $kondisi): string
+    {
+        $kondisiLower = strtolower(trim($kondisi));
+        $kondisiSakit = ['sakit', 'demam', 'mastitis', 'kembung', 'luka', 'pincang'];
+
+        if ($kondisiLower === 'sehat') {
+            return 'Sehat';
+        } elseif (in_array($kondisiLower, $kondisiSakit)) {
+            return 'Sakit';
+        } else {
+            return 'Perlu Perhatian';
+        }
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -24,7 +41,6 @@ class PemantauanKesehatanController extends Controller
             'kondisi_sekarang' => 'required|string|max:255',
             'tindakan_perawatan' => 'nullable|string|max:255',
             'catatan_perkembangan' => 'nullable|string',
-            'update_status_sapi' => 'nullable|string|max:255'
         ]);
 
         PemantauanKesehatan::create([
@@ -35,9 +51,10 @@ class PemantauanKesehatanController extends Controller
             'catatan_perkembangan' => $request->catatan_perkembangan
         ]);
 
-        if ($request->has('update_status_sapi') && $request->update_status_sapi) {
-            $sapi = Sapi::find($request->sapi_id);
-            $sapi->status_kesehatan = $request->update_status_sapi;
+        // Auto-update status sapi berdasarkan kondisi
+        $sapi = Sapi::find($request->sapi_id);
+        if ($sapi) {
+            $sapi->status_kesehatan = $this->resolveStatusFromKondisi($request->kondisi_sekarang);
             $sapi->save();
         }
 
@@ -51,7 +68,6 @@ class PemantauanKesehatanController extends Controller
             'kondisi_sekarang' => 'required|string|max:255',
             'tindakan_perawatan' => 'nullable|string|max:255',
             'catatan_perkembangan' => 'nullable|string',
-            'update_status_sapi' => 'nullable|string|max:255'
         ]);
 
         $log = PemantauanKesehatan::findOrFail($id);
@@ -62,12 +78,11 @@ class PemantauanKesehatanController extends Controller
             'catatan_perkembangan' => $request->catatan_perkembangan
         ]);
 
-        if ($request->has('update_status_sapi') && $request->update_status_sapi) {
-            $sapi = Sapi::find($log->sapi_id);
-            if ($sapi) {
-                $sapi->status_kesehatan = $request->update_status_sapi;
-                $sapi->save();
-            }
+        // Auto-update status sapi berdasarkan kondisi
+        $sapi = Sapi::find($log->sapi_id);
+        if ($sapi) {
+            $sapi->status_kesehatan = $this->resolveStatusFromKondisi($request->kondisi_sekarang);
+            $sapi->save();
         }
 
         return redirect()->back()->with('success', 'Log kesehatan berhasil diperbarui!');

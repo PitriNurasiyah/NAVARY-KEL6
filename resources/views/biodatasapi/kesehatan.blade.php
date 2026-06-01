@@ -225,7 +225,12 @@
         <div class="page-title-section">
             <div>
                 <h3>Riwayat Kesehatan: {{ $sapi->nama }} ({{ $sapi->kode_sapi }}) 🩺</h3>
-                <p>Status saat ini: <span class="badge {{ strtolower($sapi->status_kesehatan) == 'sehat' ? 'bg-success' : 'bg-danger' }}">{{ $sapi->status_kesehatan }}</span></p>
+                <p>Status saat ini: 
+                    <span class="badge {{ strtolower($sapi->status_kesehatan) == 'sehat' ? 'bg-success' : 
+                        (strtolower($sapi->status_kesehatan) == 'sakit' ? 'bg-danger' : 'bg-warning text-dark') }}">
+                        {{ $sapi->status_kesehatan }}
+                    </span>
+                </p>
             </div>
         </div>
 
@@ -272,17 +277,17 @@
                                 @forelse($kesehatan as $log)
                                 @php
                                     $kondisi = strtolower($log->kondisi_sekarang);
-                                    $statusColor = match(true) {
-                                        $kondisi === 'sehat'                => ['bg' => '#dcfce7', 'color' => '#166534', 'border' => '#22c55e'],
-                                        in_array($kondisi, ['sakit','demam','mastitis','kembung','luka','pincang']) => ['bg' => '#fee2e2', 'color' => '#991b1b', 'border' => '#ef4444'],
-                                        $kondisi === 'kurang nafsu makan'   => ['bg' => '#fef9c3', 'color' => '#713f12', 'border' => '#eab308'],
-                                        default                             => ['bg' => '#f3f4f6', 'color' => '#374151', 'border' => '#9ca3af'],
-                                    };
-                                    $statusLabel = match(true) {
-                                        $kondisi === 'sehat'                => 'Sehat',
-                                        in_array($kondisi, ['sakit','demam','mastitis','kembung','luka','pincang','kurang nafsu makan']) => 'Sakit',
-                                        default                             => 'Perlu Perhatian',
-                                    };
+                                    $kondisiSakit = ['sakit','demam','mastitis','kembung','luka','pincang'];
+                                    if ($kondisi === 'sehat') {
+                                        $statusBg    = '#22c55e';
+                                        $statusLabel = 'Sehat';
+                                    } elseif (in_array($kondisi, $kondisiSakit)) {
+                                        $statusBg    = '#ef4444';
+                                        $statusLabel = 'Sakit';
+                                    } else {
+                                        $statusBg    = '#f59e0b';
+                                        $statusLabel = 'Perlu Perhatian';
+                                    }
                                 @endphp
                                 <tr>
                                     <td style="white-space: nowrap;">{{ \Carbon\Carbon::parse($log->tanggal)->format('d M Y') }}</td>
@@ -290,7 +295,8 @@
                                     <td>{{ $log->tindakan_perawatan ?? '-' }}</td>
                                     <td>{{ $log->catatan_perkembangan ?? '-' }}</td>
                                     <td>
-                                        <span style="display:inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; background: {{ $statusColor['bg'] }}; color: {{ $statusColor['color'] }}; border: 1.5px solid {{ $statusColor['border'] }};">
+                                        <span class="badge {{ $statusLabel == 'Sehat' ? 'bg-success' : 
+                                            ($statusLabel == 'Sakit' ? 'bg-danger' : 'bg-warning text-dark') }}">
                                             {{ $statusLabel }}
                                         </span>
                                     </td>
@@ -393,16 +399,6 @@
                                 <textarea name="catatan_perkembangan" class="form-control" rows="3" placeholder="Tambahkan detail jika ada..."></textarea>
                             </div>
 
-                            <div class="mb-4">
-                                <label class="form-label">Update Status Sapi</label>
-                                <select name="update_status_sapi" class="form-select">
-                                    <option value="">-- Jangan Ubah Status --</option>
-                                    <option value="Sehat">Sehat</option>
-                                    <option value="Sakit">Sakit</option>
-                                    <option value="Karantina">Karantina</option>
-                                </select>
-                            </div>
-
                             <div class="position-relative mt-4">
                                 <img src="{{ asset('img/farm.png') }}" class="barn-icon" alt="barn">
                                 <div class="d-flex gap-2">
@@ -479,16 +475,6 @@
                             <div class="mb-2">
                                 <label class="form-label">Catatan Perkembangan</label>
                                 <textarea name="catatan_perkembangan" id="edit_catatan_perkembangan" class="form-control" rows="3"></textarea>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label">Update Status Sapi</label>
-                                <select name="update_status_sapi" id="edit_update_status_sapi" class="form-select">
-                                    <option value="">-- Jangan Ubah Status --</option>
-                                    <option value="Sehat">Sehat</option>
-                                    <option value="Sakit">Sakit</option>
-                                    <option value="Karantina">Karantina</option>
-                                </select>
                             </div>
 
                             <div class="position-relative mt-4">
@@ -681,8 +667,6 @@
                 }
 
                 document.getElementById('edit_catatan_perkembangan').value = catatan;
-                const statusEl = document.getElementById('edit_update_status_sapi');
-                if (statusEl) statusEl.value = '';
             });
         });
 

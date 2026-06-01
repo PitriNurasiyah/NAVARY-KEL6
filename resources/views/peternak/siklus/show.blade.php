@@ -114,7 +114,7 @@
                 <p>ID: {{ $sapi->kode_sapi }} | Umur: {{ $sapi->umur ?? '-' }}</p>
     </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <a href="#" class="btn-back"><i class="fa-solid fa-arrow-left me-2"></i>Kembali</a>
+                <a href="{{ route('siklus.index') }}" class="btn-back"><i class="fa-solid fa-arrow-left me-2"></i>Kembali</a>
             </div>
         </div>
 
