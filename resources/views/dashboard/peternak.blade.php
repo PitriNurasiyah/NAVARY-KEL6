@@ -283,50 +283,10 @@
             <h3>Hallo, {{ Auth::user()->name ?? 'Peternak' }}! 🐄</h3>
             <p>Selamat datang kembali di dashboard peternak.</p>
         </div>
-
-        @if($alerts->count() > 0)
-        <div class="task-board-container">
-            <div class="task-board-header">
-                <div class="task-board-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                <div class="task-board-title-group">
-                    <h4>Jadwal & Tugas Hari Ini</h4>
-                    <p>Daftar fase siklus sapi yang memerlukan tindakan hari ini</p>
-                </div>
-                <span class="badge bg-custom-green px-3 py-2 rounded-pill ms-auto" style="font-weight: 700; font-size: 12px;">
-                    {{ $alerts->count() }} Tugas
-                </span>
-            </div>
-            <div class="row g-3">
-                @foreach($alerts as $alert)
-                    <div class="col-md-6">
-                        <div class="task-item-card">
-                            <div class="task-item-indicator" style="background-color: {{ $alert->fase === 'Kering' ? '#5d7a54' : ($alert->fase === 'Melahirkan' ? '#c0392b' : '#845a33') }};"></div>
-                            <div class="task-item-icon-circle">
-                                <i class="fa-solid fa-cow" style="color: {{ $alert->fase === 'Kering' ? '#5d7a54' : ($alert->fase === 'Melahirkan' ? '#c0392b' : '#845a33') }};"></i>
-                            </div>
-                            <div class="task-item-info">
-                                <h5>{{ $alert->sapi->nama ?? 'Sapi' }}</h5>
-                                <span class="task-item-code">{{ $alert->sapi->kode_sapi }}</span>
-                                <div class="task-item-action mt-2">
-                                    @if($alert->tanggal_mulai == date('Y-m-d'))
-                                        <span class="badge badge-action-start"><i class="fa-solid fa-play me-1"></i> Mulai Fase {{ $alert->fase }}</span>
-                                    @else
-                                        <span class="badge badge-action-end"><i class="fa-solid fa-flag-checkered me-1"></i> Selesai Fase {{ $alert->fase }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        @else
         <div class="notification-bar">
             <span class="notification-icon-wrapper"><i class="fa-solid fa-circle-info"></i></span>
             <div>Tidak ada jadwal khusus untuk hari ini. Tetap semangat bekerja!</div>
         </div>
-        @endif
-
         <!-- Cards Section -->
         <div class="cards-wrapper mb-4">
             <div class="stat-card flex-shrink-0" style="width: 280px;">

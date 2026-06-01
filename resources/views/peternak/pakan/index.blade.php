@@ -241,7 +241,7 @@
                         <td>{{ $index + 1 }}</td>
                         <td class="fw-bold">{{ $item->nama_pakan }}</td>
                         <td>{{ $item->tanggal_pemberian ? \Carbon\Carbon::parse($item->tanggal_pemberian)->format('d M Y') : '-' }}</td>
-                        <td>{{ $item->stok }} {{ $item->satuan }}</td>
+                        <td>{{ $item->stok_awal }} {{ $item->satuan }}</td>
                         <td>{{ $item->keterangan ?? '-' }}</td>
                         @if(Auth::user()->role === 'Peternak')
                         <td class="text-center">

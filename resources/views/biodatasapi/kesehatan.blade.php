@@ -10,6 +10,7 @@
 
     <style>
         body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
+        .badge.bg-warning { background-color: #f59e0b !important; color: #ffffff !important; }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
 
@@ -227,7 +228,7 @@
                 <h3>Riwayat Kesehatan: {{ $sapi->nama }} ({{ $sapi->kode_sapi }}) 🩺</h3>
                 <p>Status saat ini: 
                     <span class="badge {{ strtolower($sapi->status_kesehatan) == 'sehat' ? 'bg-success' : 
-                        (strtolower($sapi->status_kesehatan) == 'sakit' ? 'bg-danger' : 'bg-warning text-dark') }}">
+                        (strtolower($sapi->status_kesehatan) == 'sakit' ? 'bg-danger' : 'bg-warning text-white') }}">
                         {{ $sapi->status_kesehatan }}
                     </span>
                 </p>
@@ -296,7 +297,7 @@
                                     <td>{{ $log->catatan_perkembangan ?? '-' }}</td>
                                     <td>
                                         <span class="badge {{ $statusLabel == 'Sehat' ? 'bg-success' : 
-                                            ($statusLabel == 'Sakit' ? 'bg-danger' : 'bg-warning text-dark') }}">
+                                            ($statusLabel == 'Sakit' ? 'bg-danger' : 'bg-warning text-white') }}">
                                             {{ $statusLabel }}
                                         </span>
                                     </td>

@@ -35,6 +35,7 @@ class DashboardPeternakController extends Controller
 
         // 5. Data Grafik Stok Pakan
         $pakanData = \App\Models\Pakan::select('nama_pakan', \DB::raw('SUM(stok) as total_stok'))
+            ->whereNull('sapi_id')
             ->groupBy('nama_pakan')
             ->get();
 
@@ -45,9 +46,11 @@ class DashboardPeternakController extends Controller
         // 6. Data Grafik Produksi Susu Harian (7 Hari Terakhir)
         $produksiData = \App\Models\ProduksiSusu::select('tanggal', \DB::raw('SUM(total) as total_produksi'))
             ->groupBy('tanggal')
-            ->orderBy('tanggal', 'asc')
+            ->orderBy('tanggal', 'desc')
             ->take(7)
-            ->get();
+            ->get()
+            ->sortBy('tanggal')
+            ->values();
 
         return view('dashboard.peternak', compact(
             'totalSapi', 'tugasInput', 'totalProduksi', 'alerts', 'pakanData', 'produksiData', 'totalStok', 'totalDigunakan'

@@ -15,6 +15,7 @@ class Pakan extends Model
         'sapi_id',
         'nama_pakan',
         'stok',
+        'stok_awal',
         'satuan',
         'tanggal_pemberian',
         'keterangan'

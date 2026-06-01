@@ -48,6 +48,7 @@ class PakanController extends Controller
         Pakan::create([
             'nama_pakan' => $request->nama_pakan,
             'stok' => $request->stok,
+            'stok_awal' => $request->stok,
             'satuan' => $request->satuan,
             'tanggal_pemberian' => $request->tanggal_pemberian ?? now(),
             'keterangan' => $request->keterangan,
@@ -81,7 +82,11 @@ class PakanController extends Controller
             'satuan.required' => 'Satuan wajib dipilih.',
         ]);
 
-        $pakan->update($request->all());
+        $data = $request->all();
+        if ($pakan->sapi_id === null) {
+            $data['stok_awal'] = $request->stok;
+        }
+        $pakan->update($data);
 
         if ($request->input('mode') === 'modal') {
             return redirect()->back()->with('success', 'Data pakan berhasil diperbarui!');
@@ -196,6 +201,7 @@ class PakanController extends Controller
             'sapi_id' => $request->sapi_id,
             'nama_pakan' => $request->nama_pakan,
             'stok' => $request->stok,
+            'stok_awal' => $request->stok,
             'satuan' => $request->satuan,
             'tanggal_pemberian' => $request->tanggal_pemberian ?? now(),
             'keterangan' => $request->keterangan,
