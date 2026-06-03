@@ -261,10 +261,10 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
-                        <input type="date" name="tanggal_mulai" class="form-control" value="{{ $siklus->tanggal_mulai }}" required>
+                        <input type="date" name="tanggal_mulai" class="form-control" value="{{ $siklus->tanggal_mulai }}" readonly required>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label">Hari Ke (Otomatis)</label>
+                        <label class="form-label">Hari Ke</label>
                         <input type="number" name="hari_ke" id="hari_ke_input" class="form-control" value="{{ $siklus->hari_ke }}" readonly>
                     </div>
                     <div class="mb-2">

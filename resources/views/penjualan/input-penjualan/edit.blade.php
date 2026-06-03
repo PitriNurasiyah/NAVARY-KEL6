@@ -264,7 +264,7 @@
                     
                     <div class="mb-2">
                         <label class="form-label">Tanggal <span class="text-danger">*</span></label>
-                        <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', $item->tanggal) }}" required>
+                        <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', $item->tanggal) }}" readonly required>
                     </div>
 
                     <div class="mb-2">

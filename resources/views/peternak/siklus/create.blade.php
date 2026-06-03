@@ -251,14 +251,14 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
-                    <input type="date" name="tanggal_mulai" class="form-control" value="{{ date('Y-m-d') }}" required>
+                    <input type="date" name="tanggal_mulai" class="form-control" value="{{ date('Y-m-d') }}" readonly required>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Hari Ke (Otomatis)</label>
+                    <label class="form-label">Hari Ke</label>
                     <input type="number" name="hari_ke" id="hari_ke_input" class="form-control" placeholder="1" readonly>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Estimasi Selesai (Otomatis)</label>
+                    <label class="form-label">Estimasi Selesai</label>
                     <input type="date" name="estimasi_selesai" id="estimasi_selesai_input" class="form-control" readonly>
                 </div>
                 <div class="mb-4">

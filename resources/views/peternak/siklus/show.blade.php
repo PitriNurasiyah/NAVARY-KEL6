@@ -232,7 +232,6 @@
                         <div class="text-end">
                             <span class="status-badge {{ $sik->status == 'Selesai' ? 'bg-success text-white' : ($sik->status == 'Batal' ? 'bg-danger text-white' : 'bg-warning text-dark') }} d-inline-block mb-2">{{ $sik->status }}</span>
                             <div class="d-flex gap-2 justify-content-end">
-                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('siklus.edit', $sik->id) }}" style="border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: bold; border-color: #bc9f82; color: #432118;"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                 <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete('{{ route('siklus.destroy', $sik->id) }}', '{{ $sik->fase }}')" style="border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: bold;"><i class="fa-solid fa-trash"></i> Hapus</button>
                             </div>
                         </div>

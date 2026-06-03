@@ -242,7 +242,7 @@
 
                     <div class="mb-2">
                         <label class="form-label">Tanggal <span class="text-danger">*</span></label>
-                        <input type="date" name="tanggal" class="form-control" value="{{ $produksi->tanggal }}" required>
+                        <input type="date" name="tanggal" class="form-control" value="{{ $produksi->tanggal }}" readonly required>
                     </div>
 
                     <div class="mb-2">

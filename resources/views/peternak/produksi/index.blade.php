@@ -492,12 +492,6 @@
         </div>
 
         <!-- Filter Active Indicator -->
-        <div id="tableFilterIndicator" class="d-none align-items-center gap-2 mb-3 px-3 py-2" style="background: rgba(93, 122, 84, 0.1); border: 1.5px solid rgba(93, 122, 84, 0.2); border-radius: 12px; font-size: 14px; font-weight: 700; color: #4a6344; transition: all 0.3s ease;">
-            <span><i class="fa-solid fa-filter me-1"></i> Filter Aktif: <strong id="filterText">Sapi: -, Rentang: -</strong></span>
-            <button onclick="resetTableFilters()" class="btn btn-sm btn-link p-0 ms-auto text-decoration-none fw-bold" style="color: #c0392b; font-size: 13px; border: none; background: none;">
-                <i class="fa-solid fa-xmark me-1"></i> Bersihkan Filter
-            </button>
-        </div>
 
         <!-- Tabel Data -->
         <div class="table-container">

@@ -242,7 +242,7 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Tanggal Pemberian</label>
-                    <input type="date" name="tanggal_pemberian" class="form-control" value="{{ date('Y-m-d') }}">
+                    <input type="date" name="tanggal_pemberian" class="form-control" value="{{ date('Y-m-d') }}" readonly>
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Jumlah Pemberian <span class="text-danger">*</span></label>

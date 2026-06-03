@@ -229,7 +229,7 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Tanggal <span class="text-danger">*</span></label>
-                    <input type="date" name="tanggal" class="form-control" value="{{ date('Y-m-d') }}" required>
+                    <input type="date" name="tanggal" class="form-control" value="{{ date('Y-m-d') }}" readonly required>
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Hasil Pagi (Liter) <span class="text-danger"></span></label>
