@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Penjualan Bulanan - Cimilk Yogurt</title>
+    <title>Grafik Laporan - Cimilk Yogurt</title>
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
@@ -59,7 +59,7 @@
         }
         .summary-card p { margin: 0; font-weight: 700; color: #6d4c41; font-size: 15px; }
         .summary-card h2 { margin: 10px 0 0; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 32px; color: #432118; }
-        
+
         /* Table Section */
         .table-container {
             background: #fffcf7;
@@ -173,37 +173,37 @@
             .page-title-section, .summary-wrapper, .mt-3, .toggle-group {
                 display: none !important;
             }
-            body { 
-                background: white !important; 
-                padding: 0 !important; 
-                margin: 0 !important; 
-                font-family: 'Plus Jakarta Sans', sans-serif !important; 
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-family: 'Plus Jakarta Sans', sans-serif !important;
                 color: #432118 !important;
             }
             .main-content { margin: 0 !important; width: 100% !important; padding: 10px 20px !important; }
             .table-container { border: none !important; border-radius: 0 !important; margin-top: 15px !important; padding: 0 !important; }
-            .table { 
-                border: 1px solid #a0a0a0 !important; 
-                width: 100% !important; 
-                border-collapse: collapse !important; 
+            .table {
+                border: 1px solid #a0a0a0 !important;
+                width: 100% !important;
+                border-collapse: collapse !important;
             }
-            .table thead th { 
-                background-color: #5d7a54 !important; 
-                color: #ffffff !important; 
-                border: 1px solid #a0a0a0 !important; 
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; 
-                padding: 8px !important; 
-                font-size: 11px; 
+            .table thead th {
+                background-color: #5d7a54 !important;
+                color: #ffffff !important;
+                border: 1px solid #a0a0a0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 8px !important;
+                font-size: 11px;
                 text-align: center !important;
             }
-            .table tbody td { 
-                border: 1px solid #a0a0a0 !important; 
-                color: #432118 !important; 
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; 
-                padding: 8px !important; 
-                font-size: 11px; 
+            .table tbody td {
+                border: 1px solid #a0a0a0 !important;
+                color: #432118 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 8px !important;
+                font-size: 11px;
             }
             .table tbody td .badge {
                 background: transparent !important;
@@ -213,7 +213,7 @@
                 font-weight: bold !important;
                 font-size: 11px !important;
             }
-            
+
             .table tfoot {
                 display: table-footer-group !important;
             }
@@ -228,7 +228,7 @@
                 font-weight: bold !important;
                 background-color: #f5efe6 !important;
             }
-            
+
             /* Print Layout Styling */
             .print-header-layout {
                 display: block !important;
@@ -262,7 +262,7 @@
                 padding-bottom: 10px;
                 margin-bottom: 15px;
             }
-            
+
             .print-title {
                 text-align: center;
                 font-family: 'Playfair Display', serif;
@@ -271,7 +271,7 @@
                 margin-bottom: 5px;
                 text-transform: uppercase;
             }
-            
+
             .print-meta {
                 display: flex;
                 justify-content: space-between;
@@ -280,7 +280,7 @@
                 padding-bottom: 5px;
                 margin-bottom: 15px;
             }
-            
+
             .print-signature-layout {
                 display: block !important;
                 margin-top: 30px;
@@ -486,9 +486,9 @@
         function exportToExcel(tableId, filename, titleText, periodText, callback) {
             const workbook = new ExcelJS.Workbook();
             const worksheet = workbook.addWorksheet('Laporan');
-            
+
             const table = document.getElementById(tableId);
-            
+
             // 1. Add Kop Surat
             worksheet.addRow(["CIMILK DAIRY FARM"]);
             worksheet.addRow(["Pengolahan & Produksi Susu Segar Murni & Yogurt Premium"]);
@@ -498,7 +498,7 @@
             worksheet.addRow([titleText]);
             worksheet.addRow([periodText]);
             worksheet.addRow([]);
-            
+
             // 2. Add Table Headers
             const ths = table.querySelectorAll("thead th");
             const headerRow = [];
@@ -511,21 +511,21 @@
             });
             const colCount = headerRow.length;
             worksheet.addRow(headerRow);
-            
+
             // Helper function to clean numeric values and return float or clean string
             function cleanVal(val) {
                 if (val === undefined || val === null) return "";
                 let clean = val.replace(/\s+/g, ' ').trim();
                 if (clean === "") return "";
-                
+
                 let isCurr = clean.startsWith('Rp');
                 let isLit = clean.toLowerCase().endsWith(' liter') || clean.toLowerCase().endsWith(' l');
-                
+
                 if (isCurr || isLit) {
                     let numericPart = clean.replace(/[^\d.,-]/g, '');
                     let dotCount = (numericPart.match(/\./g) || []).length;
                     let commaCount = (numericPart.match(/,/g) || []).length;
-                    
+
                     if (dotCount > 0 && commaCount > 0) {
                         if (numericPart.indexOf(',') < numericPart.indexOf('.')) {
                             numericPart = numericPart.replace(/,/g, '');
@@ -547,29 +547,29 @@
                             numericPart = numericPart.replace(',', '.');
                         }
                     }
-                    
+
                     let num = parseFloat(numericPart);
                     if (!isNaN(num)) return num;
                 }
-                
+
                 let num = parseFloat(clean.replace(/\./g, '').replace(',', '.'));
                 let standardNum = parseFloat(clean);
                 if (!isNaN(standardNum) && String(standardNum) === clean) return standardNum;
                 if (!isNaN(num) && /^\d+$/.test(clean.replace(/[.,]/g, ''))) return num;
-                
+
                 return clean;
             }
-            
+
             // 3. Add Table Body and Footer Rows dynamically handling colspan
             let currentRowNum = 10;
-            
+
             function addTableRows(trs) {
                 trs.forEach(function(tr) {
                     if (tr.id === 'noDataRow' || tr.id === 'tempNoDataRow') return;
                     const rowData = [];
                     const merges = [];
                     let currentCol = 1;
-                    
+
                     const tds = tr.querySelectorAll("td, th");
                     tds.forEach(function(td) {
                         const span = td.colSpan || 1;
@@ -585,7 +585,7 @@
                         }
                         currentCol += span;
                     });
-                    
+
                     worksheet.addRow(rowData);
                     merges.forEach(m => {
                         worksheet.mergeCells(m.s.r, m.s.c, m.e.r, m.e.c);
@@ -593,22 +593,22 @@
                     currentRowNum++;
                 });
             }
-            
+
             // Add body and footer rows
             addTableRows(table.querySelectorAll("tbody tr"));
             const bodyEndRowNum = currentRowNum - 1;
             addTableRows(table.querySelectorAll("tfoot tr"));
-            
+
             // 5. Add Signature
             const dateStr = "Subang, " + new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
             const sigCol = colCount > 2 ? colCount - 2 : 1;
             const lastRow = worksheet.lastRow.number;
-            
+
             worksheet.getCell(lastRow + 2, sigCol + 1).value = dateStr;
             worksheet.getCell(lastRow + 3, sigCol + 1).value = "Mengetahui,";
             worksheet.getCell(lastRow + 4, sigCol + 1).value = "Admin Cimilk Yogurt";
             worksheet.getCell(lastRow + 8, sigCol + 1).value = "( ____________________ )";
-            
+
             // Merging cells for Kop & Title
             worksheet.mergeCells(1, 1, 1, colCount);
             worksheet.mergeCells(2, 1, 2, colCount);
@@ -616,7 +616,7 @@
             worksheet.mergeCells(4, 1, 4, colCount);
             worksheet.mergeCells(6, 1, 6, colCount);
             worksheet.mergeCells(7, 1, 7, colCount);
-            
+
             // 6. STYLING THE SHEET
             // Font Calibri for the entire sheet
             worksheet.eachRow(row => {
@@ -624,13 +624,13 @@
                     cell.font = { name: 'Calibri', size: 11, color: { argb: 'FF432118' } };
                 });
             });
-            
+
             // Kop 1: CIMILK DAIRY FARM
             const r1 = worksheet.getRow(1);
             r1.height = 25;
             r1.getCell(1).font = { name: 'Calibri', size: 16, bold: true, color: { argb: 'FF4A6344' } };
             r1.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
-            
+
             // Kop 2-4: Tagline, Address, Contact
             for (let i = 2; i <= 4; i++) {
                 const r = worksheet.getRow(i);
@@ -642,19 +642,19 @@
             worksheet.getRow(4).eachCell(cell => {
                 cell.border = { bottom: { style: 'double', color: { argb: 'FF000000' } } };
             });
-            
+
             // Title row 6
             const r6 = worksheet.getRow(6);
             r6.height = 22;
             r6.getCell(1).font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FF432118' } };
             r6.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
-            
+
             // Period row 7
             const r7 = worksheet.getRow(7);
             r7.height = 18;
             r7.getCell(1).font = { name: 'Calibri', size: 10, italic: true, color: { argb: 'FF6D4C41' } };
             r7.getCell(1).alignment = { horizontal: 'center', vertical: 'middle' };
-            
+
             // Table Header Row 9 (Green theme background)
             const headerRowObj = worksheet.getRow(9);
             headerRowObj.height = 28;
@@ -674,17 +674,17 @@
                     right: { style: 'thin', color: { argb: 'FF000000' } }
                 };
             }
-            
+
             // Format Table Data & Footer rows
             for (let r = 10; r < currentRowNum; r++) {
                 const row = worksheet.getRow(r);
                 row.height = 20;
                 const isFooter = (r > bodyEndRowNum);
                 const isEven = (r % 2 === 0);
-                
+
                 for (let c = 1; c <= colCount; c++) {
                     const cell = row.getCell(c);
-                    
+
                     if (isFooter) {
                         cell.font = { name: 'Calibri', size: 11, bold: true, color: { argb: 'FF432118' } };
                         cell.fill = {
@@ -713,14 +713,14 @@
                             right: { style: 'thin', color: { argb: 'FFBFBFBF' } }
                         };
                     }
-                    
+
                     let val = cell.value;
                     if (typeof val === 'number') {
                         cell.alignment = { horizontal: 'right', vertical: 'middle' };
                         const colHeader = (headerRow[c - 1] || '').toLowerCase();
                         const isCurrency = colHeader.includes('harga') || colHeader.includes('satuan') || colHeader.includes('pendapatan') || colHeader.includes('omzet');
                         const isVolume = colHeader.includes('volume') || colHeader.includes('liter') || colHeader.includes('pagi') || colHeader.includes('sore') || colHeader.includes('jumlah') || colHeader.includes('total harian') || colHeader.includes('total volume');
-                        
+
                         if (isCurrency) {
                             cell.numFmt = '"Rp "#,##0';
                         } else if (isVolume) {
@@ -742,7 +742,7 @@
                     }
                 }
             }
-            
+
             // Auto-fit column widths (only using headers & table data from row 9 down)
             worksheet.columns.forEach((column, i) => {
                 let maxLength = 10;
@@ -773,7 +773,7 @@
                 });
                 column.width = maxLength < 10 ? 12 : maxLength + 4;
             });
-            
+
             // Write buffer and download
             workbook.xlsx.writeBuffer().then(function(buffer) {
                 const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -782,11 +782,11 @@
                 anchor.href = url;
                 anchor.download = filename + '.xlsx';
                 anchor.click();
-                
+
                 setTimeout(function() {
                     window.URL.revokeObjectURL(url);
                 }, 3000);
-                
+
                 if (typeof callback === 'function') {
                     callback();
                 }
@@ -823,7 +823,7 @@
 
         function renderChart(labels, volumeData, revenueData) {
             const ctx = document.getElementById('trenPenjualanChart').getContext('2d');
-            
+
             if (currentChart) {
                 currentChart.destroy();
             }

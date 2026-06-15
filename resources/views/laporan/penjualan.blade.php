@@ -378,6 +378,7 @@
                             <th>ID Transaksi</th>
                             <th>Tanggal Jual</th>
                             <th>Pembeli</th>
+                            <th>Jenis Produk</th>
                             <th>Jumlah (Liter)</th>
                             <th class="text-end">Harga Satuan</th>
                             <th class="text-end">Total Harga</th>
@@ -389,13 +390,14 @@
                             <td><span class="text-primary font-monospace">TRX-{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</span></td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m-d') }}</td>
                             <td>{{ $item->pembeli }}</td>
+                            <td>{{ ucwords($item->jenis_produk ?? '-') }}</td>
                             <td>{{ $item->jumlah }} L</td>
                             <td class="text-end">Rp {{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
                             <td class="text-end fw-bold text-dark">Rp {{ number_format($item->total_harga, 0, ',', '.') }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="7" class="text-center py-5">
                                 <span class="text-muted italic">Tidak ada data penjualan untuk periode ini.</span>
                             </td>
                         </tr>
@@ -403,7 +405,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="fw-bold">
-                            <td colspan="3" class="text-center fw-bold">TOTAL</td>
+                            <td colspan="4" class="text-center fw-bold">TOTAL</td>
                             <td class="fw-bold">{{ number_format($totalLiter, 2, '.', ',') }} L</td>
                             <td></td>
                             <td class="text-end fw-bold" style="font-size: 14px; color: #432118;">

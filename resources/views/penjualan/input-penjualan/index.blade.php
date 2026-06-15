@@ -104,7 +104,7 @@
 
         .form-label { font-weight: bold; color: #432118; font-size: 14px; margin-bottom: 4px; }
         
-        .form-control {
+        .form-control, .form-select {
             border-radius: 12px;
             border: 2px solid #a67c52;
             padding: 10px 14px;
@@ -113,7 +113,7 @@
             color: #432118;
             font-weight: 600;
         }
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             border-color: #5d7a54;
             box-shadow: 0 0 0 0.25rem rgba(93, 122, 84, 0.1);
             background-color: #ffffff;
@@ -272,8 +272,18 @@
                     </div>
 
                     <div class="mb-2">
-                        <label class="form-label">Jumlah (Liter) <span class="text-danger">*</span></label>
-                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="0" min="0" required>
+                        <label class="form-label">Jenis Produk <span class="text-danger">*</span></label>
+                        <select name="jenis_produk" class="form-select" required>
+                            <option value="" disabled selected>Pilih jenis produk</option>
+                            <option value="susu mentah" {{ old('jenis_produk') == 'susu mentah' ? 'selected' : '' }}>Susu Mentah</option>
+                            <option value="susu murni" {{ old('jenis_produk') == 'susu murni' ? 'selected' : '' }}>Susu Murni</option>
+                            <option value="yogurt" {{ old('jenis_produk') == 'yogurt' ? 'selected' : '' }}>Yogurt</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Jumlah (Liter)</label>
+                        <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="0" min="0">
                     </div>
 
                     <div class="mb-2">
@@ -315,7 +325,8 @@
         const totalInput = document.getElementById('total_harga');
 
         function calculateTotal() {
-            const jumlah = parseFloat(jumlahInput.value) || 0;
+            const jumlahVal = jumlahInput.value.trim();
+            const jumlah = jumlahVal === "" ? 1 : (parseFloat(jumlahVal) || 0);
             const harga = parseFloat(hargaInput.value) || 0;
             totalInput.value = Math.round(jumlah * harga);
         }

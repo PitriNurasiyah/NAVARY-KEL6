@@ -104,7 +104,7 @@
 
         .form-label { font-weight: bold; color: #432118; font-size: 14px; margin-bottom: 4px; }
         
-        .form-control {
+        .form-control, .form-select {
             border-radius: 12px;
             border: 2px solid #a67c52;
             padding: 10px 14px;
@@ -113,7 +113,7 @@
             color: #432118;
             font-weight: 600;
         }
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             border-color: #5d7a54;
             box-shadow: 0 0 0 0.25rem rgba(93, 122, 84, 0.1);
             background-color: #ffffff;
@@ -270,6 +270,16 @@
                     <div class="mb-2">
                         <label class="form-label">Pembeli <span class="text-danger">*</span></label>
                         <input type="text" name="pembeli" class="form-control" placeholder="Masukkan nama pembeli" value="{{ old('pembeli', $item->pembeli) }}" required>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Jenis Produk <span class="text-danger">*</span></label>
+                        <select name="jenis_produk" class="form-select" required>
+                            <option value="" disabled>Pilih jenis produk</option>
+                            <option value="susu mentah" {{ old('jenis_produk', $item->jenis_produk) == 'susu mentah' ? 'selected' : '' }}>Susu Mentah</option>
+                            <option value="susu murni" {{ old('jenis_produk', $item->jenis_produk) == 'susu murni' ? 'selected' : '' }}>Susu Murni</option>
+                            <option value="yogurt" {{ old('jenis_produk', $item->jenis_produk) == 'yogurt' ? 'selected' : '' }}>Yogurt</option>
+                        </select>
                     </div>
 
                     <div class="mb-2">

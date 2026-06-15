@@ -185,7 +185,7 @@
                 @php $daysPassed = $latest->hari_ke; @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-jug-detergent fs-3 mb-2 d-block"></i> Masa Laktasi. Sapi sedang menghasilkan susu (Hari ke-{{ $daysPassed }}).</p>
-                    <a href="{{ route('produksi.index') }}" class="btn btn-action mb-2"><i class="fa-solid fa-plus me-2"></i>Input Produksi Susu</a>
+                    <a href="{{ route('produksi.index', ['open_modal' => 'true', 'sapi_id' => $sapi->id]) }}" class="btn btn-action mb-2"><i class="fa-solid fa-plus me-2"></i>Input Produksi Susu</a>
                     <form action="{{ route('siklus.action.kering', $latest->id) }}" method="POST" class="mt-2">
                         @csrf
                         <button type="submit" class="btn btn-danger-action" style="background: #b91c1c; box-shadow: 0 4px 0 #7f1d1d;"><i class="fa-solid fa-stopwatch me-2"></i>Akhiri Laktasi & Mulai Masa Kering</button>

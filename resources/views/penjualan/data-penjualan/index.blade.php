@@ -278,6 +278,7 @@
                             <th class="text-center" style="width: 60px;">NO</th>
                             <th>TANGGAL</th>
                             <th>PEMBELI</th>
+                            <th>JENIS PRODUK</th>
                             <th>JUMLAH (L)</th>
                             <th class="text-end">HARGA SATUAN</th>
                             <th class="text-end">TOTAL HARGA</th>
@@ -292,6 +293,23 @@
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                             <td>{{ $item->pembeli }}</td>
+                            <td>
+                                @if($item->jenis_produk == 'susu mentah')
+                                    <span class="badge bg-warning text-dark px-2.5 py-1.5 text-capitalize" style="border-radius: 6px; font-size: 12.5px; font-weight: 700;">
+                                        {{ $item->jenis_produk }}
+                                    </span>
+                                @elseif($item->jenis_produk == 'susu murni')
+                                    <span class="badge bg-primary px-2.5 py-1.5 text-capitalize" style="border-radius: 6px; font-size: 12.5px; font-weight: 700; background-color: #5d7a54 !important;">
+                                        {{ $item->jenis_produk }}
+                                    </span>
+                                @elseif($item->jenis_produk == 'yogurt')
+                                    <span class="badge bg-danger px-2.5 py-1.5 text-capitalize" style="border-radius: 6px; font-size: 12.5px; font-weight: 700; background-color: #b05c75 !important;">
+                                        {{ $item->jenis_produk }}
+                                    </span>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
                             <td>{{ $item->jumlah }} L</td>
                             <td class="text-end">Rp {{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
                             <td class="text-end">
@@ -316,7 +334,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="{{ Auth::user()->role === 'Admin' ? 6 : 7 }}" class="text-center py-5">
+                            <td colspan="{{ Auth::user()->role === 'Admin' ? 7 : 8 }}" class="text-center py-5">
                                 <div class="d-flex flex-column align-items-center">
                                     <i class="fa-solid fa-magnifying-glass mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                     <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>

@@ -223,7 +223,7 @@
                     <select name="sapi_id" class="form-select" required>
                         <option value="">-- Pilih Sapi --</option>
                         @foreach($sapi as $s)
-                        <option value="{{ $s->id }}">{{ $s->kode_sapi }} - {{ $s->nama }}</option>
+                        <option value="{{ $s->id }}" {{ (old('sapi_id') ?? request('sapi_id')) == $s->id ? 'selected' : '' }}>{{ $s->kode_sapi }} - {{ $s->nama }}</option>
                         @endforeach
                     </select>
                 </div>

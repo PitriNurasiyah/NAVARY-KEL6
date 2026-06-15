@@ -505,7 +505,9 @@
                             <th>SORE (L)</th>
                             <th class="text-center">TOTAL</th>
                             <th>TANGGAL</th>
+                            @if(Auth::user()->role !== 'Penjualan')
                             <th class="text-center">HARI LAKTASI</th>
+                            @endif
                             @if(Auth::user()->role === 'Peternak')
                             <th class="text-center table-actions-column" style="width: 150px;">AKSI</th>
                             @endif
@@ -520,25 +522,27 @@
                             <td>{{ number_format($item->jumlah_sore, 2) }} L</td>
                             <td class="text-center">
                                 <span class="badge bg-success px-3 py-2" style="border-radius: 8px; font-size: 14px;">
-                                    {{ number_format($item->total, 2) }} L
+                                     {{ number_format($item->total, 2) }} L
                                 </span>
                             </td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
+                            @if(Auth::user()->role !== 'Penjualan')
                             <td class="text-center fw-bold text-secondary">
                                 {{ $item->laktasi_hari_ke ? 'Hari ke-' . $item->laktasi_hari_ke : '-' }}
                             </td>
+                            @endif
                             @if(Auth::user()->role === 'Peternak')
                             <td class="text-center table-actions-column">
                                 <div class="d-flex justify-content-center gap-2">
-                                    <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('produksi.edit', $item->id) }}">Edit</button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete('{{ route('produksi.destroy', $item->id) }}', '{{ $item->sapi->kode_sapi ?? 'Sapi' }}')">Hapus</button>
+                                     <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('produksi.edit', $item->id) }}">Edit</button>
+                                     <button type="button" class="btn btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete('{{ route('produksi.destroy', $item->id) }}', '{{ $item->sapi->kode_sapi ?? 'Sapi' }}')">Hapus</button>
                                 </div>
                             </td>
                             @endif
                         </tr>
                         @empty
                         <tr id="noDataRow">
-                            <td @if(Auth::user()->role === 'Peternak') colspan="8" @else colspan="7" @endif class="text-center py-5">
+                            <td @if(Auth::user()->role === 'Peternak') colspan="8" @elseif(Auth::user()->role === 'Penjualan') colspan="6" @else colspan="7" @endif class="text-center py-5">
                                 <div class="d-flex flex-column align-items-center">
                                     <i class="fa-solid fa-bucket mb-3" style="font-size: 48px; color: #a67c52; opacity: 0.4;"></i>
                                     <h5 class="fw-bold mb-1" style="color: #432118;">Data Belum Ada</h5>
@@ -686,15 +690,36 @@
         if (registerModal && registerIframe) {
             registerModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
-                const routeUrl = button.getAttribute('data-route');
-                if (routeUrl) {
-                    registerIframe.src = routeUrl + (routeUrl.includes('?') ? '&' : '?') + "mode=modal";
+                if (button) {
+                    const routeUrl = button.getAttribute('data-route');
+                    if (routeUrl) {
+                        registerIframe.src = routeUrl + (routeUrl.includes('?') ? '&' : '?') + "mode=modal";
+                    }
                 }
             });
             registerModal.addEventListener('hide.bs.modal', function() {
                 registerIframe.src = '';
             });
         }
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('open_modal') === 'true') {
+                const sapiId = urlParams.get('sapi_id');
+                const modalEl = document.getElementById('registerModal');
+                if (modalEl) {
+                    const iframe = document.getElementById('registerIframe');
+                    let routeUrl = "{{ route('produksi.create') }}";
+                    if (sapiId) {
+                        routeUrl += "?sapi_id=" + sapiId;
+                    }
+                    iframe.src = routeUrl + (routeUrl.includes('?') ? '&' : '?') + "mode=modal";
+                    
+                    const registerModalInstance = new bootstrap.Modal(modalEl);
+                    registerModalInstance.show();
+                }
+            }
+        });
 
         // Auto-dismiss alert
         const notif = document.getElementById('crudNotif');
@@ -909,7 +934,7 @@
                 let tempRow = document.getElementById('tempNoDataRow');
                 if (!tempRow) {
                     const tableBody = document.getElementById('produksiTableBody');
-                    const colSpan = @json(Auth::user()->role === 'Peternak' ? 8 : 7);
+                    const colSpan = @json(Auth::user()->role === 'Peternak' ? 8 : (Auth::user()->role === 'Penjualan' ? 6 : 7));
                     const newRow = document.createElement('tr');
                     newRow.id = 'tempNoDataRow';
                     newRow.innerHTML = `
@@ -972,7 +997,7 @@
                 let tempRow = document.getElementById('tempNoDataRow');
                 if (!tempRow) {
                     const tableBody = document.getElementById('produksiTableBody');
-                    const colSpan = @json(Auth::user()->role === 'Peternak' ? 8 : 7);
+                    const colSpan = @json(Auth::user()->role === 'Peternak' ? 8 : (Auth::user()->role === 'Penjualan' ? 6 : 7));
                     const newRow = document.createElement('tr');
                     newRow.id = 'tempNoDataRow';
                     newRow.innerHTML = `

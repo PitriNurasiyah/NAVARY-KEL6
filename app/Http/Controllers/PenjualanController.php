@@ -11,6 +11,7 @@ class PenjualanController extends Controller
         $request->validate([
             'tanggal' => 'required|date',
             'pembeli' => 'required|string',
+            'jenis_produk' => 'required|in:susu mentah,susu murni,yogurt',
             'jumlah' => 'required|numeric|min:0',
             'harga_satuan' => 'required|numeric|min:0',
             'total_harga' => 'required|numeric|min:0',
@@ -18,6 +19,8 @@ class PenjualanController extends Controller
             'tanggal.required' => 'Tanggal transaksi wajib diisi.',
             'tanggal.date' => 'Format tanggal tidak valid.',
             'pembeli.required' => 'Nama pembeli wajib diisi.',
+            'jenis_produk.required' => 'Jenis produk wajib dipilih.',
+            'jenis_produk.in' => 'Jenis produk tidak valid.',
             'jumlah.required' => 'Jumlah (liter) wajib diisi.',
             'jumlah.numeric' => 'Jumlah harus berupa angka.',
             'jumlah.min' => 'Jumlah tidak boleh kurang dari 0.',
@@ -49,6 +52,7 @@ class PenjualanController extends Controller
         $request->validate([
             'tanggal' => 'required|date',
             'pembeli' => 'required|string',
+            'jenis_produk' => 'required|in:susu mentah,susu murni,yogurt',
             'jumlah' => 'required|numeric|min:0',
             'harga_satuan' => 'required|numeric|min:0',
             'total_harga' => 'required|numeric|min:0',
@@ -56,6 +60,8 @@ class PenjualanController extends Controller
             'tanggal.required' => 'Tanggal transaksi wajib diisi.',
             'tanggal.date' => 'Format tanggal tidak valid.',
             'pembeli.required' => 'Nama pembeli wajib diisi.',
+            'jenis_produk.required' => 'Jenis produk wajib dipilih.',
+            'jenis_produk.in' => 'Jenis produk tidak valid.',
             'jumlah.required' => 'Jumlah (liter) wajib diisi.',
             'jumlah.numeric' => 'Jumlah harus berupa angka.',
             'jumlah.min' => 'Jumlah tidak boleh kurang dari 0.',

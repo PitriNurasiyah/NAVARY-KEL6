@@ -94,7 +94,7 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('laporan.penjualan.bulanan') }}" class="nav-link {{ request()->routeIs('laporan.penjualan.bulanan') ? 'active' : '' }}">
-                <i class="fas fa-chart-line"></i> <span>Laporan Bulanan</span>
+                <i class="fas fa-chart-line"></i> <span>Grafik Laporan</span>
             </a>
         </li>
     </ul>
