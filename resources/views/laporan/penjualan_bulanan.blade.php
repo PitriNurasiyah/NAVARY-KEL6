@@ -309,7 +309,7 @@
 <body>
 
     @include('layouts.sidebar')
-    @include('layouts.header', ['pageTitle' => 'Laporan Bulanan', 'pageSubtitle' => 'Rekapitulasi total penjualan susu per bulan'])
+    @include('layouts.header', ['pageTitle' => Auth::user()->role === 'Penjualan' ? 'Grafik Laporan' : 'Laporan Bulanan', 'pageSubtitle' => 'Rekapitulasi total penjualan susu per bulan'])
 
     <div class="main-content">
 

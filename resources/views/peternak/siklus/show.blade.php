@@ -13,23 +13,23 @@
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
         .page-title-section { margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; }
         .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
-        
+
         .card-cow { background: #fffcf7; padding: 25px; border-radius: 20px; border: 1.5px solid #e6d5c0; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.03); }
         .timeline { position: relative; padding: 20px 0; margin-top: 20px; }
         .timeline::before { content: ''; position: absolute; left: 30px; top: 0; bottom: 0; width: 2px; background: #e6d5c0; border-radius: 4px; }
-        
+
         .timeline-item { position: relative; padding-left: 70px; margin-bottom: 30px; }
         .timeline-icon { position: absolute; left: 15px; top: 0; width: 34px; height: 34px; background: #fff; border: 2.5px solid #bc9f82; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1; color: #bc9f82; font-size: 14px; }
         .timeline-content { background: #fffcf7; padding: 20px; border-radius: 15px; border: 1.5px solid #e6d5c0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .timeline-content h5 { font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 5px; color: #432118; }
         .timeline-content .date { color: #845a33; font-size: 13px; font-weight: bold; margin-bottom: 10px; display: block; }
-        
+
         .status-badge { padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; }
-        
+
         .action-box { background: rgba(93, 122, 84, 0.05); border: 1.5px dashed #bc9f82; padding: 25px; border-radius: 15px; margin-top: 20px; text-align: center; }
-        
+
         .chart-container { background: #fffcf7; padding: 25px; border-radius: 15px; border: 1.5px solid #e6d5c0; margin-top: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.03); }
-        
+
         .btn-action { background: #5d7a54; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; box-shadow: 0 4px 0 #3a4d33; transition: 0.2s; }
         .btn-action:hover { background: #4a6344; transform: translateY(2px); box-shadow: 0 2px 0 #3a4d33; color: white; }
         .btn-danger-action { background: #c0392b; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; box-shadow: 0 4px 0 #922b21; transition: 0.2s; }
@@ -82,7 +82,7 @@
             padding: 10px 28px; border-radius: 12px; font-weight: 700; cursor: pointer;
         }
         .btn-confirm-no:hover { background: #cbd5e1; }
-    
+
         /* Modal Floating Styling */
         .modal-content-custom {
             background: transparent;
@@ -124,9 +124,9 @@
                 $latest = $sapi->siklusSapi->first();
                 $fase = $latest ? $latest->fase : null;
             @endphp
-            
+
             <h4 style="font-family: 'Playfair Display', serif; font-weight: 700; color: #432118; margin-bottom: 20px;">Tindakan Selanjutnya</h4>
-            
+
             @if(!$fase || $fase == 'Kering Kandang' && $latest->status == 'Selesai')
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-syringe fs-3 mb-2 d-block"></i> Sapi siap untuk memulai siklus baru (Inseminasi Buatan).</p>
@@ -140,13 +140,13 @@
                 </div>
             @elseif($fase == 'IB')
                 @if($latest->status == 'Berjalan')
-                @php 
-                    $daysPassed = $latest->hari_ke; 
+                @php
+                    $daysPassed = $latest->hari_ke;
                     $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
                 @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;">
-                        <i class="fa-solid fa-magnifying-glass fs-3 mb-2 d-block"></i> 
+                        <i class="fa-solid fa-magnifying-glass fs-3 mb-2 d-block"></i>
                         Menunggu 14-21 hari setelah IB. (Sekarang Hari ke-{{ $daysPassed }}). Lakukan cek birahi untuk memastikan kehamilan.
                         @if($latest->estimasi_selesai)
                             <br><span class="text-xs text-muted">Bisa diproses mulai tanggal: {{ \Carbon\Carbon::parse($latest->estimasi_selesai)->format('d/m/Y') }}</span>
@@ -168,12 +168,25 @@
                 @endif
             @elseif($fase == 'Bunting')
                 @if($latest->status == 'Berjalan')
-                @php 
-                    $daysPassed = $latest->hari_ke; 
+                @php
+                    $daysPassed = $latest->hari_ke;
                     $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
                 @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-baby-carriage fs-3 mb-2 d-block"></i> Masa kehamilan sapi (±9 bulan). Sudah berjalan: {{ $daysPassed }} hari.<br>Estimasi selesai: {{ \Carbon\Carbon::parse($latest->estimasi_selesai)->format('d/m/Y') }}</p>
+                    <form action="{{ route('siklus.action.melahirkan', $latest->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-action" style="background: #4a6344; box-shadow: 0 4px 0 #3a4d33; @if(!$isPastEstimasi) opacity: 0.55; cursor: not-allowed; @endif" @if(!$isPastEstimasi) disabled @endif><i class="fa-solid fa-cow me-2"></i>Sapi Telah Melahirkan</button>
+                    </form>
+                </div>
+                @endif
+             @elseif($fase == 'Melahirkan')
+                @if($latest->status == 'Berjalan')
+                @php
+                    $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
+                @endphp
+                <div class="action-box">
+                    <p class="mb-3 fw-bold" style="color: #6d4c41;"><i class="fa-solid fa-baby-carriage fs-3 mb-2 d-block"></i> Sapi berada di fase Melahirkan. Tekan tombol ketika sapi sudah melahirkan.<br>@if($latest->estimasi_selesai)<span class="text-xs text-muted">Estimasi kelahiran: {{ \Carbon\Carbon::parse($latest->estimasi_selesai)->format('d/m/Y') }}</span>@endif</p>
                     <form action="{{ route('siklus.action.melahirkan', $latest->id) }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-action" style="background: #4a6344; box-shadow: 0 4px 0 #3a4d33; @if(!$isPastEstimasi) opacity: 0.55; cursor: not-allowed; @endif" @if(!$isPastEstimasi) disabled @endif><i class="fa-solid fa-cow me-2"></i>Sapi Telah Melahirkan</button>
@@ -194,13 +207,13 @@
                 @endif
             @elseif($fase == 'Kering Kandang')
                 @if($latest->status == 'Berjalan')
-                @php 
-                    $daysPassed = $latest->hari_ke; 
+                @php
+                    $daysPassed = $latest->hari_ke;
                     $isPastEstimasi = !$latest->estimasi_selesai || \Carbon\Carbon::today()->greaterThanOrEqualTo(\Carbon\Carbon::parse($latest->estimasi_selesai));
                 @endphp
                 <div class="action-box">
                     <p class="mb-3 fw-bold" style="color: #6d4c41;">
-                        <i class="fa-solid fa-bed fs-3 mb-2 d-block"></i> 
+                        <i class="fa-solid fa-bed fs-3 mb-2 d-block"></i>
                         Masa Kering (Istirahat ±1 bulan). Sudah berjalan: {{ $daysPassed }} hari.
                         @if($latest->estimasi_selesai)
                             <br><span class="text-xs text-muted">Estimasi selesai: {{ \Carbon\Carbon::parse($latest->estimasi_selesai)->format('d/m/Y') }}</span>
@@ -303,7 +316,7 @@
         // ====== Modal: Reload iframe ======
         const registerModal = document.getElementById('registerModal');
         const registerIframe = document.getElementById('registerIframe');
-        
+
         if (registerModal && registerIframe) {
             registerModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
