@@ -79,7 +79,7 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('sapi.index') }}" class="nav-link {{ request()->routeIs('sapi.*') ? 'active' : '' }}">
-                <i class="fas fa-cow"></i> <span>Data Sapi</span>
+                <i class="fas fa-cow"></i> <span>Biodata Sapi</span>
             </a>
         </li>
         <li class="nav-item">
