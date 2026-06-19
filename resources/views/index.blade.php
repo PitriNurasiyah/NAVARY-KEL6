@@ -182,7 +182,7 @@
                             Peternakan Cimilk Dari Ciater
                         </h1>
                         <p class="text-white/80 text-sm lg:text-base leading-relaxed">
-                            Kami memproduksi susu segar berkualitas premium langsung dari sapi Frisian Holstein unggulan. Dibudidayakan secara modern, higienis, dan penuh kasih sayang di Ciater.
+                            Kami memproduksi susu segar berkualitas premium langsung dari sapi peternakan unggulan. Dibudidayakan secara modern, higienis, dan penuh kasih sayang di Ciater.
                         </p>
                         <div class="flex items-center gap-4 pt-2">
                             <a href="#products" class="group flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-full transition shadow-lg shadow-emerald-500/20 hover:shadow-emerald-600/30">
