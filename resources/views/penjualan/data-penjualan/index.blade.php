@@ -10,7 +10,7 @@
     <style>
         body { background-color: #f4efe6; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; color: #432118; overflow-x: hidden; }
         .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 45px; }
-        
+
         .page-title-section { margin-bottom: 25px; }
         .page-title-section h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #4d624a; margin: 0 0 4px 0; }
         .page-title-section p { color: #6d4c41; font-weight: 600; margin: 0; font-size: 14px; }
@@ -187,14 +187,14 @@
         }
         .crud-notification.success { background: #dcfce7; border: 2px solid #22c55e; color: #166534; }
         .crud-notification.error { background: #fee2e2; border: 2px solid #ef4444; color: #991b1b; }
-        
+
         .notif-close {
             margin-left: auto; background: none; border: none; color: inherit;
             font-size: 18px; cursor: pointer; opacity: 0.5; transition: 0.2s;
             display: flex; align-items: center; justify-content: center;
         }
         .notif-close:hover { opacity: 1; }
-        
+
         @keyframes slideInRight {
             from { opacity: 0; transform: translateX(50px); }
             to { opacity: 1; transform: translateX(0); }
@@ -236,7 +236,7 @@
                 </div>
             </form>
         </div>
-        
+
         @if(session('success') || request('success'))
             <div class="crud-notification success" id="crudNotif">
                 <i class="fa-solid fa-circle-check"></i>
@@ -323,8 +323,8 @@
                                     <button type="button" class="btn btn-sm btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#registerModal" data-route="{{ route('penjualan.edit', $item->id) }}">
                                         Edit
                                     </button>
-                                    <button type="button" 
-                                        class="btn btn-sm btn-outline-danger shadow-sm" 
+                                    <button type="button"
+                                        class="btn btn-sm btn-outline-danger shadow-sm"
                                         onclick="confirmDelete('{{ route('penjualan.destroy', $item->id) }}', '{{ $item->pembeli }}')">
                                         Hapus
                                     </button>
@@ -398,7 +398,7 @@
 
         function confirmDelete(url, name) {
             deleteUrl = url;
-            document.getElementById('confirmMessage').textContent = 
+            document.getElementById('confirmMessage').textContent =
                 'Apakah Anda yakin ingin menghapus transaksi atas nama "' + name + '"? Tindakan ini tidak bisa dibatalkan.';
             document.getElementById('confirmOverlay').classList.add('active');
         }
@@ -432,7 +432,7 @@
         // ====== Modal: Reload iframe ======
         const registerModal = document.getElementById('registerModal');
         const registerIframe = document.getElementById('registerIframe');
-        
+
         if (registerModal && registerIframe) {
             registerModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
